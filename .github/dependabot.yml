@@ -6,6 +6,13 @@ updates:
       interval: weekly
     commit-message:
       prefix: build
+    ignore:
+      # A versão do TypeScript é definida pela compatibilidade com o Angular.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+      # Os tipos do Node acompanham a versão do Node do projeto (.nvmrc).
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
     groups:
       angular:
         patterns: ['@angular/*', '@angular-devkit/*', 'angular-eslint', '@angular-eslint/*']

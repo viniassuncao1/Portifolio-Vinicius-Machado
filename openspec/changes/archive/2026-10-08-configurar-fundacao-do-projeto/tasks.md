@@ -22,7 +22,7 @@
 - [x] 4.1 Criar o workflow `ci.yml` (lint, formatação, testes, build, E2E) — verificar com actionlint/validação de YAML
 - [x] 4.2 Criar o projeto na Vercel e o `vercel.json` — verificar com `vercel pull` + `vercel build` locais
 - [x] 4.3 Cadastrar os secrets da Vercel no GitHub — verificar na lista de secrets do repositório
-- [ ] 4.4 Adicionar os jobs de deploy de preview e de produção ao workflow — verificar pelo link de preview no PR
+- [x] 4.4 Adicionar os jobs de deploy de preview e de produção ao workflow — verificar pelo link de preview no PR
 - [x] 4.5 Adicionar Dependabot e template de Pull Request — verificar a presença dos arquivos em `.github/`
 
 ## 5. Documentação
