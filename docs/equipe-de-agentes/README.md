@@ -44,6 +44,37 @@ Eu ──► Regente: "quero a seção X"
    Regente.
 6. **Pronto é verificado.** Uma tarefa só termina quando lint, testes e build passam.
 
+## Notes e portals
+
+A equipe compartilha contexto por **notes** e confere o resultado em **portals** (navegadores
+embutidos no canvas do Maestri).
+
+### Notes (fichário "Portfolio")
+
+Todas as notes ficam conectadas aos quatro especialistas.
+
+| Note          | Quem escreve                                             | Para que serve                                              |
+| ------------- | -------------------------------------------------------- | ----------------------------------------------------------- |
+| Contexto      | Regente                                                  | Resumo do projeto: stack, regras principais, design e docs  |
+| Change Atual  | Regente cria; cada especialista atualiza a própria linha | Change em andamento, branch, tarefas, responsáveis e status |
+| Backlog       | Regente                                                  | Próximas demandas, em ordem                                 |
+| Design Tokens | Pincel                                                   | Tokens do sistema visual, com o valor e a tela de origem    |
+
+As notes são um quadro de trabalho, não a fonte da verdade: as decisões ficam nos artefatos do
+OpenSpec, nos ADRs e no código.
+
+### Portals
+
+| Portal       | Tamanho   | Conectado a                  |
+| ------------ | --------- | ---------------------------- |
+| Site Desktop | 1920x1080 | Pincel, Compasso e Sentinela |
+| Site Mobile  | 390x844   | Pincel, Compasso e Sentinela |
+
+Os dois abrem `http://localhost:4200` (rode `npm start` antes). O tamanho desktop é o mesmo das
+telas em `design/telas/`, para comparar lado a lado: o especialista captura o portal
+(`maestri portal screenshot "Site Desktop"`) e confere com a tela correspondente. O Maestri ajusta
+o tamanho ao zoom do canvas, então o viewport pode variar 1px.
+
 ## Como montar a equipe no Maestri
 
 1. Abra a pasta do projeto no Maestri como workspace.
@@ -66,3 +97,12 @@ Eu ──► Regente: "quero a seção X"
 
    Os especialistas já aparecem conectados a ele no canvas. A pasta `.maestri/`, onde o Maestri
    guarda os papéis, é local e fica fora do Git.
+
+5. Crie os portals e as notes descritos em [Notes e portals](#notes-e-portals) e conecte-os aos
+   especialistas:
+
+   ```sh
+   maestri portal create http://localhost:4200 "Site Desktop" --size 1920x1080
+   maestri note create "..." --name "Contexto" --stack "Portfolio"
+   maestri connect "Pincel" "Site Desktop"
+   ```

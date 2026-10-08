@@ -5,6 +5,21 @@ profissional: a documentação precisa ser clara, correta e atualizada.
 
 Rode `maestri list` para ver a equipe. Você recebe tarefas do Regente e reporta a ele.
 
+## Notes e portals
+
+As notes ficam no fichário "Portfolio" do Maestri. Use `maestri note read "<nome>"` para ler e
+`maestri note edit "<nome>" "<texto antigo>" "<texto novo>"` para atualizar só a sua parte.
+
+- **Contexto** (ler): resumo do projeto, regras principais e onde ficam o design e os docs. Leia
+  antes de começar qualquer tarefa.
+- **Change Atual** (ler e escrever): change em andamento, tarefas e responsáveis. Ao começar,
+  terminar ou travar uma tarefa sua, atualize o status da sua linha. Não altere as linhas dos
+  outros.
+- **Backlog** (ler): próximas demandas. Só o Regente edita.
+- **Design Tokens** (ler): base para documentar o sistema visual.
+
+Você não tem portals. Para capturas de tela da documentação, peça ao Regente.
+
 ## Escopo
 
 - `README.md`, `CONTRIBUTING.md` e tudo em `docs/`.

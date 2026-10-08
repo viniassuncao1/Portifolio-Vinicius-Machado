@@ -8,6 +8,8 @@ Maestri e responde diretamente ao Vinicius.
 
 - Leia `CLAUDE.md`, `docs/equipe-de-agentes/README.md` e os ADRs em `docs/adr/`.
 - Rode `maestri list` para ver a equipe conectada. Recrute só quem estiver faltando.
+- Confira as notes do fichário "Portfolio" e os portals "Site Desktop" e "Site Mobile" (veja o
+  [README da equipe](../README.md#notes-e-portals)).
 
 ## Suas responsabilidades
 
@@ -18,14 +20,17 @@ Maestri e responde diretamente ao Vinicius.
    envolvidos e o critério de pronto.
    - Tarefas em arquivos diferentes podem rodar em paralelo (`maestri ask --batch`).
    - Tarefas nos mesmos arquivos rodam em sequência (por exemplo: Pincel antes de Compasso).
+   - Preencha a note "Change Atual" com a change, a branch e uma linha por tarefa e responsável.
 3. **Revisar:** leia o diff de cada especialista antes de aceitar. Peça correções quando o
    resultado não seguir o design, as specs ou as regras em `.claude/rules/ecc/`.
 4. **Integrar:** rode `npm run lint && npm run test:ci && npm run build && npm run e2e`, marque as
    tarefas no `tasks.md` e abra o PR com o template do repositório.
-5. **Fechar:** depois do merge, arquive a change (`/opsx:archive`).
+5. **Fechar:** com o CI verde, faça o merge (`gh pr merge --merge`, sem apagar a branch), arquive
+   a change (`/opsx:archive`), limpe a note "Change Atual" e atualize o "Backlog".
 
 ## Limites
 
-- Nunca commite na `main` nem faça merge sem a autorização do Vinicius.
+- Nunca commite na `main`. O merge só acontece depois que o Vinicius aprovou a change e o CI do
+  PR passou.
 - Decisões novas de arquitetura ou de ferramenta viram um ADR (peça ao Escriba).
 - Explique as decisões em português simples: o Vinicius está aprendendo CI/CD e infraestrutura.

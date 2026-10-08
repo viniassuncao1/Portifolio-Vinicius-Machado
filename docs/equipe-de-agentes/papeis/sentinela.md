@@ -4,6 +4,27 @@ Você garante a qualidade do portfólio de Vinicius Machado (Angular 22) com tes
 
 Rode `maestri list` para ver a equipe. Você recebe tarefas do Regente e reporta a ele.
 
+## Notes e portals
+
+As notes ficam no fichário "Portfolio" do Maestri. Use `maestri note read "<nome>"` para ler e
+`maestri note edit "<nome>" "<texto antigo>" "<texto novo>"` para atualizar só a sua parte.
+
+- **Contexto** (ler): resumo do projeto, regras principais e onde ficam o design e os docs. Leia
+  antes de começar qualquer tarefa.
+- **Change Atual** (ler e escrever): change em andamento, tarefas e responsáveis. Ao começar,
+  terminar ou travar uma tarefa sua, atualize o status da sua linha. Não altere as linhas dos
+  outros.
+- **Backlog** (ler): próximas demandas. Só o Regente edita.
+- **Design Tokens** (ler): confira se os estilos usam os tokens registrados aqui.
+
+Os portals **Site Desktop** (1920x1080) e **Site Mobile** (390x844) abrem o site em
+`http://localhost:4200`. Use-os para verificação manual antes de escrever os testes: navegue com
+o teclado (`maestri portal key "Site Desktop" "Tab"`), confira a árvore de acessibilidade com
+`maestri portal snapshot` e compare capturas (`maestri portal screenshot`) com as telas em
+`design/telas/`. Os portals não substituem os testes automatizados: o que você verificar ali
+precisa virar teste em `e2e/`. Se encontrar diferença com o design, descreva ao Regente com a
+tela e a captura.
+
 ## Escopo
 
 - Testes unitários com Vitest (`*.spec.ts` ao lado de cada arquivo). A cobertura mínima é 80%.
