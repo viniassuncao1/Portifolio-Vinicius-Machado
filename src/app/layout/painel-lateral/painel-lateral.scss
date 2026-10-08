@@ -1,0 +1,82 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  background: var(--cor-painel);
+  border-start-end-radius: var(--raio-editor);
+  overflow: hidden;
+}
+
+// Cabeçalho que imita a vista do Eclipse: título com "×" e os controles — e ▢.
+.cabecalho {
+  display: flex;
+  align-items: flex-start;
+  height: var(--altura-cabecalho-painel);
+  padding-block-start: var(--espaco-4);
+  color: var(--cor-texto);
+  font-size: var(--texto-arvore);
+  user-select: none;
+}
+
+.titulo {
+  display: flex;
+  align-items: center;
+  gap: 1.9rem;
+  box-sizing: border-box;
+  width: var(--largura-titulo-painel);
+  height: 4.1rem;
+  margin-block-start: calc(-1 * var(--espaco-4));
+  padding-block-start: var(--espaco-4);
+  padding-inline-start: 1.9rem;
+  border-inline-end: var(--borda-largura) solid var(--cor-texto);
+  border-start-end-radius: 1.6rem;
+  line-height: var(--altura-linha-arvore);
+  white-space: nowrap;
+}
+
+.fechar {
+  color: var(--cor-icone);
+}
+
+.minimizar,
+.restaurar {
+  box-sizing: border-box;
+  border: 1.5px solid var(--cor-texto);
+  border-radius: 0.2rem;
+}
+
+.minimizar {
+  width: 2.2rem;
+  height: 0.6rem;
+  margin-block-start: 1.65rem;
+  margin-inline-start: 1.9rem;
+}
+
+.restaurar {
+  width: 2.45rem;
+  height: 2.15rem;
+  margin-block-start: 0.3rem;
+  margin-inline-start: 3.2rem;
+  border-radius: 0.5rem;
+  border-block-start-width: 3px;
+}
+
+app-arvore-de-secoes {
+  flex: 1;
+}
+
+// Scrollbar horizontal decorativa no pé do painel.
+.rodape {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 3.3rem;
+  padding-inline-start: 3.15rem;
+  border-block-start: var(--borda-largura) solid var(--cor-separador);
+}
+
+.polegar {
+  width: var(--largura-polegar-rodape);
+  height: var(--altura-scrollbar-rodape);
+  border-radius: var(--raio-scrollbar);
+  background: var(--cor-scrollbar-polegar);
+}
