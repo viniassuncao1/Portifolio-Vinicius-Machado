@@ -6,7 +6,9 @@ Instruções para agentes de IA que trabalham neste repositório.
 
 Portfólio pessoal de Vinicius Machado em Angular 22, pré-renderizado (SSG) e publicado na Vercel
 pelo GitHub Actions. O visual simula uma IDE escura no estilo Eclipse. O design de referência fica em
-`design/portfolio.pdf` (não versionado). Ele é fixo: implemente fielmente e não invente
+`design/` (não versionado): `portfolio.pdf` é o original, `telas/tela-01.png` a `tela-30.png` são
+as telas exportadas (use estas, porque o PDF não é legível pelas ferramentas) e
+`telas/textos.md` tem os textos de cada tela. Ele é fixo: implemente fielmente e não invente
 layout.
 
 O repositório também é uma vitrine. Código, commits e documentação precisam estar no nível de um
