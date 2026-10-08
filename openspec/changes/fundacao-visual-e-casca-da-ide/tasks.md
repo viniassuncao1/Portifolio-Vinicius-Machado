@@ -5,21 +5,21 @@ Responsável entre colchetes. Grupos que mexem nos mesmos arquivos rodam em sequ
 
 ## 1. Preparação [Regente]
 
-- [ ] 1.1 Criar a branch `feat/fundacao-visual-e-casca-da-ide` e preencher a note "Change Atual" com as tarefas e responsáveis — verificar pela note no canvas
-- [ ] 1.2 Instalar `@fontsource/jetbrains-mono` e `@axe-core/playwright` (dev) — verificar com `npm ci && npm run build`
+- [x] 1.1 Criar a branch `feat/fundacao-visual-e-casca-da-ide` e preencher a note "Change Atual" com as tarefas e responsáveis — verificar pela note no canvas
+- [x] 1.2 Instalar `@fontsource/jetbrains-mono` e `@axe-core/playwright` (dev) — verificar com `npm ci && npm run build`
 
 ## 2. Design tokens e fonte [Pincel]
 
-- [ ] 2.1 Extrair das telas as cores de interface e de sintaxe, tipografia, espaçamentos, raios e bordas, e criar `src/styles/_tokens.scss` — verificar que `npm run build` passa e que nenhum componente usa cor solta (`grep` por `#` e `rgb(` fora de `_tokens.scss`)
-- [ ] 2.2 Conferir o contraste de cada cor de texto com o fundo e ajustar as que ficarem abaixo de 4,5:1 — verificar pela tabela de contraste na note "Design Tokens"
-- [ ] 2.3 Configurar a JetBrains Mono local (pesos usados, subset latino, `font-display: swap`) — verificar no portal "Site Desktop" que nenhuma requisição sai para domínios de fontes
-- [ ] 2.4 Preencher a note "Design Tokens" com nome, valor e tela de origem de cada token — verificar pela note no canvas
+- [x] 2.1 Extrair das telas as cores de interface e de sintaxe, tipografia, espaçamentos, raios e bordas, e criar `src/styles/_tokens.scss` — verificar que `npm run build` passa e que nenhum componente usa cor solta (`grep` por `#` e `rgb(` fora de `_tokens.scss`)
+- [x] 2.2 Conferir o contraste de cada cor de texto com o fundo e ajustar as que ficarem abaixo de 4,5:1 — verificar pela tabela de contraste na note "Design Tokens"
+- [x] 2.3 Configurar a JetBrains Mono local (pesos usados, subset latino, `font-display: swap`) — verificar no portal "Site Desktop" que nenhuma requisição sai para domínios de fontes
+- [x] 2.4 Preencher a note "Design Tokens" com nome, valor e tela de origem de cada token — verificar pela note no canvas
 
 ## 3. Editor de código [Pincel, depois Sentinela]
 
-- [ ] 3.1 Criar o modelo de conteúdo e as funções construtoras em `shared/editor-de-codigo/conteudo.ts` — verificar com testes unitários das construtoras
-- [ ] 3.2 Criar o componente `EditorDeCodigo` (linhas, trechos por papel, recuo, parágrafo com `*`, numeração mínima de 15 e crescente) — verificar com teste unitário mínimo de renderização
-- [ ] 3.3 [Sentinela] Completar os testes do editor cobrindo os cenários da spec `editor-de-codigo` (cores por papel, 15 linhas, conteúdo longo, números e `*` fora da leitura, texto copiável) — verificar com `npm run test:ci`
+- [x] 3.1 Criar o modelo de conteúdo e as funções construtoras em `shared/editor-de-codigo/conteudo.ts` — verificar com testes unitários das construtoras
+- [x] 3.2 Criar o componente `EditorDeCodigo` (linhas, trechos por papel, recuo, parágrafo com `*`, numeração mínima de 15 e crescente) — verificar com teste unitário mínimo de renderização
+- [x] 3.3 [Sentinela] Completar os testes do editor cobrindo os cenários da spec `editor-de-codigo` (cores por papel, 15 linhas, conteúdo longo, números e `*` fora da leitura, texto copiável) — verificar com `npm run test:ci`
 
 ## 4. Casca da IDE e navegação [Pincel, depois Sentinela]
 
@@ -37,8 +37,8 @@ Responsável entre colchetes. Grupos que mexem nos mesmos arquivos rodam em sequ
 
 ## 6. Documentação [Escriba, em paralelo]
 
-- [ ] 6.1 Escrever o ADR-0008 (diário de desenvolvimento) e o ADR-0009 (axe nos E2E) e atualizar o índice em `docs/adr/README.md` — verificar com `npm run format:check`
-- [ ] 6.2 Criar `docs/diario/README.md` (índice e modelo de entrada) e a entrada `0001-fundacao-do-projeto.md` com rascunho de post — verificar que a entrada tem todas as seções da spec
+- [x] 6.1 Escrever o ADR-0008 (diário de desenvolvimento) e o ADR-0009 (axe nos E2E) e atualizar o índice em `docs/adr/README.md` — verificar com `npm run format:check`
+- [x] 6.2 Criar `docs/diario/README.md` (índice e modelo de entrada) e a entrada `0001-fundacao-do-projeto.md` com rascunho de post — verificar que a entrada tem todas as seções da spec
 - [ ] 6.3 Escrever `docs/componentes.md` com o inventário das telas e o uso de cada componente, depois que os grupos 3 a 5 estiverem prontos — verificar que os nomes batem com o código
 - [ ] 6.4 Atualizar `README.md` e `docs/arquitetura.md` (casca, rotas, tokens, fonte, diário) — verificar com `npm run format:check`
 - [ ] 6.5 Escrever a entrada `0002-fundacao-visual-e-casca-da-ide.md` com capturas dos portals (pedidas ao Regente) e rascunho de post — verificar que está no índice
