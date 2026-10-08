@@ -1,0 +1,23 @@
+<nav aria-label="Seções do portfólio">
+  <ul>
+    @for (secao of secoes; track secao.slug; let primeiro = $first) {
+      <li>
+        <a
+          #item
+          class="item"
+          [class.inicial]="primeiro"
+          [routerLink]="['/', secao.slug]"
+          routerLinkActive="atual"
+          ariaCurrentWhenActive="page"
+          (click)="secaoEscolhida.emit()"
+        >
+          <svg class="seta" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+            <path d="M3 1.5v17L17 10z" />
+          </svg>
+          <app-icone [nome]="secao.icone" />
+          <span class="titulo">{{ secao.titulo }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+</nav>

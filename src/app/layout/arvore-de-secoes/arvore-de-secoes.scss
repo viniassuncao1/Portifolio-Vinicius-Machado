@@ -1,0 +1,54 @@
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  min-height: var(--altura-linha-arvore);
+  padding-inline-start: var(--recuo-item-arvore);
+  color: var(--cor-texto);
+  font-size: var(--texto-arvore);
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+
+  // Primeiro item (Sobre Mim): o design o mostra sempre em cinza.
+  &.inicial .titulo {
+    color: var(--cor-texto-esmaecido);
+  }
+
+  // Item da seção aberta: destacado e expandido (estado pronto para animação).
+  &.atual {
+    min-height: var(--altura-linha-selecionada);
+    padding-inline-start: var(--recuo-item-atual);
+    background: var(--cor-linha-selecionada);
+
+    .seta {
+      rotate: 90deg;
+    }
+
+    &.inicial {
+      padding-inline-start: calc(var(--recuo-item-atual) + 0.5rem);
+    }
+  }
+}
+
+.seta {
+  flex: none;
+  width: var(--tamanho-seta-arvore);
+  height: var(--tamanho-seta-arvore);
+  margin-inline-end: var(--afastamento-icone-arvore);
+  fill: var(--cor-icone);
+}
+
+app-icone {
+  margin-inline-end: var(--afastamento-texto-arvore);
+}
