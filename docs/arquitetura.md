@@ -4,7 +4,8 @@
 
 O portfólio é uma aplicação Angular 22 **pré-renderizada**: no build, cada rota vira um arquivo
 HTML estático em `dist/portfolio/browser/`. No navegador, o Angular faz a hidratação e assume a
-navegação e as animações. Não há servidor em produção; o site é servido pelo GitHub Pages.
+navegação e as animações. Não há servidor em produção; o site é servido como arquivos estáticos pela Vercel
+(veja [CI/CD e deploy](deploy.md)).
 
 ```
 npm run build
@@ -16,13 +17,13 @@ npm run build
 
 ## Decisões principais
 
-| Decisão                       | Motivo                                                                  |
-| ----------------------------- | ----------------------------------------------------------------------- |
-| Standalone, signals, zoneless | Padrão atual do Angular; menos código e detecção de mudanças previsível |
-| Pré-renderização (SSG)        | Conteúdo fixo: HTML pronto para SEO e carregamento rápido, sem servidor |
-| Vitest                        | Executor padrão do Angular atual, mais rápido que Karma                 |
-| Playwright contra o build     | O E2E testa exatamente o que vai ao ar                                  |
-| GitHub Pages                  | Gratuito, nativo do GitHub e sem segredos externos                      |
+| Decisão                        | Motivo                                                                  |
+| ------------------------------ | ----------------------------------------------------------------------- |
+| Standalone, signals, zoneless  | Padrão atual do Angular; menos código e detecção de mudanças previsível |
+| Pré-renderização (SSG)         | Conteúdo fixo: HTML pronto para SEO e carregamento rápido, sem servidor |
+| Vitest                         | Executor padrão do Angular atual, mais rápido que Karma                 |
+| Playwright contra o build      | O E2E testa exatamente o que vai ao ar                                  |
+| Vercel com deploy pelo Actions | Feita para frontend, preview por PR; deploy só com o pipeline verde     |
 
 O raciocínio completo, com alternativas descartadas, está no design da change de fundação em
 `openspec/`.

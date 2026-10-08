@@ -4,8 +4,8 @@ Instruções para agentes de IA que trabalham neste repositório.
 
 ## Projeto
 
-Portfólio pessoal de Vinicius Machado em Angular 22, pré-renderizado (SSG) e publicado no GitHub
-Pages. O visual simula uma IDE escura no estilo Eclipse. O design de referência fica em
+Portfólio pessoal de Vinicius Machado em Angular 22, pré-renderizado (SSG) e publicado na Vercel
+pelo GitHub Actions. O visual simula uma IDE escura no estilo Eclipse. O design de referência fica em
 `design/portfolio.pdf` (não versionado). Ele é fixo: implemente fielmente e não invente
 layout.
 

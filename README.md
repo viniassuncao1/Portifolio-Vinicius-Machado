@@ -1,7 +1,6 @@
 # Portfolio_Vinicius
 
-[![CI](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/actions/workflows/ci.yml/badge.svg)](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/actions/workflows/ci.yml)
-[![Deploy](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/actions/workflows/deploy.yml/badge.svg)](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/actions/workflows/deploy.yml)
+[![CI/CD](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/actions/workflows/ci.yml/badge.svg)](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/actions/workflows/ci.yml)
 
 Portfólio pessoal de **Vinicius Machado**, desenvolvedor Full Stack (Java, Spring Boot, Angular
 e SQL).
@@ -10,7 +9,7 @@ O site imita uma IDE: as seções do portfólio aparecem como arquivos numa árv
 conteúdo é apresentado como código. Além de portfólio, este repositório é um exemplo de como eu
 desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 
-**Acesse:** https://viniassuncao1.github.io/Portifolio-Vinicius-Machado/
+**Acesse:** https://portfolio-vinicius-machado.vercel.app
 
 ## Destaques
 
@@ -31,7 +30,7 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 | Renderização | `@angular/ssr` com pré-renderização estática         |
 | Testes       | Vitest (unitários), Playwright (E2E)                 |
 | Qualidade    | ESLint (angular-eslint), Prettier, Husky, commitlint |
-| CI/CD        | GitHub Actions, GitHub Pages, Dependabot             |
+| CI/CD        | GitHub Actions, Vercel, Dependabot                   |
 | Processo     | OpenSpec (SDD), Claude Code                          |
 
 ## Como rodar
@@ -75,14 +74,19 @@ Detalhes em [docs/arquitetura.md](docs/arquitetura.md).
 
 ## CI/CD
 
-- **[CI](.github/workflows/ci.yml):** em todo PR e push na `main`, roda lint, formatação, testes
-  unitários com cobertura, build e E2E em jobs paralelos.
-- **[Deploy](.github/workflows/deploy.yml):** a cada push na `main`, gera o build e publica no
-  GitHub Pages.
+Tudo roda no workflow [`ci.yml`](.github/workflows/ci.yml):
+
+- **CI:** em todo PR e push na `main`, roda lint, formatação, testes unitários com cobertura,
+  build e E2E em jobs paralelos.
+- **CD:** com tudo verde, publica na Vercel. Cada PR ganha uma URL de preview, e cada push na
+  `main` atualiza a produção.
+
+Detalhes em [docs/deploy.md](docs/deploy.md).
 
 ## Documentação
 
 - [Arquitetura](docs/arquitetura.md)
+- [CI/CD e deploy](docs/deploy.md)
 - [Desenvolvimento com IA](docs/desenvolvimento-com-ia.md)
 - [Como contribuir](CONTRIBUTING.md)
 
