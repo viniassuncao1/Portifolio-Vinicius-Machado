@@ -47,13 +47,22 @@ Eu ──► Regente: "quero a seção X"
 ## Como montar a equipe no Maestri
 
 1. Abra a pasta do projeto no Maestri como workspace.
-2. Em **Presets**, crie dois presets de agente:
-   - `Claude Opus`: comando `claude --model opus`
-   - `Claude Sonnet`: comando `claude --model sonnet`
-3. Abra um terminal com o preset `Claude Opus` e cole o conteúdo de
+2. Não é preciso criar presets: a equipe usa o preset padrão `Claude Code` e escolhe o modelo
+   pelo comando.
+   - Regente: `claude --model opus`
+   - Especialistas: `claude --model sonnet`
+3. Abra um terminal com o preset `Claude Code` rodando `claude --model opus` e cole o conteúdo de
    [`papeis/regente.md`](papeis/regente.md), seguido de:
    > Monte a equipe descrita em `docs/equipe-de-agentes/README.md`: crie os papéis a partir dos
    > arquivos em `docs/equipe-de-agentes/papeis/` e recrute cada especialista com o preset
-   > `Claude Sonnet`.
-4. O Regente cria os papéis (`maestri role create`) e recruta os especialistas
-   (`maestri recruit`), que já aparecem conectados a ele no canvas.
+   > `Claude Code` e o comando `claude --model sonnet`.
+4. O Regente cria um papel por arquivo, com o nome da coluna "Papel" da tabela
+   (`maestri role create "Design/UI" "$(cat papeis/pincel.md)"`), e recruta cada especialista
+   com o codinome dele:
+
+   ```sh
+   maestri recruit "Pincel" --preset "Claude Code" --command "claude --model sonnet" --role "Design/UI"
+   ```
+
+   Os especialistas já aparecem conectados a ele no canvas. A pasta `.maestri/`, onde o Maestri
+   guarda os papéis, é local e fica fora do Git.
