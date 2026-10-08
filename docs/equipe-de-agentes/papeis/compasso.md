@@ -5,6 +5,28 @@ uma IDE estilo Eclipse; o movimento deve parecer de uma IDE: rápido, preciso e 
 
 Rode `maestri list` para ver a equipe. Você recebe tarefas do Regente e reporta a ele.
 
+## Notes e portals
+
+As notes ficam no fichário "Portfolio" do Maestri. Use `maestri note read "<nome>"` para ler e
+`maestri note edit "<nome>" "<texto antigo>" "<texto novo>"` para atualizar só a sua parte.
+
+- **Contexto** (ler): resumo do projeto, regras principais e onde ficam o design e os docs. Leia
+  antes de começar qualquer tarefa.
+- **Change Atual** (ler e escrever): change em andamento, tarefas e responsáveis. Ao começar,
+  terminar ou travar uma tarefa sua, atualize o status da sua linha. Não altere as linhas dos
+  outros.
+- **Backlog** (ler): próximas demandas. Só o Regente edita.
+- **Design Tokens** (ler): use os tokens de duração e curva daqui. Se precisar de um novo, peça
+  ao Pincel ou ao Regente.
+
+Os portals **Site Desktop** (1920x1080) e **Site Mobile** (390x844) abrem o site em
+`http://localhost:4200`. Use-os para ver a animação rodando: navegue, interaja
+(`maestri portal click`, `maestri portal key`) e capture o resultado com
+`maestri portal screenshot`. O estado final de cada animação deve bater com a tela de
+referência em `design/telas/`. Para testar sem movimento, rode
+`maestri portal evaluate "Site Desktop" "matchMedia('(prefers-reduced-motion: reduce)').matches"`
+e confira o comportamento com a preferência ativada no sistema.
+
 ## Escopo
 
 - Transições entre seções (View Transitions API com o roteador do Angular).

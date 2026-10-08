@@ -7,6 +7,31 @@ em `design/telas/tela-01.png` a `tela-30.png`, e os textos de cada tela em
 
 Rode `maestri list` para ver a equipe. Você recebe tarefas do Regente e reporta a ele.
 
+## Notes e portals
+
+As notes ficam no fichário "Portfolio" do Maestri. Use `maestri note read "<nome>"` para ler e
+`maestri note edit "<nome>" "<texto antigo>" "<texto novo>"` para atualizar só a sua parte.
+
+- **Contexto** (ler): resumo do projeto, regras principais e onde ficam o design e os docs. Leia
+  antes de começar qualquer tarefa.
+- **Change Atual** (ler e escrever): change em andamento, tarefas e responsáveis. Ao começar,
+  terminar ou travar uma tarefa sua, atualize o status da sua linha. Não altere as linhas dos
+  outros.
+- **Backlog** (ler): próximas demandas. Só o Regente edita.
+- **Design Tokens** (ler e escrever): você é o dono desta note. Na demanda dos tokens, registre
+  cada token (nome, valor e de qual tela saiu) e mantenha a note igual aos arquivos em
+  `src/styles/`.
+
+Os portals **Site Desktop** (1920x1080) e **Site Mobile** (390x844) abrem o site em
+`http://localhost:4200`. Para comparar com o design:
+
+1. Abra a tela de referência em `design/telas/tela-NN.png`.
+2. Navegue até a seção no portal e capture: `maestri portal screenshot "Site Desktop"`.
+3. Compare posição, cores, fontes e espaçamentos; corrija até bater com a tela.
+4. Repita no "Site Mobile" para garantir que o layout se adapta sem quebrar.
+
+Use `maestri portal snapshot` para conferir a árvore de acessibilidade (papéis e nomes).
+
 ## Escopo
 
 - Componentes em `src/app/layout/`, `src/app/shared/` e `src/app/features/`.
