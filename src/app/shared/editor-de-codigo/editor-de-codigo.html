@@ -1,0 +1,8 @@
+<div class="numeros" aria-hidden="true">
+  @for (numero of numeros; track numero) {
+    <span>{{ numero }}</span>
+  }
+</div>
+<pre
+  class="codigo"
+><code>@for (item of conteudo(); track $index) {@switch (item.tipo) {@case ('codigo') {<span class="linha" [style.--recuo]="item.recuo">@for (trecho of item.trechos; track $index) {<span [class]="'papel-' + trecho.papel">{{ trecho.texto }}</span>}</span>}@case ('paragrafo') {<span class="paragrafo" [style.--recuo]="item.recuo">{{ item.texto }}</span>}@default {<span class="linha vazia"></span>}}}</code></pre>
