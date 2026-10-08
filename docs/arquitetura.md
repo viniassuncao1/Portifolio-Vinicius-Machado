@@ -58,5 +58,7 @@ teste ao lado (`inicio.spec.ts`).
 
 O design de referência é um PDF do Illustrator (30 telas de 1920×1080) que simula uma IDE escura
 no estilo Eclipse: barra de ferramentas no topo, árvore de seções à esquerda e editor com código
-Java à direita. O PDF não é versionado (`design/` está no `.gitignore`). Cores, tipografia e
-espaçamentos serão extraídos para design tokens (variáveis CSS) numa change própria.
+Java à direita. Como o PDF não é legível pelas ferramentas de IA, cada tela foi exportada como
+imagem (`design/telas/tela-01.png` a `tela-30.png`), e os textos de cada tela ficam em
+`design/telas/textos.md`. Nada disso é versionado (`design/` está no `.gitignore`). Cores,
+tipografia e espaçamentos serão extraídos para design tokens (variáveis CSS) numa change própria.
