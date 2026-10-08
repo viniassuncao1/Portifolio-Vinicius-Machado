@@ -55,6 +55,7 @@ $quantidade-de-marcadores: 60;
   min-height: var(--altura-linha-codigo);
   padding-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo));
   font-size: var(--texto-codigo);
+  letter-spacing: var(--espacamento-letras-codigo);
   line-height: var(--altura-linha-codigo);
   white-space: pre;
 }
@@ -64,6 +65,7 @@ $quantidade-de-marcadores: 60;
   display: block;
   padding-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo));
   font-size: var(--texto-comentario);
+  letter-spacing: var(--espacamento-letras-codigo);
   line-height: var(--altura-linha-comentario);
   white-space: normal;
   overflow-wrap: anywhere;

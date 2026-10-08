@@ -41,8 +41,9 @@
   --texto-arvore: 1.38rem;
   --texto-aba: 1.38rem;
   --texto-comentario: 1.44rem;
-  --texto-codigo: 1.56rem;
+  --texto-codigo: 1.44rem;
   --texto-numero-linha: 1.74rem;
+  --espacamento-letras-codigo: 0.0642em;
   --altura-linha-arvore: 2.82rem;
   --altura-linha-codigo: 2.82rem;
   --altura-linha-comentario: 1.86rem;
@@ -68,7 +69,7 @@
   --largura-numeros-linha: 4rem;
   --afastamento-codigo: 6rem;
   --afastamento-marcador: 1.5rem;
-  --recuo-codigo: 4ch;
+  --recuo-codigo: 3.6rem;
 
   // Raio
   --raio-scrollbar: 0.6rem;
