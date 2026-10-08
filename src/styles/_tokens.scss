@@ -1,5 +1,7 @@
 // Design tokens extraídos de design/telas (telas 01, 02, 07 e 24).
-// Valores amostrados por pixel nas imagens de 1600x900; medidas em px convertidas para rem (1rem = 16px).
+// Valores amostrados por pixel nas imagens de 1600x900 (exportações reduzidas do design de 1920x1080).
+// As medidas foram convertidas para a escala de 1920x1080 (x1,2) e para rem (1rem = 16px); as cores não mudam.
+// A escala --espaco-* e a borda de 1px não vêm de medição e ficam como estão.
 // Cores de texto abaixo de 4,5:1 foram ajustadas (ver note "Design Tokens").
 // Os tokens de movimento ficam com o Compasso (src/styles/_movimento.scss).
 
@@ -36,14 +38,14 @@
   --fonte-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   --peso-regular: 400;
   --peso-negrito: 700;
-  --texto-arvore: 1.15rem;
-  --texto-aba: 1.15rem;
-  --texto-comentario: 1.2rem;
-  --texto-codigo: 1.3rem;
-  --texto-numero-linha: 1.45rem;
-  --altura-linha-arvore: 2.35rem;
-  --altura-linha-codigo: 2.35rem;
-  --altura-linha-comentario: 1.55rem;
+  --texto-arvore: 1.38rem;
+  --texto-aba: 1.38rem;
+  --texto-comentario: 1.44rem;
+  --texto-codigo: 1.56rem;
+  --texto-numero-linha: 1.74rem;
+  --altura-linha-arvore: 2.82rem;
+  --altura-linha-codigo: 2.82rem;
+  --altura-linha-comentario: 1.86rem;
 
   // Espaço
   --espaco-1: 0.25rem;
@@ -55,15 +57,15 @@
   --espaco-7: 3rem;
 
   // Dimensões da casca
-  --altura-barra-ferramentas: 2.75rem;
-  --altura-faixa-abas: 2.6rem;
-  --largura-painel-lateral: 27.8rem;
-  --altura-linha-selecionada: 2.6rem;
-  --tamanho-scrollbar: 1rem;
+  --altura-barra-ferramentas: 3.3rem;
+  --altura-faixa-abas: 3.12rem;
+  --largura-painel-lateral: 33.36rem;
+  --altura-linha-selecionada: 3.12rem;
+  --tamanho-scrollbar: 1.2rem;
 
   // Raio
-  --raio-scrollbar: 0.5rem;
-  --raio-editor: 1.25rem;
+  --raio-scrollbar: 0.6rem;
+  --raio-editor: 1.5rem;
 
   // Borda
   --borda-largura: 1px;
