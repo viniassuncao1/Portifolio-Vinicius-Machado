@@ -1,0 +1,52 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Só uma publicação por vez; a mais recente prevalece.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build de produção
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Build com base-href do GitHub Pages
+        run: npm run build -- --base-href "/${{ github.event.repository.name }}/"
+      - name: Prepara arquivos do GitHub Pages
+        working-directory: dist/portfolio/browser
+        # 404.html faz rotas inexistentes abrirem a aplicação; .nojekyll evita o processamento Jekyll.
+        run: |
+          cp index.html 404.html
+          touch .nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/portfolio/browser
+
+  deploy:
+    name: Publica no GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
