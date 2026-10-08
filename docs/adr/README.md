@@ -15,6 +15,8 @@ Um ADR aceito não é editado. Se a decisão mudar, um novo ADR o substitui e o 
 | [0005](0005-desenvolvimento-orientado-a-specs.md)     | Desenvolvimento orientado a specs com OpenSpec | Aceito |
 | [0006](0006-regras-de-codigo-com-ecc.md)              | Regras de código para a IA com o ECC           | Aceito |
 | [0007](0007-equipe-de-agentes-no-maestri.md)          | Equipe de agentes de IA no Maestri             | Aceito |
+| [0008](0008-diario-de-desenvolvimento.md)             | Diário de desenvolvimento                      | Aceito |
+| [0009](0009-acessibilidade-automatizada-com-axe.md)   | Acessibilidade automatizada com axe nos E2E    | Aceito |
 
 ## Modelo
 
