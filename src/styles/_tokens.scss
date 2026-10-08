@@ -1,0 +1,72 @@
+// Design tokens extraídos de design/telas (telas 01, 02, 07 e 24).
+// Valores amostrados por pixel nas imagens de 1600x900; medidas em px convertidas para rem (1rem = 16px).
+// Cores de texto abaixo de 4,5:1 foram ajustadas (ver note "Design Tokens").
+// Os tokens de movimento ficam com o Compasso (src/styles/_movimento.scss).
+
+:root {
+  // Interface
+  --cor-fundo-pagina: #1c1c1c;
+  --cor-barra-ferramentas-topo: #d5d5d5;
+  --cor-barra-ferramentas-base: #7c7c7b;
+  --cor-barra-ferramentas-brilho: #e5f1fd;
+  --cor-painel: #2b2b2b;
+  --cor-linha-selecionada: #1b1b1b;
+  --cor-aba-ativa: #2b2b2b;
+  --cor-aba-inativa: #5e5e5e;
+  --cor-faixa-abas: #575757;
+  --cor-editor: #2b2b2b;
+  --cor-borda: #1b1b1b;
+  --cor-separador: #6f6d6d;
+  --cor-scrollbar-trilho: #2b2b2b;
+  --cor-scrollbar-polegar: #8b8989;
+  --cor-texto: #d6d6d6;
+  --cor-numero-linha: #d6d6d6;
+  --cor-icone: #aaaaaa;
+  --cor-foco: #de60d2;
+
+  // Sintaxe
+  --cor-sintaxe-palavra-chave: #de60d2;
+  --cor-sintaxe-campo: #d5963e;
+  --cor-sintaxe-literal: #8fc258;
+  --cor-sintaxe-anotacao: #7489f8;
+  --cor-sintaxe-comentario-marcador: #939191;
+  --cor-sintaxe-texto: var(--cor-texto);
+
+  // Tipografia
+  --fonte-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --peso-regular: 400;
+  --peso-negrito: 700;
+  --texto-arvore: 1.15rem;
+  --texto-aba: 1.15rem;
+  --texto-comentario: 1.2rem;
+  --texto-codigo: 1.3rem;
+  --texto-numero-linha: 1.45rem;
+  --altura-linha-arvore: 2.35rem;
+  --altura-linha-codigo: 2.35rem;
+  --altura-linha-comentario: 1.55rem;
+
+  // Espaço
+  --espaco-1: 0.25rem;
+  --espaco-2: 0.5rem;
+  --espaco-3: 0.75rem;
+  --espaco-4: 1rem;
+  --espaco-5: 1.5rem;
+  --espaco-6: 2rem;
+  --espaco-7: 3rem;
+
+  // Dimensões da casca
+  --altura-barra-ferramentas: 2.75rem;
+  --altura-faixa-abas: 2.6rem;
+  --largura-painel-lateral: 27.8rem;
+  --altura-linha-selecionada: 2.6rem;
+  --tamanho-scrollbar: 1rem;
+
+  // Raio
+  --raio-scrollbar: 0.5rem;
+  --raio-editor: 1.25rem;
+
+  // Borda
+  --borda-largura: 1px;
+  --borda-divisoria: var(--borda-largura) solid var(--cor-separador);
+  --borda-painel: var(--borda-largura) solid var(--cor-borda);
+}

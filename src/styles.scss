@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+@use './styles/tokens';
+
+html,
+body {
+  margin: 0;
+  background: var(--cor-fundo-pagina);
+  color: var(--cor-texto);
+  font-family: var(--fonte-mono);
+}
