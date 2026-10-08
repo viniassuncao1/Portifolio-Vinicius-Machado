@@ -47,17 +47,28 @@ só da formatação. `eslint-config-prettier` evita conflitos entre os dois.
 Mantêm o histórico limpo localmente, antes do CI. O commitlint usa
 `@commitlint/config-conventional`, com a lista de tipos alinhada às regras do projeto.
 
-### GitHub Pages via GitHub Actions
-Gratuito, nativo do GitHub e sem tokens externos. O build usa `--base-href` com o nome do
-repositório. Uma cópia de `index.html` como `404.html` faz rotas inexistentes abrirem a
-aplicação.
-- Alternativa: Vercel/Netlify. Mais recursos, mas exigiria segredos e conta externa. Pode ser
-  adotada depois sem mudar o código.
+### Vercel, com deploy feito pelo GitHub Actions
+A Vercel é feita para frontend e sites estáticos, tem plano gratuito e gera uma URL de preview
+por deploy. O deploy é feito pela CLI da Vercel dentro do pipeline (`vercel pull` →
+`vercel build` → `vercel deploy --prebuilt`), e não pela integração Git automática da Vercel.
+Assim o deploy só acontece depois que as verificações passam, e todo o processo fica explícito e
+versionado no repositório.
+- Alternativa: integração Git automática da Vercel. Mais simples, mas publicaria mesmo com testes
+  falhando e esconderia o processo no painel da Vercel.
+- Alternativa: GitHub Pages. Sem preview por PR e com `base-href` atrelado ao nome do
+  repositório.
+- Alternativa: Railway. Pensado para backends e containers; para um site estático exigiria um
+  servidor (por exemplo, nginx em Docker) sem ganho.
 
-### Dois workflows: `ci.yml` e `deploy.yml`
-O CI roda em PRs e na `main`. O deploy roda só na `main` e depende de um build próprio. Assim o
-deploy pode ser reexecutado sem repetir todo o pipeline, e a permissão de escrita no Pages
-fica restrita a esse workflow.
+A configuração de build fica em `vercel.json` (infraestrutura como código). Um `rewrite` envia
+rotas inexistentes para `index.csr.html`, e o roteador do Angular redireciona para a página
+inicial.
+
+### Deploy como jobs do mesmo workflow do CI
+Os jobs `deploy-preview` (em PRs) e `deploy-producao` (em push na `main`) declaram `needs` sobre
+os três jobs de verificação. Assim, o deploy nunca acontece com o pipeline vermelho. Na `main`,
+a concorrência não cancela execuções em andamento, para não interromper um deploy de produção. A
+versão da CLI da Vercel é fixa no workflow.
 
 ### Organização por feature
 ```
@@ -71,17 +82,19 @@ Segue a regra do projeto de organizar por domínio e não por tipo de arquivo.
 
 ## Risks / Trade-offs
 
-- [O Pages exige configuração manual da fonte "GitHub Actions"] → documentado no README e na
-  seção Impact da proposta.
-- [`base-href` errado quebra os assets] → o valor vem do nome do repositório no workflow e o
-  E2E roda contra o build de produção.
+- [Token da Vercel vazado dá acesso à conta] → o token fica só em GitHub Secrets, com escopo
+  restrito e expiração definida; PRs de forks não recebem secrets.
+- [Diferença entre o build testado no E2E e o build publicado] → os dois usam o mesmo
+  `npm run build`; o `vercel build` lê o mesmo comando do `vercel.json`.
 - [Cobertura de 80% num projeto com poucos testes no início] → o código inicial é mínimo e
   testado; o limite vale desde o começo para não acumular dívida.
 
 ## Migration Plan
 
-1. Mesclar o PR desta change na `main`.
-2. Em Settings → Pages, escolher a fonte "GitHub Actions".
-3. Reexecutar o workflow de deploy, se o primeiro tiver rodado antes da configuração.
+1. Criar o projeto na Vercel com `vercel link`, sem conectar o repositório Git.
+2. Cadastrar `VERCEL_TOKEN`, `VERCEL_ORG_ID` e `VERCEL_PROJECT_ID` em GitHub Secrets.
+3. Abrir o PR desta change: o preview é publicado quando as verificações passarem.
+4. Mesclar na `main`: a produção é publicada.
 
-Rollback: reverter o merge; o Pages volta a servir a última publicação bem-sucedida.
+Rollback: reverter o merge, ou promover um deploy anterior no painel da Vercel
+(`vercel rollback`).

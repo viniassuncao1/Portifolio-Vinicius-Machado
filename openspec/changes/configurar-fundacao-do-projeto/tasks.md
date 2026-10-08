@@ -20,17 +20,19 @@
 ## 4. GitHub
 
 - [x] 4.1 Criar o workflow `ci.yml` (lint, formatação, testes, build, E2E) — verificar com actionlint/validação de YAML
-- [x] 4.2 Criar o workflow `deploy.yml` para o GitHub Pages com `404.html` — verificar com um build local usando o mesmo `base-href`
-- [x] 4.3 Adicionar Dependabot e template de Pull Request — verificar a presença dos arquivos em `.github/`
+- [x] 4.2 Criar o projeto na Vercel e o `vercel.json` — verificar com `vercel pull` + `vercel build` locais
+- [x] 4.3 Cadastrar os secrets da Vercel no GitHub — verificar na lista de secrets do repositório
+- [ ] 4.4 Adicionar os jobs de deploy de preview e de produção ao workflow — verificar pelo link de preview no PR
+- [x] 4.5 Adicionar Dependabot e template de Pull Request — verificar a presença dos arquivos em `.github/`
 
 ## 5. Documentação
 
 - [x] 5.1 Escrever o README (visão geral, stack, scripts, como rodar, deploy) — revisar a renderização no GitHub
 - [x] 5.2 Escrever `CONTRIBUTING.md`, `docs/arquitetura.md` e `docs/desenvolvimento-com-ia.md` — revisar os links entre os documentos
 - [x] 5.3 Escrever `CLAUDE.md` com as convenções para o agente de IA — revisar se aponta para as regras em `.claude/rules/`
+- [x] 5.4 Escrever `docs/deploy.md` explicando o pipeline de CI/CD e a Vercel — revisar os links a partir do README
 
 ## Workflow follow-up
 
 - Abrir PR da branch `chore/fundacao-do-projeto` para a `main`.
-- Configurar Settings → Pages → Source: GitHub Actions.
 - Arquivar a change com `openspec archive configurar-fundacao-do-projeto`.

@@ -15,8 +15,8 @@ documentação do processo de desenvolvimento assistido por IA (SDD com OpenSpec
   e cobertura mínima de 80%, testes E2E com Playwright.
 - Padronização de commits: Conventional Commits validados por commitlint, com hooks de
   pre-commit (lint-staged) e commit-msg via Husky.
-- GitHub Actions: pipeline de CI em todo PR e push na `main`; publicação automática no
-  GitHub Pages a cada push na `main`.
+- GitHub Actions: pipeline de CI em todo PR e push na `main`; deploy na Vercel feito pelo
+  próprio pipeline, com preview em cada PR e produção a cada push na `main`.
 - Dependabot para dependências npm e GitHub Actions; template de Pull Request.
 - Documentação: README, guia de contribuição, arquitetura, fluxo de desenvolvimento com IA
   e `CLAUDE.md` com as convenções que o agente de IA deve seguir.
@@ -26,8 +26,8 @@ documentação do processo de desenvolvimento assistido por IA (SDD com OpenSpec
 ### New Capabilities
 - `pipeline-de-qualidade`: verificações automáticas (lint, formatação, testes, cobertura,
   build e E2E) que todo código precisa passar antes de entrar na `main`.
-- `publicacao-do-site`: publicação automática do site estático pré-renderizado a partir da
-  `main`.
+- `publicacao-do-site`: publicação automática do site estático pré-renderizado, com versão de
+  preview por PR e versão de produção a partir da `main`.
 
 ### Modified Capabilities
 
@@ -36,7 +36,7 @@ _Nenhuma._
 ## Impact
 
 - Novo código-fonte Angular na raiz do repositório (`src/`, `angular.json`, `package.json`).
-- Novos workflows em `.github/workflows/`.
+- Novo workflow em `.github/workflows/` e configuração da Vercel em `vercel.json`.
 - Novas dependências de desenvolvimento (ESLint, Prettier, Husky, commitlint, Playwright).
-- O repositório no GitHub precisa ter o GitHub Pages configurado com a fonte
-  "GitHub Actions".
+- Projeto criado na Vercel (sem a integração Git automática) e três secrets no GitHub:
+  `VERCEL_TOKEN`, `VERCEL_ORG_ID` e `VERCEL_PROJECT_ID`.
