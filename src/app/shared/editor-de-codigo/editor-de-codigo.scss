@@ -14,7 +14,7 @@ $quantidade-de-marcadores: 60;
 :host {
   display: grid;
   grid-template-columns: var(--largura-numeros-linha) minmax(0, 1fr);
-  column-gap: var(--afastamento-codigo);
+  column-gap: calc(var(--afastamento-codigo) - var(--afastamento-marcador));
   min-height: calc(var(--linhas-minimas-editor) * var(--altura-linha-codigo));
   background: var(--cor-editor);
   font-family: var(--fonte-mono);
@@ -23,6 +23,8 @@ $quantidade-de-marcadores: 60;
 }
 
 .numeros {
+  // Não contribui para a altura do grid: a coluna estica até a altura do código e recorta o excesso.
+  contain: size;
   overflow: hidden;
   color: var(--cor-numero-linha);
   font-size: var(--texto-numero-linha);
@@ -37,6 +39,8 @@ $quantidade-de-marcadores: 60;
 
 .codigo {
   margin: 0;
+  // Faixa à esquerda do texto onde ficam os "*" do bloco de comentário.
+  padding-inline-start: var(--afastamento-marcador);
   overflow-x: auto;
   font: inherit;
 
