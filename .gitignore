@@ -1,0 +1,30 @@
+# --- Ferramentas de IA (Claude Code + ECC) ---
+# O pacote ECC completo é instalado localmente e não faz parte do projeto.
+# Versionamos apenas o que define o fluxo de trabalho deste repositório:
+# skills/comandos do OpenSpec, as regras de código aplicáveis e as settings.
+.claude/*
+!.claude/settings.json
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/openspec-*/
+!.claude/commands/
+.claude/commands/*
+!.claude/commands/opsx/
+!.claude/rules/
+.claude/rules/*
+!.claude/rules/ecc/
+.claude/rules/ecc/*
+!.claude/rules/ecc/README.md
+!.claude/rules/ecc/common/
+!.claude/rules/ecc/typescript/
+!.claude/rules/ecc/angular/
+!.claude/rules/ecc/web/
+.claude/settings.local.json
+
+# --- Arquivos-fonte do design (Illustrator/PDF) ---
+design/*.pdf
+design/*.ai
+
+# --- Sistema operacional ---
+.DS_Store
+Thumbs.db
