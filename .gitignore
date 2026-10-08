@@ -21,6 +21,9 @@
 !.claude/rules/ecc/web/
 .claude/settings.local.json
 
+# Configuração local do Maestri (gerada a partir de docs/equipe-de-agentes/)
+.maestri/
+
 # --- Arquivos-fonte do design (Illustrator/PDF) ---
 design/*.pdf
 design/*.ai
