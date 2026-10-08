@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: build
+    groups:
+      angular:
+        patterns: ['@angular/*', '@angular-devkit/*', 'angular-eslint', '@angular-eslint/*']
+      testes:
+        patterns: ['vitest', '@vitest/*', '@playwright/test', 'jsdom']
+      lint-e-formatacao:
+        patterns: ['eslint', '@eslint/*', 'typescript-eslint', 'prettier', 'eslint-config-prettier']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci

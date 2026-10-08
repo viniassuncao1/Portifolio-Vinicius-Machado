@@ -1,0 +1,82 @@
+# --- Ferramentas de IA (Claude Code + ECC) ---
+# O pacote ECC completo é instalado localmente e não faz parte do projeto.
+# Versionamos apenas o que define o fluxo de trabalho deste repositório:
+# skills/comandos do OpenSpec, as regras de código aplicáveis e as settings.
+.claude/*
+!.claude/settings.json
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/openspec-*/
+!.claude/commands/
+.claude/commands/*
+!.claude/commands/opsx/
+!.claude/rules/
+.claude/rules/*
+!.claude/rules/ecc/
+.claude/rules/ecc/*
+!.claude/rules/ecc/README.md
+!.claude/rules/ecc/common/
+!.claude/rules/ecc/typescript/
+!.claude/rules/ecc/angular/
+!.claude/rules/ecc/web/
+.claude/settings.local.json
+
+# --- Arquivos-fonte do design (Illustrator/PDF) ---
+design/*.pdf
+design/*.ai
+
+# --- Sistema operacional ---
+.DS_Store
+Thumbs.db
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/mcp.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+__screenshots__/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Playwright
+/playwright-report
+/test-results
+/blob-report
+/playwright/.cache
+.vercel
+.env*
