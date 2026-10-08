@@ -19,8 +19,11 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 - **Qualidade automatizada:** ESLint, Prettier, testes unitários com cobertura mínima de 80% e
   testes E2E com Playwright, rodando em todo Pull Request.
 - **Desenvolvimento orientado a specs com IA:** cada funcionalidade nasce como uma proposta no
-  [OpenSpec](openspec/), é implementada com o Claude Code e fica documentada no repositório.
-  Veja [como eu uso IA neste projeto](docs/desenvolvimento-com-ia.md).
+  [OpenSpec](openspec/) e é implementada por uma [equipe de agentes](docs/equipe-de-agentes/README.md)
+  no Maestri: um maestro (Claude Opus) planeja e revisa, e especialistas (Claude Sonnet) cuidam de
+  design, animações, testes e documentação. Veja [como eu uso IA neste projeto](docs/desenvolvimento-com-ia.md).
+- **Decisões documentadas:** cada escolha importante tem um [ADR](docs/adr/README.md) explicando o
+  porquê.
 
 ## Stack
 
@@ -85,9 +88,11 @@ Detalhes em [docs/deploy.md](docs/deploy.md).
 
 ## Documentação
 
+- [Decisões de arquitetura (ADRs)](docs/adr/README.md)
 - [Arquitetura](docs/arquitetura.md)
 - [CI/CD e deploy](docs/deploy.md)
 - [Desenvolvimento com IA](docs/desenvolvimento-com-ia.md)
+- [Equipe de agentes](docs/equipe-de-agentes/README.md)
 - [Como contribuir](CONTRIBUTING.md)
 
 ## Contato

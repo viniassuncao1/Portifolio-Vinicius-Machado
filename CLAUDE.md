@@ -22,6 +22,14 @@ projeto profissional.
    `npm run lint && npm run test:ci && npm run build && npm run e2e`.
 5. Atualize a documentação (`README.md`, `docs/`) quando a mudança afetar o que ela descreve.
 
+## Decisões e equipe
+
+- Leia os ADRs em `docs/adr/` antes de propor mudanças. Não rediscuta uma decisão aceita sem
+  propor um novo ADR.
+- Decisão nova de arquitetura, ferramenta ou processo exige um ADR no mesmo PR.
+- O trabalho é feito por uma equipe de agentes no Maestri. Papéis, escopos e regras estão em
+  `docs/equipe-de-agentes/`. Respeite o escopo do seu papel.
+
 ## Regras de código
 
 Siga as regras em `.claude/rules/ecc/` (common, typescript, angular, web). Em conflito, a regra
