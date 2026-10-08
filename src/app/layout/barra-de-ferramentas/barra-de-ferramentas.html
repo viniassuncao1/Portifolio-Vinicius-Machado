@@ -1,0 +1,10 @@
+<div class="botoes">
+  @for (botao of botoes; track botao.icone) {
+    <app-icone class="botao" [nome]="botao.icone" [style.--x]="botao.x" />
+  }
+</div>
+<svg class="controles-janela" viewBox="0 0 120 24" focusable="false">
+  <path d="M8 13h14" />
+  <path d="M52 5h11v11H52z M63 5l2-2v11l-2 2" />
+  <path d="M96 4l12 14M108 4L96 18" />
+</svg>

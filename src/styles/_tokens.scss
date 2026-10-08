@@ -8,9 +8,21 @@
 :root {
   // Interface
   --cor-fundo-pagina: #1c1c1c;
-  --cor-barra-ferramentas-topo: #d5d5d5;
-  --cor-barra-ferramentas-base: #7c7c7b;
-  --cor-barra-ferramentas-brilho: #e5f1fd;
+  // Degradê da barra de ferramentas: pontos amostrados na coluna x=800 da tela 02 (y 0 a 43 do PNG)
+  --degrade-barra-ferramentas: linear-gradient(
+    to bottom,
+    #929292 0%,
+    #706f6f 2%,
+    #a5a5a5 9%,
+    #cbcbcb 18%,
+    #dadada 34%,
+    #d9d9d9 64%,
+    #cccccc 75%,
+    #acacac 82%,
+    #646463 91%,
+    #464646 100%
+  );
+  --cor-controle-janela: #adadad;
   --cor-painel: #2b2b2b;
   --cor-linha-selecionada: #1b1b1b;
   --cor-aba-ativa: #2b2b2b;
@@ -24,6 +36,7 @@
   --cor-texto: #d6d6d6;
   --cor-numero-linha: #d6d6d6;
   --cor-icone: #aaaaaa;
+  --cor-texto-esmaecido: #aaaaaa;
   --cor-foco: #de60d2;
 
   // Sintaxe
@@ -66,6 +79,21 @@
   --largura-painel-lateral: 33.36rem;
   --altura-linha-selecionada: 3.12rem;
   --tamanho-scrollbar: 1.2rem;
+  --altura-cabecalho-painel: 6.2rem;
+  --largura-titulo-painel: 20.9rem;
+  --largura-aba: 24.8rem;
+  --altura-scrollbar-rodape: 1.1rem;
+  --largura-polegar-rodape: 15.3rem;
+  --tamanho-glifo: 1.2rem;
+  --tamanho-seta-arvore: 1.35rem;
+  --recuo-item-arvore: 4.4rem;
+  --recuo-item-atual: 1.65rem;
+  --afastamento-icone-arvore: 0.5rem;
+  --afastamento-texto-arvore: 0.7rem;
+  --espaco-editor-topo: 1.7rem;
+  --espaco-editor-base: 3rem;
+  --largura-coluna-scrollbar: 3.75rem;
+  --altura-polegar-editor: 47%;
 
   // Editor de código (colunas medidas na tela 02, x1,2)
   --linhas-minimas-editor: 15;
