@@ -32,6 +32,17 @@ automática.
    `openspec/changes/archive/` e as specs consolidadas passam a viver em `openspec/specs/`. Essas
    specs viram a documentação viva do que o site faz.
 
+## A equipe de agentes
+
+A implementação é feita por uma equipe no [Maestri](https://www.themaestri.app/pt-br): o
+**Regente** (Claude Opus 5.5) planeja, delega e revisa; o **Pincel**, o **Compasso**, a
+**Sentinela** e o **Escriba** (Claude Sonnet 5.5) cuidam de design, animações, testes e
+documentação. Papéis e regras em [equipe-de-agentes](equipe-de-agentes/README.md); o motivo em
+[ADR-0007](adr/0007-equipe-de-agentes-no-maestri.md).
+
+As decisões de ferramenta e arquitetura (Angular, SSG, Vercel, OpenSpec, ECC, Maestri) estão
+registradas nos [ADRs](adr/README.md).
+
 ## Por que trabalhar assim
 
 - **Contexto para a IA:** specs e regras explícitas reduzem respostas genéricas e retrabalho.
