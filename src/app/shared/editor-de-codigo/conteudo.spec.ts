@@ -62,7 +62,7 @@ describe('construtoras de conteúdo do editor', () => {
     expect(resultado).toEqual({
       tipo: 'codigo',
       recuo: 2,
-      compacta: true,
+      densidade: 'compacta',
       trechos: [
         { texto: '“Java”', papel: 'literal' },
         { texto: ',', papel: 'comum' },
@@ -71,14 +71,14 @@ describe('construtoras de conteúdo do editor', () => {
   });
 
   it('linha comum não é compacta', () => {
-    expect(linha(1).compacta).toBeUndefined();
+    expect(linha(1).densidade).toBeUndefined();
   });
 
   it('vaziaCompacta cria uma linha em branco compacta', () => {
-    expect(vaziaCompacta()).toEqual({ tipo: 'vazia', compacta: true });
+    expect(vaziaCompacta()).toEqual({ tipo: 'vazia', densidade: 'compacta' });
   });
 
   it('vazia não é compacta', () => {
-    expect(vazia()).not.toHaveProperty('compacta');
+    expect(vazia()).not.toHaveProperty('densidade');
   });
 });
