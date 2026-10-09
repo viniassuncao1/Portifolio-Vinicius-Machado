@@ -38,8 +38,9 @@ import { PainelLateral } from '../painel-lateral/painel-lateral';
   styleUrl: './casca.scss',
   host: {
     '(keydown.escape)': 'fecharEDevolverFoco()',
-    '(keydown.control.p)': 'abrirBusca($event)',
-    '(keydown.meta.p)': 'abrirBusca($event)',
+    // No documento: logo após carregar o foco está no <body>, fora do host da casca.
+    '(document:keydown.control.p)': 'abrirBusca($event)',
+    '(document:keydown.meta.p)': 'abrirBusca($event)',
   },
 })
 export class Casca {
