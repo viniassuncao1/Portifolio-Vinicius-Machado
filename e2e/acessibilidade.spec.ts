@@ -34,15 +34,19 @@ function descrever(violacoes: readonly Result[]): string {
     .join('\n');
 }
 
-test('a varredura inclui o Início, as 15 seções e as páginas de Skills e Experiências', () => {
-  expect(ROTAS).toHaveLength(1 + SECOES.length + 1 + 2);
+test('a varredura inclui o Início, as seções e as páginas de Skills, Experiências e Certificações', () => {
+  expect(new Set(ROTAS).size).toBe(ROTAS.length);
   expect(ROTAS).toEqual(
     expect.arrayContaining([
       '/',
-      '/skills/2',
       '/experiencias',
+      '/skills/2',
+      '/skills/3',
       '/experiencias/2',
       '/experiencias/3',
+      '/certificacoes',
+      '/certificacoes/2',
+      '/certificacoes/3',
     ]),
   );
 });

@@ -9,6 +9,7 @@ const COR_DECLARACAO = 'rgb(213, 150, 62)';
 
 const cor = (alvo: Locator) => alvo.evaluate((el) => getComputedStyle(el).color);
 
+const codigo = (page: Page) => page.locator('main code');
 const controle = (page: Page) => page.getByRole('navigation', { name: 'Páginas da seção' });
 
 /** Aperta Tab até o alvo receber o foco (o controle vem depois da árvore e do editor). */
@@ -30,11 +31,16 @@ test.describe('Como uso a IA (/como-uso-ia)', () => {
       'import java.util.List;',
       expect.stringContaining('Não vejo IA como modismo'),
       'public final class ArtificialIntelligence {',
-      'public static final boolean FAD = false;',
-      'public static final boolean PART_OF_THE_JOB = true;',
-      'public static final List<String> TOOLS = List.of("Claude Code", "Codex");',
-      'public static final String METHODOLOGY = "SDD (Spec-Driven Development)";',
-      'private ArtificialIntelligence() {}',
+      expect.stringMatching(/^\/\/ .+/),
+      expect.stringMatching(/^public static final boolean [A-Z_]+ = false;$/),
+      expect.stringMatching(/^public static final boolean [A-Z_]+ = true;$/),
+      expect.stringMatching(/^\/\/ .+/),
+      expect.stringMatching(
+        /^public static final List<String> [A-Z_]+ = List\.of\("Claude Code", "Codex"\);$/,
+      ),
+      expect.stringMatching(
+        /^public static final String [A-Z_]+ = "SDD \(Spec-Driven Development\)";$/,
+      ),
       '}',
     ]);
   });
@@ -71,8 +77,8 @@ test.describe('Como uso a IA (/como-uso-ia)', () => {
     expect(await cor(valores.nth(0))).toBe(COR_VALOR);
     expect(await cor(valores.nth(1))).toBe(COR_VALOR);
     await expect(page.locator('main .papel-declaracao')).toHaveText([
-      'boolean FAD',
-      'boolean PART_OF_THE_JOB',
+      /^boolean [A-Z_]+$/,
+      /^boolean [A-Z_]+$/,
     ]);
     expect(await cor(page.locator('main .papel-declaracao').first())).toBe(COR_DECLARACAO);
   });
@@ -111,29 +117,16 @@ test.describe('Skills / STACK (/skills)', () => {
 
     expect(await linhasDoCodigo(page)).toEqual([
       'import java.util.List;',
+      '// Linguagens, frameworks e bancos de dados que uso',
       'public record TechSkills(',
       'List<String> languages,',
       'List<String> frameworks,',
       'List<String> databases',
       ') {',
-      'public static final TechSkills CORE = new TechSkills(',
-      'List.of(',
-      '"Java",',
-      '"TypeScript",',
-      '"JavaScript",',
-      '"PHP",',
-      '"SQL"',
-      '),',
-      'List.of(',
-      '"Spring Boot",',
-      '"Spring Data JPA",',
-      '"Angular"',
-      '),',
-      'List.of(',
-      '"Oracle",',
-      '"PostgreSQL",',
-      '"MySQL"',
-      ')',
+      expect.stringMatching(/^public static final TechSkills [A-Z_]+ = new TechSkills\($/),
+      'List.of("Java", "TypeScript", "JavaScript", "PHP", "SQL"),',
+      'List.of("Spring Boot", "Spring Data JPA", "Angular"),',
+      'List.of("Oracle", "PostgreSQL", "MySQL")',
       ');',
       '}',
     ]);
@@ -148,12 +141,12 @@ test.describe('Skills / STACK (/skills)', () => {
     await expect(page.locator('main .papel-valor')).toHaveCount(0);
   });
 
-  test('mostra o controle 1/2 só com a próxima página', async ({ page }) => {
+  test('mostra o controle 1/3 só com a próxima página', async ({ page }) => {
     await page.goto('/skills');
 
-    await expect(controle(page)).toContainText('1/2');
+    await expect(controle(page)).toContainText('1/3');
     await expect(controle(page).locator('[aria-current="page"]')).toHaveAccessibleName(
-      'página 1 de 2',
+      'página 1 de 3',
     );
     await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveAttribute(
       'href',
@@ -162,13 +155,13 @@ test.describe('Skills / STACK (/skills)', () => {
     await expect(controle(page).getByRole('link', { name: 'Página anterior' })).toHaveCount(0);
   });
 
-  test('vai para a página 2 pelo link e o controle passa a mostrar 2/2', async ({ page }) => {
+  test('vai para a página 2 pelo link e o controle passa a mostrar 2/3', async ({ page }) => {
     await page.goto('/skills');
 
     await controle(page).getByRole('link', { name: 'Próxima página' }).click();
 
     await expect(page).toHaveURL(/\/skills\/2$/);
-    await expect(controle(page)).toContainText('2/2');
+    await expect(controle(page)).toContainText('2/3');
     await expect(page.locator('main code')).toContainText('cloudAndInfra');
   });
 
@@ -198,48 +191,41 @@ test.describe('Skills / STACK, página 2 (/skills/2)', () => {
 
     expect(await linhasDoCodigo(page)).toEqual([
       'import java.util.List;',
+      '// Nuvem, infraestrutura e ferramentas do dia a dia',
       'public record InfraSkills(',
       'List<String> cloudAndInfra,',
       'List<String> tools',
       ') {',
-      'public static final InfraSkills CORE = new InfraSkills(',
-      'List.of(',
-      '"Docker",',
-      '"Kubernetes",',
-      '"Nginx",',
-      '"AWS",',
-      '"Azure"',
-      '),',
-      'List.of(',
-      '"Git",',
-      '"GitLab CI/CD",',
-      '"Grafana",',
-      '"Scrum"',
-      ')',
+      expect.stringMatching(/^public static final InfraSkills [A-Z_]+ = new InfraSkills\($/),
+      'List.of("Docker", "Kubernetes", "Nginx", "AWS", "Azure"),',
+      'List.of("Git", "GitLab CI/CD", "Grafana", "Scrum")',
       ');',
       '}',
     ]);
-    await expect(controle(page)).toContainText('2/2');
+    await expect(controle(page)).toContainText('2/3');
   });
 
-  test('mostra só a página anterior, que volta para /skills', async ({ page }) => {
+  test('mostra a página anterior (/skills) e a próxima (/skills/3)', async ({ page }) => {
     await page.goto('/skills/2');
 
     await expect(controle(page).getByRole('link', { name: 'Página anterior' })).toHaveAttribute(
       'href',
       '/skills',
     );
-    await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveCount(0);
+    await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveAttribute(
+      'href',
+      '/skills/3',
+    );
     await expect(controle(page).locator('[aria-current="page"]')).toHaveAccessibleName(
-      'página 2 de 2',
+      'página 2 de 3',
     );
   });
 
   test('indica a página no título da janela e no h1', async ({ page }) => {
     await page.goto('/skills/2');
 
-    await expect(page).toHaveTitle('Skills / STACK (2/2) | Vinicius Machado');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK (2/2)');
+    await expect(page).toHaveTitle('Skills / STACK (2/3) | Vinicius Machado');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK (2/3)');
   });
 
   test('mantém "Skills / STACK" como página atual, com a seta para baixo', async ({ page }) => {
@@ -258,6 +244,104 @@ test.describe('Skills / STACK, página 2 (/skills/2)', () => {
     await expect(page).toHaveURL('/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Portfolio_Vinicius');
   });
+
+  test('/skills/4 não existe e leva ao Início', async ({ page }) => {
+    await page.goto('/skills/4');
+
+    await expect(page).toHaveURL('/');
+  });
+});
+
+test.describe('Skills / STACK, página 3: níveis de conhecimento (/skills/3)', () => {
+  const NIVEIS = [
+    {
+      nome: 'Domínio diário',
+      descricao: 'uso todo dia no trabalho',
+      tecnologias: ['Java', 'Spring Boot', 'Angular', 'PostgreSQL', 'Oracle', 'TypeScript', 'Git'],
+    },
+    {
+      nome: 'Projeto completo',
+      descricao: 'já entreguei um projeto inteiro com ela',
+      tecnologias: ['PHP'],
+    },
+    {
+      nome: 'Uso pontual',
+      descricao: 'usei em tarefas isoladas',
+      tecnologias: ['React Native', 'CI/CD'],
+    },
+    {
+      nome: 'Conhecimento teórico',
+      descricao: 'estudei, mas ainda não usei em produção',
+      tecnologias: ['Python', 'AWS', 'Azure', 'Docker', 'Kubernetes'],
+    },
+  ];
+
+  test('mostra os quatro níveis, cada um com a sua explicação em pt-BR', async ({ page }) => {
+    await page.goto('/skills/3');
+
+    for (const { nome, descricao } of NIVEIS) {
+      await expect(codigo(page)).toContainText(`${nome}: ${descricao}`);
+    }
+  });
+
+  test('mostra as tecnologias de cada nível, na ordem da spec', async ({ page }) => {
+    await page.goto('/skills/3');
+    const texto = (await linhasDoCodigo(page)).join(' ');
+
+    for (const { tecnologias } of NIVEIS) {
+      const lista = tecnologias.map((t) => `"${t}"`).join(', ');
+
+      expect(texto, tecnologias[0]).toContain(`List.of(${lista})`);
+    }
+  });
+
+  test('mostra o controle 3/3 só com a página anterior, que volta para /skills/2', async ({
+    page,
+  }) => {
+    await page.goto('/skills/3');
+
+    await expect(controle(page)).toContainText('3/3');
+    await expect(controle(page).locator('[aria-current="page"]')).toHaveAccessibleName(
+      'página 3 de 3',
+    );
+    await expect(controle(page).getByRole('link', { name: 'Página anterior' })).toHaveAttribute(
+      'href',
+      '/skills/2',
+    );
+    await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveCount(0);
+  });
+
+  test('indica a página 3 no título da janela e no h1', async ({ page }) => {
+    await page.goto('/skills/3');
+
+    await expect(page).toHaveTitle('Skills / STACK (3/3) | Vinicius Machado');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK (3/3)');
+  });
+
+  test('começa com um comentário em pt-BR e não usa Optional nem genérico aninhado', async ({
+    page,
+  }) => {
+    await page.goto('/skills/3');
+
+    await expect(page.locator('main .papel-comentario').first()).toContainText(
+      'Quanto conheço cada tecnologia',
+    );
+    const texto = (await codigo(page).textContent()) ?? '';
+
+    expect(texto).not.toContain('Optional');
+    expect(texto).not.toMatch(/<[^<>\n]*<[^<>\n]*>/);
+  });
+
+  test('o botão voltar do navegador volta da página 3 para a 2', async ({ page }) => {
+    await page.goto('/skills/2');
+    await controle(page).getByRole('link', { name: 'Próxima página' }).click();
+    await expect(page).toHaveURL(/\/skills\/3$/);
+
+    await page.goBack();
+
+    await expect(page).toHaveURL(/\/skills\/2$/);
+    await expect(controle(page)).toContainText('2/3');
+  });
 });
 
 test.describe('Controle de páginas pelo teclado', () => {
@@ -271,14 +355,14 @@ test.describe('Controle de páginas pelo teclado', () => {
     await page.keyboard.press('Enter');
 
     await expect(page).toHaveURL(/\/skills\/2$/);
-    await expect(controle(page)).toContainText('2/2');
+    await expect(controle(page)).toContainText('2/3');
 
     const anterior = controle(page).getByRole('link', { name: 'Página anterior' });
     await focarComTab(page, anterior);
     await page.keyboard.press('Enter');
 
     await expect(page).toHaveURL(/\/skills$/);
-    await expect(controle(page)).toContainText('1/2');
+    await expect(controle(page)).toContainText('1/3');
   });
 
   test('o botão voltar do navegador volta da página 2 para a 1', async ({ page }) => {
@@ -289,7 +373,7 @@ test.describe('Controle de páginas pelo teclado', () => {
     await page.goBack();
 
     await expect(page).toHaveURL(/\/skills$/);
-    await expect(controle(page)).toContainText('1/2');
+    await expect(controle(page)).toContainText('1/3');
   });
 });
 
@@ -308,29 +392,38 @@ test.describe('Sem JavaScript', () => {
     );
   });
 
-  test('/skills entrega o código e o controle 1/2 no HTML', async ({ page }) => {
+  test('/skills entrega o código e o controle 1/3 no HTML', async ({ page }) => {
     await page.goto('/skills');
 
     await expect(page.locator('main code')).toContainText('record TechSkills(');
-    await expect(controle(page)).toContainText('1/2');
+    await expect(controle(page)).toContainText('1/3');
     await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveAttribute(
       'href',
       '/skills/2',
     );
   });
 
-  test('/skills/2 entrega a segunda página, o título e o controle 2/2 no HTML', async ({
+  test('/skills/2 entrega a segunda página, o título e o controle 2/3 no HTML', async ({
     page,
   }) => {
     await page.goto('/skills/2');
 
-    await expect(page).toHaveTitle('Skills / STACK (2/2) | Vinicius Machado');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK (2/2)');
+    await expect(page).toHaveTitle('Skills / STACK (2/3) | Vinicius Machado');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK (2/3)');
     await expect(page.locator('main code')).toContainText('record InfraSkills(');
-    await expect(controle(page)).toContainText('2/2');
+    await expect(controle(page)).toContainText('2/3');
     await expect(page.getByRole('link', { name: 'Skills / STACK' })).toHaveAttribute(
       'aria-current',
       'page',
     );
+  });
+
+  test('/skills/3 entrega os níveis de conhecimento e o controle 3/3 no HTML', async ({ page }) => {
+    await page.goto('/skills/3');
+
+    await expect(page).toHaveTitle('Skills / STACK (3/3) | Vinicius Machado');
+    await expect(page.locator('main code')).toContainText('Domínio diário');
+    await expect(page.locator('main code')).toContainText('Conhecimento teórico');
+    await expect(controle(page)).toContainText('3/3');
   });
 });

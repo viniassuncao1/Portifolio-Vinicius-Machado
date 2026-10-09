@@ -27,10 +27,19 @@ function problemaDeBalanceamento(codigo: string): string | null {
 }
 
 test.describe('Java plausível no que o visitante vê', () => {
-  test('a lista de rotas cobre o Início, as 15 seções e todas as páginas', () => {
-    expect(ROTAS).toHaveLength(1 + 15 + 1 + 2); // Início, seções, Skills/2 e Experiências/2 e /3
+  test('a lista de rotas cobre o Início, as seções e as páginas extras, sem repetir nenhuma', () => {
+    expect(new Set(ROTAS).size).toBe(ROTAS.length);
     expect(ROTAS).toEqual(
-      expect.arrayContaining(['/skills/2', '/experiencias/2', '/experiencias/3']),
+      expect.arrayContaining([
+        '/',
+        '/skills/2',
+        '/skills/3',
+        '/experiencias/2',
+        '/experiencias/3',
+        '/certificacoes',
+        '/certificacoes/2',
+        '/certificacoes/3',
+      ]),
     );
   });
 

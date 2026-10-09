@@ -18,18 +18,15 @@ test.describe('Experiências (/experiencias)', () => {
 
     expect(linhas).toEqual(
       expect.arrayContaining([
-        'import java.time.YearMonth;',
         'import java.util.List;',
-        'import java.util.Optional;',
         'public class Experiences {',
         'record Experience(',
         'String company,',
-        'Optional<YearMonth> end,',
-        'static final Experience MEMORA = new Experience(',
+        'String period,',
+        expect.stringMatching(/^static final Experience [A-Z_]+ = new Experience\($/),
         '"Memora",',
         '"Desenvolvedor Full Stack Júnior",',
-        'YearMonth.of(2026, 8),',
-        'Optional.empty(), // em andamento (Presente)',
+        '"08/2026 - Presente",',
       ]),
     );
     await expect(controle(page)).toContainText('1/3');
@@ -56,11 +53,10 @@ test.describe('Experiências (/experiencias)', () => {
 
     expect(linhas).toEqual(
       expect.arrayContaining([
-        'static final Experience MEMORA_INTERNSHIP = new Experience(',
+        expect.stringMatching(/^static final Experience [A-Z_]+ = new Experience\($/),
         '"Memora",',
         '"Estagiário de Desenvolvimento",',
-        'YearMonth.of(2025, 8),',
-        'Optional.of(YearMonth.of(2026, 7)),',
+        '"08/2025 - 07/2026",',
       ]),
     );
     expect(linhas).not.toContain('record Experience(');
@@ -93,11 +89,10 @@ test.describe('Experiências (/experiencias)', () => {
 
     expect(linhas).toEqual(
       expect.arrayContaining([
-        'static final Experience WATTS_COMPANY = new Experience(',
+        expect.stringMatching(/^static final Experience [A-Z_]+ = new Experience\($/),
         '"Watts Company",',
         '"Co-fundador & Desenvolvedor Full Stack",',
-        'YearMonth.of(2025, 2),',
-        'Optional.empty(), // em andamento (Presente)',
+        '"02/2025 - Presente",',
       ]),
     );
     await expect(controle(page)).toContainText('3/3');
@@ -128,11 +123,17 @@ test.describe('Experiências (/experiencias)', () => {
     await expect(page).toHaveURL('/');
   });
 
-  test('as três páginas usam períodos de java.time', async ({ page }) => {
-    for (const rota of ['/experiencias', '/experiencias/2', '/experiencias/3']) {
+  test('as três páginas mostram o período como texto simples, sem java.time', async ({ page }) => {
+    for (const [rota, periodo] of [
+      ['/experiencias', '08/2026 - Presente'],
+      ['/experiencias/2', '08/2025 - 07/2026'],
+      ['/experiencias/3', '02/2025 - Presente'],
+    ]) {
       await page.goto(rota);
 
-      await expect(codigo(page)).toContainText('YearMonth.of(');
+      await expect(codigo(page)).toContainText(`"${periodo}"`);
+      await expect(codigo(page)).not.toContainText('YearMonth');
+      await expect(codigo(page)).not.toContainText('Optional');
     }
   });
 });
@@ -146,7 +147,9 @@ test.describe('Eventos (/eventos)', () => {
     expect(await linhasDoCodigo(page)).toEqual([
       'import java.util.List;',
       'public class Events {',
+      expect.stringMatching(/^\/\/ .+/),
       'record Event(String name, int times) {}',
+      expect.stringMatching(/^\/\/ .+/),
       'static final List<Event> ATTENDED = List.of(',
       'new Event("Brasília IT", 1),',
       'new Event("Campus Party Brasília", 2), // 2x',
@@ -164,7 +167,9 @@ test.describe('Eventos (/eventos)', () => {
 
     await expect(valores).toHaveText(['1', '2', '1']);
     expect(await valores.nth(1).evaluate((el) => getComputedStyle(el).color)).toBe(COR_VALOR);
-    await expect(page.locator('main .papel-comentario')).toHaveText(['// 2x']);
+    await expect(page.locator('main .papel-comentario').filter({ hasText: '2x' })).toHaveText([
+      '// 2x',
+    ]);
   });
 
   test('tem aba, título e árvore da seção', async ({ page }) => {
@@ -189,16 +194,16 @@ test.describe('Formação (/formacao)', () => {
     await page.goto('/formacao');
 
     expect(await linhasDoCodigo(page)).toEqual([
-      'import java.time.Year;',
       'public class Education {',
+      expect.stringMatching(/^\/\/ .+/),
       'record Degree(',
       'String institution,',
       'String course,',
-      'Year expectedGraduation) {}',
-      'static final Degree DEGREE = new Degree(',
+      'int expectedGraduation) {}',
+      expect.stringMatching(/^static final Degree [A-Z_]+ = new Degree\($/),
       '"UniCEUB",',
       '"Bacharelado em Ciência da Computação",',
-      'Year.of(2027)',
+      '2027',
       ');',
       '}',
     ]);
@@ -214,29 +219,28 @@ test.describe('Formação (/formacao)', () => {
 });
 
 test.describe('Idiomas (/idiomas)', () => {
-  test('mostra inglês e espanhol em nível básico, com o enum Level', async ({ page }) => {
+  test('mostra inglês e espanhol em nível básico, em constantes simples', async ({ page }) => {
     await page.goto('/idiomas');
     const linhas = await linhasDoCodigo(page);
 
     expect(linhas).toEqual(
       expect.arrayContaining([
-        'import java.util.Map;',
         'public class Languages {',
-        'enum Level {',
-        'BASIC("Básico"),',
-        'static final Map<String, Level> SPOKEN = Map.of(',
-        '"Inglês", Level.BASIC,',
-        '"Espanhol", Level.BASIC',
+        expect.stringMatching(/^\/\/ .+/),
+        expect.stringMatching(/^static final String \w+ = "Básico";$/),
+        expect.stringMatching(/^static final String \w+ = "Básico";$/),
       ]),
     );
+    await expect(codigo(page)).toContainText(/english/i);
+    await expect(codigo(page)).toContainText(/spanish/i);
+    await expect(codigo(page)).not.toContainText('Map.of');
+    await expect(codigo(page)).not.toContainText('enum');
   });
 
-  test('declara os quatro níveis do enum, em ordem', async ({ page }) => {
+  test('os dois níveis são textos entre aspas, na cor de literal', async ({ page }) => {
     await page.goto('/idiomas');
 
-    await expect(page.locator('main .papel-declaracao').filter({ hasText: /^[A-Z]+$/ })).toHaveText(
-      ['BASIC', 'INTERMEDIATE', 'ADVANCED', 'FLUENT'],
-    );
+    await expect(page.locator('main .papel-literal')).toHaveText(['"Básico"', '"Básico"']);
   });
 });
 
@@ -245,17 +249,17 @@ test.describe('Contato (/contato)', () => {
     await page.goto('/contato');
 
     expect(await linhasDoCodigo(page)).toEqual([
-      'import java.net.URI;',
       'public record Contact(',
       'String email,',
       'String phone,',
-      'URI linkedin,',
-      'URI github) {',
-      'public static final Contact VINICIUS = new Contact(',
+      'String linkedin,',
+      'String github) {',
+      expect.stringMatching(/^\/\/ .+/),
+      expect.stringMatching(/^public static final Contact [A-Z_]+ = new Contact\($/),
       '"viniciusmassuncao@gmail.com",',
       '"+55 61 98283-7805",',
-      'URI.create("https://linkedin.com/in/viniassuncao"),',
-      'URI.create("https://github.com/viniassuncao1")',
+      '"linkedin.com/in/viniassuncao",',
+      '"github.com/viniassuncao1"',
       ');',
       '}',
     ]);
@@ -317,12 +321,12 @@ test.describe('Cinco seções novas sem JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
   for (const [rota, trecho] of [
-    ['/experiencias', 'static final Experience MEMORA'],
-    ['/experiencias/2', 'MEMORA_INTERNSHIP'],
-    ['/experiencias/3', 'WATTS_COMPANY'],
+    ['/experiencias', '"Desenvolvedor Full Stack Júnior"'],
+    ['/experiencias/2', '"Estagiário de Desenvolvimento"'],
+    ['/experiencias/3', '"Watts Company"'],
     ['/eventos', 'Campus Party Brasília'],
     ['/formacao', 'UniCEUB'],
-    ['/idiomas', 'Level.BASIC'],
+    ['/idiomas', '"Básico"'],
     ['/contato', 'mailto:viniciusmassuncao@gmail.com'],
   ] as const) {
     test(`${rota} entrega o código no HTML`, async ({ page }) => {
