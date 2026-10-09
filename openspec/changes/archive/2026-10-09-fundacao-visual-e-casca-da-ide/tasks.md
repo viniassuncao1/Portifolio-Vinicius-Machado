@@ -54,9 +54,9 @@ Responsável entre colchetes. Grupos que mexem nos mesmos arquivos rodam em sequ
 
 ## 9. Integração [Regente]
 
-- [ ] 9.1 Revisar os diffs contra specs, design e `.claude/rules/ecc/` e conferir com o Vinicius a gaveta no portal "Site Mobile" — verificar pela aprovação dele
+- [x] 9.1 Revisar os diffs contra specs, design e `.claude/rules/ecc/` e conferir com o Vinicius a gaveta no portal "Site Mobile" — verificar pela aprovação dele
 - [x] 9.2 Rodar `npm run lint && npm run test:ci && npm run build && npm run e2e` com cobertura acima de 80% — verificar pela saída dos comandos
-- [ ] 9.3 Abrir o PR com o template e capturas, esperar o CI verde e fazer o merge sem apagar a branch — verificar pelo PR mesclado e pelo deploy de produção
+- [x] 9.3 Abrir o PR com o template e capturas, esperar o CI verde e fazer o merge sem apagar a branch — verificar pelo PR mesclado e pelo deploy de produção
 
 ## Workflow follow-up
 
