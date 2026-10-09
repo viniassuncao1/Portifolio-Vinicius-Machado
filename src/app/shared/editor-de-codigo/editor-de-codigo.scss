@@ -152,3 +152,56 @@ a[class^='papel-'] {
     outline-offset: 2px;
   }
 }
+
+// Linha atual: destaque de fundo (a cor é a mesma da linha selecionada da árvore).
+.linha.atual,
+.paragrafo.atual {
+  background: var(--cor-linha-selecionada);
+}
+
+// Cursor no fim da linha atual: aparece quando o editor está pronto e pisca por token.
+:host(.pronto) .linha.atual:not(.vazia)::after {
+  content: '';
+  display: inline-block;
+  inline-size: 0.15em;
+  block-size: 1.1em;
+  margin-inline-start: 0.1em;
+  background: var(--cor-sintaxe-texto);
+  vertical-align: text-bottom;
+  animation: piscar var(--duracao-cursor) var(--curva-cursor) infinite;
+}
+
+@keyframes piscar {
+  50% {
+    opacity: 0;
+  }
+}
+
+// Digitação: o texto completo continua no DOM; cada item é recortado da direita para a esquerda
+// conforme `--digitado` (itens revelados, com fração) passa do seu `--indice`.
+:host(.digitando) {
+  .linha,
+  .paragrafo {
+    --progresso: clamp(0, var(--digitado, 0) - var(--indice, 0), 1);
+
+    inline-size: fit-content;
+    clip-path: inset(0 calc((1 - var(--progresso)) * 100%) 0 0);
+  }
+
+  .atual {
+    background: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.digitando) {
+    .linha,
+    .paragrafo {
+      clip-path: none;
+    }
+  }
+
+  :host(.pronto) .linha.atual::after {
+    animation: none;
+  }
+}
