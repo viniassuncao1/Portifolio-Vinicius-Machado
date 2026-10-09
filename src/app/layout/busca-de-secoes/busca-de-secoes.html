@@ -1,0 +1,49 @@
+<!-- O clique no fundo é um atalho do mouse; o equivalente por teclado é o Escape do dialog. -->
+<!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
+<dialog
+  #dialogo
+  class="busca"
+  aria-label="Buscar seção"
+  (close)="aoFechar()"
+  (click)="cliqueNoFundo($event)"
+>
+  <div class="caixa">
+    <input
+      #campo
+      type="text"
+      role="combobox"
+      class="campo"
+      aria-label="Buscar arquivo ou seção"
+      aria-autocomplete="list"
+      aria-expanded="true"
+      aria-controls="resultados-busca"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="Buscar arquivo ou seção"
+      [attr.aria-activedescendant]="idDoAtivo()"
+      [value]="consulta()"
+      (input)="digitar(campo.value)"
+      (keydown)="aoTeclar($event)"
+    />
+    <ul id="resultados-busca" role="listbox" aria-label="Resultados" class="resultados">
+      @for (resultado of resultados(); track resultado.rota; let i = $index) {
+        <!-- As opções não recebem foco (aria-activedescendant); o teclado usa setas e Enter no campo. -->
+        <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
+        <li
+          role="option"
+          class="opcao"
+          [id]="'opcao-busca-' + i"
+          [class.ativa]="i === indiceAtivo()"
+          [attr.aria-selected]="i === indiceAtivo()"
+          (click)="escolher(resultado)"
+        >
+          <span class="arquivo">{{ resultado.arquivo }}</span>
+          <span class="titulo">{{ resultado.titulo }}</span>
+        </li>
+      }
+    </ul>
+    <p class="contagem" role="status">
+      {{ resumo() }}
+    </p>
+  </div>
+</dialog>

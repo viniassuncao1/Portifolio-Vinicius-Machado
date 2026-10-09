@@ -5,7 +5,7 @@ import { RouterTestingHarness } from '@angular/router/testing';
 
 import { FaixaDeAbas } from './faixa-de-abas';
 
-@Component({ template: '', imports: [FaixaDeAbas] })
+@Component({ template: '' })
 class Vazia {}
 
 @Component({ template: '<app-faixa-de-abas />', imports: [FaixaDeAbas] })

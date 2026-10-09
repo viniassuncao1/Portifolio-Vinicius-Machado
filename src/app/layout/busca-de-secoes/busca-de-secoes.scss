@@ -1,0 +1,82 @@
+:host {
+  display: contents;
+}
+
+.busca {
+  box-sizing: border-box;
+  width: min(100% - var(--espaco-5), var(--largura-busca));
+  margin: var(--distancia-topo-busca) auto 0;
+  padding: 0;
+  border: var(--borda-divisoria);
+  border-radius: var(--raio-aba);
+  background: var(--cor-painel);
+  color: var(--cor-texto);
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-arvore);
+
+  &::backdrop {
+    background: var(--cor-fundo-modal);
+  }
+}
+
+.campo {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--espaco-3) var(--espaco-4);
+  border: 0;
+  border-block-end: var(--borda-divisoria);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+
+  &::placeholder {
+    color: var(--cor-texto-esmaecido);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+}
+
+.resultados {
+  max-height: var(--altura-maxima-resultados-busca);
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.opcao {
+  display: flex;
+  gap: var(--espaco-4);
+  align-items: baseline;
+  padding: var(--espaco-2) var(--espaco-4);
+  border-inline-start: var(--largura-marcador-opcao) solid transparent;
+  cursor: pointer;
+
+  // Além da cor, a barra lateral marca o item ativo.
+  &.ativa {
+    border-inline-start-color: var(--cor-foco);
+    background: var(--cor-linha-selecionada);
+  }
+}
+
+.arquivo {
+  flex: none;
+}
+
+.titulo {
+  overflow: hidden;
+  color: var(--cor-texto-esmaecido);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contagem {
+  margin: 0;
+  padding: var(--espaco-2) var(--espaco-4);
+  border-block-start: var(--borda-divisoria);
+  color: var(--cor-texto-esmaecido);
+  font-size: var(--texto-status);
+}

@@ -13,6 +13,7 @@ import { filter, map, startWith } from 'rxjs';
 
 import { DADO_ARVORE_NO_INICIO } from '../../core/secoes';
 import { EstrategiaDeTitulo } from '../../core/estrategia-de-titulo';
+import { BuscaDeSecoes } from '../busca-de-secoes/busca-de-secoes';
 import { BarraDeStatus } from '../barra-de-status/barra-de-status';
 import { BarraDeFerramentas } from '../barra-de-ferramentas/barra-de-ferramentas';
 import { FaixaDeAbas } from '../faixa-de-abas/faixa-de-abas';
@@ -25,14 +26,26 @@ import { PainelLateral } from '../painel-lateral/painel-lateral';
  */
 @Component({
   selector: 'app-casca',
-  imports: [RouterOutlet, BarraDeFerramentas, PainelLateral, FaixaDeAbas, BarraDeStatus],
+  imports: [
+    RouterOutlet,
+    BarraDeFerramentas,
+    PainelLateral,
+    FaixaDeAbas,
+    BarraDeStatus,
+    BuscaDeSecoes,
+  ],
   templateUrl: './casca.html',
   styleUrl: './casca.scss',
-  host: { '(keydown.escape)': 'fecharEDevolverFoco()' },
+  host: {
+    '(keydown.escape)': 'fecharEDevolverFoco()',
+    '(keydown.control.p)': 'abrirBusca($event)',
+    '(keydown.meta.p)': 'abrirBusca($event)',
+  },
 })
 export class Casca {
   private readonly injector = inject(Injector);
   private readonly painel = viewChild.required(PainelLateral);
+  private readonly busca = viewChild.required(BuscaDeSecoes);
   private readonly botao = viewChild.required<ElementRef<HTMLButtonElement>>('botaoSecoes');
 
   protected readonly titulo = inject(EstrategiaDeTitulo).titulo;
@@ -60,6 +73,12 @@ export class Casca {
     }
     this.gavetaAberta.set(true);
     afterNextRender(() => this.painel().focarPrimeiroItem(), { injector: this.injector });
+  }
+
+  /** Ctrl/Cmd+P abre a busca de seções no lugar da impressão do navegador. */
+  protected abrirBusca(evento?: Event): void {
+    evento?.preventDefault();
+    this.busca().abrir();
   }
 
   protected fecharGaveta(): void {
