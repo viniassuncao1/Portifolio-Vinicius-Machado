@@ -1,0 +1,60 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.area {
+  display: grid;
+  grid-template-columns: var(--largura-painel-lateral) minmax(0, 1fr);
+  column-gap: var(--espaco-2);
+  min-height: calc(100dvh - var(--altura-barra-ferramentas));
+}
+
+.coluna-editor {
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  min-width: 0;
+}
+
+.editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--largura-coluna-scrollbar);
+  border-end-start-radius: var(--raio-editor);
+  background: var(--cor-editor);
+}
+
+.conteudo {
+  min-width: 0;
+  padding-block: var(--espaco-editor-topo) var(--espaco-editor-base);
+}
+
+// Scrollbar vertical decorativa, como no design.
+.scrollbar {
+  position: relative;
+  border-inline-start: var(--borda-divisoria);
+}
+
+.polegar {
+  position: absolute;
+  inset-block-start: var(--espaco-4);
+  inset-inline-start: 50%;
+  width: var(--tamanho-scrollbar);
+  height: var(--altura-polegar-editor);
+  translate: -50% 0;
+  border-radius: var(--raio-scrollbar);
+  background: var(--cor-scrollbar-polegar);
+}
+
+// Texto só para leitores de tela e buscadores (h1 da página).
+.somente-leitores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
