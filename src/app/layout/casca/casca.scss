@@ -58,3 +58,56 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+// Botão que abre a gaveta: só existe abaixo de 768px.
+.barra-gaveta {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .barra-gaveta {
+    display: flex;
+    align-items: center;
+    height: var(--altura-barra-gaveta);
+    padding-inline: var(--espaco-4);
+    background: var(--cor-faixa-abas);
+  }
+
+  .botao-secoes {
+    min-height: var(--altura-barra-gaveta);
+    padding-inline: var(--espaco-4);
+    border: 0;
+    background: transparent;
+    color: var(--cor-texto);
+    font: inherit;
+    font-family: var(--fonte-mono);
+    font-size: var(--texto-aba);
+    cursor: pointer;
+  }
+
+  .botao-secoes:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+
+  .area {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  // Gaveta: o painel sai do fluxo e cobre o editor; `data-aberta` fica pronto para o Compasso.
+  app-painel-lateral {
+    position: fixed;
+    inset-block: calc(var(--altura-barra-ferramentas) + var(--altura-barra-gaveta)) 0;
+    inset-inline-start: 0;
+    z-index: var(--camada-gaveta);
+    width: min(var(--largura-painel-lateral), 85vw);
+  }
+
+  app-painel-lateral[data-aberta='false'] {
+    display: none;
+  }
+
+  .scrollbar {
+    display: none;
+  }
+}

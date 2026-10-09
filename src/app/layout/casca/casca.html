@@ -1,6 +1,22 @@
 <app-barra-de-ferramentas />
+<div class="barra-gaveta">
+  <button
+    #botaoSecoes
+    type="button"
+    class="botao-secoes"
+    aria-controls="painel-lateral"
+    [attr.aria-expanded]="gavetaAberta()"
+    (click)="alternarGaveta()"
+  >
+    Seções
+  </button>
+</div>
 <div class="area">
-  <app-painel-lateral />
+  <app-painel-lateral
+    id="painel-lateral"
+    [attr.data-aberta]="gavetaAberta()"
+    (secaoEscolhida)="fecharEDevolverFoco()"
+  />
   <div class="coluna-editor">
     <app-aba-do-editor />
     <main class="editor">

@@ -1,4 +1,4 @@
-import { Component, viewChild } from '@angular/core';
+import { Component, output, viewChild } from '@angular/core';
 
 import { GlifoFechar } from '../../shared/glifo-fechar/glifo-fechar';
 import { ArvoreDeSecoes } from '../arvore-de-secoes/arvore-de-secoes';
@@ -11,6 +11,9 @@ import { ArvoreDeSecoes } from '../arvore-de-secoes/arvore-de-secoes';
 })
 export class PainelLateral {
   private readonly arvore = viewChild.required(ArvoreDeSecoes);
+
+  /** Repassa a escolha de uma seção para a casca fechar a gaveta. */
+  readonly secaoEscolhida = output<void>();
 
   focarPrimeiroItem(): void {
     this.arvore().focarPrimeiroItem();

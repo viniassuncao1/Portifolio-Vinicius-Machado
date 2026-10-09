@@ -96,6 +96,8 @@
   --espaco-editor-base: 3rem;
   --largura-coluna-scrollbar: 3.75rem;
   --altura-polegar-editor: 47%;
+  --altura-barra-gaveta: 3rem;
+  --camada-gaveta: 10;
 
   // Editor de código (colunas medidas na tela 02, x1,2)
   --linhas-minimas-editor: 15;
@@ -113,4 +115,14 @@
   --borda-largura: 1px;
   --borda-divisoria: var(--borda-largura) solid var(--cor-separador);
   --borda-painel: var(--borda-largura) solid var(--cor-borda);
+}
+
+// Telas pequenas (< 768px): o design só tem desktop, então o editor ganha colunas mais estreitas.
+@media (max-width: 767.98px) {
+  :root {
+    --largura-numeros-linha: 3.2rem;
+    --afastamento-codigo: 3rem;
+    --recuo-codigo: 2.4rem;
+    --largura-coluna-scrollbar: 0rem;
+  }
 }
