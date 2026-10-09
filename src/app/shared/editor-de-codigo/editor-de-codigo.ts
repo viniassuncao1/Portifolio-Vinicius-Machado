@@ -12,5 +12,9 @@ const QUANTIDADE_DE_NUMEROS = 99;
 export class EditorDeCodigo {
   readonly conteudo = input.required<ConteudoDoEditor>();
 
+  protected ehExterno(href: string): boolean {
+    return href.startsWith('http');
+  }
+
   protected readonly numeros = Array.from({ length: QUANTIDADE_DE_NUMEROS }, (_, i) => i + 1);
 }

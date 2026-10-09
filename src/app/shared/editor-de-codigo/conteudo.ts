@@ -1,4 +1,5 @@
-export type Papel = 'palavra-chave' | 'declaracao' | 'literal' | 'valor' | 'anotacao' | 'comum';
+export type Papel =
+  'palavra-chave' | 'declaracao' | 'literal' | 'valor' | 'anotacao' | 'comentario' | 'comum';
 
 /**
  * Altura da linha. Sem valor é a linha normal; `compacta` (3/4) e `apertada` (3/5) vêm das listas
@@ -9,6 +10,8 @@ export type Densidade = 'compacta' | 'apertada';
 export interface Trecho {
   readonly texto: string;
   readonly papel: Papel;
+  /** Quando existe, o trecho vira um link (`https://`, `mailto:`, `tel:`). */
+  readonly href?: string;
 }
 
 export interface LinhaDeCodigo {
@@ -40,7 +43,11 @@ export const declaracao = (texto: string): Trecho => ({ texto, papel: 'declaraca
 export const literal = (texto: string): Trecho => ({ texto, papel: 'literal' });
 export const valor = (texto: string): Trecho => ({ texto, papel: 'valor' });
 export const anotacao = (texto: string): Trecho => ({ texto, papel: 'anotacao' });
+export const comentario = (texto: string): Trecho => ({ texto, papel: 'comentario' });
 export const comum = (texto: string): Trecho => ({ texto, papel: 'comum' });
+
+/** Transforma um trecho em link: `link(literal('"site.com"'), 'https://site.com')`. */
+export const link = (trecho: Trecho, href: string): Trecho => ({ ...trecho, href });
 
 export const linha = (recuo: number, ...trechos: readonly Trecho[]): LinhaDeCodigo => ({
   tipo: 'codigo',
