@@ -8,10 +8,12 @@ import {
   linha,
   literal,
   palavraChave,
+  linhaApertada,
   linhaCompacta,
   paragrafo,
   valor,
   vazia,
+  vaziaApertada,
   vaziaCompacta,
 } from './conteudo';
 import type { ConteudoDoEditor } from './conteudo';
@@ -205,6 +207,44 @@ describe('EditorDeCodigo', () => {
       const raiz = renderizar([vaziaCompacta()]);
 
       expect(raiz.querySelector('code')?.textContent).toBe('');
+    });
+  });
+
+  describe('linhas apertadas', () => {
+    it('marca só a linha apertada com a classe apertada, sem a compacta', () => {
+      const raiz = renderizar([linhaApertada(2, literal('“Java”')), linhaCompacta(2, comum('x'))]);
+
+      const [apertada, compacta] = Array.from(raiz.querySelectorAll('code > span'));
+
+      expect(apertada.classList.contains('apertada')).toBe(true);
+      expect(apertada.classList.contains('compacta')).toBe(false);
+      expect(compacta.classList.contains('apertada')).toBe(false);
+    });
+
+    it('marca a vazia apertada e mantém a vazia comum sem a classe', () => {
+      const raiz = renderizar([vaziaApertada(), vazia()]);
+
+      const [apertada, comumVazia] = Array.from(raiz.querySelectorAll('code > span'));
+
+      expect(apertada.classList.contains('vazia')).toBe(true);
+      expect(apertada.classList.contains('apertada')).toBe(true);
+      expect(comumVazia.classList.contains('apertada')).toBe(false);
+    });
+
+    it('dá à linha apertada a altura de linha de 3/5', () => {
+      renderizar();
+
+      expect(estilosDoComponente()).toMatch(
+        /\.linha\.apertada[^{]*\{[^}]*line-height:\s*calc\(\s*var\(--altura-linha-codigo\)\s*\*\s*3\s*\/\s*5\s*\)/,
+      );
+    });
+
+    it('dá à vazia apertada a altura mínima de 3/5 de uma linha', () => {
+      renderizar();
+
+      expect(estilosDoComponente()).toMatch(
+        /\.linha\.vazia\.apertada[^{]*\{[^}]*min-height:\s*calc\(\s*var\(--altura-linha-codigo\)\s*\*\s*3\s*\/\s*5\s*\)/,
+      );
     });
   });
 

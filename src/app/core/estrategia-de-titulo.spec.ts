@@ -65,4 +65,70 @@ describe('EstrategiaDeTitulo', () => {
 
     expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Portfolio_Vinicius');
   });
+
+  describe('seção com várias páginas', () => {
+    beforeEach(() => {
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [
+          provideRouter([
+            { path: '', title: TITULO_INICIO, component: Vazia },
+            {
+              path: 'skills',
+              title: 'Skills / STACK',
+              data: { pagina: 1, totalDePaginas: 2 },
+              component: Vazia,
+            },
+            {
+              path: 'skills/2',
+              title: 'Skills / STACK',
+              data: { pagina: 2, totalDePaginas: 2 },
+              component: Vazia,
+            },
+            { path: 'sem-pagina', title: 'Solta', data: { outro: 1 }, component: Vazia },
+          ]),
+          { provide: TitleStrategy, useExisting: EstrategiaDeTitulo },
+        ],
+      });
+    });
+
+    it('não acrescenta "(X/N)" na primeira página', async () => {
+      const harness = await RouterTestingHarness.create();
+      await harness.navigateByUrl('/skills');
+
+      expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Skills / STACK');
+      expect(TestBed.inject(Title).getTitle()).toBe('Skills / STACK | Vinicius Machado');
+    });
+
+    it('acrescenta "(2/2)" ao h1 e à janela a partir da segunda página', async () => {
+      const harness = await RouterTestingHarness.create();
+      await harness.navigateByUrl('/skills/2');
+
+      expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Skills / STACK (2/2)');
+      expect(TestBed.inject(Title).getTitle()).toBe('Skills / STACK (2/2) | Vinicius Machado');
+    });
+
+    it('tira o "(2/2)" ao voltar para a primeira página', async () => {
+      const harness = await RouterTestingHarness.create();
+      await harness.navigateByUrl('/skills/2');
+      await harness.navigateByUrl('/skills');
+
+      expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Skills / STACK');
+    });
+
+    it('ignora um data sem página', async () => {
+      const harness = await RouterTestingHarness.create();
+      await harness.navigateByUrl('/sem-pagina');
+
+      expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Solta');
+    });
+
+    it('não leva "(X/N)" ao título do Início', async () => {
+      const harness = await RouterTestingHarness.create();
+      await harness.navigateByUrl('/skills/2');
+      await harness.navigateByUrl('/');
+
+      expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Portfolio_Vinicius');
+    });
+  });
 });
