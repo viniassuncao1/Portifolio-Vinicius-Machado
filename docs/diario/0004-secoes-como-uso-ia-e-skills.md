@@ -1,8 +1,8 @@
 # 0004: Seções Como uso a IA e Skills
 
 - **Data:** 2026-10-09
-- **Change:** [secoes-como-uso-ia-e-skills](../../openspec/changes/secoes-como-uso-ia-e-skills/)
-- **PR:** a definir
+- **Change:** [secoes-como-uso-ia-e-skills](../../openspec/changes/archive/2026-10-09-secoes-como-uso-ia-e-skills/)
+- **PR:** [#15](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/15)
 - **ADRs:** nenhum (a change não tomou decisão nova de arquitetura, ferramenta ou processo)
 
 ![Seção Como uso a IA no desktop, com a classe ArtificialIntelligence](imagens/0004-como-uso-ia-desktop.png)
@@ -54,7 +54,7 @@ mesma seção que servisse também para as próximas seções com várias telas.
 
 ## Links
 
-- Change: [`openspec/changes/secoes-como-uso-ia-e-skills`](../../openspec/changes/secoes-como-uso-ia-e-skills/)
+- Change: [`openspec/changes/archive/2026-10-09-secoes-como-uso-ia-e-skills`](../../openspec/changes/archive/2026-10-09-secoes-como-uso-ia-e-skills/)
 - Documentação: [componentes](../componentes.md), com `PaginasDaSecao`, a densidade das linhas e
   como criar uma seção com várias páginas
 - Entrada anterior: [0003 seções Sobre Mim e Diferenciais](0003-secoes-sobre-mim-e-diferenciais.md)
