@@ -30,3 +30,10 @@
   stroke: var(--cor-controle-janela);
   stroke-width: 1.2;
 }
+
+// Abaixo de 768px só ficam os ícones que cabem inteiros na largura da tela.
+@media (max-width: 767.98px) {
+  .botao:nth-child(n + 7) {
+    display: none;
+  }
+}
