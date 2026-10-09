@@ -1,6 +1,11 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { TitleStrategy, provideRouter, withViewTransitions } from '@angular/router';
+import {
+  TitleStrategy,
+  provideRouter,
+  withComponentInputBinding,
+  withViewTransitions,
+} from '@angular/router';
 
 import { routes } from './app.routes';
 import { EstrategiaDeTitulo } from './core/estrategia-de-titulo';
@@ -12,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withViewTransitions({ onViewTransitionCreated: pularTransicaoSeMovimentoReduzido }),
+      withComponentInputBinding(),
     ),
     { provide: TitleStrategy, useExisting: EstrategiaDeTitulo },
     provideClientHydration(withEventReplay()),

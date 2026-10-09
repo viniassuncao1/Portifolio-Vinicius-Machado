@@ -2,23 +2,16 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import type { Result } from 'axe-core';
 
+import { SECOES, totalDePaginas } from '../src/app/core/secoes';
+
+/** Início e todas as páginas de todas as seções, geradas de SECOES (uma seção nova entra sozinha). */
 const ROTAS = [
   '/',
-  '/sobre-mim',
-  '/diferenciais',
-  '/como-uso-ia',
-  '/skills',
-  '/experiencias',
-  '/projeto-1',
-  '/projeto-2',
-  '/projeto-3',
-  '/projeto-4',
-  '/certificacoes',
-  '/eventos',
-  '/formacao',
-  '/idiomas',
-  '/depoimentos',
-  '/contato',
+  ...SECOES.flatMap((secao) =>
+    Array.from({ length: totalDePaginas(secao) }, (_, i) =>
+      i === 0 ? `/${secao.slug}` : `/${secao.slug}/${i + 1}`,
+    ),
+  ),
 ];
 
 const TELAS = [

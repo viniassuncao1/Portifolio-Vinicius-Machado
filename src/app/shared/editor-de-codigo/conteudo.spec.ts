@@ -3,12 +3,14 @@ import {
   comum,
   declaracao,
   linha,
+  linhaApertada,
   linhaCompacta,
   literal,
   palavraChave,
   paragrafo,
   valor,
   vazia,
+  vaziaApertada,
   vaziaCompacta,
   type Papel,
 } from './conteudo';
@@ -62,7 +64,7 @@ describe('construtoras de conteúdo do editor', () => {
     expect(resultado).toEqual({
       tipo: 'codigo',
       recuo: 2,
-      compacta: true,
+      densidade: 'compacta',
       trechos: [
         { texto: '“Java”', papel: 'literal' },
         { texto: ',', papel: 'comum' },
@@ -71,14 +73,35 @@ describe('construtoras de conteúdo do editor', () => {
   });
 
   it('linha comum não é compacta', () => {
-    expect(linha(1).compacta).toBeUndefined();
+    expect(linha(1).densidade).toBeUndefined();
   });
 
   it('vaziaCompacta cria uma linha em branco compacta', () => {
-    expect(vaziaCompacta()).toEqual({ tipo: 'vazia', compacta: true });
+    expect(vaziaCompacta()).toEqual({ tipo: 'vazia', densidade: 'compacta' });
   });
 
   it('vazia não é compacta', () => {
-    expect(vazia()).not.toHaveProperty('compacta');
+    expect(vazia()).not.toHaveProperty('densidade');
+  });
+
+  it('linhaApertada marca a densidade apertada e guarda recuo e trechos', () => {
+    expect(linhaApertada(2, literal('“Java”'), comum(','))).toEqual({
+      tipo: 'codigo',
+      recuo: 2,
+      densidade: 'apertada',
+      trechos: [
+        { texto: '“Java”', papel: 'literal' },
+        { texto: ',', papel: 'comum' },
+      ],
+    });
+  });
+
+  it('vaziaApertada cria uma linha em branco de densidade apertada', () => {
+    expect(vaziaApertada()).toEqual({ tipo: 'vazia', densidade: 'apertada' });
+  });
+
+  it('as densidades compacta e apertada são distintas', () => {
+    expect(linhaApertada(0).densidade).not.toBe(linhaCompacta(0).densidade);
+    expect(vaziaApertada().densidade).not.toBe(vaziaCompacta().densidade);
   });
 });

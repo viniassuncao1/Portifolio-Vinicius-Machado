@@ -1,0 +1,48 @@
+:host {
+  display: block;
+}
+
+// Fica na faixa de respiro abaixo do código (o padding do editor), à direita.
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--espaco-1);
+  min-height: var(--espaco-editor-base);
+  margin-block-start: calc(var(--espaco-editor-base) * -1);
+  padding-inline-end: var(--espaco-4);
+  color: var(--cor-texto-esmaecido);
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-arvore);
+}
+
+.controle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  // Alvo de toque confortável sem pesar no visual.
+  min-width: var(--tamanho-alvo-toque);
+  min-height: var(--tamanho-alvo-toque);
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--cor-texto);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+}
+
+.seta {
+  width: var(--tamanho-seta-pagina);
+  height: var(--tamanho-seta-pagina);
+  fill: currentColor;
+}
+
+.pagina {
+  min-width: 3ch;
+  text-align: center;
+}

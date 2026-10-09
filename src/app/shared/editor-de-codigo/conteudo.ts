@@ -1,5 +1,11 @@
 export type Papel = 'palavra-chave' | 'declaracao' | 'literal' | 'valor' | 'anotacao' | 'comum';
 
+/**
+ * Altura da linha. Sem valor é a linha normal; `compacta` (3/4) e `apertada` (3/5) vêm das listas
+ * das telas, onde várias linhas ocupam menos espaço que o número de linha.
+ */
+export type Densidade = 'compacta' | 'apertada';
+
 export interface Trecho {
   readonly texto: string;
   readonly papel: Papel;
@@ -8,8 +14,8 @@ export interface Trecho {
 export interface LinhaDeCodigo {
   readonly tipo: 'codigo';
   readonly recuo: number;
-  /** Linha apertada, como a lista de strings da tela 01: 4 linhas ocupam 3 linhas de número. */
-  readonly compacta?: boolean;
+  /** `compacta`: a lista de strings da tela 01 (4 linhas ocupam 3 linhas de número). */
+  readonly densidade?: Densidade;
   readonly trechos: readonly Trecho[];
 }
 
@@ -21,8 +27,8 @@ export interface LinhaDeParagrafo {
 
 export interface LinhaVazia {
   readonly tipo: 'vazia';
-  /** Vazia com a altura das linhas compactas (3/4 de uma linha), como na tela 03. */
-  readonly compacta?: boolean;
+  /** Vazia com a altura das linhas da mesma densidade (telas 03 a 06). */
+  readonly densidade?: Densidade;
 }
 
 export type Linha = LinhaDeCodigo | LinhaDeParagrafo | LinhaVazia;
@@ -42,12 +48,17 @@ export const linha = (recuo: number, ...trechos: readonly Trecho[]): LinhaDeCodi
   trechos,
 });
 
-export const linhaCompacta = (recuo: number, ...trechos: readonly Trecho[]): LinhaDeCodigo => ({
-  tipo: 'codigo',
-  recuo,
-  compacta: true,
-  trechos,
-});
+const comDensidade =
+  (densidade: Densidade) =>
+  (recuo: number, ...trechos: readonly Trecho[]): LinhaDeCodigo => ({
+    tipo: 'codigo',
+    recuo,
+    densidade,
+    trechos,
+  });
+
+export const linhaCompacta = comDensidade('compacta');
+export const linhaApertada = comDensidade('apertada');
 
 export const paragrafo = (recuo: number, texto: string): LinhaDeParagrafo => ({
   tipo: 'paragrafo',
@@ -56,5 +67,5 @@ export const paragrafo = (recuo: number, texto: string): LinhaDeParagrafo => ({
 });
 
 export const vazia = (): LinhaVazia => ({ tipo: 'vazia' });
-
-export const vaziaCompacta = (): LinhaVazia => ({ tipo: 'vazia', compacta: true });
+export const vaziaCompacta = (): LinhaVazia => ({ tipo: 'vazia', densidade: 'compacta' });
+export const vaziaApertada = (): LinhaVazia => ({ tipo: 'vazia', densidade: 'apertada' });

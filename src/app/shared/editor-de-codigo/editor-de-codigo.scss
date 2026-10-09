@@ -71,6 +71,16 @@ $quantidade-de-marcadores: 60;
   line-height: calc(var(--altura-linha-codigo) * 3 / 4);
 }
 
+// Linha apertada: as listas das telas 04 a 06 têm passo de ~22 px (3/5 da linha normal).
+.linha.apertada {
+  min-height: 0;
+  line-height: calc(var(--altura-linha-codigo) * 3 / 5);
+}
+
+.linha.vazia.apertada {
+  min-height: calc(var(--altura-linha-codigo) * 3 / 5);
+}
+
 // Linha vazia compacta: mantém a altura de uma linha compacta (que tem min-height 0).
 .linha.vazia.compacta {
   min-height: calc(var(--altura-linha-codigo) * 3 / 4);

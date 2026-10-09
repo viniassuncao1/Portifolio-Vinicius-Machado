@@ -1,0 +1,29 @@
+@if (total() > 1) {
+  <nav aria-label="Páginas da seção">
+    @if (pagina() > 1) {
+      <a class="controle" [routerLink]="anterior()" aria-label="Página anterior">
+        <svg class="seta" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <path d="M17 1.5v17L3 10z" />
+        </svg>
+      </a>
+    } @else {
+      <span class="controle vazio" aria-hidden="true"></span>
+    }
+    <span
+      class="pagina"
+      aria-current="page"
+      [attr.aria-label]="'página ' + pagina() + ' de ' + total()"
+    >
+      {{ pagina() }}/{{ total() }}
+    </span>
+    @if (pagina() < total()) {
+      <a class="controle" [routerLink]="proxima()" aria-label="Próxima página">
+        <svg class="seta" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <path d="M3 1.5v17L17 10z" />
+        </svg>
+      </a>
+    } @else {
+      <span class="controle vazio" aria-hidden="true"></span>
+    }
+  </nav>
+}
