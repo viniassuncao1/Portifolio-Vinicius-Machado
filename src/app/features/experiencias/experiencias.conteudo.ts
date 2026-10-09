@@ -15,9 +15,8 @@ interface Experiencia {
   readonly constante: string;
   readonly empresa: string;
   readonly cargo: string;
-  readonly inicio: readonly [ano: number, mes: number];
-  /** Sem `fim`, a experiência segue em andamento (`Optional.empty()`). */
-  readonly fim?: readonly [ano: number, mes: number];
+  /** Texto do período, como "08/2026 - Presente". */
+  readonly periodo: string;
   readonly destaques: readonly string[];
   /** Texto original da tela, no Javadoc da constante. */
   readonly descricao: string;
@@ -25,45 +24,21 @@ interface Experiencia {
 
 const aspas = (texto: string): Trecho => literal(`"${texto}"`);
 
-const periodo = ([ano, mes]: readonly [number, number]): readonly Trecho[] => [
-  comum('YearMonth.of('),
-  literal(String(ano)),
-  comum(', '),
-  literal(String(mes)),
-  comum(')'),
-];
-
-const campoFim = (experiencia: Experiencia): Linha => {
-  if (!experiencia.fim) {
-    return linha(
-      2,
-      comum('Optional.empty(),'),
-      comum('  '),
-      comentario('// em andamento (Presente)'),
-    );
-  }
-  return linha(2, comum('Optional.of('), ...periodo(experiencia.fim), comum('),'));
-};
-
 const destaques = (itens: readonly string[]): readonly Linha[] => [
   linha(2, comum('List.of(')),
   ...itens.map((item, i) => linha(3, aspas(item), comum(i < itens.length - 1 ? ',' : ''))),
   linha(2, comum(')')),
 ];
 
-const importacoes: readonly Linha[] = [
-  linha(0, palavraChave('import'), comum(' java.time.YearMonth;')),
-  linha(0, palavraChave('import'), comum(' java.util.List;')),
-  linha(0, palavraChave('import'), comum(' java.util.Optional;')),
-];
+const importacoes: readonly Linha[] = [linha(0, palavraChave('import'), comum(' java.util.List;'))];
 
 /** O record vem só na página 1; as outras duas páginas o usam como a mesma classe `Experiences`. */
 const registro: readonly Linha[] = [
+  linha(1, comentario('// Cada experiência tem empresa, cargo, período e destaques')),
   linha(1, palavraChave('record'), comum(' Experience(')),
   linha(2, declaracao('String company'), comum(',')),
   linha(2, declaracao('String role'), comum(',')),
-  linha(2, declaracao('YearMonth start'), comum(',')),
-  linha(2, declaracao('Optional<YearMonth> end'), comum(',')),
+  linha(2, declaracao('String period'), comum(',')),
   linha(2, declaracao('List<String> highlights'), comum(') {}')),
   vazia(),
 ];
@@ -86,8 +61,7 @@ const pagina = (experiencia: Experiencia, comRegistro: boolean): ConteudoDoEdito
   ),
   linha(2, aspas(experiencia.empresa), comum(',')),
   linha(2, aspas(experiencia.cargo), comum(',')),
-  linha(2, ...periodo(experiencia.inicio), comum(',')),
-  campoFim(experiencia),
+  linha(2, aspas(experiencia.periodo), comum(',')),
   ...destaques(experiencia.destaques),
   linha(1, comum(');')),
   vazia(),
@@ -98,7 +72,7 @@ const MEMORA: Experiencia = {
   constante: 'MEMORA',
   empresa: 'Memora',
   cargo: 'Desenvolvedor Full Stack Júnior',
-  inicio: [2026, 8],
+  periodo: '08/2026 - Presente',
   destaques: [
     'Liderança de squad',
     'Scrum: dailies, previsões de conclusão e reviews',
@@ -112,8 +86,7 @@ const MEMORA_ESTAGIO: Experiencia = {
   constante: 'MEMORA_INTERNSHIP',
   empresa: 'Memora',
   cargo: 'Estagiário de Desenvolvimento',
-  inicio: [2025, 8],
-  fim: [2026, 7],
+  periodo: '08/2025 - 07/2026',
   destaques: [
     'Migração de APIs de Oracle para PostgreSQL',
     'Scrapers em Java + Playwright',
@@ -128,7 +101,7 @@ const WATTS_COMPANY: Experiencia = {
   constante: 'WATTS_COMPANY',
   empresa: 'Watts Company',
   cargo: 'Co-fundador & Desenvolvedor Full Stack',
-  inicio: [2025, 2],
+  periodo: '02/2025 - Presente',
   destaques: [
     'Agência de automação e IA co-fundada do zero',
     'Sistemas de CRM e agentes de IA',
