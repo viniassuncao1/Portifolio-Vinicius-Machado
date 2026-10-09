@@ -105,6 +105,10 @@ $quantidade-de-marcadores: 60;
   color: var(--cor-sintaxe-literal);
 }
 
+.papel-valor {
+  color: var(--cor-sintaxe-valor);
+}
+
 .papel-anotacao {
   color: var(--cor-sintaxe-anotacao);
 }

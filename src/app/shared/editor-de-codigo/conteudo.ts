@@ -1,4 +1,4 @@
-export type Papel = 'palavra-chave' | 'declaracao' | 'literal' | 'anotacao' | 'comum';
+export type Papel = 'palavra-chave' | 'declaracao' | 'literal' | 'valor' | 'anotacao' | 'comum';
 
 export interface Trecho {
   readonly texto: string;
@@ -30,6 +30,7 @@ export type ConteudoDoEditor = readonly Linha[];
 export const palavraChave = (texto: string): Trecho => ({ texto, papel: 'palavra-chave' });
 export const declaracao = (texto: string): Trecho => ({ texto, papel: 'declaracao' });
 export const literal = (texto: string): Trecho => ({ texto, papel: 'literal' });
+export const valor = (texto: string): Trecho => ({ texto, papel: 'valor' });
 export const anotacao = (texto: string): Trecho => ({ texto, papel: 'anotacao' });
 export const comum = (texto: string): Trecho => ({ texto, papel: 'comum' });
 
