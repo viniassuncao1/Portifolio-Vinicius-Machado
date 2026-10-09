@@ -1,8 +1,8 @@
 # 0003: Seções Sobre Mim e Diferenciais
 
 - **Data:** 2026-10-09
-- **Change:** [secoes-sobre-mim-e-diferenciais](../../openspec/changes/secoes-sobre-mim-e-diferenciais/)
-- **PR:** a definir
+- **Change:** [secoes-sobre-mim-e-diferenciais](../../openspec/changes/archive/2026-10-09-secoes-sobre-mim-e-diferenciais/)
+- **PR:** [#14](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/14)
 - **ADRs:** nenhum (a change não tomou decisão nova de arquitetura, ferramenta ou processo)
 
 ![Seção Sobre Mim no desktop, com a interface e o parágrafo em bloco de comentário](imagens/0003-sobre-mim-desktop.png)
@@ -51,7 +51,7 @@ prontos, uma seção nova deveria ser só conteúdo.
 
 ## Links
 
-- Change: [`openspec/changes/secoes-sobre-mim-e-diferenciais`](../../openspec/changes/secoes-sobre-mim-e-diferenciais/)
+- Change: [`openspec/changes/archive/2026-10-09-secoes-sobre-mim-e-diferenciais`](../../openspec/changes/archive/2026-10-09-secoes-sobre-mim-e-diferenciais/)
 - Documentação: [componentes](../componentes.md), com o papel `valor` e as duas seções como
   exemplo de "como criar uma seção só com dados"
 - Entrada anterior: [0002 fundação visual e casca da IDE](0002-fundacao-visual-e-casca-da-ide.md)

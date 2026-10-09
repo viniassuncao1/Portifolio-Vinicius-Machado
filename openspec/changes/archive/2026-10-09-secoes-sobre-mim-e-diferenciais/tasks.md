@@ -25,4 +25,4 @@ Responsável entre colchetes.
 ## 5. Integração [Regente]
 
 - [x] 5.1 Revisar os diffs e rodar `npm run lint && npm run test:ci && npm run build && npm run e2e` — verificar pela saída dos comandos
-- [ ] 5.2 Abrir o PR, esperar o CI verde, fazer o merge sem apagar a branch e arquivar a change — verificar pelo PR mesclado e pelo deploy de produção
+- [x] 5.2 Abrir o PR, esperar o CI verde, fazer o merge sem apagar a branch e arquivar a change — verificar pelo PR mesclado e pelo deploy de produção
