@@ -1,6 +1,6 @@
 // Design tokens extraídos de design/telas (telas 01, 02, 07 e 24).
 // Valores amostrados por pixel nas imagens de 1600x900 (exportações reduzidas do design de 1920x1080).
-// As medidas foram convertidas para a escala de 1920x1080 (x1,2) e para rem (1rem = 16px); as cores não mudam.
+// As medidas foram convertidas para a escala de 1920x1080 (x1,2) e para rem (1rem = 16px) e reduzidas por ~0,74 (legibilidade); as cores não mudam.
 // A escala --espaco-* e a borda de 1px não vêm de medição e ficam como estão.
 // Cores de texto abaixo de 4,5:1 foram ajustadas (ver note "Design Tokens").
 // Os tokens de movimento ficam com o Compasso (src/styles/_movimento.scss).
@@ -56,19 +56,19 @@
   --fonte-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   --peso-regular: 400;
   --peso-negrito: 700;
-  --texto-arvore: 1.38rem;
-  --texto-aba: 1.38rem;
-  --texto-status: 1.2rem;
-  --texto-comentario: 1.44rem;
-  --texto-codigo: 1.44rem;
-  --texto-numero-linha: 1.74rem;
+  --texto-arvore: 1rem;
+  --texto-aba: 1rem;
+  --texto-status: 1rem;
+  --texto-comentario: 1.06rem;
+  --texto-codigo: 1.06rem;
+  --texto-numero-linha: 1.29rem;
   --espacamento-letras-codigo: 0.0642em;
-  --altura-linha-arvore: 2.76rem;
-  --altura-linha-codigo: 2.82rem;
-  --altura-linha-comentario: 1.86rem;
+  --altura-linha-arvore: 2.04rem;
+  --altura-linha-codigo: 2.09rem;
+  --altura-linha-comentario: 1.38rem;
 
   // Ícones (medidos nas telas 01 e 02: ~20 px no PNG)
-  --tamanho-icone: 1.85rem;
+  --tamanho-icone: 1.37rem;
 
   // Espaço
   --espaco-1: 0.25rem;
@@ -80,52 +80,52 @@
   --espaco-7: 3rem;
 
   // Dimensões da casca
-  --altura-barra-ferramentas: 3.3rem;
-  --altura-faixa-abas: 3.12rem;
-  --altura-barra-status: 2.4rem;
-  --largura-busca: 56rem;
-  --tamanho-icone-busca: 1.5rem;
+  --altura-barra-ferramentas: 2.44rem;
+  --altura-faixa-abas: 2.31rem;
+  --altura-barra-status: 1.78rem;
+  --largura-busca: 41.4rem;
+  --tamanho-icone-busca: 1.1rem;
   --largura-marcador-opcao: 3px;
   --distancia-topo-busca: 12vh;
   --altura-maxima-resultados-busca: 36vh;
-  --largura-painel-lateral: 33.36rem;
-  --altura-linha-selecionada: 3.12rem;
-  --tamanho-scrollbar: 1.2rem;
-  --altura-cabecalho-painel: 6.2rem;
-  --largura-titulo-painel: 20.9rem;
-  --largura-aba: 24.8rem;
-  --largura-minima-aba: 11rem;
-  --altura-scrollbar-rodape: 1.1rem;
-  --largura-polegar-rodape: 15.3rem;
-  --tamanho-glifo: 1.2rem;
-  --tamanho-seta-arvore: 1.35rem;
-  --recuo-item-arvore: 4.4rem;
-  --afastamento-primeiro-item: 0.5rem;
-  --afastamento-topo-arvore: 0.25rem;
-  --recuo-item-atual: 1.65rem;
-  --afastamento-icone-arvore: 0.5rem;
-  --afastamento-texto-arvore: 0.3rem;
-  --espaco-editor-topo: 1.7rem;
-  --espaco-editor-base: 3rem;
-  --largura-coluna-scrollbar: 3.75rem;
+  --largura-painel-lateral: 24.7rem;
+  --altura-linha-selecionada: 2.31rem;
+  --tamanho-scrollbar: 0.89rem;
+  --altura-cabecalho-painel: 4.59rem;
+  --largura-titulo-painel: 15.5rem;
+  --largura-aba: 18.4rem;
+  --largura-minima-aba: 8.1rem;
+  --altura-scrollbar-rodape: 0.81rem;
+  --largura-polegar-rodape: 11.3rem;
+  --tamanho-glifo: 0.89rem;
+  --tamanho-seta-arvore: 1rem;
+  --recuo-item-arvore: 3.26rem;
+  --afastamento-primeiro-item: 0.37rem;
+  --afastamento-topo-arvore: 0.19rem;
+  --recuo-item-atual: 1.22rem;
+  --afastamento-icone-arvore: 0.37rem;
+  --afastamento-texto-arvore: 0.22rem;
+  --espaco-editor-topo: 1.26rem;
+  --espaco-editor-base: 2.22rem;
+  --largura-coluna-scrollbar: 2.78rem;
   --altura-polegar-editor: 47%;
-  --altura-barra-gaveta: 3rem;
+  --altura-barra-gaveta: 2.22rem;
   --camada-gaveta: 10;
 
   // Editor de código (colunas medidas na tela 02, x1,2)
   --linhas-minimas-editor: 15;
-  --largura-numeros-linha: 4rem;
-  --afastamento-codigo: 6rem;
-  --afastamento-marcador: 1.5rem;
+  --largura-numeros-linha: 2.96rem;
+  --afastamento-codigo: 4.44rem;
+  --afastamento-marcador: 1.11rem;
   --colunas-paragrafo: 72.5;
   --tamanho-alvo-toque: 2.4rem;
-  --tamanho-seta-pagina: 1.1rem;
-  --recuo-codigo: 3.6rem;
+  --tamanho-seta-pagina: 0.81rem;
+  --recuo-codigo: 2.66rem;
 
   // Raio
-  --raio-scrollbar: 0.6rem;
-  --raio-editor: 1.5rem;
-  --raio-aba: 1rem;
+  --raio-scrollbar: 0.44rem;
+  --raio-editor: 1.11rem;
+  --raio-aba: 0.74rem;
 
   // Borda
   --borda-largura: 1px;
@@ -137,17 +137,17 @@
 // para o código e a árvore caberem em 390px.
 @media (max-width: 767.98px) {
   :root {
-    --texto-arvore: 1.2rem;
-    --texto-codigo: 1.1rem;
-    --texto-comentario: 1.1rem;
-    --texto-numero-linha: 1.3rem;
-    --altura-linha-codigo: 2.2rem;
-    --altura-linha-comentario: 1.6rem;
-    --recuo-item-arvore: 1.6rem;
-    --recuo-item-atual: 1.2rem;
-    --largura-numeros-linha: 2.6rem;
-    --afastamento-codigo: 2.4rem;
-    --recuo-codigo: 1.8rem;
+    --texto-arvore: 1rem;
+    --texto-codigo: 0.95rem;
+    --texto-comentario: 0.95rem;
+    --texto-numero-linha: 1.05rem;
+    --altura-linha-codigo: 1.8rem;
+    --altura-linha-comentario: 1.35rem;
+    --recuo-item-arvore: 1.4rem;
+    --recuo-item-atual: 1.05rem;
+    --largura-numeros-linha: 2.2rem;
+    --afastamento-codigo: 2rem;
+    --recuo-codigo: 1.5rem;
     --largura-coluna-scrollbar: 0rem;
   }
 }
