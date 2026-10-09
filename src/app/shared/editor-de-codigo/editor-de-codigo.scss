@@ -1,0 +1,114 @@
+@use 'sass:string';
+
+// Coluna de "*" do bloco de comentário: o pseudo-elemento é recortado pela altura do bloco.
+$quantidade-de-marcadores: 60;
+
+@function coluna-de-marcadores($quantidade) {
+  $coluna: '*';
+  @for $i from 2 through $quantidade {
+    $coluna: $coluna + '\A *';
+  }
+  @return $coluna;
+}
+
+:host {
+  display: grid;
+  grid-template-columns: var(--largura-numeros-linha) minmax(0, 1fr);
+  column-gap: calc(var(--afastamento-codigo) - var(--afastamento-marcador));
+  min-height: calc(var(--linhas-minimas-editor) * var(--altura-linha-codigo));
+  background: var(--cor-editor);
+  font-family: var(--fonte-mono);
+  font-weight: var(--peso-regular);
+  color: var(--cor-sintaxe-texto);
+}
+
+.numeros {
+  // Não contribui para a altura do grid: a coluna estica até a altura do código e recorta o excesso.
+  contain: size;
+  overflow: hidden;
+  color: var(--cor-numero-linha);
+  font-size: var(--texto-numero-linha);
+  line-height: var(--altura-linha-codigo);
+  text-align: end;
+  user-select: none;
+
+  span {
+    display: block;
+  }
+}
+
+.codigo {
+  margin: 0;
+  // Faixa à esquerda do texto onde ficam os "*" do bloco de comentário.
+  padding-inline-start: var(--afastamento-marcador);
+  overflow-x: auto;
+  font: inherit;
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+
+  code {
+    display: block;
+    font: inherit;
+  }
+}
+
+.linha {
+  display: block;
+  min-height: var(--altura-linha-codigo);
+  padding-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo));
+  font-size: var(--texto-codigo);
+  letter-spacing: var(--espacamento-letras-codigo);
+  line-height: var(--altura-linha-codigo);
+  white-space: pre;
+}
+
+.linha.compacta {
+  min-height: 0;
+  font-size: var(--texto-comentario);
+  line-height: calc(var(--altura-linha-codigo) * 3 / 4);
+}
+
+.paragrafo {
+  position: relative;
+  display: block;
+  padding-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo));
+  font-size: var(--texto-comentario);
+  letter-spacing: var(--espacamento-letras-codigo);
+  line-height: var(--altura-linha-comentario);
+  white-space: normal;
+  overflow-wrap: anywhere;
+
+  &::before {
+    content: coluna-de-marcadores($quantidade-de-marcadores) / '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo) - var(--afastamento-marcador));
+    overflow: hidden;
+    color: var(--cor-sintaxe-comentario-marcador);
+    white-space: pre;
+    user-select: none;
+  }
+}
+
+.papel-palavra-chave {
+  color: var(--cor-sintaxe-palavra-chave);
+}
+
+.papel-declaracao {
+  color: var(--cor-sintaxe-campo);
+}
+
+.papel-literal {
+  color: var(--cor-sintaxe-literal);
+}
+
+.papel-anotacao {
+  color: var(--cor-sintaxe-anotacao);
+}
+
+.papel-comum {
+  color: var(--cor-sintaxe-texto);
+}

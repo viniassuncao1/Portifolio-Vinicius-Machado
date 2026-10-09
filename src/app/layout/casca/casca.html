@@ -1,0 +1,34 @@
+<app-barra-de-ferramentas />
+<div class="barra-gaveta">
+  <button
+    #botaoSecoes
+    type="button"
+    class="botao-secoes"
+    aria-controls="painel-lateral"
+    [attr.aria-expanded]="gavetaAberta()"
+    (click)="alternarGaveta()"
+  >
+    Seções
+  </button>
+</div>
+<div class="area">
+  <app-painel-lateral
+    id="painel-lateral"
+    [attr.data-aberta]="gavetaAberta()"
+    [noInicio]="arvoreNoInicio()"
+    (secaoEscolhida)="fecharEDevolverFoco()"
+    (fecharGaveta)="fecharEDevolverFoco()"
+  />
+  <div class="coluna-editor">
+    <app-aba-do-editor />
+    <main class="editor">
+      <h1 class="somente-leitores">{{ titulo() }}</h1>
+      <div class="conteudo">
+        <router-outlet />
+      </div>
+      <div class="scrollbar" aria-hidden="true">
+        <span class="polegar"></span>
+      </div>
+    </main>
+  </div>
+</div>

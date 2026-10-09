@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+@use './styles/tokens';
+@use './styles/movimento';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-700.css';
+
+html,
+body {
+  margin: 0;
+  background: var(--cor-fundo-pagina);
+  color: var(--cor-texto);
+  font-family: var(--fonte-mono);
+}

@@ -16,7 +16,7 @@ export default defineConfig({
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   // Testa o build de produção pré-renderizado, o mesmo que vai ao ar.
   webServer: {
-    command: `npx serve dist/portfolio/browser --single --listen ${PORT} --no-clipboard`,
+    command: `node e2e/servidor.mjs ${PORT}`,
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !isCI,
   },

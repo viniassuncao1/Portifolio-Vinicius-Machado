@@ -16,6 +16,12 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 - **Angular 22 moderno:** componentes standalone, signals, zoneless e o novo control flow.
 - **Pré-renderização (SSG):** cada rota é gerada como HTML estático no build, o que garante
   carregamento rápido e SEO.
+- **Casca de IDE como rota-pai:** a barra, o painel e a aba são montados uma vez; as 15 seções
+  são rotas filhas pré-renderizadas, com o conteúdo definido como dados tipados.
+- **Design tokens:** cores, tipografia e movimento em variáveis CSS (`src/styles/`); os
+  componentes usam só tokens. Fonte JetBrains Mono servida pelo próprio site.
+- **Responsivo e acessível:** no celular o painel vira uma gaveta; `prefers-reduced-motion` é
+  respeitado e o axe verifica o WCAG AA em todas as rotas nos testes E2E.
 - **Qualidade automatizada:** ESLint, Prettier, testes unitários com cobertura mínima de 80% e
   testes E2E com Playwright, rodando em todo Pull Request.
 - **Desenvolvimento orientado a specs com IA:** cada funcionalidade nasce como uma proposta no
@@ -31,7 +37,7 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 | ------------ | ---------------------------------------------------- |
 | Framework    | Angular 22, TypeScript 6, SCSS                       |
 | Renderização | `@angular/ssr` com pré-renderização estática         |
-| Testes       | Vitest (unitários), Playwright (E2E)                 |
+| Testes       | Vitest (unitários), Playwright + axe (E2E)           |
 | Qualidade    | ESLint (angular-eslint), Prettier, Husky, commitlint |
 | CI/CD        | GitHub Actions, Vercel, Dependabot                   |
 | Processo     | OpenSpec (SDD), Claude Code                          |
@@ -66,14 +72,16 @@ A aplicação fica disponível em `http://localhost:4200`.
 src/app/
   core/       serviços e configurações globais
   shared/     componentes, diretivas e pipes reutilizáveis
-  layout/     a "casca" da IDE (barra superior, árvore lateral, editor)
+  layout/     a "casca" da IDE (barra superior, árvore lateral, aba)
   features/   uma pasta por seção do portfólio
-e2e/          testes E2E (Playwright)
+src/styles/   design tokens (_tokens.scss) e movimento (_movimento.scss)
+e2e/          testes E2E (Playwright + axe) e servidor.mjs, que imita a Vercel
 openspec/     specs e histórico de mudanças planejadas
 docs/         documentação do projeto
 ```
 
-Detalhes em [docs/arquitetura.md](docs/arquitetura.md).
+Detalhes em [docs/arquitetura.md](docs/arquitetura.md) e, para os componentes, em
+[docs/componentes.md](docs/componentes.md).
 
 ## CI/CD
 
@@ -90,6 +98,8 @@ Detalhes em [docs/deploy.md](docs/deploy.md).
 
 - [Decisões de arquitetura (ADRs)](docs/adr/README.md)
 - [Arquitetura](docs/arquitetura.md)
+- [Componentes e como criar uma seção](docs/componentes.md)
+- [Diário de desenvolvimento](docs/diario/README.md)
 - [CI/CD e deploy](docs/deploy.md)
 - [Desenvolvimento com IA](docs/desenvolvimento-com-ia.md)
 - [Equipe de agentes](docs/equipe-de-agentes/README.md)

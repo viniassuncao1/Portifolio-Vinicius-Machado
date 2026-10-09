@@ -1,0 +1,18 @@
+<div class="barra-fechar">
+  <button type="button" class="fechar-gaveta" (click)="fecharGaveta.emit()">
+    <app-glifo-fechar />
+    Fechar seções
+  </button>
+</div>
+<header class="cabecalho" aria-hidden="true">
+  <span class="titulo">
+    Portfolio_Vinicius
+    <app-glifo-fechar class="fechar" />
+  </span>
+  <span class="minimizar"></span>
+  <span class="restaurar"></span>
+</header>
+<app-arvore-de-secoes [noInicio]="noInicio()" (secaoEscolhida)="secaoEscolhida.emit()" />
+<div class="rodape" aria-hidden="true">
+  <span class="polegar"></span>
+</div>

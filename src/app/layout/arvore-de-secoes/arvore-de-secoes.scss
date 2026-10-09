@@ -1,0 +1,83 @@
+ul {
+  margin: 0;
+  padding: var(--afastamento-topo-arvore) 0 0;
+  list-style: none;
+}
+
+li:first-child {
+  margin-block-end: var(--afastamento-primeiro-item);
+}
+
+.item {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: var(--altura-linha-arvore);
+  padding-inline-start: var(--recuo-item-arvore);
+  color: var(--cor-texto);
+  font-size: var(--texto-arvore);
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+
+  // Primeiro item (Sobre Mim): o design o mostra sempre em cinza.
+  &.inicial .titulo {
+    color: var(--cor-texto-esmaecido);
+  }
+
+  // Destaque do item atual: camada própria que aparece com `opacity`.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--cor-linha-selecionada);
+    opacity: 0;
+    transition: opacity var(--duracao-rapida) var(--curva-padrao);
+  }
+
+  // Item da seção aberta (ou, no Início, o destaque do design): destacado e expandido.
+  &.atual,
+  &.destacado {
+    min-height: var(--altura-linha-selecionada);
+    padding-inline-start: var(--recuo-item-atual);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .seta {
+      rotate: 90deg;
+    }
+
+    &.inicial {
+      padding-inline-start: calc(var(--recuo-item-atual) + 0.5rem);
+    }
+  }
+}
+
+.seta {
+  flex: none;
+  width: var(--tamanho-seta-arvore);
+  height: var(--tamanho-seta-arvore);
+  margin-inline-end: var(--afastamento-icone-arvore);
+  fill: var(--cor-icone);
+  transition: rotate var(--duracao-rapida) var(--curva-padrao);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item::before,
+  .seta {
+    transition: none;
+  }
+}
+
+app-icone {
+  margin-inline-end: var(--afastamento-texto-arvore);
+}

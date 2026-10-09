@@ -1,0 +1,134 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.area {
+  display: grid;
+  grid-template-columns: var(--largura-painel-lateral) minmax(0, 1fr);
+  column-gap: var(--espaco-2);
+  min-height: calc(100dvh - var(--altura-barra-ferramentas));
+}
+
+.coluna-editor {
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  min-width: 0;
+}
+
+.editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--largura-coluna-scrollbar);
+  border-end-start-radius: var(--raio-editor);
+  background: var(--cor-editor);
+}
+
+.conteudo {
+  view-transition-name: conteudo-editor;
+  min-width: 0;
+  padding-block: var(--espaco-editor-topo) var(--espaco-editor-base);
+}
+
+// Scrollbar vertical decorativa, como no design.
+.scrollbar {
+  position: relative;
+  border-inline-start: var(--borda-divisoria);
+}
+
+.polegar {
+  position: absolute;
+  inset-block-start: var(--espaco-4);
+  inset-inline-start: 50%;
+  width: var(--tamanho-scrollbar);
+  height: var(--altura-polegar-editor);
+  translate: -50% 0;
+  border-radius: var(--raio-scrollbar);
+  background: var(--cor-scrollbar-polegar);
+}
+
+// Texto só para leitores de tela e buscadores (h1 da página).
+.somente-leitores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+// Botão que abre a gaveta: só existe abaixo de 768px.
+.barra-gaveta {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .barra-gaveta {
+    display: flex;
+    align-items: center;
+    height: var(--altura-barra-gaveta);
+    padding-inline: var(--espaco-4);
+    border-block-end: var(--borda-divisoria);
+    background: var(--cor-painel);
+  }
+
+  .botao-secoes {
+    min-height: var(--altura-barra-gaveta);
+    padding-inline: var(--espaco-4);
+    border: 0;
+    background: transparent;
+    color: var(--cor-texto);
+    font: inherit;
+    font-family: var(--fonte-mono);
+    font-size: var(--texto-aba);
+    cursor: pointer;
+  }
+
+  .botao-secoes:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+
+  .area {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  // Gaveta: o painel sai do fluxo e cobre o editor; `data-aberta` controla a animação.
+  // `visibility` só espera o fim da saída para tirar o painel do foco e dos leitores de tela.
+  app-painel-lateral {
+    position: fixed;
+    inset-block: calc(var(--altura-barra-ferramentas) + var(--altura-barra-gaveta)) 0;
+    inset-inline-start: 0;
+    z-index: var(--camada-gaveta);
+    width: 100%;
+    background: var(--cor-painel);
+    transition:
+      transform var(--duracao-media) var(--curva-saida),
+      opacity var(--duracao-media) var(--curva-saida),
+      visibility 0s;
+  }
+
+  app-painel-lateral[data-aberta='false'] {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-100%);
+    transition:
+      transform var(--duracao-media) var(--curva-entrada),
+      opacity var(--duracao-media) var(--curva-entrada),
+      visibility 0s var(--duracao-media);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    app-painel-lateral,
+    app-painel-lateral[data-aberta='false'] {
+      transition: none;
+    }
+  }
+
+  .scrollbar {
+    display: none;
+  }
+}
