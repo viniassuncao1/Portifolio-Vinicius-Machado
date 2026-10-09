@@ -33,7 +33,7 @@ Responsável entre colchetes. Grupos que mexem nos mesmos arquivos rodam em sequ
 ## 5. Página inicial [Pincel, depois Sentinela]
 
 - [x] 5.1 Escrever o conteúdo da tela 01 em `features/inicio/inicio.conteudo.ts` e exibir no editor, sem item atual na árvore — verificar comparando com a `tela-01.png` no portal "Site Desktop"
-- [ ] 5.2 [Sentinela] Atualizar os testes unitário e E2E do Início para os cenários da spec `secao-inicio` — verificar com `npm run test:ci && npm run e2e`
+- [x] 5.2 [Sentinela] Atualizar os testes unitário e E2E do Início para os cenários da spec `secao-inicio` — verificar com `npm run test:ci && npm run e2e`
 
 ## 6. Documentação [Escriba, em paralelo]
 
@@ -41,7 +41,7 @@ Responsável entre colchetes. Grupos que mexem nos mesmos arquivos rodam em sequ
 - [x] 6.2 Criar `docs/diario/README.md` (índice e modelo de entrada) e a entrada `0001-fundacao-do-projeto.md` com rascunho de post — verificar que a entrada tem todas as seções da spec
 - [x] 6.3 Escrever `docs/componentes.md` com o inventário das telas e o uso de cada componente, depois que os grupos 3 a 5 estiverem prontos — verificar que os nomes batem com o código
 - [x] 6.4 Atualizar `README.md` e `docs/arquitetura.md` (casca, rotas, tokens, fonte, diário) — verificar com `npm run format:check`
-- [ ] 6.5 Escrever a entrada `0002-fundacao-visual-e-casca-da-ide.md` com capturas dos portals (pedidas ao Regente) e rascunho de post — verificar que está no índice
+- [x] 6.5 Escrever a entrada `0002-fundacao-visual-e-casca-da-ide.md` com capturas dos portals (pedidas ao Regente) e rascunho de post — verificar que está no índice
 
 ## 7. Movimento [Compasso, depois do grupo 4]
 
@@ -55,7 +55,7 @@ Responsável entre colchetes. Grupos que mexem nos mesmos arquivos rodam em sequ
 ## 9. Integração [Regente]
 
 - [ ] 9.1 Revisar os diffs contra specs, design e `.claude/rules/ecc/` e conferir com o Vinicius a gaveta no portal "Site Mobile" — verificar pela aprovação dele
-- [ ] 9.2 Rodar `npm run lint && npm run test:ci && npm run build && npm run e2e` com cobertura acima de 80% — verificar pela saída dos comandos
+- [x] 9.2 Rodar `npm run lint && npm run test:ci && npm run build && npm run e2e` com cobertura acima de 80% — verificar pela saída dos comandos
 - [ ] 9.3 Abrir o PR com o template e capturas, esperar o CI verde e fazer o merge sem apagar a branch — verificar pelo PR mesclado e pelo deploy de produção
 
 ## Workflow follow-up
