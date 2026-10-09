@@ -29,19 +29,19 @@ export const CONTEUDO_CONTATO: ConteudoDoEditor = [
     comum(' Contact('),
   ),
   linha(
-    3,
+    2,
     link(literal('"viniciusmassuncao@gmail.com"'), 'mailto:viniciusmassuncao@gmail.com'),
     comum(','),
   ),
-  linha(3, link(literal('"+55 61 98283-7805"'), 'tel:+5561982837805'), comum(',')),
+  linha(2, link(literal('"+55 61 98283-7805"'), 'tel:+5561982837805'), comum(',')),
   linha(
-    3,
+    2,
     comum('URI.create('),
     link(literal('"https://linkedin.com/in/viniassuncao"'), 'https://linkedin.com/in/viniassuncao'),
     comum('),'),
   ),
   linha(
-    3,
+    2,
     comum('URI.create('),
     link(literal('"https://github.com/viniassuncao1"'), 'https://github.com/viniassuncao1'),
     comum(')'),

@@ -36,19 +36,19 @@ const periodo = ([ano, mes]: readonly [number, number]): readonly Trecho[] => [
 const campoFim = (experiencia: Experiencia): Linha => {
   if (!experiencia.fim) {
     return linha(
-      3,
+      2,
       comum('Optional.empty(),'),
       comum('  '),
       comentario('// em andamento (Presente)'),
     );
   }
-  return linha(3, comum('Optional.of('), ...periodo(experiencia.fim), comum('),'));
+  return linha(2, comum('Optional.of('), ...periodo(experiencia.fim), comum('),'));
 };
 
 const destaques = (itens: readonly string[]): readonly Linha[] => [
-  linha(3, comum('List.of(')),
-  ...itens.map((item, i) => linha(4, aspas(item), comum(i < itens.length - 1 ? ',' : ''))),
-  linha(3, comum(')')),
+  linha(2, comum('List.of(')),
+  ...itens.map((item, i) => linha(3, aspas(item), comum(i < itens.length - 1 ? ',' : ''))),
+  linha(2, comum(')')),
 ];
 
 const importacoes: readonly Linha[] = [
@@ -60,11 +60,11 @@ const importacoes: readonly Linha[] = [
 /** O record vem só na página 1; as outras duas páginas o usam como a mesma classe `Experiences`. */
 const registro: readonly Linha[] = [
   linha(1, palavraChave('record'), comum(' Experience(')),
-  linha(3, declaracao('String company'), comum(',')),
-  linha(3, declaracao('String role'), comum(',')),
-  linha(3, declaracao('YearMonth start'), comum(',')),
-  linha(3, declaracao('Optional<YearMonth> end'), comum(',')),
-  linha(3, declaracao('List<String> highlights'), comum(') {}')),
+  linha(2, declaracao('String company'), comum(',')),
+  linha(2, declaracao('String role'), comum(',')),
+  linha(2, declaracao('YearMonth start'), comum(',')),
+  linha(2, declaracao('Optional<YearMonth> end'), comum(',')),
+  linha(2, declaracao('List<String> highlights'), comum(') {}')),
   vazia(),
 ];
 
@@ -84,9 +84,9 @@ const pagina = (experiencia: Experiencia, comRegistro: boolean): ConteudoDoEdito
     palavraChave('new'),
     comum(' Experience('),
   ),
-  linha(3, aspas(experiencia.empresa), comum(',')),
-  linha(3, aspas(experiencia.cargo), comum(',')),
-  linha(3, ...periodo(experiencia.inicio), comum(',')),
+  linha(2, aspas(experiencia.empresa), comum(',')),
+  linha(2, aspas(experiencia.cargo), comum(',')),
+  linha(2, ...periodo(experiencia.inicio), comum(',')),
   campoFim(experiencia),
   ...destaques(experiencia.destaques),
   linha(1, comum(');')),
