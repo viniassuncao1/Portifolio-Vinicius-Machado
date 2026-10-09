@@ -45,7 +45,7 @@ Eu ──► Regente: "quero a seção X"
 Com seis especialistas na mesma cópia do repositório, o Regente divide a change em **trilhas**:
 cada trilha tem um dono e um conjunto de arquivos que mais ninguém toca. Uma trilha que depende de
 outra espera por ela. A decisão 7 do design da change
-[`experiencia-de-ide-e-java-moderno`](../../openspec/changes/experiencia-de-ide-e-java-moderno/design.md)
+[`experiencia-de-ide-e-java-moderno`](../../openspec/changes/archive/2026-10-09-experiencia-de-ide-e-java-moderno/design.md)
 é o exemplo:
 
 | Trilha            | Quem      | Arquivos                                                                | Depende de  |
