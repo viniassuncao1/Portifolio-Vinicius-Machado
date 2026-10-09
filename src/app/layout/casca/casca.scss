@@ -25,6 +25,7 @@
 }
 
 .conteudo {
+  view-transition-name: conteudo-editor;
   min-width: 0;
   padding-block: var(--espaco-editor-topo) var(--espaco-editor-base);
 }

@@ -1,0 +1,59 @@
+// Tokens de movimento: rápido e preciso, como uma IDE. Anime só `transform` e `opacity`.
+// Com `prefers-reduced-motion: reduce` as durações zeram e o estado final aparece direto.
+
+:root {
+  --duracao-rapida: 120ms;
+  --duracao-media: 160ms;
+  --duracao-lenta: 200ms;
+
+  // Desaceleração firme: o elemento chega rápido e assenta.
+  --curva-saida: cubic-bezier(0.2, 0, 0, 1);
+  // Aceleração suave: para elementos que saem de cena.
+  --curva-entrada: cubic-bezier(0.4, 0, 1, 1);
+  // Movimento entre dois estados visíveis.
+  --curva-padrao: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duracao-rapida: 0ms;
+    --duracao-media: 0ms;
+    --duracao-lenta: 0ms;
+  }
+}
+
+// Troca de seção (View Transitions API): só o conteúdo do editor anima. O resto da casca
+// fica parado, pois a camada `root` não faz fade. O nome `conteudo-editor` está em casca.scss.
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(conteudo-editor) {
+  animation: movimento-sair var(--duracao-rapida) var(--curva-entrada) both;
+}
+
+::view-transition-new(conteudo-editor) {
+  animation: movimento-entrar var(--duracao-media) var(--curva-saida) both;
+}
+
+@keyframes movimento-sair {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes movimento-entrar {
+  from {
+    opacity: 0;
+    transform: translateY(0.4rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(conteudo-editor),
+  ::view-transition-new(conteudo-editor) {
+    animation: none;
+  }
+}
