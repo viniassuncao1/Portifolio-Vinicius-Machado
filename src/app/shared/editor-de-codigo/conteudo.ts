@@ -28,13 +28,23 @@ export interface LinhaDeParagrafo {
   readonly texto: string;
 }
 
+/**
+ * Comentário Javadoc: o editor desenha a abertura, a coluna de asteriscos e o fechamento como
+ * elementos só visuais, então o texto copiado e lido por leitores de tela é apenas `texto`.
+ */
+export interface LinhaDeJavadoc {
+  readonly tipo: 'javadoc';
+  readonly recuo: number;
+  readonly texto: string;
+}
+
 export interface LinhaVazia {
   readonly tipo: 'vazia';
   /** Vazia com a altura das linhas da mesma densidade (telas 03 a 06). */
   readonly densidade?: Densidade;
 }
 
-export type Linha = LinhaDeCodigo | LinhaDeParagrafo | LinhaVazia;
+export type Linha = LinhaDeCodigo | LinhaDeParagrafo | LinhaDeJavadoc | LinhaVazia;
 
 export type ConteudoDoEditor = readonly Linha[];
 
@@ -69,6 +79,13 @@ export const linhaApertada = comDensidade('apertada');
 
 export const paragrafo = (recuo: number, texto: string): LinhaDeParagrafo => ({
   tipo: 'paragrafo',
+  recuo,
+  texto,
+});
+
+/** Bloco Javadoc com o texto quebrado em 72 colunas, alinhado ao recuo da declaração. */
+export const javadoc = (recuo: number, texto: string): LinhaDeJavadoc => ({
+  tipo: 'javadoc',
   recuo,
   texto,
 });
