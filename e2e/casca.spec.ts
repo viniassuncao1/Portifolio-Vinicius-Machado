@@ -35,9 +35,15 @@ test.describe('Estrutura da IDE', () => {
     await expect(page.getByRole('main')).toBeVisible();
   });
 
-  test('não marca nenhuma seção como atual no Início', async ({ page }) => {
+  test('destaca "Sobre Mim" no Início, sem marcar página atual', async ({ page }) => {
     await page.goto('/');
 
+    const sobreMim = page.getByRole('link', { name: 'Sobre Mim' });
+    await expect(sobreMim.locator('.seta')).toHaveCSS('rotate', '90deg');
+    await expect(page.getByRole('link', { name: 'Diferenciais' }).locator('.seta')).not.toHaveCSS(
+      'rotate',
+      '90deg',
+    );
     await expect(page.locator('nav [aria-current]')).toHaveCount(0);
   });
 
