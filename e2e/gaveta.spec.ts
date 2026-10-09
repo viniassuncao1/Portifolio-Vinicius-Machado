@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+import { abrirHidratada } from './apoio';
+
 test.describe('Gaveta de seções no celular (390x844)', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
@@ -72,12 +74,13 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
     await expect(page.getByRole('link', { name: 'Formação' })).toBeHidden();
   });
 
-  test('escolhe uma seção só com o teclado: Tab, Enter', async ({ page }) => {
-    await page.goto('/');
+  test('escolhe uma seção só com o teclado: seta para baixo e Enter', async ({ page }) => {
+    await abrirHidratada(page, '/');
     await page.getByRole('button', { name: 'Seções', exact: true }).click();
     await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeFocused();
 
-    await page.keyboard.press('Tab');
+    await page.keyboard.press('ArrowDown');
+    await expect(page.getByRole('link', { name: 'Diferenciais' })).toBeFocused();
     await page.keyboard.press('Enter');
 
     await expect(page).toHaveURL(/\/diferenciais$/);
