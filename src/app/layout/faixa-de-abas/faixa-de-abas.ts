@@ -97,7 +97,7 @@ export class FaixaDeAbas {
   private mostrarAbaAtiva(): void {
     const indice = this.abas().findIndex((aba) => aba.slug === this.slugAtivo());
     const reduzido = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    this.botoes()[indice]?.nativeElement.parentElement?.scrollIntoView?.({
+    this.botoes()[indice]?.nativeElement.scrollIntoView?.({
       block: 'nearest',
       inline: 'nearest',
       behavior: reduzido ? 'auto' : 'smooth',

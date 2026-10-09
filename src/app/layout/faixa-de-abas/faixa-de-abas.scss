@@ -5,36 +5,30 @@
   user-select: none;
 }
 
+// Uma grade com uma coluna por aba. A lista de abas e a de botões de fechar ocupam as mesmas
+// colunas (subgrade), então cada × fica na ponta da sua aba sem estar dentro do tablist.
 .lista {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(var(--quantidade-de-abas, 1), max-content);
+  grid-auto-rows: 100%;
   height: 100%;
   // Com muitas abas a faixa rola na horizontal, sem barra visível.
   overflow-x: auto;
+  overflow-y: hidden;
   scrollbar-width: none;
 }
 
-.aba {
-  position: relative;
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  box-sizing: border-box;
-  min-width: var(--largura-minima-aba);
-  height: 100%;
-  border-start-start-radius: var(--raio-aba);
-  border-start-end-radius: var(--raio-aba);
-  color: var(--cor-texto-aba-inativa);
-  font-size: var(--texto-aba);
-  white-space: nowrap;
+.abas,
+.fechamentos {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  grid-template-columns: subgrid;
+}
 
-  &.ativa {
-    background: var(--cor-aba-ativa);
-    color: var(--cor-texto);
-  }
-
-  &:not(.ativa):hover {
-    background: var(--cor-aba-passando);
-  }
+.fechamentos {
+  // Só os botões recebem o mouse; o resto da camada deixa passar para as abas.
+  pointer-events: none;
 }
 
 button {
@@ -52,18 +46,28 @@ button {
 
 .arquivo {
   display: flex;
-  flex: 1 1 auto;
   align-items: center;
   gap: var(--espaco-3);
-  min-width: 0;
+  box-sizing: border-box;
+  min-width: var(--largura-minima-aba);
   height: 100%;
-  padding-inline: 1.7rem 0;
-  white-space: nowrap;
+  // O espaço à direita é do botão de fechar, que fica sobre a aba.
+  padding-inline: 1.7rem calc(var(--tamanho-alvo-toque) + var(--espaco-2));
+  border-start-start-radius: var(--raio-aba);
+  border-start-end-radius: var(--raio-aba);
+  color: var(--cor-texto-aba-inativa);
+  font-size: var(--texto-aba);
   text-align: start;
-}
+  white-space: nowrap;
 
-.nome {
-  padding-inline-end: var(--espaco-2);
+  &.ativa {
+    background: var(--cor-aba-ativa);
+    color: var(--cor-texto);
+  }
+
+  &:not(.ativa):hover {
+    background: var(--cor-aba-passando);
+  }
 }
 
 .icone-java {
@@ -86,20 +90,21 @@ button {
 
 .fechar {
   display: flex;
-  flex: none;
   align-items: center;
   justify-content: center;
+  justify-self: end;
   min-width: var(--tamanho-alvo-toque);
   height: 100%;
-  padding: 0;
   margin-inline-end: var(--espaco-1);
-  color: var(--cor-icone);
+  padding: 0;
+  color: var(--cor-texto-aba-inativa);
+  pointer-events: auto;
+
+  &.ativa {
+    color: var(--cor-icone);
+  }
 
   &:hover {
     color: var(--cor-texto);
   }
-}
-
-.aba:not(.ativa) .fechar {
-  color: var(--cor-texto-aba-inativa);
 }

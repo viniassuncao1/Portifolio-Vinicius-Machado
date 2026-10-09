@@ -106,4 +106,15 @@ describe('FaixaDeAbas', () => {
 
     expect(abas(raiz).map((a) => a.textContent?.trim())).toEqual(['SobreMim.java', 'Contato.java']);
   });
+
+  it('o tablist contém só abas: os botões de fechar ficam fora dele', async () => {
+    const { raiz } = await abrir('/sobre-mim', '/skills');
+    const tablist = raiz.querySelector('[role="tablist"]') as HTMLElement;
+
+    expect(
+      Array.from(tablist.children).every((filho) => filho.getAttribute('role') === 'tab'),
+    ).toBe(true);
+    expect(tablist.querySelector('button:not([role="tab"])')).toBeNull();
+    expect(raiz.querySelectorAll('.fechar')).toHaveLength(2);
+  });
 });
