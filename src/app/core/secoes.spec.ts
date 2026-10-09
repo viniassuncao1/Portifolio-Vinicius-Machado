@@ -1,3 +1,4 @@
+import { NOMES_DE_ICONE } from '../shared/icone/icone';
 import { SECOES } from './secoes';
 
 describe('SECOES', () => {
@@ -42,5 +43,15 @@ describe('SECOES', () => {
       'contato',
     ]);
     expect(new Set(slugs).size).toBe(slugs.length);
+  });
+
+  it('dá a cada seção um ícone conhecido', () => {
+    const nomes: readonly string[] = NOMES_DE_ICONE;
+
+    expect(SECOES.every((secao) => nomes.includes(secao.icone))).toBe(true);
+  });
+
+  it('usa slugs seguros para endereço: minúsculos, sem acento nem espaço', () => {
+    expect(SECOES.every((secao) => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(secao.slug))).toBe(true);
   });
 });

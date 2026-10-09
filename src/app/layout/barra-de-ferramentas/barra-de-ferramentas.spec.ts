@@ -18,4 +18,40 @@ describe('BarraDeFerramentas', () => {
 
     expect((fixture.nativeElement as HTMLElement).querySelectorAll('app-icone')).toHaveLength(8);
   });
+
+  it('exibe os ícones na ordem do design', async () => {
+    const fixture = TestBed.createComponent(BarraDeFerramentas);
+    await fixture.whenStable();
+    const origens = Array.from(
+      (fixture.nativeElement as HTMLElement).querySelectorAll('app-icone img'),
+    ).map((img) => /icones\/(.+)\.svg/.exec(img.getAttribute('src') ?? '')?.[1]);
+
+    expect(origens).toEqual([
+      'arquivo',
+      'pasta',
+      'projeto',
+      'executar',
+      'ferramenta',
+      'ia',
+      'relogio',
+      'monitor',
+    ]);
+  });
+
+  it('posiciona cada ícone pela variável --x', async () => {
+    const fixture = TestBed.createComponent(BarraDeFerramentas);
+    await fixture.whenStable();
+    const botoes = (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLElement>('.botao');
+
+    expect(botoes[0].style.getPropertyValue('--x')).toBe('2.75');
+    expect(botoes[7].style.getPropertyValue('--x')).toBe('25.1');
+  });
+
+  it('inclui os controles de janela sem foco', async () => {
+    const fixture = TestBed.createComponent(BarraDeFerramentas);
+    await fixture.whenStable();
+    const controles = (fixture.nativeElement as HTMLElement).querySelector('.controles-janela');
+
+    expect(controles?.getAttribute('focusable')).toBe('false');
+  });
 });

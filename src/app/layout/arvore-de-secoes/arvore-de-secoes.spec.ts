@@ -66,4 +66,84 @@ describe('ArvoreDeSecoes', () => {
     expect(escolhidas).toHaveLength(1);
     elemento.remove();
   });
+
+  it('mostra os títulos das 15 seções na ordem definida', async () => {
+    const fixture = await abrir('/');
+    const titulos = Array.from(
+      (fixture.nativeElement as HTMLElement).querySelectorAll('a .titulo'),
+    ).map((titulo) => titulo.textContent);
+
+    expect(titulos).toEqual(SECOES.map((secao) => secao.titulo));
+  });
+
+  it('liga cada item à rota da sua seção', async () => {
+    const fixture = await abrir('/');
+    const hrefs = Array.from((fixture.nativeElement as HTMLElement).querySelectorAll('a')).map(
+      (link) => link.getAttribute('href'),
+    );
+
+    expect(hrefs).toEqual(SECOES.map((secao) => `/${secao.slug}`));
+  });
+
+  it('mostra o ícone da seção em cada item', async () => {
+    const fixture = await abrir('/');
+    const links = (fixture.nativeElement as HTMLElement).querySelectorAll('a');
+
+    SECOES.forEach((secao, i) => {
+      expect(links[i].querySelector('app-icone img')?.getAttribute('src')).toContain(
+        `icones/${secao.icone}.svg`,
+      );
+    });
+  });
+
+  it('esconde a seta decorativa de cada item da leitura', async () => {
+    const fixture = await abrir('/');
+    const setas = (fixture.nativeElement as HTMLElement).querySelectorAll('a .seta');
+
+    expect(setas).toHaveLength(15);
+    setas.forEach((seta) => {
+      expect(seta.getAttribute('aria-hidden')).toBe('true');
+      expect(seta.getAttribute('focusable')).toBe('false');
+    });
+  });
+
+  it('identifica a navegação para tecnologias assistivas', async () => {
+    const fixture = await abrir('/');
+
+    expect(
+      (fixture.nativeElement as HTMLElement).querySelector('nav')?.getAttribute('aria-label'),
+    ).toBe('Seções do portfólio');
+  });
+
+  it('move o destaque quando a rota muda', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/sobre-mim');
+    const fixture = TestBed.createComponent(ArvoreDeSecoes);
+    await fixture.whenStable();
+    const elemento = fixture.nativeElement as HTMLElement;
+
+    await harness.navigateByUrl('/contato');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const atual = elemento.querySelectorAll('[aria-current="page"]');
+    expect(atual).toHaveLength(1);
+    expect(atual[0].textContent).toContain('Contato');
+  });
+
+  it('gira a seta do item atual para baixo pelo estilo', async () => {
+    await abrir('/sobre-mim');
+    const estilos = Array.from(document.head.querySelectorAll('style'))
+      .map((e) => e.textContent ?? '')
+      .join('\n');
+
+    expect(estilos).toMatch(/\.atual[^{]*\.seta[^{]*\{[^}]*rotate:\s*90deg/);
+  });
+
+  it('mantém todos os itens alcançáveis pelo teclado, sem tabindex negativo', async () => {
+    const fixture = await abrir('/');
+    const links = (fixture.nativeElement as HTMLElement).querySelectorAll('a');
+
+    links.forEach((link) => expect(link.getAttribute('tabindex')).not.toBe('-1'));
+  });
 });

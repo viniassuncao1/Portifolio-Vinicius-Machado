@@ -17,7 +17,10 @@ describe('Casca', () => {
           {
             path: '',
             component: Casca,
-            children: [{ path: 'contato', title: 'Contato', component: Pagina }],
+            children: [
+              { path: 'contato', title: 'Contato', component: Pagina },
+              { path: 'ajuda', title: 'Ajuda', component: Pagina },
+            ],
           },
         ]),
         { provide: TitleStrategy, useExisting: EstrategiaDeTitulo },
@@ -43,5 +46,58 @@ describe('Casca', () => {
 
     expect(titulos).toHaveLength(1);
     expect(titulos[0].textContent).toBe('Contato');
+  });
+
+  it('põe a barra antes do painel e o painel antes do editor', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/contato');
+    const elemento = harness.routeNativeElement as HTMLElement;
+    const ordem = Array.from(
+      elemento.querySelectorAll(
+        'app-barra-de-ferramentas, app-painel-lateral, app-aba-do-editor, main',
+      ),
+    ).map((e) => e.tagName.toLowerCase());
+
+    expect(ordem).toEqual([
+      'app-barra-de-ferramentas',
+      'app-painel-lateral',
+      'app-aba-do-editor',
+      'main',
+    ]);
+  });
+
+  it('põe a aba antes da área do editor', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/contato');
+    const aba = (harness.routeNativeElement as HTMLElement).querySelector('app-aba-do-editor');
+
+    expect(aba?.nextElementSibling?.tagName).toBe('MAIN');
+  });
+
+  it('põe o h1 como primeiro item do main, antes do conteúdo da rota', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/contato');
+    const main = (harness.routeNativeElement as HTMLElement).querySelector('main');
+
+    expect(main?.firstElementChild?.tagName).toBe('H1');
+  });
+
+  it('esconde a scrollbar decorativa da leitura', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/contato');
+    const scrollbar = (harness.routeNativeElement as HTMLElement).querySelector('.scrollbar');
+
+    expect(scrollbar?.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('atualiza o h1 quando a rota muda', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/contato');
+    await harness.navigateByUrl('/ajuda');
+    harness.detectChanges();
+
+    expect((harness.routeNativeElement as HTMLElement).querySelector('h1')?.textContent).toBe(
+      'Ajuda',
+    );
   });
 });

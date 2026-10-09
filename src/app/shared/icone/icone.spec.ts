@@ -25,4 +25,23 @@ describe('Icone', () => {
   it('expõe os nove ícones usados nas telas', () => {
     expect(NOMES_DE_ICONE).toHaveLength(9);
   });
+
+  it.each(NOMES_DE_ICONE)('aponta o ícone %s para o seu arquivo SVG', async (nome) => {
+    const fixture = TestBed.createComponent(Hospedeiro);
+    fixture.componentInstance.nome = nome;
+    await fixture.whenStable();
+    const imagem = (fixture.nativeElement as HTMLElement).querySelector('img');
+
+    expect(imagem?.getAttribute('src')).toContain(`icones/${nome}.svg`);
+  });
+
+  it('não tem papel de imagem para tecnologias assistivas', async () => {
+    const fixture = TestBed.createComponent(Hospedeiro);
+    await fixture.whenStable();
+
+    expect((fixture.nativeElement as HTMLElement).querySelector('img[alt=""]')).not.toBeNull();
+    expect(
+      (fixture.nativeElement as HTMLElement).querySelector('img[alt]:not([alt=""])'),
+    ).toBeNull();
+  });
 });

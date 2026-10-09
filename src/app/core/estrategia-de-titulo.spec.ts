@@ -38,4 +38,31 @@ describe('EstrategiaDeTitulo', () => {
     expect(TestBed.inject(Title).getTitle()).toBe('Contato | Vinicius Machado');
     expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Contato');
   });
+
+  it('volta ao título do Início ao navegar de uma seção para a raiz', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/contato');
+    await harness.navigateByUrl('/');
+
+    expect(TestBed.inject(Title).getTitle()).toBe('Vinicius Machado | Desenvolvedor Full Stack');
+    expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Portfolio_Vinicius');
+  });
+
+  it('começa com o título do Início antes de qualquer navegação', () => {
+    expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Portfolio_Vinicius');
+  });
+
+  it('usa o título do Início quando a rota não define título', async () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        provideRouter([{ path: 'sem-titulo', component: Vazia }]),
+        { provide: TitleStrategy, useExisting: EstrategiaDeTitulo },
+      ],
+    });
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/sem-titulo');
+
+    expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Portfolio_Vinicius');
+  });
 });
