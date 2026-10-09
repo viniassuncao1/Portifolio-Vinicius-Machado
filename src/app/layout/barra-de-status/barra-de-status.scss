@@ -34,3 +34,10 @@
   padding-inline-start: var(--espaco-4);
   border-inline-start: var(--borda-divisoria);
 }
+
+// No celular o nome do arquivo tem prioridade: a codificação e a versão do Java saem.
+@media (max-width: 767.98px) {
+  .item:not(:last-child) {
+    display: none;
+  }
+}
