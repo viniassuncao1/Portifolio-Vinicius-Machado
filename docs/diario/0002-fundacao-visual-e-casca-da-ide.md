@@ -1,8 +1,8 @@
 # 0002: Fundação visual e casca da IDE
 
 - **Data:** 2026-10-09
-- **Change:** [fundacao-visual-e-casca-da-ide](../../openspec/changes/fundacao-visual-e-casca-da-ide/)
-- **PR:** ainda não aberto na data desta entrada
+- **Change:** [fundacao-visual-e-casca-da-ide](../../openspec/changes/archive/2026-10-09-fundacao-visual-e-casca-da-ide/)
+- **PR:** [#12](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/12)
 - **ADRs:** [0008](../adr/0008-diario-de-desenvolvimento.md) e
   [0009](../adr/0009-acessibilidade-automatizada-com-axe.md)
 
@@ -72,7 +72,7 @@ o começo.
 
 ## Links
 
-- Change: [`openspec/changes/fundacao-visual-e-casca-da-ide`](../../openspec/changes/fundacao-visual-e-casca-da-ide/)
+- Change: [`openspec/changes/archive/2026-10-09-fundacao-visual-e-casca-da-ide`](../../openspec/changes/archive/2026-10-09-fundacao-visual-e-casca-da-ide/)
 - ADRs: [0008 diário de desenvolvimento](../adr/0008-diario-de-desenvolvimento.md) e
   [0009 acessibilidade com axe](../adr/0009-acessibilidade-automatizada-com-axe.md)
 - Documentação: [componentes](../componentes.md) e [arquitetura](../arquitetura.md)
