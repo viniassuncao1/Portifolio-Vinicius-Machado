@@ -139,7 +139,7 @@ describe('Skills', () => {
     expect(texto).toContain('KnowledgeLevel.FULL_PROJECT, List.of("PHP")),');
     expect(texto).toContain('KnowledgeLevel.OCCASIONAL_USE, List.of("React Native", "CI/CD")),');
     expect(texto).toContain(
-      'KnowledgeLevel.THEORETICAL, List.of("Python", "AWS", "Azure", "Docker", "Kubernetes"));',
+      'KnowledgeLevel.THEORETICAL, List.of("Python", "AWS", "Azure", "Docker", "Kubernetes")));',
     );
   });
 
