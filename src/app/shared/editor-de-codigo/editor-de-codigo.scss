@@ -256,7 +256,8 @@ a[class^='papel-'] {
     }
   }
 
-  :host(.pronto) .linha.atual::after {
+  // Mesma especificidade da regra do cursor (com `:not(.vazia)`), senão a animação vence.
+  :host(.pronto) .linha.atual:not(.vazia)::after {
     animation: none;
   }
 }

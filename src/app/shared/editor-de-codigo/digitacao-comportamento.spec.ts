@@ -346,7 +346,7 @@ describe('Digitação do editor: comportamento', () => {
       expect(editor.querySelector('code')!.textContent).toContain('int linha78');
       expect(editor.querySelectorAll('.atual')).toHaveLength(1);
       expect(estilos()).toMatch(
-        /prefers-reduced-motion[\s\S]*\.pronto[^{]*\.linha\.atual::after[^{]*\{[^}]*animation:\s*none/,
+        /prefers-reduced-motion[\s\S]*\.pronto[^{]*\.linha\.atual:not\(\.vazia\)::after[^{]*\{[^}]*animation:\s*none/,
       );
     });
 
