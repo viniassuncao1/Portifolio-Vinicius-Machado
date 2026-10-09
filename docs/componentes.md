@@ -22,7 +22,10 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 | Início                                     | 01               | `Inicio`                       | `features/inicio/`             |
 | Sobre Mim                                  | 02               | `SobreMim`                     | `features/sobre-mim/`          |
 | Diferenciais                               | 03               | `Diferenciais`                 | `features/diferenciais/`       |
-| Seção sem conteúdo ainda                   | 04-30            | `SecaoEmConstrucao`            | `shared/secao-em-construcao/`  |
+| Como uso a IA                              | 04               | `ComoUsoIa`                    | `features/como-uso-ia/`        |
+| Skills / STACK (2 páginas)                 | 05, 06           | `Skills`                       | `features/skills/`             |
+| Controle de páginas `◂ 1/2 ▸`              | 05, 06 (nosso)   | `PaginasDaSecao`               | `shared/paginas-da-secao/`     |
+| Seção sem conteúdo ainda                   | 07-30            | `SecaoEmConstrucao`            | `shared/secao-em-construcao/`  |
 | Janela de preview de site                  | 11-15            | fora do escopo (change futura) | -                              |
 
 O botão "Seções" e a gaveta do celular **não existem no design** (só há telas de desktop). São
@@ -111,6 +114,24 @@ decisão nossa e moram na `Casca` e no `PainelLateral`.
   token `--tamanho-glifo`.
 - **Entradas e saídas:** nenhuma.
 
+### `PaginasDaSecao`
+
+- **Onde:** `shared/paginas-da-secao/paginas-da-secao.ts`, seletor `app-paginas-da-secao`.
+- **O que faz:** o controle de páginas de uma seção com mais de uma tela do design (hoje, Skills):
+  setas em SVG para anterior e próxima e o texto `1/2` entre elas, num
+  `<nav aria-label="Páginas da seção">`. Os links são `routerLink` para `/<slug>` (página 1) e
+  `/<slug>/N`. As setas têm `aria-label` "Página anterior" e "Próxima página"; o número tem o
+  rótulo "página X de N" e `aria-current="page"`. Na primeira e na última página, o lado sem
+  destino fica como espaço vazio decorativo. **Não aparece quando `total` é 1.** Esse controle
+  não existe no design (as telas são estáticas): é o mínimo para navegar entre as páginas de uma
+  mesma seção, só com tokens.
+- **Entradas:** `slug = input.required<string>()`, `pagina = input.required<number>()` e
+  `total = input.required<number>()`.
+
+```html
+<app-paginas-da-secao slug="skills" [pagina]="pagina()" [total]="totalDePaginas()" />
+```
+
 ### `SecaoEmConstrucao`
 
 - **Onde:** `shared/secao-em-construcao/secao-em-construcao.ts`, seletor
@@ -128,9 +149,10 @@ tipadas, todas `readonly`.
 | ------------------ | ---------------------------------------------------------------------------------- |
 | `Papel`            | `'palavra-chave' \| 'declaracao' \| 'literal' \| 'valor' \| 'anotacao' \| 'comum'` |
 | `Trecho`           | `{ texto, papel }`: um pedaço de código com uma cor                                |
-| `LinhaDeCodigo`    | `{ tipo: 'codigo', recuo, compacta?, trechos }`                                    |
+| `LinhaDeCodigo`    | `{ tipo: 'codigo', recuo, densidade?, trechos }`                                   |
 | `LinhaDeParagrafo` | `{ tipo: 'paragrafo', recuo, texto }`: texto em bloco de comentário                |
-| `LinhaVazia`       | `{ tipo: 'vazia', compacta? }`                                                     |
+| `LinhaVazia`       | `{ tipo: 'vazia', densidade? }`                                                    |
+| `Densidade`        | `'compacta' \| 'apertada'`: altura da linha (sem valor, a linha normal)            |
 | `ConteudoDoEditor` | `readonly Linha[]`                                                                 |
 
 `recuo` é o nível de indentação (0, 1, 2...). Cada papel tem uma cor de sintaxe nos tokens:
@@ -151,25 +173,35 @@ O papel `valor` (verde-azulado, `#4fafac`) é o dos valores literais que não s�
 
 Funções curtas para o arquivo de conteúdo ficar legível:
 
-| Função                             | Cria                                      |
-| ---------------------------------- | ----------------------------------------- |
-| `palavraChave(texto)`              | `Trecho` rosa (`public class`, `extends`) |
-| `declaracao(texto)`                | `Trecho` laranja (`String cargo`)         |
-| `literal(texto)`                   | `Trecho` verde (`“Java”`)                 |
-| `valor(texto)`                     | `Trecho` verde-azulado (`true`)           |
-| `anotacao(texto)`                  | `Trecho` azul (`@Anotacao`)               |
-| `comum(texto)`                     | `Trecho` na cor padrão do texto           |
-| `linha(recuo, ...trechos)`         | `LinhaDeCodigo`                           |
-| `linhaCompacta(recuo, ...trechos)` | `LinhaDeCodigo` com `compacta: true`      |
-| `paragrafo(recuo, texto)`          | `LinhaDeParagrafo`                        |
-| `vazia()`                          | `LinhaVazia`                              |
-| `vaziaCompacta()`                  | `LinhaVazia` com `compacta: true`         |
+| Função                             | Cria                                        |
+| ---------------------------------- | ------------------------------------------- |
+| `palavraChave(texto)`              | `Trecho` rosa (`public class`, `extends`)   |
+| `declaracao(texto)`                | `Trecho` laranja (`String cargo`)           |
+| `literal(texto)`                   | `Trecho` verde (`“Java”`)                   |
+| `valor(texto)`                     | `Trecho` verde-azulado (`true`)             |
+| `anotacao(texto)`                  | `Trecho` azul (`@Anotacao`)                 |
+| `comum(texto)`                     | `Trecho` na cor padrão do texto             |
+| `linha(recuo, ...trechos)`         | `LinhaDeCodigo`                             |
+| `linhaCompacta(recuo, ...trechos)` | `LinhaDeCodigo` com `densidade: 'compacta'` |
+| `linhaApertada(recuo, ...trechos)` | `LinhaDeCodigo` com `densidade: 'apertada'` |
+| `paragrafo(recuo, texto)`          | `LinhaDeParagrafo`                          |
+| `vazia()`                          | `LinhaVazia`                                |
+| `vaziaCompacta()`                  | `LinhaVazia` com `densidade: 'compacta'`    |
+| `vaziaApertada()`                  | `LinhaVazia` com `densidade: 'apertada'`    |
 
-**`linhaCompacta`** existe para a lista de strings da tela 01, em que 4 linhas de código ocupam
-só 3 linhas de número. Use-a apenas quando a tela de referência tiver esse espaçamento apertado.
-Quando uma linha vazia fica no meio de um bloco compacto (tela 03), use **`vaziaCompacta()`**:
-ela ocupa a altura de uma linha compacta, e não a de uma linha comum, para a numeração seguir o
-design.
+**Densidade das linhas.** Sem `densidade`, a linha tem a altura normal. As listas das telas
+ocupam menos espaço que o número de linha, e o campo `densidade` reproduz isso:
+
+| Densidade  | Altura da linha     | Onde aparece                                    |
+| ---------- | ------------------- | ----------------------------------------------- |
+| (nenhuma)  | normal              | a maior parte do código                         |
+| `compacta` | 3/4 da linha normal | lista de strings da tela 01 e campos da tela 03 |
+| `apertada` | 3/5 da linha normal | listas e campos das telas 04 a 06               |
+
+As construtoras `linhaCompacta`/`linhaApertada` e `vaziaCompacta`/`vaziaApertada` são atalhos do
+mesmo campo. Uma linha vazia no meio de um bloco precisa ter a densidade do bloco (por exemplo,
+`vaziaApertada()` entre os arrays da tela 05), senão a numeração deixa de seguir o design. Use a
+densidade só quando a tela de referência tiver esse espaçamento.
 
 **Largura do parágrafo:** o texto de um `paragrafo` quebra em 72 colunas, como no design. O limite
 vem do token `--colunas-paragrafo` (72,5, para a última coluna não quebrar por arredondamento) e é
@@ -191,12 +223,13 @@ export const CONTEUDO_INICIO: ConteudoDoEditor = [
 
 ## Como criar uma seção nova só com dados
 
-As seções **Sobre Mim** e **Diferenciais** foram feitas assim e servem de exemplo real
-(`features/sobre-mim/` e `features/diferenciais/`). As demais seções ainda mostram
+As seções **Sobre Mim**, **Diferenciais**, **Como uso a IA** e **Skills / STACK** foram feitas
+assim e servem de exemplo real (`features/sobre-mim/`, `features/diferenciais/`,
+`features/como-uso-ia/` e `features/skills/`). As demais seções ainda mostram
 `SecaoEmConstrucao`. Para dar conteúdo a uma delas não é preciso criar componente de editor,
 estilo nem item de árvore.
 
-1. **Confirme a seção em `core/secoes.ts`.** A lista `SECOES` (`slug`, `titulo`, `icone`) é a fonte
+1. **Confirme a seção em `core/secoes.ts`.** A lista `SECOES` (`slug`, `titulo`, `icone` e, opcionalmente, `paginas`) é a fonte
    única: dela saem os itens da árvore, as rotas e os títulos. Para uma seção nova, acrescente um
    item na posição em que ela deve aparecer. O `icone` precisa estar em `NOMES_DE_ICONE`.
 2. **Crie o conteúdo em `features/<slug>/<slug>.conteudo.ts`**, exportando um `ConteudoDoEditor`
@@ -245,20 +278,73 @@ estilo nem item de árvore.
    }
    ```
 
-4. **Troque a rota.** Em `app.routes.ts`, toda rota de seção é gerada de `SECOES` e carrega
-   `SecaoEmConstrucao` enquanto o slug não tem feature. Para trocar, registre o carregador da
-   feature em `FEATURES_DAS_SECOES`, indexado pelo slug; `path` e `title` continuam vindo de
-   `SECOES`:
+4. **Troque a rota.** Em `app.routes.ts`, toda rota de seção é gerada de `SECOES` (função
+   `rotasDaSecao`) e carrega `SecaoEmConstrucao` enquanto o slug não tem feature. Para trocar,
+   registre o carregador da feature em `FEATURES_DAS_SECOES`, indexado pelo slug; `path` e `title`
+   continuam vindo de `SECOES`:
 
    ```ts
    const FEATURES_DAS_SECOES: Readonly<Record<string, CarregadorDeSecao>> = {
      'sobre-mim': () => import('./features/sobre-mim/sobre-mim').then((m) => m.SobreMim),
      diferenciais: () => import('./features/diferenciais/diferenciais').then((m) => m.Diferenciais),
+     'como-uso-ia': () => import('./features/como-uso-ia/como-uso-ia').then((m) => m.ComoUsoIa),
+     skills: () => import('./features/skills/skills').then((m) => m.Skills),
    };
    ```
 
 5. **Teste.** Um `<slug>.spec.ts` ao lado do componente e um cenário no E2E. O teste de
    acessibilidade (`e2e/acessibilidade.spec.ts`) já percorre as 15 rotas.
+
+### Seção com várias páginas
+
+Algumas seções têm mais de uma tela no design (Skills tem as telas 05 e 06). Em vez de uma rota
+com parâmetro, cada página é uma rota estática pré-renderizada, e o mecanismo é todo dados:
+
+1. **Declare `paginas` em `core/secoes.ts`.** É o único lugar:
+
+   ```ts
+   { slug: 'skills', titulo: 'Skills / STACK', icone: 'ferramenta', paginas: 2 },
+   ```
+
+   A função `totalDePaginas(secao)` devolve `paginas ?? 1`.
+
+2. **Rotas e título saem sozinhos.** `rotasDaSecao` gera `/<slug>` (página 1) e `/<slug>/2` até
+   `/<slug>/N`, cada uma com `data: { pagina, totalDePaginas }` (tipo `DadosDePagina`). A
+   `EstrategiaDeTitulo` acrescenta `(X/N)` ao título a partir da página 2, como em
+   `Skills / STACK (2/2) | Vinicius Machado`. A árvore mantém a seção como atual em qualquer página.
+   Uma página fora do intervalo cai no `**` e volta ao Início.
+3. **O conteúdo é um array, um item por página.** Em `features/skills/skills.conteudo.ts`:
+
+   ```ts
+   export const CONTEUDOS_SKILLS: readonly ConteudoDoEditor[] = [
+     [vazia(), CABECALHO, ...arrayDeTextos('linguagens', ['Java', 'TypeScript'])],
+     [vazia(), CABECALHO, ...arrayDeTextos('cloudAndInfra', ['Docker', 'Kubernetes'])],
+   ];
+   ```
+
+4. **A feature recebe a página como `input()`.** O roteador entrega o `data` da rota aos inputs
+   do componente (`withComponentInputBinding`, em `app.config.ts`), e o componente escolhe o
+   conteúdo e mostra o controle:
+
+   ```ts
+   @Component({
+     selector: 'app-skills',
+     imports: [EditorDeCodigo, PaginasDaSecao],
+     template: `
+       <app-editor-de-codigo [conteudo]="conteudo()" />
+       <app-paginas-da-secao slug="skills" [pagina]="pagina()" [total]="totalDePaginas()" />
+     `,
+   })
+   export class Skills {
+     readonly pagina = input(1);
+     readonly totalDePaginas = input(CONTEUDOS_SKILLS.length);
+
+     protected readonly conteudo = computed(() => CONTEUDOS_SKILLS[this.pagina() - 1]);
+   }
+   ```
+
+Seções de uma página só (como `ComoUsoIa`) não precisam de nada disso. A mesma estrutura serve às
+próximas seções com várias telas, só declarando quantas páginas têm.
 
 Uma feature não importa de outra feature: o editor e as construtoras vêm de `shared/`, e a lista
 de seções vem de `core/`.
