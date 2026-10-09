@@ -32,20 +32,20 @@ describe('Diferenciais', () => {
       .filter((texto) => texto);
 
     expect(textos).toEqual([
-      'import java.time.Period;',
       expect.stringContaining(INICIO_DO_PARAGRAFO),
       'public record PersonalData(',
-      'String origin,',
+      'String hometown,',
       'String city,',
-      'Period livingInCityFor,',
+      'int yearsInCity,',
       'boolean extrovert,',
       'boolean curious,',
       'boolean loveToLearn',
       ') {',
+      '// Quem sou eu, em dados',
       'public static final PersonalData VINICIUS = new PersonalData(',
       '"Mineiro",',
       '"Brasília",',
-      'Period.ofYears(20),',
+      '20, // anos em Brasília',
       'true, // extrovertido',
       'true, // curioso',
       'true // gosta de aprender',
@@ -101,7 +101,7 @@ describe('Diferenciais', () => {
     const recuo = (texto: string) =>
       (linhaDe(raiz, texto) as HTMLElement).style.getPropertyValue('--recuo');
 
-    expect(recuo('String origin,')).toBe('2');
+    expect(recuo('String hometown,')).toBe('2');
     expect(recuo('PersonalData VINICIUS')).toBe('1');
     expect(recuo('"Mineiro"')).toBe('3');
     expect(recuo('public record PersonalData')).toBe('0');
