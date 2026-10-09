@@ -71,9 +71,16 @@ $quantidade-de-marcadores: 60;
   line-height: calc(var(--altura-linha-codigo) * 3 / 4);
 }
 
+// Linha vazia compacta: mantém a altura de uma linha compacta (que tem min-height 0).
+.linha.vazia.compacta {
+  min-height: calc(var(--altura-linha-codigo) * 3 / 4);
+}
+
 .paragrafo {
   position: relative;
   display: block;
+  // O design quebra o parágrafo em 72 colunas (avanço da fonte mono: 0,6em + espaçamento).
+  max-inline-size: calc(var(--colunas-paragrafo) * (0.6em + var(--espacamento-letras-codigo)));
   padding-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo));
   font-size: var(--texto-comentario);
   letter-spacing: var(--espacamento-letras-codigo);
@@ -103,6 +110,10 @@ $quantidade-de-marcadores: 60;
 
 .papel-literal {
   color: var(--cor-sintaxe-literal);
+}
+
+.papel-valor {
+  color: var(--cor-sintaxe-valor);
 }
 
 .papel-anotacao {
