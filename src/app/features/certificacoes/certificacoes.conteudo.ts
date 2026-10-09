@@ -34,7 +34,7 @@ const CURSOS: readonly Curso[] = [
     concluidoEm: [2025, 12, 9],
   },
   {
-    constante: 'JAVA_API_E_ARQUIVOS',
+    constante: 'JAVA_API_AND_FILES',
     nome: 'Java: consumindo API, gravando arquivos e lidando com erros',
     horas: 10,
     concluidoEm: [2025, 11, 5],
@@ -58,19 +58,19 @@ const CURSOS: readonly Curso[] = [
     concluidoEm: [2025, 9, 11],
   },
   {
-    constante: 'PYTHON_PARA_DADOS',
+    constante: 'PYTHON_FOR_DATA',
     nome: 'Python para Dados: primeiros passos',
     horas: 10,
     concluidoEm: [2025, 4, 8],
   },
   {
-    constante: 'PYTHON_ORIENTACAO_A_OBJETOS',
+    constante: 'PYTHON_OOP',
     nome: 'Python: avance na Orientação a Objetos e consuma API',
     horas: 8,
     concluidoEm: [2025, 3, 27],
   },
   {
-    constante: 'GIT_E_GITHUB',
+    constante: 'GIT_AND_GITHUB',
     nome: 'Git e GitHub: repositório, commit e versões',
     horas: 8,
     concluidoEm: [2025, 3, 25],
