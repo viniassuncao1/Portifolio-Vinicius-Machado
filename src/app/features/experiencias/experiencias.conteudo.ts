@@ -49,7 +49,9 @@ const pagina = (experiencia: Experiencia, comRegistro: boolean): ConteudoDoEdito
   vazia(),
   linha(0, palavraChave('public class'), comum('  Experiences {')),
   vazia(),
-  ...(comRegistro ? registro : []),
+  ...(comRegistro
+    ? registro
+    : [linha(1, comentario('// Outra experiência, no mesmo formato da primeira página'))]),
   javadoc(1, experiencia.descricao),
   linha(
     1,
