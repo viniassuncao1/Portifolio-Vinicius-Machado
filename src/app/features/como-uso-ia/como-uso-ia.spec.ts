@@ -35,26 +35,30 @@ describe('ComoUsoIa', () => {
     expect(texto).not.toContain('ArtificialItenligence');
   });
 
-  it('exibe as linhas de código na ordem da tela 04', async () => {
+  it('exibe as linhas de código na ordem, com constantes imutáveis', async () => {
     const raiz = await renderizar();
     const textos = Array.from(raiz.querySelectorAll('code > span'))
       .map((linha) => linha.textContent?.replace(/\s+/g, ' ').trim())
       .filter((texto) => texto);
 
     expect(textos).toEqual([
-      'public class ArtificialIntelligence {',
-      'boolean modismo = false;',
-      'boolean parteDoTrabalho = true;',
-      '@Override',
-      'public void comoEuUsoIA() {',
+      'import java.util.List;',
+      '/**',
       expect.stringContaining(INICIO_DO_PARAGRAFO),
+      '*/',
+      'public final class ArtificialIntelligence {',
+      'public static final boolean FAD = false;',
+      'public static final boolean PART_OF_THE_JOB = true;',
+      'public static final List<String> TOOLS = List.of("Claude Code", "Codex");',
+      'public static final String METHODOLOGY = "SDD (Spec-Driven Development)";',
+      'private ArtificialIntelligence() {}',
       '}',
     ]);
   });
 
   it.each([
-    ['modismo', 'false'],
-    ['parteDoTrabalho', 'true'],
+    ['FAD', 'false'],
+    ['PART_OF_THE_JOB', 'true'],
   ])('colore boolean %s como declaração e %s como valor', async (campo, valor) => {
     const linha = linhaDe(await renderizar(), `boolean ${campo}`);
 
@@ -62,24 +66,29 @@ describe('ComoUsoIa', () => {
     expect(linha?.querySelector('.papel-valor')?.textContent).toBe(valor);
   });
 
-  it('põe os campos em linhas apertadas, recuados um nível', async () => {
+  it('recua os campos um nível e a classe zero', async () => {
     const raiz = await renderizar();
 
-    for (const campo of ['boolean modismo', 'boolean parteDoTrabalho']) {
-      const linha = linhaDe(raiz, campo);
-
-      expect(linha?.classList.contains('apertada')).toBe(true);
-      expect(linha?.style.getPropertyValue('--recuo')).toBe('1');
+    for (const campo of ['boolean FAD', 'boolean PART_OF_THE_JOB', 'TOOLS']) {
+      expect(linhaDe(raiz, campo)?.style.getPropertyValue('--recuo')).toBe('1');
     }
+    expect(linhaDe(raiz, 'final class')?.style.getPropertyValue('--recuo')).toBe('0');
   });
 
-  it('marca o método com @Override na cor de anotação', async () => {
+  it('lista as ferramentas e a metodologia como literais', async () => {
+    const literais = Array.from((await renderizar()).querySelectorAll('.papel-literal')).map(
+      (l) => l.textContent,
+    );
+
+    expect(literais).toEqual(['"Claude Code"', '"Codex"', '"SDD (Spec-Driven Development)"']);
+  });
+
+  it('comenta o texto como Javadoc, na cor de comentário', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelector('.papel-anotacao')?.textContent).toBe('@Override');
-    expect(linhaDe(raiz, 'comoEuUsoIA')?.querySelector('.papel-palavra-chave')?.textContent).toBe(
-      'public void',
-    );
+    expect(
+      Array.from(raiz.querySelectorAll('.papel-comentario')).map((c) => c.textContent?.trim()),
+    ).toEqual(['/**', '*/']);
   });
 
   it('começa e termina o parágrafo com os textos da spec', async () => {
@@ -106,7 +115,7 @@ describe('ComoUsoIa', () => {
     expect(raiz.querySelector('nav')).toBeNull();
   });
 
-  it('mantém o texto do código sem "*"', async () => {
-    expect((await renderizar()).querySelector('code')?.textContent).not.toContain('*');
+  it('mantém o texto do código sem números de linha', async () => {
+    expect((await renderizar()).querySelector('code')?.textContent).not.toMatch(/^\d+/);
   });
 });
