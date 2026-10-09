@@ -5,7 +5,7 @@ import {
   linha,
   literal,
   palavraChave,
-  paragrafo,
+  javadoc,
   vazia,
 } from '../../shared/editor-de-codigo/conteudo';
 import type { ConteudoDoEditor, Linha, Trecho } from '../../shared/editor-de-codigo/conteudo';
@@ -75,7 +75,7 @@ const pagina = (experiencia: Experiencia, comRegistro: boolean): ConteudoDoEdito
   linha(0, palavraChave('public class'), comum('  Experiences {')),
   vazia(),
   ...(comRegistro ? registro : []),
-  paragrafo(1, experiencia.descricao),
+  javadoc(1, experiencia.descricao),
   linha(
     1,
     palavraChave('static final'),
