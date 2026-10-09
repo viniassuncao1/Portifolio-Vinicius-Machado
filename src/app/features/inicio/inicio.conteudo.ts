@@ -1,5 +1,5 @@
 import {
-  comentario,
+  javadoc,
   comum,
   declaracao,
   linha,
@@ -16,7 +16,7 @@ export const CONTEUDO_INICIO: ConteudoDoEditor = [
   vazia(),
   linha(0, palavraChave('import'), comum(' java.util.List;')),
   vazia(),
-  linha(0, comentario('/** Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL. */')),
+  javadoc(0, 'Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL.'),
   linha(0, palavraChave('public record'), comum(' ViniciusMachado(')),
   linha(2, declaracao('String role'), comum(',')),
   linha(2, declaracao('List<String> stack')),

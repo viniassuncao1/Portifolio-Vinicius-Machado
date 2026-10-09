@@ -31,7 +31,7 @@ describe('Inicio', () => {
     expect(linhas(raiz).slice(0, 7)).toEqual([
       'package portfolio.viniciusmachado;',
       'import java.util.List;',
-      '/** Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL. */',
+      'Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL.',
       'public record ViniciusMachado(',
       'String role,',
       'List<String> stack',
@@ -47,10 +47,10 @@ describe('Inicio', () => {
     expect(linha.textContent).toContain('portfolio.viniciusmachado;');
   });
 
-  it('colore o Javadoc do perfil como comentário', async () => {
+  it('exibe o Javadoc do perfil antes do record', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelector('.papel-comentario')?.textContent).toContain('Full Stack Júnior');
+    expect(raiz.querySelector('.javadoc')?.textContent).toContain('Full Stack Júnior');
   });
 
   it('mostra os componentes do record na cor de declaração', async () => {
