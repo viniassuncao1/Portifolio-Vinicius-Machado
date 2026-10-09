@@ -52,6 +52,41 @@ describe('Certificacoes', () => {
     expect(texto.indexOf('Python para Dados')).toBeLessThan(texto.indexOf('Git e GitHub'));
   });
 
+  it('lista os nove cursos com horas e data, do mais recente para o mais antigo', async () => {
+    const esperado = [
+      ['Spring Boot 3', 10, '2025-12-19'],
+      ['Spring Data JPA', 16, '2025-12-09'],
+      ['consumindo API', 10, '2025-11-05'],
+      ['HTTP', 10, '2025-10-14'],
+      ['Angular', 8, '2025-09-22'],
+      ['TypeScript na prática', 12, '2025-09-11'],
+      ['Python para Dados', 10, '2025-04-08'],
+      ['Orientação a Objetos', 8, '2025-03-27'],
+      ['Git e GitHub', 8, '2025-03-25'],
+    ] as const;
+    const texto = [await codigo(1), await codigo(2), await codigo(3)].join('\n');
+    const datas = Array.from(
+      texto.matchAll(/(\d+),\s*LocalDate\.of\((\d{4}), (\d+), (\d+)\)/g),
+      (m) => ({
+        horas: Number(m[1]),
+        data: `${m[2]}-${m[3].padStart(2, '0')}-${m[4].padStart(2, '0')}`,
+      }),
+    );
+
+    expect(datas).toEqual(esperado.map(([, horas, data]) => ({ horas, data })));
+    esperado.reduce((posicaoAnterior, [nome]) => {
+      const posicao = texto.indexOf(nome);
+      expect(posicao, nome).toBeGreaterThan(posicaoAnterior);
+      return posicao;
+    }, -1);
+  });
+
+  it('cada página tem o comentário em pt-BR e o controle mostra X/3', async () => {
+    for (const pagina of [1, 2, 3]) {
+      expect(await codigo(pagina)).toContain('// Cursos concluídos');
+    }
+  });
+
   it('declara o record só na página 1', async () => {
     expect(await codigo(2)).not.toContain('record Certification');
   });

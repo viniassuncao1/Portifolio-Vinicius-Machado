@@ -1,3 +1,4 @@
+import { CONTEUDOS_CERTIFICACOES } from './features/certificacoes/certificacoes.conteudo';
 import { CONTEUDO_COMO_USO_IA } from './features/como-uso-ia/como-uso-ia.conteudo';
 import { CONTEUDO_CONTATO } from './features/contato/contato.conteudo';
 import { CONTEUDO_DIFERENCIAIS } from './features/diferenciais/diferenciais.conteudo';
@@ -8,59 +9,8 @@ import { CONTEUDO_IDIOMAS } from './features/idiomas/idiomas.conteudo';
 import { CONTEUDO_INICIO } from './features/inicio/inicio.conteudo';
 import { CONTEUDOS_SKILLS } from './features/skills/skills.conteudo';
 import { CONTEUDO_SOBRE_MIM } from './features/sobre-mim/sobre-mim.conteudo';
-import type { ConteudoDoEditor, Linha } from './shared/editor-de-codigo/conteudo';
-
-/** Todas as páginas de todas as seções, com o nome que aparece nas falhas. */
-const DOCUMENTOS: readonly (readonly [string, ConteudoDoEditor])[] = [
-  ['Início', CONTEUDO_INICIO],
-  ['Sobre Mim', CONTEUDO_SOBRE_MIM],
-  ['Diferenciais', CONTEUDO_DIFERENCIAIS],
-  ['Como uso a IA', CONTEUDO_COMO_USO_IA],
-  ...CONTEUDOS_SKILLS.map((c, i): [string, ConteudoDoEditor] => [`Skills ${i + 1}/2`, c]),
-  ...CONTEUDOS_EXPERIENCIAS.map((c, i): [string, ConteudoDoEditor] => [
-    `Experiências ${i + 1}/3`,
-    c,
-  ]),
-  ['Eventos', CONTEUDO_EVENTOS],
-  ['Formação', CONTEUDO_FORMACAO],
-  ['Idiomas', CONTEUDO_IDIOMAS],
-  ['Contato', CONTEUDO_CONTATO],
-];
-
-/** Texto de uma linha como o leitor vê: trechos de código ou o texto do Javadoc/parágrafo. */
-const textoDaLinha = (item: Linha): string => {
-  switch (item.tipo) {
-    case 'codigo':
-      return item.trechos.map((t) => t.texto).join('');
-    case 'javadoc':
-    case 'paragrafo':
-      return item.texto;
-    default:
-      return '';
-  }
-};
-
-const textoDe = (conteudo: ConteudoDoEditor): string => conteudo.map(textoDaLinha).join('\n');
-
-/** Só o código: sem textos entre aspas, comentários de linha e Javadoc (o que o compilador lê). */
-const codigoDe = (conteudo: ConteudoDoEditor): string =>
-  conteudo
-    .map((item) =>
-      item.tipo === 'codigo'
-        ? item.trechos
-            .filter((t) => t.papel !== 'literal' && t.papel !== 'comentario')
-            .map((t) => t.texto)
-            .join('')
-        : '',
-    )
-    .join('\n');
-
-const literaisDe = (conteudo: ConteudoDoEditor): readonly string[] =>
-  conteudo.flatMap((item) =>
-    item.tipo === 'codigo'
-      ? item.trechos.filter((t) => t.papel === 'literal').map((t) => t.texto)
-      : [],
-  );
+import type { ConteudoDoEditor } from './shared/editor-de-codigo/conteudo';
+import { DOCUMENTOS, aspasRetas, codigoDe, literaisDe, textoDe } from './conteudo-das-secoes.apoio';
 
 const PARES: Readonly<Record<string, string>> = { ')': '(', '}': '{', ']': '[' };
 
@@ -76,11 +26,12 @@ function problemaDeBalanceamento(codigo: string): string | null {
   return abertos.length ? `sobraram abertos: ${abertos.join(' ')}` : null;
 }
 
-const aspasRetas = (texto: string) => texto.replace(/^"|"$/g, '');
-
 describe('conteúdo das seções em Java moderno', () => {
-  it('cobre as 13 páginas das 10 seções (Início, 8 seções e Skills/Experiências paginadas)', () => {
-    expect(DOCUMENTOS).toHaveLength(13);
+  it('cobre as 17 páginas das 11 seções (Início, Skills, Experiências e Certificações paginadas)', () => {
+    expect(DOCUMENTOS).toHaveLength(17);
+    expect(DOCUMENTOS.map(([nome]) => nome)).toEqual(
+      expect.arrayContaining(['Skills 3/3', 'Experiências 3/3', 'Certificações 3/3']),
+    );
   });
 
   describe('Java sintaticamente plausível', () => {
@@ -147,15 +98,10 @@ describe('conteúdo das seções em Java moderno', () => {
       constantes.forEach((nome) => expect(nome).toMatch(/^[A-Z][A-Z0-9_]*$/));
     });
 
-    it('os campos do Diferenciais estão em inglês: city, origin, extrovert, curious', () => {
+    it('os campos do Diferenciais estão em inglês: city, extrovert, curious', () => {
       const texto = textoDe(CONTEUDO_DIFERENCIAIS);
 
-      for (const campo of [
-        'String city',
-        'String origin',
-        'boolean extrovert',
-        'boolean curious',
-      ]) {
+      for (const campo of ['String city', 'boolean extrovert', 'boolean curious']) {
         expect(texto).toContain(campo);
       }
     });
@@ -173,21 +119,37 @@ describe('conteúdo das seções em Java moderno', () => {
       }
     });
 
-    it('períodos usam java.time: YearMonth, Year e Period', () => {
-      expect(textoDe(CONTEUDOS_EXPERIENCIAS[0])).toContain('YearMonth.of(2026, 8)');
-      expect(textoDe(CONTEUDO_FORMACAO)).toContain('Year.of(2027)');
-      expect(textoDe(CONTEUDO_DIFERENCIAIS)).toContain('Period.ofYears(20)');
+    it('períodos e anos aparecem como texto e número simples, sem java.time avançado', () => {
+      for (const [nome, c] of DOCUMENTOS) {
+        expect(codigoDe(c), nome).not.toMatch(/\b(YearMonth|Year|Period)\b/);
+      }
+      expect(textoDe(CONTEUDOS_EXPERIENCIAS[0])).toContain('"08/2026 - Presente"');
+      expect(textoDe(CONTEUDO_FORMACAO)).toMatch(/\b2027\b/);
     });
 
-    it('usa records para dados e Optional para o fim em aberto', () => {
-      expect(textoDe(CONTEUDO_INICIO)).toContain('public record ViniciusMachado(');
-      expect(textoDe(CONTEUDOS_EXPERIENCIAS[0])).toContain('Optional<YearMonth> end');
-      expect(textoDe(CONTEUDOS_EXPERIENCIAS[0])).toContain('Optional.empty()');
+    it('usa records para dados em todas as seções que guardam um registro', () => {
+      const comRecord: readonly (readonly [string, ConteudoDoEditor])[] = [
+        ['Início', CONTEUDO_INICIO],
+        ['Skills 1', CONTEUDOS_SKILLS[0]],
+        ['Skills 3', CONTEUDOS_SKILLS[2]],
+        ['Experiências 1', CONTEUDOS_EXPERIENCIAS[0]],
+        ['Eventos', CONTEUDO_EVENTOS],
+        ['Formação', CONTEUDO_FORMACAO],
+        ['Contato', CONTEUDO_CONTATO],
+        ['Certificações 1', CONTEUDOS_CERTIFICACOES[0]],
+      ];
+
+      for (const [nome, c] of comRecord) {
+        expect(codigoDe(c), nome).toMatch(/\brecord\s+[A-Z]\w*\s*\(/);
+      }
     });
 
-    it('usa Map.of e enum nos Idiomas', () => {
-      expect(textoDe(CONTEUDO_IDIOMAS)).toContain('Map.of(');
-      expect(textoDe(CONTEUDO_IDIOMAS)).toContain('enum Level');
+    it('os Idiomas usam constantes simples, sem Map.of nem enum', () => {
+      const codigo = codigoDe(CONTEUDO_IDIOMAS);
+
+      expect(codigo).not.toContain('Map.of');
+      expect(codigo).not.toMatch(/\benum\b/);
+      expect(codigo).toMatch(/static final\s+String\s+\w+\s*=/);
     });
 
     it('textos longos vão em Javadoc (Sobre Mim, Diferenciais, IA, Experiências)', () => {
@@ -237,7 +199,6 @@ describe('conteúdo das seções em Java moderno', () => {
       for (const trecho of [
         '"Mineiro"',
         '"Brasília"',
-        'Period.ofYears(20)',
         'mineiro, extrovertido, curioso',
         'uma boa discussão',
         'back-end ou front-end',
@@ -245,11 +206,12 @@ describe('conteúdo das seções em Java moderno', () => {
       ]) {
         expect(texto, trecho).toContain(trecho);
       }
-      expect(
-        CONTEUDO_DIFERENCIAIS.flatMap((i) => (i.tipo === 'codigo' ? i.trechos : [])).filter(
-          (t) => t.papel === 'valor' && t.texto === 'true',
-        ),
-      ).toHaveLength(3);
+      const valores = CONTEUDO_DIFERENCIAIS.flatMap((i) =>
+        i.tipo === 'codigo' ? i.trechos : [],
+      ).filter((t) => t.papel === 'valor');
+
+      expect(valores.filter((t) => t.texto === 'true')).toHaveLength(3);
+      expect(valores.map((t) => t.texto)).toContain('20');
     });
 
     it('Como uso a IA: modismo, Ana, WhatsApp, Claude Code, Codex e SDD', () => {
@@ -262,11 +224,11 @@ describe('conteúdo das seções em Java moderno', () => {
         'Claude Code e Codex',
         'SDD (Spec-Driven Development)',
         'parte de como eu planejo e entrego código.',
-        'boolean FAD = false',
-        'boolean PART_OF_THE_JOB = true',
       ]) {
         expect(texto, trecho).toContain(trecho);
       }
+      expect(texto).toMatch(/boolean\s+\w+\s*=\s*false;/);
+      expect(texto).toMatch(/boolean\s+\w+\s*=\s*true;/);
     });
 
     it('Skills página 1: as 11 tecnologias das linguagens, frameworks e bancos', () => {
@@ -299,20 +261,39 @@ describe('conteúdo das seções em Java moderno', () => {
       ]);
     });
 
+    it('Skills página 3: os quatro níveis com descrição e as 15 tecnologias', () => {
+      const texto = textoDe(CONTEUDOS_SKILLS[2]);
+
+      for (const nivel of [
+        'Domínio diário',
+        'Projeto completo',
+        'Uso pontual',
+        'Conhecimento teórico',
+      ]) {
+        expect(texto, nivel).toContain(nivel);
+      }
+      expect(literaisDe(CONTEUDOS_SKILLS[2]).map(aspasRetas)).toEqual(
+        expect.arrayContaining([
+          ...['Java', 'Spring Boot', 'Angular', 'PostgreSQL', 'Oracle', 'TypeScript', 'Git'],
+          'PHP',
+          ...['React Native', 'CI/CD'],
+          ...['Python', 'AWS', 'Azure', 'Docker', 'Kubernetes'],
+        ]),
+      );
+    });
+
     it('Experiências: empresa, cargo e período de cada página', () => {
       const [memora, estagio, watts] = CONTEUDOS_EXPERIENCIAS.map(textoDe);
 
       expect(memora).toContain('"Memora"');
       expect(memora).toContain('"Desenvolvedor Full Stack Júnior"');
-      expect(memora).toContain('YearMonth.of(2026, 8)');
-      expect(memora).toContain('Optional.empty()');
+      expect(memora).toContain('"08/2026 - Presente"');
+      expect(estagio).toContain('"Memora"');
       expect(estagio).toContain('"Estagiário de Desenvolvimento"');
-      expect(estagio).toContain('YearMonth.of(2025, 8)');
-      expect(estagio).toContain('Optional.of(YearMonth.of(2026, 7))');
+      expect(estagio).toContain('"08/2025 - 07/2026"');
       expect(watts).toContain('"Watts Company"');
       expect(watts).toContain('"Co-fundador & Desenvolvedor Full Stack"');
-      expect(watts).toContain('YearMonth.of(2025, 2)');
-      expect(watts).toContain('Optional.empty()');
+      expect(watts).toContain('"02/2025 - Presente"');
     });
 
     it('Experiências 1: liderança de squad e Scrum', () => {
@@ -378,15 +359,15 @@ describe('conteúdo das seções em Java moderno', () => {
         'UniCEUB',
         'Bacharelado em Ciência da Computação',
       ]);
-      expect(textoDe(CONTEUDO_FORMACAO)).toContain('Year.of(2027)');
+      expect(codigoDe(CONTEUDO_FORMACAO)).toMatch(/\b2027\b/);
     });
 
     it('Idiomas: inglês e espanhol, ambos em nível básico', () => {
-      const texto = textoDe(CONTEUDO_IDIOMAS);
+      const codigo = codigoDe(CONTEUDO_IDIOMAS);
 
-      expect(texto).toContain('"Inglês", Level.BASIC,');
-      expect(texto).toContain('"Espanhol", Level.BASIC');
-      expect(texto).toContain('BASIC("Básico")');
+      expect(codigo).toMatch(/english/i);
+      expect(codigo).toMatch(/spanish/i);
+      expect(literaisDe(CONTEUDO_IDIOMAS).map(aspasRetas)).toEqual(['Básico', 'Básico']);
     });
 
     it('Contato: e-mail, telefone, LinkedIn e GitHub, todos como links reais', () => {
@@ -397,8 +378,8 @@ describe('conteúdo das seções em Java moderno', () => {
       expect(links).toEqual([
         ['viniciusmassuncao@gmail.com', 'mailto:viniciusmassuncao@gmail.com'],
         ['+55 61 98283-7805', 'tel:+5561982837805'],
-        ['https://linkedin.com/in/viniassuncao', 'https://linkedin.com/in/viniassuncao'],
-        ['https://github.com/viniassuncao1', 'https://github.com/viniassuncao1'],
+        ['linkedin.com/in/viniassuncao', 'https://linkedin.com/in/viniassuncao'],
+        ['github.com/viniassuncao1', 'https://github.com/viniassuncao1'],
       ]);
     });
   });

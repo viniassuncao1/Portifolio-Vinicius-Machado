@@ -28,14 +28,22 @@ describe('rotas com várias páginas', () => {
     );
 
     expect(caminhos).toEqual(['', ...esperados]);
-    expect(caminhos).toContain('skills/2');
-    expect(caminhos).not.toContain('skills/3');
+    expect(caminhos).toEqual(expect.arrayContaining(['skills/2', 'skills/3']));
+    expect(caminhos).toEqual(
+      expect.arrayContaining(['certificacoes', 'certificacoes/2', 'certificacoes/3']),
+    );
+    expect(caminhos).not.toContain('skills/4');
+    expect(caminhos).not.toContain('certificacoes/4');
   });
 
   it('guardam a página e o total no data da rota', () => {
     const pagina2 = filhas.find((rota) => rota.path === 'skills/2');
+    const niveis = filhas.find((rota) => rota.path === 'skills/3');
+    const ultimaCertificacao = filhas.find((rota) => rota.path === 'certificacoes/3');
 
-    expect(pagina2?.data).toEqual({ pagina: 2, totalDePaginas: 2 });
+    expect(pagina2?.data).toEqual({ pagina: 2, totalDePaginas: 3 });
+    expect(niveis?.data).toEqual({ pagina: 3, totalDePaginas: 3 });
+    expect(ultimaCertificacao?.data).toEqual({ pagina: 3, totalDePaginas: 3 });
   });
 
   it('acrescenta "(X/N)" ao título a partir da página 2', async () => {
@@ -45,7 +53,30 @@ describe('rotas com várias páginas', () => {
     expect(TestBed.inject(Title).getTitle()).toBe('Skills / STACK | Vinicius Machado');
 
     await harness.navigateByUrl('/skills/2');
-    expect(TestBed.inject(Title).getTitle()).toBe('Skills / STACK (2/2) | Vinicius Machado');
+    expect(TestBed.inject(Title).getTitle()).toBe('Skills / STACK (2/3) | Vinicius Machado');
+
+    await harness.navigateByUrl('/skills/3');
+    expect(TestBed.inject(Title).getTitle()).toBe('Skills / STACK (3/3) | Vinicius Machado');
+  });
+
+  it('acrescenta "(X/3)" ao título das páginas de Certificações', async () => {
+    const harness = await RouterTestingHarness.create();
+
+    await harness.navigateByUrl('/certificacoes');
+    expect(TestBed.inject(Title).getTitle()).toBe('Certificações | Vinicius Machado');
+
+    await harness.navigateByUrl('/certificacoes/2');
+    expect(TestBed.inject(Title).getTitle()).toBe('Certificações (2/3) | Vinicius Machado');
+
+    await harness.navigateByUrl('/certificacoes/3');
+    expect(TestBed.inject(Title).getTitle()).toBe('Certificações (3/3) | Vinicius Machado');
+  });
+
+  it('leva /certificacoes/4 ao Início', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/certificacoes/4');
+
+    expect(TestBed.inject(Title).getTitle()).toBe('Vinicius Machado | Desenvolvedor Full Stack');
   });
 
   it('leva /skills/9 ao Início', async () => {
