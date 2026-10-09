@@ -1,4 +1,5 @@
 import {
+  comentario,
   comum,
   declaracao,
   linha,
@@ -24,11 +25,12 @@ export const CONTEUDO_COMO_USO_IA: ConteudoDoEditor = [
   ),
   linha(0, palavraChave('public final class'), comum(' ArtificialIntelligence {')),
   vazia(),
+  linha(1, comentario('// Minha visão: IA é parte do trabalho, não modismo')),
   linha(
     1,
     palavraChave('public static final'),
     comum(' '),
-    declaracao('boolean FAD'),
+    declaracao('boolean IS_JUST_A_TREND'),
     comum(' = '),
     valor('false'),
     comum(';'),
@@ -37,11 +39,13 @@ export const CONTEUDO_COMO_USO_IA: ConteudoDoEditor = [
     1,
     palavraChave('public static final'),
     comum(' '),
-    declaracao('boolean PART_OF_THE_JOB'),
+    declaracao('boolean IS_PART_OF_THE_JOB'),
     comum(' = '),
     valor('true'),
     comum(';'),
   ),
+  vazia(),
+  linha(1, comentario('// Ferramentas e método que uso no dia a dia')),
   linha(
     1,
     palavraChave('public static final'),
@@ -58,7 +62,5 @@ export const CONTEUDO_COMO_USO_IA: ConteudoDoEditor = [
     literal('"SDD (Spec-Driven Development)"'),
     comum(';'),
   ),
-  vazia(),
-  linha(1, palavraChave('private'), comum(' ArtificialIntelligence() {}')),
   linha(0, comum('}')),
 ];
