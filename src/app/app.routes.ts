@@ -16,6 +16,11 @@ const FEATURES_DAS_SECOES: Readonly<Record<string, CarregadorDeSecao>> = {
   'como-uso-ia': () => import('./features/como-uso-ia/como-uso-ia').then((m) => m.ComoUsoIa),
   skills: () => import('./features/skills/skills').then((m) => m.Skills),
   diferenciais: () => import('./features/diferenciais/diferenciais').then((m) => m.Diferenciais),
+  experiencias: () => import('./features/experiencias/experiencias').then((m) => m.Experiencias),
+  eventos: () => import('./features/eventos/eventos').then((m) => m.Eventos),
+  formacao: () => import('./features/formacao/formacao').then((m) => m.Formacao),
+  idiomas: () => import('./features/idiomas/idiomas').then((m) => m.Idiomas),
+  contato: () => import('./features/contato/contato').then((m) => m.Contato),
 };
 
 const EM_CONSTRUCAO: CarregadorDeSecao = () =>
