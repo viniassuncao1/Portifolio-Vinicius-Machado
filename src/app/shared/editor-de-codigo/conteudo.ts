@@ -21,6 +21,8 @@ export interface LinhaDeParagrafo {
 
 export interface LinhaVazia {
   readonly tipo: 'vazia';
+  /** Vazia com a altura das linhas compactas (3/4 de uma linha), como na tela 03. */
+  readonly compacta?: boolean;
 }
 
 export type Linha = LinhaDeCodigo | LinhaDeParagrafo | LinhaVazia;
@@ -54,3 +56,5 @@ export const paragrafo = (recuo: number, texto: string): LinhaDeParagrafo => ({
 });
 
 export const vazia = (): LinhaVazia => ({ tipo: 'vazia' });
+
+export const vaziaCompacta = (): LinhaVazia => ({ tipo: 'vazia', compacta: true });
