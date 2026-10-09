@@ -9,6 +9,8 @@ li:first-child {
 }
 
 .item {
+  position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
   min-height: var(--altura-linha-arvore);
@@ -29,11 +31,25 @@ li:first-child {
     color: var(--cor-texto-esmaecido);
   }
 
-  // Item da seção aberta: destacado e expandido (estado pronto para animação).
+  // Destaque do item atual: camada própria que aparece com `opacity`.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--cor-linha-selecionada);
+    opacity: 0;
+    transition: opacity var(--duracao-rapida) var(--curva-padrao);
+  }
+
+  // Item da seção aberta: destacado e expandido.
   &.atual {
     min-height: var(--altura-linha-selecionada);
     padding-inline-start: var(--recuo-item-atual);
-    background: var(--cor-linha-selecionada);
+
+    &::before {
+      opacity: 1;
+    }
 
     .seta {
       rotate: 90deg;
@@ -51,6 +67,14 @@ li:first-child {
   height: var(--tamanho-seta-arvore);
   margin-inline-end: var(--afastamento-icone-arvore);
   fill: var(--cor-icone);
+  transition: rotate var(--duracao-rapida) var(--curva-padrao);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item::before,
+  .seta {
+    transition: none;
+  }
 }
 
 app-icone {

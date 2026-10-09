@@ -96,7 +96,8 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  // Gaveta: o painel sai do fluxo e cobre o editor; `data-aberta` fica pronto para o Compasso.
+  // Gaveta: o painel sai do fluxo e cobre o editor; `data-aberta` controla a animação.
+  // `visibility` só espera o fim da saída para tirar o painel do foco e dos leitores de tela.
   app-painel-lateral {
     position: fixed;
     inset-block: calc(var(--altura-barra-ferramentas) + var(--altura-barra-gaveta)) 0;
@@ -104,10 +105,27 @@
     z-index: var(--camada-gaveta);
     width: 100%;
     background: var(--cor-painel);
+    transition:
+      transform var(--duracao-media) var(--curva-saida),
+      opacity var(--duracao-media) var(--curva-saida),
+      visibility 0s;
   }
 
   app-painel-lateral[data-aberta='false'] {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-100%);
+    transition:
+      transform var(--duracao-media) var(--curva-entrada),
+      opacity var(--duracao-media) var(--curva-entrada),
+      visibility 0s var(--duracao-media);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    app-painel-lateral,
+    app-painel-lateral[data-aberta='false'] {
+      transition: none;
+    }
   }
 
   .scrollbar {
