@@ -3,10 +3,13 @@ import {
   comum,
   declaracao,
   linha,
+  linhaCompacta,
   literal,
   palavraChave,
   paragrafo,
+  valor,
   vazia,
+  vaziaCompacta,
   type Papel,
 } from './conteudo';
 
@@ -15,6 +18,7 @@ describe('construtoras de conteúdo do editor', () => {
     ['palavraChave', palavraChave, 'palavra-chave'],
     ['declaracao', declaracao, 'declaracao'],
     ['literal', literal, 'literal'],
+    ['valor', valor, 'valor'],
     ['anotacao', anotacao, 'anotacao'],
     ['comum', comum, 'comum'],
   ])('%s cria um trecho com o papel %s', (_nome, construtora, papel) => {
@@ -45,5 +49,36 @@ describe('construtoras de conteúdo do editor', () => {
 
   it('vazia cria uma linha em branco', () => {
     expect(vazia()).toEqual({ tipo: 'vazia' });
+  });
+
+  it('valor cria um trecho de valor literal, distinto do literal de texto', () => {
+    expect(valor('true')).toEqual({ texto: 'true', papel: 'valor' });
+    expect(valor('true').papel).not.toBe(literal('true').papel);
+  });
+
+  it('linhaCompacta marca a linha como compacta e guarda recuo e trechos', () => {
+    const resultado = linhaCompacta(2, literal('“Java”'), comum(','));
+
+    expect(resultado).toEqual({
+      tipo: 'codigo',
+      recuo: 2,
+      compacta: true,
+      trechos: [
+        { texto: '“Java”', papel: 'literal' },
+        { texto: ',', papel: 'comum' },
+      ],
+    });
+  });
+
+  it('linha comum não é compacta', () => {
+    expect(linha(1).compacta).toBeUndefined();
+  });
+
+  it('vaziaCompacta cria uma linha em branco compacta', () => {
+    expect(vaziaCompacta()).toEqual({ tipo: 'vazia', compacta: true });
+  });
+
+  it('vazia não é compacta', () => {
+    expect(vazia()).not.toHaveProperty('compacta');
   });
 });

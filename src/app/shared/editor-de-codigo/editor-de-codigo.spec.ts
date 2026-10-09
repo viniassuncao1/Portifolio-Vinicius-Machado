@@ -8,8 +8,11 @@ import {
   linha,
   literal,
   palavraChave,
+  linhaCompacta,
   paragrafo,
+  valor,
   vazia,
+  vaziaCompacta,
 } from './conteudo';
 import type { ConteudoDoEditor } from './conteudo';
 import { EditorDeCodigo } from './editor-de-codigo';
@@ -106,6 +109,7 @@ describe('EditorDeCodigo', () => {
       ['palavra-chave', palavraChave('public')],
       ['declaracao', declaracao('String cargo')],
       ['literal', literal('"Spring Boot"')],
+      ['valor', valor('true')],
       ['anotacao', anotacao('@Override')],
       ['comum', comum(' = ')],
     ])('aplica a classe papel-%s ao trecho', (papel, trecho) => {
@@ -128,6 +132,7 @@ describe('EditorDeCodigo', () => {
       ['papel-palavra-chave', '--cor-sintaxe-palavra-chave'],
       ['papel-declaracao', '--cor-sintaxe-campo'],
       ['papel-literal', '--cor-sintaxe-literal'],
+      ['papel-valor', '--cor-sintaxe-valor'],
       ['papel-anotacao', '--cor-sintaxe-anotacao'],
       ['papel-comum', '--cor-sintaxe-texto'],
     ])('a classe %s usa o token %s', (classe, token) => {
@@ -136,6 +141,88 @@ describe('EditorDeCodigo', () => {
       const regra = new RegExp(`\\.${classe}[^{]*\\{[^}]*color:\\s*var\\(${token}\\)`);
 
       expect(estilosDoComponente()).toMatch(regra);
+    });
+  });
+
+  describe('papel valor', () => {
+    it('exibe o valor true com a classe papel-valor, separado do texto entre aspas', () => {
+      const raiz = renderizar([
+        linha(1, declaracao('boolean curioso'), comum(' = '), valor('true'), comum(';')),
+        linha(1, declaracao('String origem'), comum(' = '), literal('“Mineiro”'), comum(';')),
+      ]);
+
+      expect(raiz.querySelector('.papel-valor')?.textContent).toBe('true');
+      expect(raiz.querySelectorAll('.papel-valor')).toHaveLength(1);
+      expect(raiz.querySelector('.papel-literal')?.textContent).toBe('“Mineiro”');
+    });
+
+    it('dá ao valor um token próprio, diferente do literal', () => {
+      renderizar();
+      const estilos = estilosDoComponente();
+
+      expect(estilos).toMatch(/\.papel-valor[^{]*\{[^}]*color:\s*var\(--cor-sintaxe-valor\)/);
+      expect(estilos).not.toMatch(/\.papel-valor[^{]*\{[^}]*var\(--cor-sintaxe-literal\)/);
+    });
+  });
+
+  describe('linhas compactas', () => {
+    it('marca a linha de código compacta com a classe compacta', () => {
+      const raiz = renderizar([linhaCompacta(2, literal('“Java”')), linha(2, comum('x'))]);
+
+      const [compacta, normal] = Array.from(raiz.querySelectorAll('code > span'));
+
+      expect(compacta.classList.contains('compacta')).toBe(true);
+      expect(normal.classList.contains('compacta')).toBe(false);
+    });
+
+    it('marca a linha vazia compacta e mantém a vazia comum sem a classe', () => {
+      const raiz = renderizar([vaziaCompacta(), vazia()]);
+
+      const [compacta, comumVazia] = Array.from(raiz.querySelectorAll('code > span'));
+
+      expect(compacta.classList.contains('vazia')).toBe(true);
+      expect(compacta.classList.contains('compacta')).toBe(true);
+      expect(comumVazia.classList.contains('compacta')).toBe(false);
+    });
+
+    it('dá à vazia compacta a altura de 3/4 de uma linha pelo estilo', () => {
+      renderizar();
+
+      expect(estilosDoComponente()).toMatch(
+        /\.linha\.vazia\.compacta[^{]*\{[^}]*min-height:\s*calc\(\s*var\(--altura-linha-codigo\)\s*\*\s*3\s*\/\s*4\s*\)/,
+      );
+    });
+
+    it('dá à linha compacta a altura de linha de 3/4', () => {
+      renderizar();
+
+      expect(estilosDoComponente()).toMatch(
+        /\.linha\.compacta[^{]*\{[^}]*line-height:\s*calc\(\s*var\(--altura-linha-codigo\)\s*\*\s*3\s*\/\s*4\s*\)/,
+      );
+    });
+
+    it('não põe texto nem números na linha vazia compacta', () => {
+      const raiz = renderizar([vaziaCompacta()]);
+
+      expect(raiz.querySelector('code')?.textContent).toBe('');
+    });
+  });
+
+  describe('largura do parágrafo', () => {
+    it('limita a largura do parágrafo às colunas de --colunas-paragrafo', () => {
+      renderizar();
+
+      expect(estilosDoComponente()).toMatch(
+        /\.paragrafo[^{]*\{[^}]*max-inline-size:\s*calc\(\s*var\(--colunas-paragrafo\)\s*\*/,
+      );
+    });
+
+    it('mede a coluna pelo avanço da fonte mono mais o espaçamento de letras', () => {
+      renderizar();
+
+      expect(estilosDoComponente()).toMatch(
+        /max-inline-size:[^;]*0\.6em\s*\+\s*var\(--espacamento-letras-codigo\)/,
+      );
     });
   });
 
