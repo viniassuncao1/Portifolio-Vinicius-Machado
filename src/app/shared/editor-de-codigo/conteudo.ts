@@ -10,6 +10,8 @@ export interface LinhaDeCodigo {
   readonly recuo: number;
   /** Linha apertada, como a lista de strings da tela 01: 4 linhas ocupam 3 linhas de número. */
   readonly compacta?: boolean;
+  /** Linha mais apertada ainda (3/5 de uma linha), como as listas das telas 04 a 06. */
+  readonly apertada?: boolean;
   readonly trechos: readonly Trecho[];
 }
 
@@ -23,6 +25,8 @@ export interface LinhaVazia {
   readonly tipo: 'vazia';
   /** Vazia com a altura das linhas compactas (3/4 de uma linha), como na tela 03. */
   readonly compacta?: boolean;
+  /** Vazia com a altura das linhas apertadas (3/5 de uma linha). */
+  readonly apertada?: boolean;
 }
 
 export type Linha = LinhaDeCodigo | LinhaDeParagrafo | LinhaVazia;
@@ -49,6 +53,13 @@ export const linhaCompacta = (recuo: number, ...trechos: readonly Trecho[]): Lin
   trechos,
 });
 
+export const linhaApertada = (recuo: number, ...trechos: readonly Trecho[]): LinhaDeCodigo => ({
+  tipo: 'codigo',
+  recuo,
+  apertada: true,
+  trechos,
+});
+
 export const paragrafo = (recuo: number, texto: string): LinhaDeParagrafo => ({
   tipo: 'paragrafo',
   recuo,
@@ -56,5 +67,7 @@ export const paragrafo = (recuo: number, texto: string): LinhaDeParagrafo => ({
 });
 
 export const vazia = (): LinhaVazia => ({ tipo: 'vazia' });
+
+export const vaziaApertada = (): LinhaVazia => ({ tipo: 'vazia', apertada: true });
 
 export const vaziaCompacta = (): LinhaVazia => ({ tipo: 'vazia', compacta: true });

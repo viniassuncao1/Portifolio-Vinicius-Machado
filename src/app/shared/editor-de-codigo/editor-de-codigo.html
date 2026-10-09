@@ -8,4 +8,4 @@
   tabindex="0"
   role="region"
   aria-label="Código da seção"
-><code>@for (item of conteudo(); track $index) {@switch (item.tipo) {@case ('codigo') {<span class="linha" [class.compacta]="item.compacta" [style.--recuo]="item.recuo">@for (trecho of item.trechos; track $index) {<span [class]="'papel-' + trecho.papel">{{ trecho.texto }}</span>}</span>}@case ('paragrafo') {<span class="paragrafo" [style.--recuo]="item.recuo">{{ item.texto }}</span>}@default {<span class="linha vazia" [class.compacta]="item.compacta"></span>}}}</code></pre>
+><code>@for (item of conteudo(); track $index) {@switch (item.tipo) {@case ('codigo') {<span class="linha" [class.compacta]="item.compacta" [class.apertada]="item.apertada" [style.--recuo]="item.recuo">@for (trecho of item.trechos; track $index) {<span [class]="'papel-' + trecho.papel">{{ trecho.texto }}</span>}</span>}@case ('paragrafo') {<span class="paragrafo" [style.--recuo]="item.recuo">{{ item.texto }}</span>}@default {<span class="linha vazia" [class.compacta]="item.compacta" [class.apertada]="item.apertada"></span>}}}</code></pre>
