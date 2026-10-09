@@ -19,7 +19,10 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 | Bloco de comentário com `*`                | 02-04, 07-18, 29 | parte do `EditorDeCodigo`      | `shared/editor-de-codigo/`     |
 | Ícones (arquivo, pasta, ferramenta, IA...) | todas            | `Icone`                        | `shared/icone/`                |
 | "×" fino do Eclipse                        | todas            | `GlifoFechar`                  | `shared/glifo-fechar/`         |
-| Seção sem conteúdo ainda                   | 02-30            | `SecaoEmConstrucao`            | `shared/secao-em-construcao/`  |
+| Início                                     | 01               | `Inicio`                       | `features/inicio/`             |
+| Sobre Mim                                  | 02               | `SobreMim`                     | `features/sobre-mim/`          |
+| Diferenciais                               | 03               | `Diferenciais`                 | `features/diferenciais/`       |
+| Seção sem conteúdo ainda                   | 04-30            | `SecaoEmConstrucao`            | `shared/secao-em-construcao/`  |
 | Janela de preview de site                  | 11-15            | fora do escopo (change futura) | -                              |
 
 O botão "Seções" e a gaveta do celular **não existem no design** (só há telas de desktop). São
@@ -121,16 +124,28 @@ decisão nossa e moram na `Casca` e no `PainelLateral`.
 Fica em `shared/editor-de-codigo/conteudo.ts`. O conteúdo de uma seção é uma lista de linhas
 tipadas, todas `readonly`.
 
-| Tipo               | Forma                                                                   |
-| ------------------ | ----------------------------------------------------------------------- |
-| `Papel`            | `'palavra-chave' \| 'declaracao' \| 'literal' \| 'anotacao' \| 'comum'` |
-| `Trecho`           | `{ texto, papel }`: um pedaço de código com uma cor                     |
-| `LinhaDeCodigo`    | `{ tipo: 'codigo', recuo, compacta?, trechos }`                         |
-| `LinhaDeParagrafo` | `{ tipo: 'paragrafo', recuo, texto }`: texto em bloco de comentário     |
-| `LinhaVazia`       | `{ tipo: 'vazia' }`                                                     |
-| `ConteudoDoEditor` | `readonly Linha[]`                                                      |
+| Tipo               | Forma                                                                              |
+| ------------------ | ---------------------------------------------------------------------------------- |
+| `Papel`            | `'palavra-chave' \| 'declaracao' \| 'literal' \| 'valor' \| 'anotacao' \| 'comum'` |
+| `Trecho`           | `{ texto, papel }`: um pedaço de código com uma cor                                |
+| `LinhaDeCodigo`    | `{ tipo: 'codigo', recuo, compacta?, trechos }`                                    |
+| `LinhaDeParagrafo` | `{ tipo: 'paragrafo', recuo, texto }`: texto em bloco de comentário                |
+| `LinhaVazia`       | `{ tipo: 'vazia', compacta? }`                                                     |
+| `ConteudoDoEditor` | `readonly Linha[]`                                                                 |
 
-`recuo` é o nível de indentação (0, 1, 2...). Cada papel tem uma cor de sintaxe nos tokens.
+`recuo` é o nível de indentação (0, 1, 2...). Cada papel tem uma cor de sintaxe nos tokens:
+
+| Papel           | Token                         | Exemplo                |
+| --------------- | ----------------------------- | ---------------------- |
+| `palavra-chave` | `--cor-sintaxe-palavra-chave` | `public class`         |
+| `declaracao`    | `--cor-sintaxe-campo`         | `String cargo`         |
+| `literal`       | `--cor-sintaxe-literal`       | `“Java”`               |
+| `valor`         | `--cor-sintaxe-valor`         | `true`                 |
+| `anotacao`      | `--cor-sintaxe-anotacao`      | `@Override`            |
+| `comum`         | `--cor-sintaxe-texto`         | pontuação e o restante |
+
+O papel `valor` (verde-azulado, `#4fafac`) é o dos valores literais que não são texto, como
+`true`, e aparece na tela 03.
 
 ### Construtoras
 
@@ -141,15 +156,25 @@ Funções curtas para o arquivo de conteúdo ficar legível:
 | `palavraChave(texto)`              | `Trecho` rosa (`public class`, `extends`) |
 | `declaracao(texto)`                | `Trecho` laranja (`String cargo`)         |
 | `literal(texto)`                   | `Trecho` verde (`“Java”`)                 |
+| `valor(texto)`                     | `Trecho` verde-azulado (`true`)           |
 | `anotacao(texto)`                  | `Trecho` azul (`@Anotacao`)               |
 | `comum(texto)`                     | `Trecho` na cor padrão do texto           |
 | `linha(recuo, ...trechos)`         | `LinhaDeCodigo`                           |
 | `linhaCompacta(recuo, ...trechos)` | `LinhaDeCodigo` com `compacta: true`      |
 | `paragrafo(recuo, texto)`          | `LinhaDeParagrafo`                        |
 | `vazia()`                          | `LinhaVazia`                              |
+| `vaziaCompacta()`                  | `LinhaVazia` com `compacta: true`         |
 
 **`linhaCompacta`** existe para a lista de strings da tela 01, em que 4 linhas de código ocupam
 só 3 linhas de número. Use-a apenas quando a tela de referência tiver esse espaçamento apertado.
+Quando uma linha vazia fica no meio de um bloco compacto (tela 03), use **`vaziaCompacta()`**:
+ela ocupa a altura de uma linha compacta, e não a de uma linha comum, para a numeração seguir o
+design.
+
+**Largura do parágrafo:** o texto de um `paragrafo` quebra em 72 colunas, como no design. O limite
+vem do token `--colunas-paragrafo` (72,5, para a última coluna não quebrar por arredondamento) e é
+calculado com o avanço da fonte monoespaçada, então acompanha o tamanho do texto. Não é preciso
+quebrar o texto à mão: passe o parágrafo inteiro numa string.
 
 Exemplo (trecho de `features/inicio/inicio.conteudo.ts`):
 
@@ -166,16 +191,42 @@ export const CONTEUDO_INICIO: ConteudoDoEditor = [
 
 ## Como criar uma seção nova só com dados
 
-As 15 seções já existem como rotas, mostrando `SecaoEmConstrucao`. Para dar conteúdo a uma delas
-não é preciso criar componente de editor, estilo nem item de árvore.
+As seções **Sobre Mim** e **Diferenciais** foram feitas assim e servem de exemplo real
+(`features/sobre-mim/` e `features/diferenciais/`). As demais seções ainda mostram
+`SecaoEmConstrucao`. Para dar conteúdo a uma delas não é preciso criar componente de editor,
+estilo nem item de árvore.
 
 1. **Confirme a seção em `core/secoes.ts`.** A lista `SECOES` (`slug`, `titulo`, `icone`) é a fonte
    única: dela saem os itens da árvore, as rotas e os títulos. Para uma seção nova, acrescente um
    item na posição em que ela deve aparecer. O `icone` precisa estar em `NOMES_DE_ICONE`.
 2. **Crie o conteúdo em `features/<slug>/<slug>.conteudo.ts`**, exportando um `ConteudoDoEditor`
    montado com as construtoras. Os textos visíveis ficam em pt-BR. Confira com a tela e com
-   `design/telas/textos.md`.
-3. **Crie o componente em `features/<slug>/<slug>.ts`**, igual ao `Inicio`:
+   `design/telas/textos.md`. Exemplo, de `features/sobre-mim/sobre-mim.conteudo.ts` (tela 02):
+
+   ```ts
+   export const CONTEUDO_SOBRE_MIM: ConteudoDoEditor = [
+     vazia(),
+     linha(0, palavraChave('public interface'), comum('  ViniciusMachado {')),
+     linha(1, palavraChave('void'), comum(' sobreMim();')),
+     linha(0, comum('}')),
+     vazia(),
+     linha(1, anotacao('@Override')),
+     linha(1, palavraChave('public void'), comum(' sobreMim() {')),
+     paragrafo(0, 'Sou desenvolvedor Full Stack com cerca de 2 anos de experiência...'),
+     vazia(),
+     linha(0, comum('}')),
+   ];
+   ```
+
+   `features/diferenciais/diferenciais.conteudo.ts` (tela 03) mostra `valor('true')`,
+   `linhaCompacta` e `vaziaCompacta()` juntos:
+
+   ```ts
+   linhaCompacta(1, declaracao('boolean curioso'), comum(' = '), valor('true'), comum(';')),
+   vaziaCompacta(),
+   ```
+
+3. **Crie o componente em `features/<slug>/<slug>.ts`**, igual ao `SobreMim`:
 
    ```ts
    import { Component } from '@angular/core';
@@ -194,17 +245,16 @@ não é preciso criar componente de editor, estilo nem item de árvore.
    }
    ```
 
-4. **Troque a rota.** Em `app.routes.ts`, a rota da seção é gerada de `SECOES` e aponta para
-   `SecaoEmConstrucao`. Substitua o `loadComponent` dessa seção pelo da feature (por exemplo,
-   tratando o `slug` à parte antes do `map`, ou separando a seção da lista gerada), mantendo
-   `path: secao.slug` e `title: secao.titulo`:
+4. **Troque a rota.** Em `app.routes.ts`, toda rota de seção é gerada de `SECOES` e carrega
+   `SecaoEmConstrucao` enquanto o slug não tem feature. Para trocar, registre o carregador da
+   feature em `FEATURES_DAS_SECOES`, indexado pelo slug; `path` e `title` continuam vindo de
+   `SECOES`:
 
    ```ts
-   {
-     path: 'sobre-mim',
-     title: 'Sobre Mim',
-     loadComponent: () => import('./features/sobre-mim/sobre-mim').then((m) => m.SobreMim),
-   },
+   const FEATURES_DAS_SECOES: Readonly<Record<string, CarregadorDeSecao>> = {
+     'sobre-mim': () => import('./features/sobre-mim/sobre-mim').then((m) => m.SobreMim),
+     diferenciais: () => import('./features/diferenciais/diferenciais').then((m) => m.Diferenciais),
+   };
    ```
 
 5. **Teste.** Um `<slug>.spec.ts` ao lado do componente e um cenário no E2E. O teste de
