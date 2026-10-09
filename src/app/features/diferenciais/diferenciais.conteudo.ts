@@ -5,7 +5,7 @@ import {
   linha,
   literal,
   palavraChave,
-  paragrafo,
+  javadoc,
   valor,
   vazia,
 } from '../../shared/editor-de-codigo/conteudo';
@@ -16,12 +16,10 @@ export const CONTEUDO_DIFERENCIAIS: ConteudoDoEditor = [
   vazia(),
   linha(0, palavraChave('import'), comum(' java.time.Period;')),
   vazia(),
-  linha(0, comentario('/**')),
-  paragrafo(
+  javadoc(
     0,
     'Moro em Brasília há 20 anos. Sou mineiro, extrovertido, curioso e gosto de uma boa discussão, principalmente com quem sabe mais do que eu sobre algum assunto. Estou disposto a experiências novas e não me prendo só a back-end ou front-end: gosto de testar, aprender e encarar o que aparecer pela frente.',
   ),
-  linha(0, comentario(' */')),
   linha(0, palavraChave('public record'), comum(' PersonalData(')),
   linha(2, declaracao('String origin'), comum(',')),
   linha(2, declaracao('String city'), comum(',')),

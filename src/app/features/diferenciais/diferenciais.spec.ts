@@ -33,9 +33,7 @@ describe('Diferenciais', () => {
 
     expect(textos).toEqual([
       'import java.time.Period;',
-      '/**',
       expect.stringContaining(INICIO_DO_PARAGRAFO),
-      '*/',
       'public record PersonalData(',
       'String origin,',
       'String city,',
@@ -112,9 +110,9 @@ describe('Diferenciais', () => {
 
   it('começa e termina o parágrafo com os textos da spec', async () => {
     const raiz = await renderizar();
-    const texto = raiz.querySelector('.paragrafo')?.textContent ?? '';
+    const texto = raiz.querySelector('.javadoc')?.textContent ?? '';
 
-    expect(raiz.querySelectorAll('.paragrafo')).toHaveLength(1);
+    expect(raiz.querySelectorAll('.javadoc')).toHaveLength(1);
     expect(texto.startsWith(INICIO_DO_PARAGRAFO)).toBe(true);
     expect(texto.endsWith(FIM_DO_PARAGRAFO)).toBe(true);
   });
