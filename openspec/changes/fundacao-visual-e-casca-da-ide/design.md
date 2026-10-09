@@ -3,8 +3,9 @@
 ## Context
 
 Hoje existe só a feature `inicio` com um placeholder, rota única pré-renderizada
-(`RenderMode.Prerender` em `**`) e as pastas `core/`, `layout/` e `shared/` vazias. As 30 telas
-de 1920x1080 estão em `design/telas/` (fora do Git). Motivação em `proposal.md`; comportamento
+(`RenderMode.Prerender` em `**`) e as pastas `core/`, `layout/` e `shared/` vazias. As 30 telas estão em
+`design/telas/` (fora do Git) como PNGs de 1600x900, exportados do PDF original de 1920x1080:
+o design real é o PNG x 1,2. Motivação em `proposal.md`; comportamento
 esperado nas specs desta change.
 
 ### Inventário das telas

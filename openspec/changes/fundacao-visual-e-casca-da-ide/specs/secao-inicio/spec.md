@@ -26,9 +26,12 @@ título da janela do navegador com o nome do Vinicius.
 - **THEN** existe um `h1` com o texto `Portfolio_Vinicius` e o título da janela contém
   "Vinicius Machado"
 
-### Requirement: Nenhuma seção selecionada na árvore
-Na página inicial, a árvore SHALL exibir todas as seções sem nenhuma marcada como página atual.
+### Requirement: Árvore no Início como no design
+Na página inicial, a árvore SHALL exibir "Sobre Mim" destacado e expandido, como na tela 01, e
+MUST NOT marcar nenhum item como página atual para tecnologias assistivas, porque a página aberta
+é o Início.
 
 #### Scenario: Árvore na página inicial
 - **WHEN** a página inicial está aberta
-- **THEN** nenhum item da árvore está marcado como página atual
+- **THEN** "Sobre Mim" aparece destacado e com a seta para baixo, e nenhum item tem
+  `aria-current`
