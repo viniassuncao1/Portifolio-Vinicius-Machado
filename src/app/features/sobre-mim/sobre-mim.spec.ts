@@ -34,9 +34,7 @@ describe('SobreMim', () => {
       '}',
       'public final class ViniciusMachado implements Developer {',
       'private static final String ABOUT_ME = "Full Stack: Java, Spring Boot, Angular e SQL";',
-      '/**',
       expect.stringContaining(INICIO_DO_PARAGRAFO),
-      '*/',
       '@Override',
       'public String aboutMe() {',
       'return ABOUT_ME;',
@@ -61,7 +59,7 @@ describe('SobreMim', () => {
     ]);
     expect(raiz.querySelector('.papel-anotacao')?.textContent).toBe('@Override');
     expect(raiz.querySelector('.papel-literal')?.textContent).toContain('Full Stack');
-    expect(raiz.querySelectorAll('.papel-comentario')).toHaveLength(2);
+    expect(raiz.querySelectorAll('.javadoc')).toHaveLength(1);
   });
 
   it('recua o corpo da classe um nível, o corpo do método dois e a interface zero', async () => {
@@ -80,18 +78,18 @@ describe('SobreMim', () => {
   it('exibe o parágrafo como um bloco de comentário único', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelectorAll('.paragrafo')).toHaveLength(1);
+    expect(raiz.querySelectorAll('.javadoc')).toHaveLength(1);
   });
 
   it('começa e termina o parágrafo com os textos da spec', async () => {
-    const texto = (await renderizar()).querySelector('.paragrafo')?.textContent ?? '';
+    const texto = (await renderizar()).querySelector('.javadoc')?.textContent ?? '';
 
     expect(texto.startsWith(INICIO_DO_PARAGRAFO)).toBe(true);
     expect(texto.endsWith(FIM_DO_PARAGRAFO)).toBe(true);
   });
 
   it('cita as tecnologias, a Memora, a Watts Company e o UniCEUB', async () => {
-    const texto = (await renderizar()).querySelector('.paragrafo')?.textContent ?? '';
+    const texto = (await renderizar()).querySelector('.javadoc')?.textContent ?? '';
 
     for (const termo of [
       'Java, Spring Boot, Angular e SQL',
@@ -116,7 +114,7 @@ describe('SobreMim', () => {
     expect(raiz.querySelector('.compacta')).toBeNull();
   });
 
-  it('tem o conteúdo tipado com 16 linhas', () => {
-    expect(CONTEUDO_SOBRE_MIM).toHaveLength(16);
+  it('tem o conteúdo tipado com 14 linhas', () => {
+    expect(CONTEUDO_SOBRE_MIM).toHaveLength(14);
   });
 });

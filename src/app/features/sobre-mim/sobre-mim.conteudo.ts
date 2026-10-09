@@ -1,11 +1,10 @@
 import {
   anotacao,
-  comentario,
   comum,
   linha,
   literal,
   palavraChave,
-  paragrafo,
+  javadoc,
   vazia,
 } from '../../shared/editor-de-codigo/conteudo';
 import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
@@ -32,12 +31,10 @@ export const CONTEUDO_SOBRE_MIM: ConteudoDoEditor = [
     comum(';'),
   ),
   vazia(),
-  linha(1, comentario('/**')),
-  paragrafo(
+  javadoc(
     1,
     'Sou desenvolvedor Full Stack com cerca de 2 anos de experiência, atuando com Java, Spring Boot, Angular e SQL em sistemas críticos de produção. Lidero um squad na Memora Processos Inovadores, atuando à frente de projetos, orientando o time nas demandas, tirando dúvidas técnicas e garantindo que sigamos Scrum, com dailies, previsões de conclusão e reviews. Também sou co-fundador da Watts Company, agência de automação e IA, onde desenvolvo sistemas de CRM e agentes de IA para atendimento. Curso Ciência da Computação no UniCEUB, com foco em Engenharia de Software, Sistemas Distribuídos e Arquitetura de Software.',
   ),
-  linha(1, comentario(' */')),
   linha(1, anotacao('@Override')),
   linha(1, palavraChave('public'), comum(' String aboutMe() {')),
   linha(2, palavraChave('return'), comum(' ABOUT_ME;')),
