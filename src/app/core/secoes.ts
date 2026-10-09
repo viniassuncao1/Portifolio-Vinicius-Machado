@@ -20,7 +20,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Skills / STACK',
     icone: 'ferramenta',
     arquivo: 'Skills.java',
-    paginas: 2,
+    paginas: 3,
   },
   {
     slug: 'experiencias',
