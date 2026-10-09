@@ -15,6 +15,9 @@ export class PainelLateral {
   /** Repassa a escolha de uma seção para a casca fechar a gaveta. */
   readonly secaoEscolhida = output<void>();
 
+  /** Pedido do botão "Fechar seções" da gaveta (só aparece abaixo de 768px). */
+  readonly fecharGaveta = output<void>();
+
   focarPrimeiroItem(): void {
     this.arvore().focarPrimeiroItem();
   }

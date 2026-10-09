@@ -87,4 +87,15 @@ describe('Gaveta de seções (telas pequenas)', () => {
     expect(painel().getAttribute('data-aberta')).toBe('false');
     expect(document.activeElement).toBe(botao());
   });
+
+  it('fecha pelo botão "Fechar seções" e devolve o foco ao botão', async () => {
+    botao().click();
+    await estabilizar();
+
+    painel().querySelector<HTMLButtonElement>('.fechar-gaveta')!.click();
+    await estabilizar();
+
+    expect(painel().getAttribute('data-aberta')).toBe('false');
+    expect(document.activeElement).toBe(botao());
+  });
 });

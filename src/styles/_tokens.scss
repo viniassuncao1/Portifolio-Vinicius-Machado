@@ -117,12 +117,21 @@
   --borda-painel: var(--borda-largura) solid var(--cor-borda);
 }
 
-// Telas pequenas (< 768px): o design só tem desktop, então o editor ganha colunas mais estreitas.
+// Telas pequenas (< 768px): o design só tem desktop, então fontes, linhas e recuos encolhem
+// para o código e a árvore caberem em 390px.
 @media (max-width: 767.98px) {
   :root {
-    --largura-numeros-linha: 3.2rem;
-    --afastamento-codigo: 3rem;
-    --recuo-codigo: 2.4rem;
+    --texto-arvore: 1.2rem;
+    --texto-codigo: 1.1rem;
+    --texto-comentario: 1.1rem;
+    --texto-numero-linha: 1.3rem;
+    --altura-linha-codigo: 2.2rem;
+    --altura-linha-comentario: 1.6rem;
+    --recuo-item-arvore: 1.6rem;
+    --recuo-item-atual: 1.2rem;
+    --largura-numeros-linha: 2.6rem;
+    --afastamento-codigo: 2.4rem;
+    --recuo-codigo: 1.8rem;
     --largura-coluna-scrollbar: 0rem;
   }
 }

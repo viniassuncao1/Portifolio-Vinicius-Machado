@@ -81,3 +81,48 @@ app-arvore-de-secoes {
   border-radius: var(--raio-scrollbar);
   background: var(--cor-scrollbar-polegar);
 }
+
+// Barra de fechar da gaveta: só existe abaixo de 768px, no lugar do cabeçalho que imita a janela.
+.barra-fechar {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  :host {
+    border-radius: 0;
+  }
+
+  .cabecalho {
+    display: none;
+  }
+
+  .barra-fechar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: var(--altura-barra-gaveta);
+    padding-inline: var(--espaco-4);
+    border-block-end: var(--borda-divisoria);
+    color: var(--cor-texto);
+    font-size: var(--texto-arvore);
+  }
+
+  .fechar-gaveta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espaco-2);
+    min-height: var(--altura-barra-gaveta);
+    padding-inline: var(--espaco-3);
+    border: 0;
+    background: transparent;
+    color: var(--cor-texto);
+    font: inherit;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--cor-foco);
+      outline-offset: -2px;
+    }
+  }
+}

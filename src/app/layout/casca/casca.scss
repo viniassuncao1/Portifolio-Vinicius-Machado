@@ -70,7 +70,8 @@
     align-items: center;
     height: var(--altura-barra-gaveta);
     padding-inline: var(--espaco-4);
-    background: var(--cor-faixa-abas);
+    border-block-end: var(--borda-divisoria);
+    background: var(--cor-painel);
   }
 
   .botao-secoes {
@@ -100,7 +101,8 @@
     inset-block: calc(var(--altura-barra-ferramentas) + var(--altura-barra-gaveta)) 0;
     inset-inline-start: 0;
     z-index: var(--camada-gaveta);
-    width: min(var(--largura-painel-lateral), 85vw);
+    width: 100%;
+    background: var(--cor-painel);
   }
 
   app-painel-lateral[data-aberta='false'] {
