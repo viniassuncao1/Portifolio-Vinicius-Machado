@@ -1,7 +1,11 @@
 ul {
   margin: 0;
-  padding: 0;
+  padding: var(--afastamento-topo-arvore) 0 0;
   list-style: none;
+}
+
+li:first-child {
+  margin-block-end: var(--afastamento-primeiro-item);
 }
 
 .item {

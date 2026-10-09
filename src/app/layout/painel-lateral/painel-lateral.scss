@@ -8,6 +8,7 @@
 
 // Cabeçalho que imita a vista do Eclipse: título com "×" e os controles — e ▢.
 .cabecalho {
+  box-sizing: border-box;
   display: flex;
   align-items: flex-start;
   height: var(--altura-cabecalho-painel);
@@ -47,7 +48,7 @@
 .minimizar {
   width: 2.2rem;
   height: 0.6rem;
-  margin-block-start: 1.65rem;
+  margin-block-start: 1.05rem;
   margin-inline-start: 1.9rem;
 }
 
