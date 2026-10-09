@@ -29,8 +29,8 @@ export class FaixaDeAbas {
   private readonly router = inject(Router);
   private readonly injector = inject(Injector);
   private readonly botoes = viewChildren<ElementRef<HTMLButtonElement>>('botaoAba');
-  /** Depois de fechar a aba ativa, o foco segue para a nova aba ativa. */
-  private devolverFocoParaAtiva = false;
+  /** Aba que deve receber o foco quando ficar ativa, depois de fechar a ativa com Delete. */
+  private focoPendente: string | undefined;
 
   protected readonly abas = this.estado.abas;
   protected readonly slugAtivo = computed(() => this.estado.ativa()?.slug);
@@ -42,8 +42,8 @@ export class FaixaDeAbas {
       afterNextRender(
         () => {
           this.mostrarAbaAtiva();
-          if (!this.devolverFocoParaAtiva) return;
-          this.devolverFocoParaAtiva = false;
+          if (this.focoPendente === undefined || this.slugAtivo() !== this.focoPendente) return;
+          this.focoPendente = undefined;
           this.focarAbaAtiva();
         },
         { injector: this.injector },
@@ -81,7 +81,9 @@ export class FaixaDeAbas {
 
   private fecharPorTeclado(aba: Aba, indice: number): void {
     if (aba.slug === this.slugAtivo()) {
-      this.devolverFocoParaAtiva = true;
+      // A vizinha que o AbasAbertas vai ativar: à direita, senão à esquerda, senão o Início.
+      const abas = this.abas();
+      this.focoPendente = (abas[indice + 1] ?? abas[indice - 1])?.slug ?? '';
     } else {
       afterNextRender(
         () => this.botoes()[Math.min(indice, this.abas().length - 1)]?.nativeElement.focus(),
