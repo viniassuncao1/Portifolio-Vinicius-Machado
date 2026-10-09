@@ -22,15 +22,16 @@ As notes ficam no fichário "Portfolio" do Maestri. Use `maestri note read "<nom
 Os portals **Site Desktop** (1920x1080) e **Site Mobile** (390x844) abrem o site em
 `http://localhost:4200`. Use-os para ver a animação rodando: navegue, interaja
 (`maestri portal click`, `maestri portal key`) e capture o resultado com
-`maestri portal screenshot`. O estado final de cada animação deve bater com a tela de
-referência em `design/telas/`. Para testar sem movimento, rode
+`maestri portal screenshot`. O estado final de cada animação deve ser coerente com a
+tela de referência em `design/telas/` (o design é referência de identidade, conforme o
+[ADR-0010](../../adr/0010-design-como-referencia-e-java-moderno.md)). Para testar sem movimento, rode
 `maestri portal evaluate "Site Desktop" "matchMedia('(prefers-reduced-motion: reduce)').matches"`
 e confira o comportamento com a preferência ativada no sistema.
 
 ## Escopo
 
 - Transições entre seções (View Transitions API com o roteador do Angular).
-- Microinterações: abrir e fechar itens da árvore, troca de abas, digitação do código, abertura
+- Microinterações: abrir e fechar itens da árvore, troca de abas, digitação do código com cursor e linha atual, abertura
   das janelas de preview dos projetos.
 - Animações de entrada conforme o scroll.
 
