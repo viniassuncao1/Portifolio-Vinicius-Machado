@@ -2,7 +2,9 @@
   <nav aria-label="Páginas da seção">
     @if (pagina() > 1) {
       <a class="controle" [routerLink]="anterior()" aria-label="Página anterior">
-        <span aria-hidden="true">◂</span>
+        <svg class="seta" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <path d="M17 1.5v17L3 10z" />
+        </svg>
       </a>
     } @else {
       <span class="controle vazio" aria-hidden="true"></span>
@@ -16,7 +18,9 @@
     </span>
     @if (pagina() < total()) {
       <a class="controle" [routerLink]="proxima()" aria-label="Próxima página">
-        <span aria-hidden="true">▸</span>
+        <svg class="seta" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <path d="M3 1.5v17L17 10z" />
+        </svg>
       </a>
     } @else {
       <span class="controle vazio" aria-hidden="true"></span>

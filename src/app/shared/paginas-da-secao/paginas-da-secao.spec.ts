@@ -51,7 +51,7 @@ describe('PaginasDaSecao', () => {
   it('esconde os glifos da leitura, pois os links têm nome próprio', async () => {
     const raiz = await renderizar(2, 3);
 
-    raiz.querySelectorAll('a > span').forEach((glifo) => {
+    raiz.querySelectorAll('a > svg').forEach((glifo) => {
       expect(glifo.getAttribute('aria-hidden')).toBe('true');
     });
     expect(raiz.querySelectorAll('a')).toHaveLength(2);

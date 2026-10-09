@@ -36,6 +36,12 @@ nav {
   }
 }
 
+.seta {
+  width: var(--tamanho-seta-pagina);
+  height: var(--tamanho-seta-pagina);
+  fill: currentColor;
+}
+
 .pagina {
   min-width: 3ch;
   text-align: center;
