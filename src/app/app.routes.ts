@@ -13,6 +13,8 @@ type CarregadorDeSecao = NonNullable<Route['loadComponent']>;
  */
 const FEATURES_DAS_SECOES: Readonly<Record<string, CarregadorDeSecao>> = {
   'sobre-mim': () => import('./features/sobre-mim/sobre-mim').then((m) => m.SobreMim),
+  'como-uso-ia': () => import('./features/como-uso-ia/como-uso-ia').then((m) => m.ComoUsoIa),
+  skills: () => import('./features/skills/skills').then((m) => m.Skills),
   diferenciais: () => import('./features/diferenciais/diferenciais').then((m) => m.Diferenciais),
 };
 
