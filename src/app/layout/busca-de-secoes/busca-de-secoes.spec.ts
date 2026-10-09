@@ -138,4 +138,52 @@ describe('BuscaDeSecoes', () => {
     botao.remove();
     raiz.remove();
   });
+
+  it('usa o plural com vários resultados e o singular com um só', async () => {
+    const { raiz, digitar } = await montar();
+    const contagem = () => raiz.querySelector('.contagem')?.textContent?.trim();
+
+    expect(contagem()).toBe('16 resultados');
+    await digitar('projeto');
+    expect(contagem()).toBe('4 resultados');
+    await digitar('formacao');
+    expect(contagem()).toBe('1 resultado');
+    await digitar('zzzz');
+    expect(contagem()).toBe('Nenhum resultado');
+    raiz.remove();
+  });
+
+  it('"formacao" acha Formação e "exp" acha Experiências', async () => {
+    const { raiz, digitar, opcoes } = await montar();
+
+    await digitar('formacao');
+    expect(opcoes().map((o) => o.querySelector('.titulo')?.textContent)).toEqual(['Formação']);
+
+    await digitar('exp');
+    expect(opcoes().map((o) => o.querySelector('.titulo')?.textContent)).toEqual(['Experiências']);
+    raiz.remove();
+  });
+
+  it('as setas mudam o aria-activedescendant e a opção selecionada', async () => {
+    const { raiz, campo, tecla, opcoes } = await montar();
+    expect(campo.getAttribute('aria-activedescendant')).toBe('opcao-busca-0');
+
+    tecla('ArrowDown');
+
+    expect(campo.getAttribute('aria-activedescendant')).toBe('opcao-busca-1');
+    expect(opcoes()[1].getAttribute('aria-selected')).toBe('true');
+    expect(opcoes()[0].getAttribute('aria-selected')).toBe('false');
+    raiz.remove();
+  });
+
+  it('volta o índice ativo ao primeiro resultado ao digitar', async () => {
+    const { raiz, campo, tecla, digitar } = await montar();
+    tecla('ArrowDown');
+    tecla('ArrowDown');
+
+    await digitar('p');
+
+    expect(campo.getAttribute('aria-activedescendant')).toBe('opcao-busca-0');
+    raiz.remove();
+  });
 });
