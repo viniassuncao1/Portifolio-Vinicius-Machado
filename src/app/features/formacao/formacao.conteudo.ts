@@ -1,4 +1,5 @@
 import {
+  comentario,
   comum,
   declaracao,
   linha,
@@ -12,14 +13,13 @@ import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
 /** Conteúdo da parte "Education" da tela 28 (design/telas/tela-28.png). */
 export const CONTEUDO_FORMACAO: ConteudoDoEditor = [
   vazia(),
-  linha(0, palavraChave('import'), comum(' java.time.Year;')),
-  vazia(),
   linha(0, palavraChave('public class'), comum('  Education {')),
   vazia(),
+  linha(1, comentario('// Graduação: instituição, curso e ano previsto de formatura')),
   linha(1, palavraChave('record'), comum(' Degree(')),
   linha(2, declaracao('String institution'), comum(',')),
   linha(2, declaracao('String course'), comum(',')),
-  linha(2, declaracao('Year expectedGraduation'), comum(') {}')),
+  linha(2, declaracao('int expectedGraduation'), comum(') {}')),
   vazia(),
   linha(
     1,
@@ -31,7 +31,7 @@ export const CONTEUDO_FORMACAO: ConteudoDoEditor = [
   ),
   linha(2, literal('"UniCEUB"'), comum(',')),
   linha(2, literal('"Bacharelado em Ciência da Computação"'), comum(',')),
-  linha(2, comum('Year.of('), valor('2027'), comum(')')),
+  linha(2, valor('2027')),
   linha(1, comum(');')),
   vazia(),
   linha(0, comum('}')),

@@ -14,6 +14,8 @@ describe('Formacao', () => {
 
     expect(texto).toContain('UniCEUB');
     expect(texto).toContain('Bacharelado em Ciência da Computação');
-    expect(texto).toContain('Year.of(2027)');
+    expect(texto).toContain('int expectedGraduation');
+    expect(texto).toContain('2027');
+    expect(texto).not.toContain('Year.of');
   });
 });
