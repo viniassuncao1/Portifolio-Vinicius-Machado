@@ -7,7 +7,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, map, startWith } from 'rxjs';
 
@@ -46,6 +46,7 @@ export class Casca {
   private readonly injector = inject(Injector);
   private readonly painel = viewChild.required(PainelLateral);
   private readonly busca = viewChild.required(BuscaDeSecoes);
+  private readonly conteudo = viewChild<ElementRef<HTMLElement>>('conteudo');
   private readonly botao = viewChild.required<ElementRef<HTMLButtonElement>>('botaoSecoes');
 
   protected readonly titulo = inject(EstrategiaDeTitulo).titulo;
@@ -65,6 +66,16 @@ export class Casca {
     ),
     { requireSync: true },
   );
+
+  constructor() {
+    // Cada página abre no topo: o editor é a região rolável e a rolagem não se reinicia sozinha.
+    this.router.events
+      .pipe(
+        filter((evento) => evento instanceof NavigationEnd),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => this.conteudo()?.nativeElement.scrollTo?.({ top: 0 }));
+  }
 
   protected alternarGaveta(): void {
     if (this.gavetaAberta()) {

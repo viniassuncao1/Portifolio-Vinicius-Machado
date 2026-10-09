@@ -1,21 +1,25 @@
 :host {
+  // A casca ocupa exatamente a janela, como uma IDE: quem rola é a área do editor, não a página.
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 .area {
   display: grid;
   grid-template-columns: var(--largura-painel-lateral) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   column-gap: var(--espaco-2);
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  min-height: 0;
 }
 
 .coluna-editor {
   display: flex;
   flex-direction: column;
-  align-self: start;
   min-width: 0;
+  min-height: 0;
 }
 
 // Faixa de abas: o degradê fica aqui e a aba ativa se funde com o editor.
@@ -59,16 +63,25 @@
   }
 }
 
+// Cresce com o código até a altura disponível; passando disso, `.conteudo` rola.
 .editor {
   display: grid;
+  flex: 0 1 auto;
   grid-template-columns: minmax(0, 1fr) var(--largura-coluna-scrollbar);
+  grid-template-rows: minmax(0, 1fr);
+  min-height: 0;
   border-end-start-radius: var(--raio-editor);
   background: var(--cor-editor);
 }
 
+// Região rolável do editor (alcançável por teclado pelo próprio bloco de código).
 .conteudo {
   view-transition-name: conteudo-editor;
   min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-color: var(--cor-scrollbar-polegar) var(--cor-scrollbar-trilho);
+  scrollbar-width: thin;
   padding-block: var(--espaco-editor-topo) var(--espaco-editor-base);
 }
 
