@@ -24,3 +24,6 @@ export const SECOES: readonly Secao[] = [
   { slug: 'depoimentos', titulo: 'Depoimentos/Recomendações', icone: 'arquivo' },
   { slug: 'contato', titulo: 'Contato', icone: 'pasta' },
 ];
+
+/** Chave do `data` da rota que pede a árvore com a primeira seção destacada, sem página atual. */
+export const DADO_ARVORE_NO_INICIO = 'arvoreNoInicio';

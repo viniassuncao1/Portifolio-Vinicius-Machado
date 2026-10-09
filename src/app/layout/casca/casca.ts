@@ -7,8 +7,11 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter, map, startWith } from 'rxjs';
 
+import { DADO_ARVORE_NO_INICIO } from '../../core/secoes';
 import { EstrategiaDeTitulo } from '../../core/estrategia-de-titulo';
 import { AbaDoEditor } from '../aba-do-editor/aba-do-editor';
 import { BarraDeFerramentas } from '../barra-de-ferramentas/barra-de-ferramentas';
@@ -33,6 +36,21 @@ export class Casca {
 
   protected readonly titulo = inject(EstrategiaDeTitulo).titulo;
   protected readonly gavetaAberta = signal(false);
+
+  private readonly router = inject(Router);
+  /** A rota aberta pede a árvore como no Início (design da tela 01). */
+  protected readonly arvoreNoInicio = toSignal(
+    this.router.events.pipe(
+      filter((evento) => evento instanceof NavigationEnd),
+      startWith(null),
+      map(() => {
+        let rota = this.router.routerState.snapshot.root;
+        while (rota.firstChild) rota = rota.firstChild;
+        return rota.data[DADO_ARVORE_NO_INICIO] === true;
+      }),
+    ),
+    { requireSync: true },
+  );
 
   protected alternarGaveta(): void {
     if (this.gavetaAberta()) {

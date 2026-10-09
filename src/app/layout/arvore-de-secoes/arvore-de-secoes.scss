@@ -42,8 +42,9 @@ li:first-child {
     transition: opacity var(--duracao-rapida) var(--curva-padrao);
   }
 
-  // Item da seção aberta: destacado e expandido.
-  &.atual {
+  // Item da seção aberta (ou, no Início, o destaque do design): destacado e expandido.
+  &.atual,
+  &.destacado {
     min-height: var(--altura-linha-selecionada);
     padding-inline-start: var(--recuo-item-atual);
 

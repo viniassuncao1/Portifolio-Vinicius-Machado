@@ -146,4 +146,28 @@ describe('ArvoreDeSecoes', () => {
 
     links.forEach((link) => expect(link.getAttribute('tabindex')).not.toBe('-1'));
   });
+
+  describe('no Início', () => {
+    const abrirNoInicio = async () => {
+      const fixture = await abrir('/');
+      fixture.componentRef.setInput('noInicio', true);
+      await fixture.whenStable();
+      return fixture.nativeElement as HTMLElement;
+    };
+
+    it('destaca só "Sobre Mim", sem aria-current', async () => {
+      const elemento = await abrirNoInicio();
+
+      const destacados = elemento.querySelectorAll('.destacado');
+      expect(destacados).toHaveLength(1);
+      expect(destacados[0].textContent).toContain('Sobre Mim');
+      expect(elemento.querySelector('[aria-current]')).toBeNull();
+    });
+
+    it('não destaca nada quando o estado está desligado', async () => {
+      const fixture = await abrir('/');
+
+      expect((fixture.nativeElement as HTMLElement).querySelector('.destacado')).toBeNull();
+    });
+  });
 });

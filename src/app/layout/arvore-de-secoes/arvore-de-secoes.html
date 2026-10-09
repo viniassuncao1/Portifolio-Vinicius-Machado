@@ -6,6 +6,7 @@
           #item
           class="item"
           [class.inicial]="primeiro"
+          [class.destacado]="primeiro && noInicio()"
           [routerLink]="['/', secao.slug]"
           routerLinkActive="atual"
           ariaCurrentWhenActive="page"

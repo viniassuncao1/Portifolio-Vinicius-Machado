@@ -15,6 +15,7 @@
   <app-painel-lateral
     id="painel-lateral"
     [attr.data-aberta]="gavetaAberta()"
+    [noInicio]="arvoreNoInicio()"
     (secaoEscolhida)="fecharEDevolverFoco()"
     (fecharGaveta)="fecharEDevolverFoco()"
   />

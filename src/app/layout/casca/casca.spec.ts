@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { TitleStrategy, provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
+import { DADO_ARVORE_NO_INICIO } from '../../core/secoes';
 import { EstrategiaDeTitulo } from '../../core/estrategia-de-titulo';
 import { Casca } from './casca';
 
@@ -18,6 +19,7 @@ describe('Casca', () => {
             path: '',
             component: Casca,
             children: [
+              { path: '', data: { [DADO_ARVORE_NO_INICIO]: true }, component: Pagina },
               { path: 'contato', title: 'Contato', component: Pagina },
               { path: 'ajuda', title: 'Ajuda', component: Pagina },
             ],
@@ -99,5 +101,15 @@ describe('Casca', () => {
     expect((harness.routeNativeElement as HTMLElement).querySelector('h1')?.textContent).toBe(
       'Ajuda',
     );
+  });
+
+  it('destaca "Sobre Mim" só na rota que pede a árvore do Início', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/');
+    const elemento = harness.routeNativeElement as HTMLElement;
+    expect(elemento.querySelector('nav .destacado')?.textContent).toContain('Sobre Mim');
+
+    await harness.navigateByUrl('/contato');
+    expect(elemento.querySelector('nav .destacado')).toBeNull();
   });
 });
