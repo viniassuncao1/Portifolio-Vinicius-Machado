@@ -4,6 +4,9 @@ import { DADO_ARVORE_NO_INICIO, SECOES } from './core/secoes';
 import { TITULO_INICIO } from './core/titulos';
 import { Casca } from './layout/casca/casca';
 
+/** Seções que já têm feature própria (as demais mostram o aviso de "em construção"). */
+const SECOES_COM_FEATURE: ReadonlySet<string> = new Set(['sobre-mim', 'diferenciais']);
+
 export const routes: Routes = [
   {
     path: '',
@@ -15,8 +18,19 @@ export const routes: Routes = [
         data: { [DADO_ARVORE_NO_INICIO]: true },
         loadComponent: () => import('./features/inicio/inicio').then((m) => m.Inicio),
       },
+      {
+        path: 'sobre-mim',
+        title: 'Sobre Mim',
+        loadComponent: () => import('./features/sobre-mim/sobre-mim').then((m) => m.SobreMim),
+      },
+      {
+        path: 'diferenciais',
+        title: 'Diferenciais',
+        loadComponent: () =>
+          import('./features/diferenciais/diferenciais').then((m) => m.Diferenciais),
+      },
       // Enquanto a seção não tem feature própria, a rota carrega o aviso de "em construção".
-      ...SECOES.map((secao) => ({
+      ...SECOES.filter((secao) => !SECOES_COM_FEATURE.has(secao.slug)).map((secao) => ({
         path: secao.slug,
         title: secao.titulo,
         loadComponent: () =>
