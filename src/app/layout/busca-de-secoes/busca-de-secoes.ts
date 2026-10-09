@@ -70,6 +70,8 @@ export class BuscaDeSecoes {
     this.focoAnterior = this.documento.activeElement as HTMLElement | null;
     this.consulta.set('');
     this.indiceAtivo.set(0);
+    // O binding [value] não reescreve o DOM se a consulta já era '' no último render: zera o campo.
+    this.campo().nativeElement.value = '';
     dialogo.showModal();
     this.campo().nativeElement.focus();
   }
