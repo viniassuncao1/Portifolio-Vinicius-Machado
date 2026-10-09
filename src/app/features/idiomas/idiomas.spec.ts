@@ -16,6 +16,13 @@ describe('Idiomas', () => {
     expect(texto).toContain('SPANISH = "Básico"');
   });
 
+  it('escreve os nomes dos idiomas em pt-BR', async () => {
+    const texto = await codigo();
+
+    expect(texto).toContain('// Inglês');
+    expect(texto).toContain('// Espanhol');
+  });
+
   it('não usa enum nem Map para dois idiomas', async () => {
     const texto = await codigo();
 

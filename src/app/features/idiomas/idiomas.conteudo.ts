@@ -22,6 +22,7 @@ export const CONTEUDO_IDIOMAS: ConteudoDoEditor = [
     comum(' ENGLISH = '),
     literal('"Básico"'),
     comum(';'),
+    comentario('  // Inglês'),
   ),
   linha(
     1,
@@ -30,6 +31,7 @@ export const CONTEUDO_IDIOMAS: ConteudoDoEditor = [
     comum(' SPANISH = '),
     literal('"Básico"'),
     comum(';'),
+    comentario('  // Espanhol'),
   ),
   vazia(),
   linha(0, comum('}')),
