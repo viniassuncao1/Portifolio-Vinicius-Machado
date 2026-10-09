@@ -16,9 +16,10 @@ e eu quero mostrar o processo, não só o resultado.
 
 ## Entradas
 
-| Entrada                             | Data       | Resumo                                                                      |
-| ----------------------------------- | ---------- | --------------------------------------------------------------------------- |
-| [0001](0001-fundacao-do-projeto.md) | 2026-10-08 | Angular 22 pré-renderizado, CI/CD na Vercel, ADRs, OpenSpec e equipe de IA. |
+| Entrada                                        | Data       | Resumo                                                                                           |
+| ---------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------ |
+| [0001](0001-fundacao-do-projeto.md)            | 2026-10-08 | Angular 22 pré-renderizado, CI/CD na Vercel, ADRs, OpenSpec e equipe de IA.                      |
+| [0002](0002-fundacao-visual-e-casca-da-ide.md) | 2026-10-09 | Tokens, casca da IDE como rota-pai, editor de código com dados tipados, gaveta no celular e axe. |
 
 ## Modelo de entrada
 
