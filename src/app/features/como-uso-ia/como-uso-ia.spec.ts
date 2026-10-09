@@ -43,9 +43,7 @@ describe('ComoUsoIa', () => {
 
     expect(textos).toEqual([
       'import java.util.List;',
-      '/**',
       expect.stringContaining(INICIO_DO_PARAGRAFO),
-      '*/',
       'public final class ArtificialIntelligence {',
       'public static final boolean FAD = false;',
       'public static final boolean PART_OF_THE_JOB = true;',
@@ -83,25 +81,25 @@ describe('ComoUsoIa', () => {
     expect(literais).toEqual(['"Claude Code"', '"Codex"', '"SDD (Spec-Driven Development)"']);
   });
 
-  it('comenta o texto como Javadoc, na cor de comentário', async () => {
+  it('exibe o texto como um bloco Javadoc antes da classe', async () => {
     const raiz = await renderizar();
+    const bloco = raiz.querySelector('.javadoc');
 
-    expect(
-      Array.from(raiz.querySelectorAll('.papel-comentario')).map((c) => c.textContent?.trim()),
-    ).toEqual(['/**', '*/']);
+    expect(bloco?.textContent).toContain(INICIO_DO_PARAGRAFO);
+    expect(bloco?.nextElementSibling?.textContent).toContain('public final class');
   });
 
   it('começa e termina o parágrafo com os textos da spec', async () => {
     const raiz = await renderizar();
-    const texto = raiz.querySelector('.paragrafo')?.textContent ?? '';
+    const texto = raiz.querySelector('.javadoc')?.textContent ?? '';
 
-    expect(raiz.querySelectorAll('.paragrafo')).toHaveLength(1);
+    expect(raiz.querySelectorAll('.javadoc')).toHaveLength(1);
     expect(texto.startsWith(INICIO_DO_PARAGRAFO)).toBe(true);
     expect(texto.endsWith(FIM_DO_PARAGRAFO)).toBe(true);
   });
 
   it('cita Watts Company, Claude Code, Codex e SDD no parágrafo', async () => {
-    const texto = (await renderizar()).querySelector('.paragrafo')?.textContent ?? '';
+    const texto = (await renderizar()).querySelector('.javadoc')?.textContent ?? '';
 
     for (const termo of ['Watts Company', 'Claude Code', 'Codex', 'Spec-Driven Development']) {
       expect(texto).toContain(termo);
