@@ -7,49 +7,6 @@ import { routes } from '../../app.routes';
 import { EstrategiaDeTitulo } from '../../core/estrategia-de-titulo';
 import { Inicio } from './inicio';
 
-/** Linhas do código da tela 01, na ordem, com o papel de cada trecho. */
-const LINHAS_DA_TELA_01: readonly (readonly [string, string][])[] = [
-  [],
-  [
-    ['papel-palavra-chave', 'package'],
-    ['papel-comum', '   portfolio.viniciusmachado;'],
-  ],
-  [
-    ['papel-palavra-chave', 'public class'],
-    ['papel-comum', '  ViniciusMachado'],
-  ],
-  [
-    ['papel-comum', '      '],
-    ['papel-palavra-chave', 'extends'],
-    ['papel-comum', '  DesenvolvedorFullStack {'],
-  ],
-  [],
-  [
-    ['papel-declaracao', 'String cargo'],
-    ['papel-comum', '  = '],
-    ['papel-literal', '“Full Stack Júnior”'],
-    ['papel-comum', ';'],
-  ],
-  [['papel-comum', 'String[] stack = {']],
-  [
-    ['papel-literal', '“Java”'],
-    ['papel-comum', ','],
-  ],
-  [
-    ['papel-literal', '“Spring Boot”'],
-    ['papel-comum', ','],
-  ],
-  [
-    ['papel-literal', '“Angular”'],
-    ['papel-comum', ','],
-  ],
-  [['papel-literal', '“SQL”']],
-  [],
-  [['papel-comum', '};']],
-  [],
-  [['papel-comum', '}']],
-];
-
 describe('Inicio', () => {
   async function renderizar(): Promise<HTMLElement> {
     const fixture = TestBed.createComponent(Inicio);
@@ -63,14 +20,23 @@ describe('Inicio', () => {
     expect(raiz.querySelectorAll('app-editor-de-codigo')).toHaveLength(1);
   });
 
-  it('exibe as 15 linhas da tela 01 com o papel de cada trecho', async () => {
+  const linhas = (raiz: HTMLElement) =>
+    Array.from(raiz.querySelectorAll('code > span'))
+      .map((linha) => linha.textContent?.replace(/\s+/g, ' ').trim())
+      .filter((texto) => texto);
+
+  it('declara o pacote, o import e o record ViniciusMachado, na ordem', async () => {
     const raiz = await renderizar();
 
-    const linhas = Array.from(raiz.querySelectorAll('code > span')).map((linha) =>
-      Array.from(linha.children).map((trecho) => [trecho.className, trecho.textContent]),
-    );
-
-    expect(linhas).toEqual(LINHAS_DA_TELA_01);
+    expect(linhas(raiz).slice(0, 7)).toEqual([
+      'package portfolio.viniciusmachado;',
+      'import java.util.List;',
+      '/** Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL. */',
+      'public record ViniciusMachado(',
+      'String role,',
+      'List<String> stack',
+      ') implements FullStackDeveloper {',
+    ]);
   });
 
   it('declara o pacote portfolio.viniciusmachado como palavra-chave e texto comum', async () => {
@@ -81,56 +47,52 @@ describe('Inicio', () => {
     expect(linha.textContent).toContain('portfolio.viniciusmachado;');
   });
 
-  it('declara a classe ViniciusMachado que estende DesenvolvedorFullStack', async () => {
-    const raiz = await renderizar();
-    const texto = Array.from(raiz.querySelectorAll('code > span'))
-      .slice(2, 4)
-      .map((linha) => linha.textContent?.replace(/\s+/g, ' ').trim());
-
-    expect(texto).toEqual(['public class ViniciusMachado', 'extends DesenvolvedorFullStack {']);
-  });
-
-  it('mostra o cargo "Full Stack Júnior" com a declaração na cor de campo', async () => {
+  it('colore o Javadoc do perfil como comentário', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelector('.papel-declaracao')?.textContent).toBe('String cargo');
-    expect(raiz.querySelector('.papel-literal')?.textContent).toBe('“Full Stack Júnior”');
+    expect(raiz.querySelector('.papel-comentario')?.textContent).toContain('Full Stack Júnior');
   });
 
-  it('lista as quatro tecnologias do array stack, em ordem, com aspas curvas', async () => {
+  it('mostra os componentes do record na cor de declaração', async () => {
+    const raiz = await renderizar();
+
+    expect(
+      Array.from(raiz.querySelectorAll('.papel-declaracao')).map((d) => d.textContent),
+    ).toEqual(['String role', 'List<String> stack']);
+  });
+
+  it('mostra o cargo e as quatro tecnologias da stack, em ordem, com aspas retas', async () => {
     const raiz = await renderizar();
 
     const literais = Array.from(raiz.querySelectorAll('.papel-literal')).map((l) => l.textContent);
 
     expect(literais).toEqual([
-      '“Full Stack Júnior”',
-      '“Java”',
-      '“Spring Boot”',
-      '“Angular”',
-      '“SQL”',
+      '"Full Stack Júnior"',
+      '"Java"',
+      '"Spring Boot"',
+      '"Angular"',
+      '"SQL"',
     ]);
   });
 
-  it('usa aspas curvas e nunca aspas retas', async () => {
+  it('cria a stack com List.of, em lista imutável', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelector('code')?.textContent).not.toMatch(/["']/);
+    expect(raiz.querySelector('code')?.textContent).toContain('List.of(');
+    expect(raiz.querySelector('code')?.textContent).not.toContain('String[]');
   });
 
-  it('indenta o campo e o array com um nível e as tecnologias com dois', async () => {
+  it('indenta o record com zero, os componentes com dois e a stack com quatro níveis', async () => {
     const raiz = await renderizar();
-    const linhas = Array.from(raiz.querySelectorAll<HTMLElement>('code > span'));
-    const recuo = (i: number) => linhas[i].style.getPropertyValue('--recuo');
+    const todas = Array.from(raiz.querySelectorAll<HTMLElement>('code > span'));
+    const recuo = (texto: string) =>
+      todas.find((l) => l.textContent?.trim() === texto)?.style.getPropertyValue('--recuo');
 
-    expect([recuo(1), recuo(5), recuo(6), recuo(7), recuo(10), recuo(12), recuo(14)]).toEqual([
-      '0',
-      '1',
-      '1',
-      '2',
-      '2',
-      '1',
-      '0',
-    ]);
+    expect([
+      recuo('public record ViniciusMachado('),
+      recuo('String role,'),
+      recuo('"Java",'),
+    ]).toEqual(['0', '2', '4']);
   });
 
   it('não tem h1 próprio: o título vem da casca', async () => {
@@ -185,7 +147,7 @@ describe('Início dentro da casca', () => {
     expect(raiz.querySelector('nav [aria-current]')).toBeNull();
   });
 
-  it('mostra o código da tela 01 no editor da casca', async () => {
+  it('mostra o código do Início no editor da casca', async () => {
     const raiz = await abrirInicio();
 
     expect(raiz.querySelector('main code')?.textContent).toContain('portfolio.viniciusmachado;');
