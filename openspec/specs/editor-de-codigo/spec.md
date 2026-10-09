@@ -16,9 +16,10 @@ seu papel na sintaxe) e exibi-lo como código Java, sem que a seção precise de
   visual específico da seção
 
 ### Requirement: Cores de sintaxe
-O editor SHALL colorir cada trecho conforme o seu papel, como no design: palavras-chave
-(`package`, `public`, `class`, `extends`, `void`), declarações de campo, textos entre aspas,
-valores literais (`true`), anotações (`@Override`), marcadores de comentário e texto comum.
+O editor SHALL colorir cada trecho conforme o seu papel: palavras-chave (`package`, `public`,
+`class`, `record`, `static`, `final`, `var`, `void`), declarações (tipos e nomes de campos e
+parâmetros), textos entre aspas, valores literais (`true`, `false`, números, `null`), anotações
+(`@Override`), comentários (`//` e Javadoc) e texto comum.
 
 #### Scenario: Linha com campo e texto
 - **WHEN** o editor exibe `String cargo = "Full Stack Júnior";`
@@ -28,6 +29,10 @@ valores literais (`true`), anotações (`@Override`), marcadores de comentário 
 #### Scenario: Linha com valor literal
 - **WHEN** o editor exibe `boolean curioso = true;`
 - **THEN** `true` aparece na cor de valor literal, com contraste de pelo menos 4,5:1 com o fundo
+
+#### Scenario: Comentário de linha
+- **WHEN** o editor exibe `// 2x` no fim de uma linha
+- **THEN** o comentário aparece na cor de comentário, com contraste de pelo menos 4,5:1
 
 ### Requirement: Numeração de linhas
 O editor SHALL exibir uma coluna de números de linha à esquerda, com no mínimo 15 linhas, como
@@ -63,3 +68,11 @@ O texto exibido no editor SHALL poder ser selecionado e copiado como texto comum
 #### Scenario: Copiar um trecho
 - **WHEN** o visitante seleciona e copia `"Spring Boot"` no editor
 - **THEN** a área de transferência recebe o texto, sem números de linha
+
+### Requirement: Links no código
+Um trecho do código SHALL poder ser um link real, exibido com a cor do seu papel e sublinhado ao
+passar o mouse ou receber foco, sem quebrar a leitura do código.
+
+#### Scenario: E-mail no código
+- **WHEN** o editor exibe o e-mail da seção Contato
+- **THEN** ele é um link `mailto:` alcançável por Tab e com foco visível

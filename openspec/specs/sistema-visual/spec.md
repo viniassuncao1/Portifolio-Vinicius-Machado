@@ -15,15 +15,6 @@ escritos diretamente.
 - **WHEN** o valor do token de cor de fundo do editor é alterado
 - **THEN** o fundo do editor muda em todas as telas, sem alterar nenhum componente
 
-### Requirement: Fidelidade ao design de referência
-Os valores dos tokens SHALL ser extraídos das telas em `design/telas/`, de modo que a casca da
-IDE em 1920x1080 reproduza as cores, fontes e proporções da tela correspondente.
-
-#### Scenario: Comparação com a tela 01
-- **WHEN** a página inicial é aberta numa janela de 1920x1080
-- **THEN** a barra de ferramentas, o painel lateral, a aba e o editor aparecem com as mesmas
-  cores, fontes e proporções da `tela-01.png`
-
 ### Requirement: Contraste mínimo
 Todo texto exibido MUST ter contraste de pelo menos 4,5:1 com o fundo (WCAG AA). Quando uma cor
 do design não atingir esse mínimo, o token SHALL usar a cor mais próxima que atinja.
@@ -49,3 +40,18 @@ movimento no sistema, exibindo o estado final diretamente.
 #### Scenario: Preferência de reduzir movimento ativada
 - **WHEN** o usuário com `prefers-reduced-motion: reduce` troca de seção ou expande a árvore
 - **THEN** o novo estado aparece imediatamente, sem animação
+
+### Requirement: Design como referência
+As telas em `design/telas/` SHALL ser a referência da identidade visual (cores, tipografia,
+proporções e estrutura de IDE). Desvios MUST ser permitidos quando melhoram a experiência de
+IDE, a acessibilidade ou a modernidade do código, e MUST ser registrados no design da change.
+
+#### Scenario: Comparação com a tela 01
+- **WHEN** a página inicial é aberta numa janela de 1920x1080
+- **THEN** a barra de ferramentas, o painel lateral e o editor mantêm as cores, as fontes e as
+  proporções da `tela-01.png`
+
+#### Scenario: Desvio intencional
+- **WHEN** uma change acrescenta algo que não está nas telas, como a barra de status
+- **THEN** o elemento usa os tokens do sistema visual e o desvio está descrito no design da
+  change

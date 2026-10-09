@@ -1,8 +1,8 @@
 # 0005: Experiência de IDE e Java moderno
 
 - **Data:** 2026-10-09
-- **Change:** [experiencia-de-ide-e-java-moderno](../../openspec/changes/experiencia-de-ide-e-java-moderno/)
-- **PR:** a definir
+- **Change:** [experiencia-de-ide-e-java-moderno](../../openspec/changes/archive/2026-10-09-experiencia-de-ide-e-java-moderno/)
+- **PR:** [#16](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/16)
 - **ADRs:** [0010](../adr/0010-design-como-referencia-e-java-moderno.md)
 
 ![Faixa de abas com vários arquivos abertos no desktop](imagens/0005-abas-desktop.png)
@@ -66,7 +66,7 @@ já cabiam no mecanismo existente.
 
 ## Links
 
-- Change: [`openspec/changes/experiencia-de-ide-e-java-moderno`](../../openspec/changes/experiencia-de-ide-e-java-moderno/)
+- Change: [`openspec/changes/archive/2026-10-09-experiencia-de-ide-e-java-moderno`](../../openspec/changes/archive/2026-10-09-experiencia-de-ide-e-java-moderno/)
 - ADR: [0010 design como referência e Java moderno](../adr/0010-design-como-referencia-e-java-moderno.md)
 - Documentação: [componentes](../componentes.md), [arquitetura](../arquitetura.md) e
   [equipe de agentes](../equipe-de-agentes/README.md)

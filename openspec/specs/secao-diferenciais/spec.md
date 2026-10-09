@@ -6,16 +6,6 @@ dados pessoais escritos como uma classe Java.
 
 ## Requirements
 
-### Requirement: Código da tela 03
-A rota `/diferenciais` SHALL exibir no editor o código da tela 03: a classe `PersonalData` com
-`String origem = "Mineiro"`, `String cidade = "Brasília"`, os campos `boolean` `extrovertido`,
-`curioso` e `gostaDeAprender` iguais a `true`, a anotação `@Override` e o método
-`public void diferenciais() {` com o parágrafo, com os mesmos textos, recuos e cores do design.
-
-#### Scenario: Abertura da seção
-- **WHEN** o visitante abre a seção "Diferenciais"
-- **THEN** o editor mostra a classe, os campos, a anotação, o método e o parágrafo da tela 03
-
 ### Requirement: Valores booleanos destacados
 Os valores `true` dos campos `boolean` SHALL aparecer na cor de valor literal, diferente da cor
 dos textos entre aspas.
@@ -25,10 +15,11 @@ dos textos entre aspas.
 - **THEN** `boolean curioso` aparece na cor de declaração de campo e `true` na cor de valor
   literal
 
-### Requirement: Parágrafo dos diferenciais
-O parágrafo SHALL reproduzir o texto do design como bloco de comentário.
+### Requirement: Diferenciais em Java moderno
+A rota `/diferenciais` SHALL mostrar em Java moderno que o Vinicius é mineiro, mora em Brasília
+há 20 anos, é extrovertido, curioso e gosta de aprender, e o texto da tela 03 sobre gostar de
+boas discussões e não se prender só a back-end ou front-end.
 
-#### Scenario: Texto do parágrafo
-- **WHEN** a seção "Diferenciais" está aberta
-- **THEN** o parágrafo começa com "Moro em Brasília há 20 anos." e termina com "encarar o que
-  aparecer pela frente."
+#### Scenario: Abertura da seção
+- **WHEN** o visitante abre a seção "Diferenciais"
+- **THEN** o editor mostra essas informações, com os valores booleanos na cor de valor literal

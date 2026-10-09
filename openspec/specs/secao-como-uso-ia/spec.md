@@ -6,25 +6,11 @@ escrito como uma classe Java.
 
 ## Requirements
 
-### Requirement: Código da tela 04
-A rota `/como-uso-ia` SHALL exibir no editor o código da tela 04: a classe
-`ArtificialIntelligence` (o design grafa `ArtificialItenligence`; a grafia foi corrigida a pedido
-do Vinicius) com `boolean modismo = false` e `boolean parteDoTrabalho = true`, a
-anotação `@Override` e o método `public void comoEuUsoIA() {` com o parágrafo, com os mesmos
-textos, recuos e cores do design.
+### Requirement: Uso de IA em Java moderno
+A rota `/como-uso-ia` SHALL mostrar em Java moderno que IA não é modismo e é parte do trabalho,
+e o texto da tela 04: agentes de IA na Watts Company (como a Ana, que atende pacientes de uma
+clínica pelo WhatsApp) e o uso de Claude Code e Codex com SDD (Spec-Driven Development).
 
 #### Scenario: Abertura da seção
 - **WHEN** o visitante abre a seção "Como uso a IA"
-- **THEN** o editor mostra a classe, os campos, a anotação, o método e o parágrafo da tela 04
-
-#### Scenario: Valores booleanos
-- **WHEN** a seção está aberta
-- **THEN** `false` e `true` aparecem na cor de valor literal
-
-### Requirement: Parágrafo sobre IA
-O parágrafo SHALL reproduzir o texto do design como bloco de comentário.
-
-#### Scenario: Texto do parágrafo
-- **WHEN** a seção "Como uso a IA" está aberta
-- **THEN** o parágrafo começa com "Não vejo IA como modismo" e termina com "parte de como eu
-  planejo e entrego código."
+- **THEN** o editor mostra essas informações em Java moderno
