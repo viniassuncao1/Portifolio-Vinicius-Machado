@@ -8,6 +8,8 @@ export interface Trecho {
 export interface LinhaDeCodigo {
   readonly tipo: 'codigo';
   readonly recuo: number;
+  /** Linha apertada, como a lista de strings da tela 01: 4 linhas ocupam 3 linhas de número. */
+  readonly compacta?: boolean;
   readonly trechos: readonly Trecho[];
 }
 
@@ -34,6 +36,13 @@ export const comum = (texto: string): Trecho => ({ texto, papel: 'comum' });
 export const linha = (recuo: number, ...trechos: readonly Trecho[]): LinhaDeCodigo => ({
   tipo: 'codigo',
   recuo,
+  trechos,
+});
+
+export const linhaCompacta = (recuo: number, ...trechos: readonly Trecho[]): LinhaDeCodigo => ({
+  tipo: 'codigo',
+  recuo,
+  compacta: true,
   trechos,
 });
 

@@ -65,6 +65,12 @@ $quantidade-de-marcadores: 60;
   white-space: pre;
 }
 
+.linha.compacta {
+  min-height: 0;
+  font-size: var(--texto-comentario);
+  line-height: calc(var(--altura-linha-codigo) * 3 / 4);
+}
+
 .paragrafo {
   position: relative;
   display: block;

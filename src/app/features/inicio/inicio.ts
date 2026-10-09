@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 
-import { SecaoEmConstrucao } from '../../shared/secao-em-construcao/secao-em-construcao';
+import { EditorDeCodigo } from '../../shared/editor-de-codigo/editor-de-codigo';
+import { CONTEUDO_INICIO } from './inicio.conteudo';
 
-// Provisório até a tarefa 5.1 trazer o conteúdo da tela 01; o h1 vem da casca.
+// O h1 da página vem da casca.
 @Component({
   selector: 'app-inicio',
-  imports: [SecaoEmConstrucao],
-  template: `<app-secao-em-construcao />`,
+  imports: [EditorDeCodigo],
+  template: `<app-editor-de-codigo [conteudo]="conteudo" />`,
 })
-export class Inicio {}
+export class Inicio {
+  protected readonly conteudo = CONTEUDO_INICIO;
+}
