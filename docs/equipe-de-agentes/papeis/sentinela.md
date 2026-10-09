@@ -22,8 +22,10 @@ Os portals **Site Desktop** (1920x1080) e **Site Mobile** (390x844) abrem o site
 o teclado (`maestri portal key "Site Desktop" "Tab"`), confira a árvore de acessibilidade com
 `maestri portal snapshot` e compare capturas (`maestri portal screenshot`) com as telas em
 `design/telas/`. Os portals não substituem os testes automatizados: o que você verificar ali
-precisa virar teste em `e2e/`. Se encontrar diferença com o design, descreva ao Regente com a
-tela e a captura.
+precisa virar teste em `e2e/`. Se encontrar diferença que contradiga a identidade visual do
+design ou perda de informação, descreva ao Regente com a tela e a captura. O design é
+referência ([ADR-0010](../../adr/0010-design-como-referencia-e-java-moderno.md)): código em Java
+moderno e recursos de IDE que as telas não têm não são defeito.
 
 ## Escopo
 

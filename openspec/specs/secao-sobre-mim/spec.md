@@ -6,24 +6,6 @@ escrito como a implementação de uma interface Java.
 
 ## Requirements
 
-### Requirement: Código da tela 02
-A rota `/sobre-mim` SHALL exibir no editor o código da tela 02: a interface `ViniciusMachado`
-com o método `void sobreMim();`, a anotação `@Override` e o método `public void sobreMim() {`
-com o parágrafo de apresentação, com os mesmos textos, recuos e cores do design.
-
-#### Scenario: Abertura da seção
-- **WHEN** o visitante abre a seção "Sobre Mim"
-- **THEN** o editor mostra a interface, a anotação, o método e o parágrafo da tela 02
-
-### Requirement: Parágrafo de apresentação
-O parágrafo SHALL reproduzir o texto do design (experiência com Java, Spring Boot, Angular e SQL,
-a liderança de squad na Memora, a Watts Company e o curso no UniCEUB) como bloco de comentário.
-
-#### Scenario: Texto do parágrafo
-- **WHEN** a seção "Sobre Mim" está aberta
-- **THEN** o parágrafo começa com "Sou desenvolvedor Full Stack com cerca de 2 anos de
-  experiência" e termina com "Sistemas Distribuídos e Arquitetura de Software."
-
 ### Requirement: Item atual na árvore
 Na rota `/sobre-mim`, o item "Sobre Mim" SHALL aparecer destacado e expandido e MUST ser
 anunciado como página atual.
@@ -31,3 +13,16 @@ anunciado como página atual.
 #### Scenario: Árvore na seção
 - **WHEN** a seção "Sobre Mim" está aberta
 - **THEN** "Sobre Mim" tem `aria-current="page"` e a seta para baixo
+
+### Requirement: Apresentação em Java moderno
+A rota `/sobre-mim` SHALL apresentar o Vinicius em Java moderno, preservando todas as
+informações do parágrafo da tela 02: cerca de 2 anos de experiência como Full Stack com Java,
+Spring Boot, Angular e SQL em sistemas críticos, a liderança de squad na Memora Processos
+Inovadores com Scrum, a cofundação da Watts Company com CRM e agentes de IA, e o curso de Ciência
+da Computação no UniCEUB com foco em Engenharia de Software, Sistemas Distribuídos e Arquitetura
+de Software.
+
+#### Scenario: Abertura da seção
+- **WHEN** o visitante abre a seção "Sobre Mim"
+- **THEN** o editor mostra a apresentação em Java moderno, com todas as informações do parágrafo da tela
+  02

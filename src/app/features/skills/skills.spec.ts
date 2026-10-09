@@ -29,83 +29,94 @@ describe('Skills', () => {
   it('página 1 mostra linguagens, frameworks e databases e o controle 1/2', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelector('code')?.textContent).toContain('String[] linguagens = {');
-    expect(raiz.querySelector('code')?.textContent).toContain('String[] databases = {');
+    expect(raiz.querySelector('code')?.textContent).toContain('List<String> languages,');
+    expect(raiz.querySelector('code')?.textContent).toContain('List<String> databases');
     expect(literais(raiz)).toHaveLength(11);
     expect(raiz.querySelector('[aria-current="page"]')?.textContent?.trim()).toBe('1/2');
   });
 
-  it('página 1 lista os três arrays da tela 05, com as vírgulas e sem a última', async () => {
+  it('página 1 declara o record TechSkills e lista as três coleções com List.of', async () => {
     const raiz = await renderizar();
 
     expect(linhas(raiz)).toEqual([
-      'public class TechSkills {',
-      'String[] linguagens = {',
-      '“Java”,',
-      '“TypeScript”,',
-      '“JavaScript”,',
-      '“PHP”,',
-      '“SQL”',
-      '};',
-      'String[] frameworks = {',
-      '“Spring Boot”,',
-      '“Spring Data JPA”,',
-      '“Angular”',
-      '};',
-      'String[] databases = {',
-      '“Oracle”,',
-      '“PostgreSQL”,',
-      '“MySQL”',
-      '};',
+      'import java.util.List;',
+      'public record TechSkills(',
+      'List<String> languages,',
+      'List<String> frameworks,',
+      'List<String> databases',
+      ') {',
+      'public static final TechSkills CORE = new TechSkills(',
+      'List.of(',
+      '"Java",',
+      '"TypeScript",',
+      '"JavaScript",',
+      '"PHP",',
+      '"SQL"',
+      '),',
+      'List.of(',
+      '"Spring Boot",',
+      '"Spring Data JPA",',
+      '"Angular"',
+      '),',
+      'List.of(',
+      '"Oracle",',
+      '"PostgreSQL",',
+      '"MySQL"',
+      ')',
+      ');',
+      '}',
     ]);
   });
 
   it('página 2 mostra cloudAndInfra e ferramentas e o controle 2/2', async () => {
     const raiz = await renderizar(2);
 
-    expect(raiz.querySelector('code')?.textContent).toContain('String[] cloudAndInfra = {');
+    expect(raiz.querySelector('code')?.textContent).toContain('List<String> cloudAndInfra,');
     expect(literais(raiz)).toEqual([
-      '“Docker”',
-      '“Kubernetes”',
-      '“Nginx”',
-      '“AWS”',
-      '“Azure”',
-      '“Git”',
-      '“GitLab CI/CD”',
-      '“Grafana”',
-      '“Scrum”',
+      '"Docker"',
+      '"Kubernetes"',
+      '"Nginx"',
+      '"AWS"',
+      '"Azure"',
+      '"Git"',
+      '"GitLab CI/CD"',
+      '"Grafana"',
+      '"Scrum"',
     ]);
     expect(raiz.querySelector('[aria-current="page"]')?.textContent?.trim()).toBe('2/2');
   });
 
-  it('página 2 lista os dois arrays da tela 06 e não repete os da página 1', async () => {
+  it('página 2 declara o record InfraSkills e não repete os da página 1', async () => {
     const raiz = await renderizar(2);
     const texto = raiz.querySelector('code')?.textContent ?? '';
 
-    expect(linhas(raiz).filter((l) => l?.startsWith('String[]'))).toEqual([
-      'String[] cloudAndInfra = {',
-      'String[] ferramentas = {',
+    expect(linhas(raiz).filter((l) => l?.startsWith('List<String>'))).toEqual([
+      'List<String> cloudAndInfra,',
+      'List<String> tools',
     ]);
-    expect(texto).not.toContain('linguagens');
+    expect(linhas(raiz)).toContain('public record InfraSkills(');
+    expect(texto).not.toContain('languages');
     expect(texto).not.toContain('databases');
   });
 
-  it('repete o cabeçalho da classe TechSkills nas duas páginas', async () => {
-    expect(linhas(await renderizar())[0]).toBe('public class TechSkills {');
-    expect(linhas(await renderizar(2))[0]).toBe('public class TechSkills {');
+  it('cada página importa java.util.List e declara um record', async () => {
+    expect(linhas(await renderizar())[0]).toBe('import java.util.List;');
+    expect(linhas(await renderizar(2))[0]).toBe('import java.util.List;');
+    expect(linhas(await renderizar())[1]).toBe('public record TechSkills(');
+    expect(linhas(await renderizar(2))[1]).toBe('public record InfraSkills(');
   });
 
-  it('põe as listas em linhas apertadas, com itens dois níveis e arrays um nível', async () => {
+  it('indenta os itens quatro níveis, as coleções três e os componentes dois', async () => {
     const raiz = await renderizar();
     const linha = (texto: string) =>
       Array.from(raiz.querySelectorAll<HTMLElement>('code > span')).find(
         (l) => l.textContent?.trim() === texto,
       );
 
-    expect(linha('“Java”,')?.classList.contains('apertada')).toBe(true);
-    expect(linha('“Java”,')?.style.getPropertyValue('--recuo')).toBe('2');
-    expect(linha('String[] linguagens = {')?.style.getPropertyValue('--recuo')).toBe('1');
-    expect(linha('};')?.style.getPropertyValue('--recuo')).toBe('0');
+    expect(linha('"Java",')?.style.getPropertyValue('--recuo')).toBe('4');
+    expect(linha('List.of(')?.style.getPropertyValue('--recuo')).toBe('3');
+    expect(linha('List<String> languages,')?.style.getPropertyValue('--recuo')).toBe('2');
+    expect(linha('public record TechSkills(')?.style.getPropertyValue('--recuo')).toBe('0');
   });
 
   it('não usa o papel valor: só textos entre aspas', async () => {

@@ -22,7 +22,7 @@ Maestri e responde diretamente ao Vinicius.
    - Tarefas nos mesmos arquivos rodam em sequência (por exemplo: Pincel antes de Compasso).
    - Preencha a note "Change Atual" com a change, a branch e uma linha por tarefa e responsável.
 3. **Revisar:** leia o diff de cada especialista antes de aceitar. Peça correções quando o
-   resultado não seguir o design, as specs ou as regras em `.claude/rules/ecc/`.
+   resultado contradisser a identidade visual do design (referência, ADR-0010), as specs ou as regras em `.claude/rules/ecc/`.
 4. **Integrar:** rode `npm run lint && npm run test:ci && npm run build && npm run e2e`, marque as
    tarefas no `tasks.md` e abra o PR com o template do repositório.
 5. **Fechar:** com o CI verde, faça o merge (`gh pr merge --merge`, sem apagar a branch), arquive

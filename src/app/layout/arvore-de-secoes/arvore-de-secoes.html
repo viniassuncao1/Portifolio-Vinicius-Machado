@@ -1,6 +1,6 @@
 <nav aria-label="Seções do portfólio">
   <ul>
-    @for (secao of secoes; track secao.slug; let primeiro = $first) {
+    @for (secao of secoes; track secao.slug; let primeiro = $first; let i = $index) {
       <li>
         <a
           #item
@@ -10,6 +10,10 @@
           [routerLink]="['/', secao.slug]"
           routerLinkActive="atual"
           ariaCurrentWhenActive="page"
+          [attr.tabindex]="i === indiceFocavel() ? 0 : -1"
+          (isActiveChange)="aoAtivar(i, $event)"
+          (focus)="indiceFocavel.set(i)"
+          (keydown)="aoTeclar($event)"
           (click)="secaoEscolhida.emit()"
         >
           <svg class="seta" viewBox="0 0 20 20" aria-hidden="true" focusable="false">

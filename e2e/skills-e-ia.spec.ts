@@ -1,20 +1,11 @@
 import { expect, test } from '@playwright/test';
 import type { Locator, Page } from '@playwright/test';
 
+import { linhasDoCodigo, normalizar } from './apoio';
+
 const COR_VALOR = 'rgb(79, 175, 172)';
 const COR_LITERAL = 'rgb(143, 194, 88)';
 const COR_DECLARACAO = 'rgb(213, 150, 62)';
-
-const normalizar = (texto: string | null) => (texto ?? '').replace(/\s+/g, ' ').trim();
-
-const linhasDoCodigo = async (page: Page) =>
-  (
-    await page
-      .locator('main code > span')
-      .evaluateAll((els) => els.map((el) => el.textContent ?? ''))
-  )
-    .map(normalizar)
-    .filter((linha) => linha !== '');
 
 const cor = (alvo: Locator) => alvo.evaluate((el) => getComputedStyle(el).color);
 
@@ -30,39 +21,70 @@ async function focarComTab(page: Page, alvo: Locator) {
 }
 
 test.describe('Como uso a IA (/como-uso-ia)', () => {
-  test('exibe a classe ArtificialIntelligence, os campos, a anotação e o método da tela 04', async ({
+  test('exibe a classe ArtificialIntelligence com as constantes em Java moderno', async ({
     page,
   }) => {
     await page.goto('/como-uso-ia');
 
     expect(await linhasDoCodigo(page)).toEqual([
-      'public class ArtificialIntelligence {',
-      'boolean modismo = false;',
-      'boolean parteDoTrabalho = true;',
-      '@Override',
-      'public void comoEuUsoIA() {',
+      'import java.util.List;',
       expect.stringContaining('Não vejo IA como modismo'),
+      'public final class ArtificialIntelligence {',
+      'public static final boolean FAD = false;',
+      'public static final boolean PART_OF_THE_JOB = true;',
+      'public static final List<String> TOOLS = List.of("Claude Code", "Codex");',
+      'public static final String METHODOLOGY = "SDD (Spec-Driven Development)";',
+      'private ArtificialIntelligence() {}',
       '}',
     ]);
   });
 
-  test('começa e termina o parágrafo com os textos da spec', async ({ page }) => {
+  test('começa e termina o Javadoc com os textos da spec', async ({ page }) => {
     await page.goto('/como-uso-ia');
 
-    const paragrafo = normalizar(await page.locator('main .paragrafo').textContent());
+    const texto = normalizar(await page.locator('main .javadoc').textContent());
 
-    expect(paragrafo.startsWith('Não vejo IA como modismo')).toBe(true);
-    expect(paragrafo.endsWith('parte de como eu planejo e entrego código.')).toBe(true);
+    expect(texto.startsWith('Não vejo IA como modismo')).toBe(true);
+    expect(texto.endsWith('parte de como eu planejo e entrego código.')).toBe(true);
   });
 
-  test('colore false e true com a cor de valor e os campos como declaração', async ({ page }) => {
+  test('preserva a Ana, o WhatsApp, o Claude Code, o Codex e o SDD', async ({ page }) => {
+    await page.goto('/como-uso-ia');
+    const bloco = page.locator('main .javadoc');
+
+    for (const trecho of [
+      'Watts Company',
+      'a Ana, por exemplo, atende pacientes de uma clínica pelo WhatsApp',
+      'Claude Code e Codex com metodologia SDD (Spec-Driven Development)',
+    ]) {
+      await expect(bloco).toContainText(trecho);
+    }
+  });
+
+  test('colore false e true com a cor de valor e as constantes booleanas como declaração', async ({
+    page,
+  }) => {
     await page.goto('/como-uso-ia');
     const valores = page.locator('main .papel-valor');
 
     await expect(valores).toHaveText(['false', 'true']);
     expect(await cor(valores.nth(0))).toBe(COR_VALOR);
     expect(await cor(valores.nth(1))).toBe(COR_VALOR);
+    await expect(page.locator('main .papel-declaracao')).toHaveText([
+      'boolean FAD',
+      'boolean PART_OF_THE_JOB',
+    ]);
     expect(await cor(page.locator('main .papel-declaracao').first())).toBe(COR_DECLARACAO);
+  });
+
+  test('lista as ferramentas e a metodologia como textos entre aspas', async ({ page }) => {
+    await page.goto('/como-uso-ia');
+
+    await expect(page.locator('main .papel-literal')).toHaveText([
+      '"Claude Code"',
+      '"Codex"',
+      '"SDD (Spec-Driven Development)"',
+    ]);
   });
 
   test('tem o título, o h1 e a árvore com a seção atual', async ({ page }) => {
@@ -84,32 +106,40 @@ test.describe('Como uso a IA (/como-uso-ia)', () => {
 });
 
 test.describe('Skills / STACK (/skills)', () => {
-  test('exibe os três arrays da tela 05', async ({ page }) => {
+  test('exibe as três listas imutáveis do record TechSkills (tela 05)', async ({ page }) => {
     await page.goto('/skills');
 
     expect(await linhasDoCodigo(page)).toEqual([
-      'public class TechSkills {',
-      'String[] linguagens = {',
-      '“Java”,',
-      '“TypeScript”,',
-      '“JavaScript”,',
-      '“PHP”,',
-      '“SQL”',
-      '};',
-      'String[] frameworks = {',
-      '“Spring Boot”,',
-      '“Spring Data JPA”,',
-      '“Angular”',
-      '};',
-      'String[] databases = {',
-      '“Oracle”,',
-      '“PostgreSQL”,',
-      '“MySQL”',
-      '};',
+      'import java.util.List;',
+      'public record TechSkills(',
+      'List<String> languages,',
+      'List<String> frameworks,',
+      'List<String> databases',
+      ') {',
+      'public static final TechSkills CORE = new TechSkills(',
+      'List.of(',
+      '"Java",',
+      '"TypeScript",',
+      '"JavaScript",',
+      '"PHP",',
+      '"SQL"',
+      '),',
+      'List.of(',
+      '"Spring Boot",',
+      '"Spring Data JPA",',
+      '"Angular"',
+      '),',
+      'List.of(',
+      '"Oracle",',
+      '"PostgreSQL",',
+      '"MySQL"',
+      ')',
+      ');',
+      '}',
     ]);
   });
 
-  test('colore os textos dos arrays como literais, sem papel de valor', async ({ page }) => {
+  test('colore os textos das listas como literais, sem papel de valor', async ({ page }) => {
     await page.goto('/skills');
     const literais = page.locator('main .papel-literal');
 
@@ -161,24 +191,33 @@ test.describe('Skills / STACK (/skills)', () => {
 });
 
 test.describe('Skills / STACK, página 2 (/skills/2)', () => {
-  test('abre direto pelo endereço com os dois arrays da tela 06', async ({ page }) => {
+  test('abre direto pelo endereço com as duas listas do record InfraSkills (tela 06)', async ({
+    page,
+  }) => {
     await page.goto('/skills/2');
 
     expect(await linhasDoCodigo(page)).toEqual([
-      'public class TechSkills {',
-      'String[] cloudAndInfra = {',
-      '“Docker”,',
-      '“Kubernetes”,',
-      '“Nginx”,',
-      '“AWS”,',
-      '“Azure”',
-      '};',
-      'String[] ferramentas = {',
-      '“Git”,',
-      '“GitLab CI/CD”,',
-      '“Grafana”,',
-      '“Scrum”',
-      '};',
+      'import java.util.List;',
+      'public record InfraSkills(',
+      'List<String> cloudAndInfra,',
+      'List<String> tools',
+      ') {',
+      'public static final InfraSkills CORE = new InfraSkills(',
+      'List.of(',
+      '"Docker",',
+      '"Kubernetes",',
+      '"Nginx",',
+      '"AWS",',
+      '"Azure"',
+      '),',
+      'List.of(',
+      '"Git",',
+      '"GitLab CI/CD",',
+      '"Grafana",',
+      '"Scrum"',
+      ')',
+      ');',
+      '}',
     ]);
     await expect(controle(page)).toContainText('2/2');
   });
@@ -257,12 +296,12 @@ test.describe('Controle de páginas pelo teclado', () => {
 test.describe('Sem JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
-  test('/como-uso-ia entrega o código, os valores e o parágrafo no HTML', async ({ page }) => {
+  test('/como-uso-ia entrega o código, os valores e o Javadoc no HTML', async ({ page }) => {
     await page.goto('/como-uso-ia');
 
     await expect(page.locator('main code')).toContainText('ArtificialIntelligence');
     await expect(page.locator('main .papel-valor')).toHaveText(['false', 'true']);
-    await expect(page.locator('main .paragrafo')).toContainText('Não vejo IA como modismo');
+    await expect(page.locator('main .javadoc')).toContainText('Não vejo IA como modismo');
     await expect(page.getByRole('link', { name: 'Como uso a IA' })).toHaveAttribute(
       'aria-current',
       'page',
@@ -272,7 +311,7 @@ test.describe('Sem JavaScript', () => {
   test('/skills entrega o código e o controle 1/2 no HTML', async ({ page }) => {
     await page.goto('/skills');
 
-    await expect(page.locator('main code')).toContainText('String[] linguagens = {');
+    await expect(page.locator('main code')).toContainText('record TechSkills(');
     await expect(controle(page)).toContainText('1/2');
     await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveAttribute(
       'href',
@@ -287,7 +326,7 @@ test.describe('Sem JavaScript', () => {
 
     await expect(page).toHaveTitle('Skills / STACK (2/2) | Vinicius Machado');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK (2/2)');
-    await expect(page.locator('main code')).toContainText('String[] cloudAndInfra = {');
+    await expect(page.locator('main code')).toContainText('record InfraSkills(');
     await expect(controle(page)).toContainText('2/2');
     await expect(page.getByRole('link', { name: 'Skills / STACK' })).toHaveAttribute(
       'aria-current',

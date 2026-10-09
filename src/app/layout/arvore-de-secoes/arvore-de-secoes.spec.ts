@@ -140,11 +140,13 @@ describe('ArvoreDeSecoes', () => {
     expect(estilos).toMatch(/\.atual[^{]*\.seta[^{]*\{[^}]*rotate:\s*90deg/);
   });
 
-  it('mantém todos os itens alcançáveis pelo teclado, sem tabindex negativo', async () => {
+  it('mantém um único item na ordem de Tab (roving tabindex), os demais por setas', async () => {
     const fixture = await abrir('/');
     const links = (fixture.nativeElement as HTMLElement).querySelectorAll('a');
 
-    links.forEach((link) => expect(link.getAttribute('tabindex')).not.toBe('-1'));
+    expect(Array.from(links).filter((link) => link.getAttribute('tabindex') === '0')).toHaveLength(
+      1,
+    );
   });
 
   describe('no Início', () => {

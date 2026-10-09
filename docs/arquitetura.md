@@ -29,15 +29,17 @@ npm run build
 | Só design tokens nos estilos    | Um lugar para ajustar o visual; nada de cor ou tamanho solto            |
 | Fonte servida pelo próprio site | Sem Google Fonts: nenhuma requisição externa para a fonte               |
 | axe nos E2E                     | Acessibilidade verificada em todo PR (ADR-0009)                         |
+| Design como referência          | Experiência de IDE de verdade e Java moderno no código (ADR-0010)       |
 
 O raciocínio completo, com alternativas descartadas, está no design da change de fundação em
 `openspec/`.
 
 ## Rotas e casca da IDE
 
-`app.routes.ts` tem uma rota-pai `''` com o componente `Casca` (`layout/`) e **16 rotas filhas**:
-o Início (`''`) e as 15 seções de `core/secoes.ts` (`sobre-mim`, `skills`, `contato` etc.). A casca
-(barra de ferramentas, painel lateral, aba e editor) é montada uma vez e não recarrega entre
+`app.routes.ts` tem uma rota-pai `''` com o componente `Casca` (`layout/`) e as rotas filhas:
+o Início (`''`) e as 15 seções de `core/secoes.ts` (`sobre-mim`, `skills`, `contato` etc.), mais
+uma rota por página extra das seções que declaram `paginas` (`/skills/2`). A casca
+(barra de ferramentas, painel lateral, faixa de abas, editor e barra de status) é montada uma vez e não recarrega entre
 seções: só o conteúdo do `<router-outlet>` troca, e a View Transitions API anima apenas ele.
 
 `core/secoes.ts` é a fonte única da lista de seções: dela saem os itens da árvore, as rotas e os
@@ -48,6 +50,31 @@ então cada um vira um HTML estático com o conteúdo já desenhado.
 O título da janela segue o formato `<seção> | Vinicius Machado` (`EstrategiaDeTitulo`) e o mesmo
 texto vira o `h1` visualmente oculto da casca. Os componentes e o modelo de conteúdo do editor
 estão em [componentes.md](componentes.md).
+
+### Casca que ocupa a janela
+
+A casca tem a altura da janela (`100dvh`) e a página não rola: só a área do editor rola, como numa
+IDE. Cada navegação volta o editor ao topo. A barra de status fica sempre visível no rodapé.
+
+### Experiência de IDE
+
+Além da estrutura do design, a casca tem comportamento de IDE ([ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md)):
+
+- **Faixa de abas** (`FaixaDeAbas`): uma aba por arquivo `.java` aberto, no padrão `tablist`, com
+  os botões de fechar fora do `tablist`. O estado fica no serviço `AbasAbertas` (`core/`), guardado
+  em `sessionStorage` e restaurado só no navegador depois da hidratação. No servidor existe apenas
+  a aba da rota atual, para o HTML pré-renderizado e a hidratação coincidirem.
+- **Barra de status** (`BarraDeStatus`): arquivo aberto, `linha:coluna` (serviço `EstadoDoEditor`),
+  codificação, versão do Java e ramo.
+- **Busca de seções** (`BuscaDeSecoes`): Ctrl/Cmd+P abre um `<dialog>` com combobox; o filtro
+  ignora acentos e maiúsculas. A árvore de seções também se navega por setas (roving tabindex).
+- **Digitação, cursor e linha atual** (`EditorDeCodigo`): o código aparece digitado na primeira
+  abertura de cada página, em até 1,5 s. É só visual, uma máscara de CSS: o texto completo fica
+  sempre no DOM, então o HTML pré-renderizado, o SEO e os leitores de tela recebem o código
+  inteiro. Com `prefers-reduced-motion` o código aparece pronto e o cursor não pisca.
+
+O código exibido é Java 21 válido, e as informações do design são preservadas. Os detalhes de
+cada componente e o modelo de conteúdo estão em [componentes.md](componentes.md).
 
 ### Gaveta no celular
 
@@ -79,7 +106,7 @@ externa para texto.
 
 A meta é WCAG AA. Os E2E rodam o **axe** (`@axe-core/playwright`, tags `wcag2a` e `wcag2aa`) no
 Início e nas 15 rotas, e qualquer violação reprova o PR. Elementos decorativos (barra de
-ferramentas, aba, numeração) usam `aria-hidden`; as regras do axe não são desligadas. A decisão
+ferramentas, numeração, posição do cursor) usam `aria-hidden`; as regras do axe não são desligadas. A decisão
 está no [ADR-0009](adr/0009-acessibilidade-automatizada-com-axe.md).
 
 ## Testes E2E e servidor próprio
@@ -106,7 +133,7 @@ src/app/
   app.config.server.ts        providers da pré-renderização
   core/                       singletons e configurações globais
   shared/                     componentes, diretivas e pipes reutilizáveis
-  layout/                     casca da IDE: barra de ferramentas, árvore de seções, editor
+  layout/                     casca da IDE: barra de ferramentas, árvore, abas, status e busca
   features/<secao>/           uma pasta por seção do portfólio
 ```
 
@@ -123,7 +150,8 @@ teste ao lado (`inicio.spec.ts`).
 
 ## Design
 
-O design de referência é um PDF do Illustrator (30 telas, exportadas do PDF original de 1920×1080) que simula uma IDE escura
+O design de referência (identidade visual, não especificação pixel a pixel: veja o
+[ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md)) é um PDF do Illustrator (30 telas, exportadas do PDF original de 1920×1080) que simula uma IDE escura
 no estilo Eclipse: barra de ferramentas no topo, árvore de seções à esquerda e editor com código
 Java à direita. Como o PDF não é legível pelas ferramentas de IA, cada tela foi exportada como
 imagem (`design/telas/tela-01.png` a `tela-30.png`, de 1600×900: o design real é o PNG × 1,2), e os textos de cada tela ficam em

@@ -8,8 +8,14 @@ Portfólio pessoal de Vinicius Machado em Angular 22, pré-renderizado (SSG) e p
 pelo GitHub Actions. O visual simula uma IDE escura no estilo Eclipse. O design de referência fica em
 `design/` (não versionado): `portfolio.pdf` é o original, `telas/tela-01.png` a `tela-30.png` são
 as telas exportadas (use estas, porque o PDF não é legível pelas ferramentas) e
-`telas/textos.md` tem os textos de cada tela. Ele é fixo: implemente fielmente e não invente
-layout.
+`telas/textos.md` tem os textos de cada tela. Trate o design como **referência** de identidade visual
+(cores, tipografia, proporções e estrutura de IDE), não como especificação pixel a pixel
+([ADR-0010](docs/adr/0010-design-como-referencia-e-java-moderno.md)). Preserve as informações das
+telas; desvios que melhorem a experiência de IDE, a acessibilidade ou o código são bem-vindos.
+
+O código exibido nas seções é **Java moderno (21)** com padrões de mercado: `record`, `List.of`,
+`var`, `Optional`, `java.time`, text blocks e Javadoc, sintaticamente válido, com identificadores
+em inglês e textos para o leitor em pt-BR.
 
 O repositório também é uma vitrine. Código, commits e documentação precisam estar no nível de um
 projeto profissional.

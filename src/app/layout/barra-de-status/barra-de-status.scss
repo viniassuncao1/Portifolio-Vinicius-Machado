@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.barra {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-4);
+  min-height: var(--altura-barra-status);
+  padding-inline: var(--espaco-4);
+  border-block-start: var(--borda-painel);
+  background: var(--cor-painel);
+  color: var(--cor-texto-esmaecido);
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-status);
+  white-space: nowrap;
+}
+
+// O arquivo fica à esquerda e o resto à direita, como nas barras de status das IDEs.
+.arquivo {
+  margin-inline-end: auto;
+  overflow: hidden;
+  color: var(--cor-texto);
+  text-overflow: ellipsis;
+}
+
+.posicao,
+.item {
+  flex: none;
+}
+
+.posicao,
+.item + .item {
+  padding-inline-start: var(--espaco-4);
+  border-inline-start: var(--borda-divisoria);
+}
+
+// No celular o nome do arquivo tem prioridade: a codificação e a versão do Java saem.
+@media (max-width: 767.98px) {
+  .item:not(:last-child) {
+    display: none;
+  }
+}

@@ -1,0 +1,38 @@
+<div class="lista" [style.--quantidade-de-abas]="abas().length">
+  <div class="abas" role="tablist" aria-label="Arquivos abertos">
+    @for (aba of abas(); track aba.slug; let i = $index) {
+      <button
+        #botaoAba
+        type="button"
+        role="tab"
+        class="arquivo"
+        [class.ativa]="aba.slug === slugAtivo()"
+        [attr.aria-selected]="aba.slug === slugAtivo()"
+        [attr.tabindex]="aba.slug === slugAtivo() ? 0 : -1"
+        (click)="abrir(aba)"
+        (keydown)="aoTeclar($event, i)"
+      >
+        <svg class="icone-java" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path class="folha" d="M3 1h7l3 3v11H3zM10 1v3h3" />
+          <path class="letra" d="M8.8 6v4.4a1.5 1.5 0 0 1-3 0" />
+        </svg>
+        <span class="nome">{{ aba.arquivo }}</span>
+      </button>
+    }
+  </div>
+  <!-- Fora do tablist, que só pode ter abas; cada botão fica sobre a ponta da sua aba. -->
+  <div class="fechamentos">
+    @for (aba of abas(); track aba.slug) {
+      <button
+        type="button"
+        class="fechar"
+        tabindex="-1"
+        [class.ativa]="aba.slug === slugAtivo()"
+        [attr.aria-label]="'Fechar ' + aba.arquivo"
+        (click)="fechar(aba.slug)"
+      >
+        <app-glifo-fechar />
+      </button>
+    }
+  </div>
+</div>

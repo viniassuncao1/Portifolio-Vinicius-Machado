@@ -5,6 +5,8 @@
   --duracao-rapida: 120ms;
   --duracao-media: 160ms;
   --duracao-lenta: 200ms;
+  // Ciclo do cursor do editor (aceso e apagado).
+  --duracao-cursor: 1060ms;
 
   // Desaceleração firme: o elemento chega rápido e assenta.
   --curva-saida: cubic-bezier(0.2, 0, 0, 1);
@@ -12,6 +14,8 @@
   --curva-entrada: cubic-bezier(0.4, 0, 1, 1);
   // Movimento entre dois estados visíveis.
   --curva-padrao: cubic-bezier(0.4, 0, 0.2, 1);
+  // Cursor: alterna de uma vez, sem esmaecer.
+  --curva-cursor: steps(1, end);
 }
 
 @media (prefers-reduced-motion: reduce) {

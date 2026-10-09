@@ -17,6 +17,7 @@ Um ADR aceito não é editado. Se a decisão mudar, um novo ADR o substitui e o 
 | [0007](0007-equipe-de-agentes-no-maestri.md)          | Equipe de agentes de IA no Maestri             | Aceito |
 | [0008](0008-diario-de-desenvolvimento.md)             | Diário de desenvolvimento                      | Aceito |
 | [0009](0009-acessibilidade-automatizada-com-axe.md)   | Acessibilidade automatizada com axe nos E2E    | Aceito |
+| [0010](0010-design-como-referencia-e-java-moderno.md) | Design como referência e Java moderno          | Aceito |
 
 ## Modelo
 

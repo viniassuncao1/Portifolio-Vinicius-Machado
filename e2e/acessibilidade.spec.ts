@@ -34,6 +34,19 @@ function descrever(violacoes: readonly Result[]): string {
     .join('\n');
 }
 
+test('a varredura inclui o Início, as 15 seções e as páginas de Skills e Experiências', () => {
+  expect(ROTAS).toHaveLength(1 + SECOES.length + 1 + 2);
+  expect(ROTAS).toEqual(
+    expect.arrayContaining([
+      '/',
+      '/skills/2',
+      '/experiencias',
+      '/experiencias/2',
+      '/experiencias/3',
+    ]),
+  );
+});
+
 for (const { nome, viewport } of TELAS) {
   test.describe(`Acessibilidade (axe, WCAG 2 A e AA) no ${nome}`, () => {
     test.use({ viewport });

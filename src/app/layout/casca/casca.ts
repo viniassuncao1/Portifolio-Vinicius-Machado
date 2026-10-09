@@ -7,14 +7,16 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, map, startWith } from 'rxjs';
 
 import { DADO_ARVORE_NO_INICIO } from '../../core/secoes';
 import { EstrategiaDeTitulo } from '../../core/estrategia-de-titulo';
-import { AbaDoEditor } from '../aba-do-editor/aba-do-editor';
+import { BuscaDeSecoes } from '../busca-de-secoes/busca-de-secoes';
+import { BarraDeStatus } from '../barra-de-status/barra-de-status';
 import { BarraDeFerramentas } from '../barra-de-ferramentas/barra-de-ferramentas';
+import { FaixaDeAbas } from '../faixa-de-abas/faixa-de-abas';
 import { PainelLateral } from '../painel-lateral/painel-lateral';
 
 /**
@@ -24,14 +26,28 @@ import { PainelLateral } from '../painel-lateral/painel-lateral';
  */
 @Component({
   selector: 'app-casca',
-  imports: [RouterOutlet, BarraDeFerramentas, PainelLateral, AbaDoEditor],
+  imports: [
+    RouterOutlet,
+    BarraDeFerramentas,
+    PainelLateral,
+    FaixaDeAbas,
+    BarraDeStatus,
+    BuscaDeSecoes,
+  ],
   templateUrl: './casca.html',
   styleUrl: './casca.scss',
-  host: { '(keydown.escape)': 'fecharEDevolverFoco()' },
+  host: {
+    '(keydown.escape)': 'fecharEDevolverFoco()',
+    // No documento: logo após carregar o foco está no <body>, fora do host da casca.
+    '(document:keydown.control.p)': 'abrirBusca($event)',
+    '(document:keydown.meta.p)': 'abrirBusca($event)',
+  },
 })
 export class Casca {
   private readonly injector = inject(Injector);
   private readonly painel = viewChild.required(PainelLateral);
+  private readonly busca = viewChild.required(BuscaDeSecoes);
+  private readonly conteudo = viewChild<ElementRef<HTMLElement>>('conteudo');
   private readonly botao = viewChild.required<ElementRef<HTMLButtonElement>>('botaoSecoes');
 
   protected readonly titulo = inject(EstrategiaDeTitulo).titulo;
@@ -52,6 +68,16 @@ export class Casca {
     { requireSync: true },
   );
 
+  constructor() {
+    // Cada página abre no topo: o editor é a região rolável e a rolagem não se reinicia sozinha.
+    this.router.events
+      .pipe(
+        filter((evento) => evento instanceof NavigationEnd),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => this.conteudo()?.nativeElement.scrollTo?.({ top: 0 }));
+  }
+
   protected alternarGaveta(): void {
     if (this.gavetaAberta()) {
       this.fecharGaveta();
@@ -59,6 +85,12 @@ export class Casca {
     }
     this.gavetaAberta.set(true);
     afterNextRender(() => this.painel().focarPrimeiroItem(), { injector: this.injector });
+  }
+
+  /** Ctrl/Cmd+P abre a busca de seções no lugar da impressão do navegador. */
+  protected abrirBusca(evento?: Event): void {
+    evento?.preventDefault();
+    this.busca().abrir();
   }
 
   protected fecharGaveta(): void {

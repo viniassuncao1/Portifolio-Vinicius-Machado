@@ -7,14 +7,14 @@ principal escritos como uma classe Java.
 ## Requirements
 
 ### Requirement: Apresentação como classe Java
-A página inicial SHALL exibir no editor o código da tela 01: o pacote
-`portfolio.viniciusmachado`, a classe `ViniciusMachado` que estende `DesenvolvedorFullStack`, o
-campo `cargo` com o valor "Full Stack Júnior" e o array `stack` com Java, Spring Boot, Angular e
-SQL.
+A página inicial SHALL apresentar o Vinicius em Java moderno, no pacote
+`portfolio.viniciusmachado`: desenvolvedor Full Stack Júnior com a stack principal Java, Spring
+Boot, Angular e SQL.
 
 #### Scenario: Abertura da página inicial
 - **WHEN** o visitante abre a página inicial
-- **THEN** o editor mostra o código da tela 01 com os mesmos textos e cores de sintaxe
+- **THEN** o editor mostra o pacote, o cargo "Full Stack Júnior" e a stack principal em Java
+  moderno
 
 ### Requirement: Título da página
 A página inicial SHALL ter um único título principal (`h1`) com o texto `Portfolio_Vinicius` e o

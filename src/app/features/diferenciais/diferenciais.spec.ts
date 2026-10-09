@@ -25,96 +25,107 @@ describe('Diferenciais', () => {
     expect(raiz.querySelector('h1')).toBeNull();
   });
 
-  it('declara a classe PersonalData e o método diferenciais, na ordem', async () => {
+  it('declara o record PersonalData e a constante VINICIUS, na ordem', async () => {
     const raiz = await renderizar();
     const textos = Array.from(raiz.querySelectorAll('code > span'))
       .map((linha) => linha.textContent?.replace(/\s+/g, ' ').trim())
       .filter((texto) => texto);
 
     expect(textos).toEqual([
-      'public class PersonalData {',
-      'String origem = “Mineiro”;',
-      'String cidade = “Brasília”;',
-      'boolean extrovertido = true;',
-      'boolean curioso = true;',
-      'boolean gostaDeAprender = true;',
-      '@Override',
-      'public void diferenciais() {',
+      'import java.time.Period;',
       expect.stringContaining(INICIO_DO_PARAGRAFO),
+      'public record PersonalData(',
+      'String origin,',
+      'String city,',
+      'Period livingInCityFor,',
+      'boolean extrovert,',
+      'boolean curious,',
+      'boolean loveToLearn',
+      ') {',
+      'public static final PersonalData VINICIUS = new PersonalData(',
+      '"Mineiro",',
+      '"Brasília",',
+      'Period.ofYears(20),',
+      'true, // extrovertido',
+      'true, // curioso',
+      'true // gosta de aprender',
+      ');',
       '}',
     ]);
   });
 
-  it('mostra origem e cidade com os textos entre aspas curvas na cor de literal', async () => {
+  it('mostra origem e cidade com os textos entre aspas na cor de literal', async () => {
     const raiz = await renderizar();
 
-    expect(linhaDe(raiz, 'origem')?.querySelector('.papel-literal')?.textContent).toBe('“Mineiro”');
-    expect(linhaDe(raiz, 'cidade')?.querySelector('.papel-literal')?.textContent).toBe(
-      '“Brasília”',
-    );
+    expect(Array.from(raiz.querySelectorAll('.papel-literal')).map((l) => l.textContent)).toEqual([
+      '"Mineiro"',
+      '"Brasília"',
+    ]);
   });
 
-  it.each(['extrovertido', 'curioso', 'gostaDeAprender'])(
-    'colore boolean %s como declaração e true como valor',
+  it.each(['extrovert', 'curious', 'loveToLearn'])(
+    'declara boolean %s como declaração',
     async (campo) => {
       const raiz = await renderizar();
-      const linha = linhaDe(raiz, `boolean ${campo}`);
 
-      expect(linha?.querySelector('.papel-declaracao')?.textContent).toBe(`boolean ${campo}`);
-      expect(linha?.querySelector('.papel-valor')?.textContent).toBe('true');
-      expect(linha?.querySelector('.papel-literal')).toBeNull();
+      expect(
+        linhaDe(raiz, `boolean ${campo}`)?.querySelector('.papel-declaracao')?.textContent,
+      ).toBe(`boolean ${campo}`);
     },
   );
 
-  it('usa o papel valor só nos três booleanos', async () => {
+  it('usa o papel valor nos três booleanos true e nos 20 anos', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelectorAll('.papel-valor')).toHaveLength(3);
+    expect(Array.from(raiz.querySelectorAll('.papel-valor')).map((v) => v.textContent)).toEqual([
+      '20',
+      'true',
+      'true',
+      'true',
+    ]);
   });
 
-  it('anota o método com @Override na cor de anotação', async () => {
+  it('comenta cada booleano com o significado, na cor de comentário', async () => {
     const raiz = await renderizar();
+    const comentarios = Array.from(raiz.querySelectorAll('.papel-comentario')).map((c) =>
+      c.textContent?.trim(),
+    );
 
-    expect(raiz.querySelector('.papel-anotacao')?.textContent).toBe('@Override');
+    expect(comentarios).toEqual(
+      expect.arrayContaining(['// extrovertido', '// curioso', '// gosta de aprender']),
+    );
   });
 
-  it('agrupa os campos em linhas compactas, com vazias compactas entre os grupos', async () => {
-    const raiz = await renderizar();
-
-    expect(raiz.querySelectorAll('code > span.compacta:not(.vazia)')).toHaveLength(5);
-    expect(raiz.querySelectorAll('code > span.vazia.compacta')).toHaveLength(4);
-  });
-
-  it('recua os campos um nível, a anotação e o método um nível e o parágrafo zero', async () => {
+  it('recua os componentes dois níveis, a constante um e o parágrafo zero', async () => {
     const raiz = await renderizar();
     const recuo = (texto: string) =>
       (linhaDe(raiz, texto) as HTMLElement).style.getPropertyValue('--recuo');
 
-    expect(recuo('origem')).toBe('1');
-    expect(recuo('boolean curioso')).toBe('1');
-    expect(recuo('@Override')).toBe('1');
-    expect(recuo('public void diferenciais')).toBe('1');
+    expect(recuo('String origin,')).toBe('2');
+    expect(recuo('PersonalData VINICIUS')).toBe('1');
+    expect(recuo('"Mineiro"')).toBe('3');
+    expect(recuo('public record PersonalData')).toBe('0');
     expect(recuo(INICIO_DO_PARAGRAFO)).toBe('0');
   });
 
   it('começa e termina o parágrafo com os textos da spec', async () => {
     const raiz = await renderizar();
-    const texto = raiz.querySelector('.paragrafo')?.textContent ?? '';
+    const texto = raiz.querySelector('.javadoc')?.textContent ?? '';
 
-    expect(raiz.querySelectorAll('.paragrafo')).toHaveLength(1);
+    expect(raiz.querySelectorAll('.javadoc')).toHaveLength(1);
     expect(texto.startsWith(INICIO_DO_PARAGRAFO)).toBe(true);
     expect(texto.endsWith(FIM_DO_PARAGRAFO)).toBe(true);
   });
 
-  it('reproduz o design: a classe termina na chave de fechamento da tela 03', async () => {
+  it('fecha o record com a chave de fechamento no recuo zero', async () => {
     const ultima = CONTEUDO_DIFERENCIAIS.at(-1);
 
     expect(ultima).toMatchObject({ tipo: 'codigo', recuo: 0 });
   });
 
-  it('mantém o texto do código sem "*"', async () => {
+  it('mantém o texto do código sem números de linha', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelector('code')?.textContent).not.toContain('*');
+    expect(raiz.querySelector('code')?.textContent).not.toMatch(/^\d+/);
   });
 });

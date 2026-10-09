@@ -25,54 +25,71 @@ describe('SobreMim', () => {
     expect(raiz.querySelector('h1')).toBeNull();
   });
 
-  it('exibe a interface, o método e a anotação da tela 02, na ordem', async () => {
+  it('exibe a interface, a implementação, o Javadoc e o método, na ordem', async () => {
     const raiz = await renderizar();
 
     expect(linhas(raiz).filter((texto) => texto !== '' && texto !== undefined)).toEqual([
-      'public interface ViniciusMachado {',
-      'void sobreMim();',
+      'public interface Developer {',
+      'String aboutMe();',
       '}',
-      '@Override',
-      'public void sobreMim() {',
+      'public final class ViniciusMachado implements Developer {',
+      'private static final String ABOUT_ME = "Full Stack: Java, Spring Boot, Angular e SQL";',
       expect.stringContaining(INICIO_DO_PARAGRAFO),
+      '@Override',
+      'public String aboutMe() {',
+      'return ABOUT_ME;',
+      '}',
       '}',
     ]);
   });
 
-  it('colore as palavras-chave e a anotação', async () => {
+  it('colore palavras-chave, anotação, literal e comentário', async () => {
     const raiz = await renderizar();
 
     expect(
       Array.from(raiz.querySelectorAll('.papel-palavra-chave')).map((t) => t.textContent),
-    ).toEqual(['public interface', 'void', 'public void']);
+    ).toEqual([
+      'public interface',
+      'String',
+      'public final class',
+      'implements',
+      'private static final',
+      'public',
+      'return',
+    ]);
     expect(raiz.querySelector('.papel-anotacao')?.textContent).toBe('@Override');
+    expect(raiz.querySelector('.papel-literal')?.textContent).toContain('Full Stack');
+    expect(raiz.querySelectorAll('.javadoc')).toHaveLength(1);
   });
 
-  it('recua o campo, a anotação e o método um nível, e a interface, o parágrafo e as chaves zero', async () => {
+  it('recua o corpo da classe um nível, o corpo do método dois e a interface zero', async () => {
     const raiz = await renderizar();
-    const recuos = Array.from(raiz.querySelectorAll<HTMLElement>('code > span')).map((linha) =>
-      linha.style.getPropertyValue('--recuo'),
-    );
+    const recuo = (texto: string) =>
+      Array.from(raiz.querySelectorAll<HTMLElement>('code > span'))
+        .find((l) => l.textContent?.trim() === texto)
+        ?.style.getPropertyValue('--recuo');
 
-    // As linhas vazias não têm recuo.
-    expect(recuos).toEqual(['', '0', '1', '0', '', '1', '1', '0', '', '0']);
+    expect(recuo('public interface Developer {')).toBe('0');
+    expect(recuo('String aboutMe();')).toBe('1');
+    expect(recuo('@Override')).toBe('1');
+    expect(recuo('return ABOUT_ME;')).toBe('2');
   });
 
   it('exibe o parágrafo como um bloco de comentário único', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelectorAll('.paragrafo')).toHaveLength(1);
+    expect(raiz.querySelectorAll('.javadoc')).toHaveLength(1);
   });
 
   it('começa e termina o parágrafo com os textos da spec', async () => {
-    const texto = (await renderizar()).querySelector('.paragrafo')?.textContent ?? '';
+    const texto = (await renderizar()).querySelector('.javadoc')?.textContent ?? '';
 
     expect(texto.startsWith(INICIO_DO_PARAGRAFO)).toBe(true);
     expect(texto.endsWith(FIM_DO_PARAGRAFO)).toBe(true);
   });
 
   it('cita as tecnologias, a Memora, a Watts Company e o UniCEUB', async () => {
-    const texto = (await renderizar()).querySelector('.paragrafo')?.textContent ?? '';
+    const texto = (await renderizar()).querySelector('.javadoc')?.textContent ?? '';
 
     for (const termo of [
       'Java, Spring Boot, Angular e SQL',
@@ -84,10 +101,9 @@ describe('SobreMim', () => {
     }
   });
 
-  it('mantém o texto do código sem números de linha nem marcadores "*"', async () => {
+  it('mantém o texto do código sem números de linha', async () => {
     const codigo = (await renderizar()).querySelector('code')?.textContent ?? '';
 
-    expect(codigo).not.toContain('*');
     expect(codigo).not.toMatch(/\b\d{2,}\b.*\b\d{2,}\b.*\b\d{2,}\b/);
   });
 
@@ -98,7 +114,7 @@ describe('SobreMim', () => {
     expect(raiz.querySelector('.compacta')).toBeNull();
   });
 
-  it('tem o conteúdo tipado com 10 linhas', () => {
-    expect(CONTEUDO_SOBRE_MIM).toHaveLength(10);
+  it('tem o conteúdo tipado com 14 linhas', () => {
+    expect(CONTEUDO_SOBRE_MIM).toHaveLength(14);
   });
 });

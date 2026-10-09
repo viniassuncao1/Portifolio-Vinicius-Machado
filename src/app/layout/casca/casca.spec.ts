@@ -37,7 +37,7 @@ describe('Casca', () => {
 
     expect(elemento.querySelector('app-barra-de-ferramentas')).not.toBeNull();
     expect(elemento.querySelector('app-painel-lateral')).not.toBeNull();
-    expect(elemento.querySelector('app-aba-do-editor')).not.toBeNull();
+    expect(elemento.querySelector('app-faixa-de-abas')).not.toBeNull();
     expect(elemento.querySelector('main .pagina')?.textContent).toBe('Conteúdo');
   });
 
@@ -56,14 +56,14 @@ describe('Casca', () => {
     const elemento = harness.routeNativeElement as HTMLElement;
     const ordem = Array.from(
       elemento.querySelectorAll(
-        'app-barra-de-ferramentas, app-painel-lateral, app-aba-do-editor, main',
+        'app-barra-de-ferramentas, app-painel-lateral, app-faixa-de-abas, main',
       ),
     ).map((e) => e.tagName.toLowerCase());
 
     expect(ordem).toEqual([
       'app-barra-de-ferramentas',
       'app-painel-lateral',
-      'app-aba-do-editor',
+      'app-faixa-de-abas',
       'main',
     ]);
   });
@@ -71,7 +71,7 @@ describe('Casca', () => {
   it('põe a aba antes da área do editor', async () => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/contato');
-    const aba = (harness.routeNativeElement as HTMLElement).querySelector('app-aba-do-editor');
+    const aba = (harness.routeNativeElement as HTMLElement).querySelector('.faixa');
 
     expect(aba?.nextElementSibling?.tagName).toBe('MAIN');
   });

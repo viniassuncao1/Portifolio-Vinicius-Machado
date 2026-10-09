@@ -110,6 +110,58 @@ $quantidade-de-marcadores: 60;
   }
 }
 
+// Javadoc: `/**`, a coluna de `*` e `*/` são pseudo-elementos (fora do texto copiado e lido). O `*`
+// fica uma coluna à direita do `/`, como numa IDE; o texto começa três colunas depois do recuo.
+.javadoc {
+  --avanco: calc(0.6em + var(--espacamento-letras-codigo));
+
+  display: block;
+  padding-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo));
+  color: var(--cor-sintaxe-comentario);
+  font-size: var(--texto-comentario);
+  letter-spacing: var(--espacamento-letras-codigo);
+  line-height: var(--altura-linha-comentario);
+  white-space: normal;
+
+  &::before,
+  &::after {
+    display: block;
+    white-space: pre;
+    user-select: none;
+  }
+
+  &::before {
+    // Strings separadas: `/` e `*` juntos seriam lidos como comentário de CSS pelo Angular.
+    content: '/' '*' '*' / '';
+  }
+
+  &::after {
+    content: '*' '/' / '';
+    padding-inline-start: var(--avanco);
+  }
+}
+
+.javadoc-texto {
+  position: relative;
+  display: block;
+  box-sizing: content-box;
+  // Mesma quebra do parágrafo: 72 colunas de texto depois das três colunas de ` * `.
+  max-inline-size: calc(var(--colunas-paragrafo) * var(--avanco));
+  padding-inline-start: calc(3 * var(--avanco));
+  overflow-wrap: anywhere;
+
+  &::before {
+    content: coluna-de-marcadores($quantidade-de-marcadores) / '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: var(--avanco);
+    overflow: hidden;
+    color: var(--cor-sintaxe-comentario-marcador);
+    white-space: pre;
+    user-select: none;
+  }
+}
+
 .papel-palavra-chave {
   color: var(--cor-sintaxe-palavra-chave);
 }
@@ -130,6 +182,82 @@ $quantidade-de-marcadores: 60;
   color: var(--cor-sintaxe-anotacao);
 }
 
+.papel-comentario {
+  color: var(--cor-sintaxe-comentario);
+}
+
 .papel-comum {
   color: var(--cor-sintaxe-texto);
+}
+
+// Trechos com `href`: mesma cor do papel, sublinhado ao passar o mouse ou focar.
+a[class^='papel-'] {
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: 2px;
+  }
+}
+
+// Linha atual: destaque de fundo (a cor é a mesma da linha selecionada da árvore).
+.linha.atual,
+.paragrafo.atual,
+.javadoc.atual {
+  background: var(--cor-linha-selecionada);
+}
+
+// Cursor no fim da linha atual: aparece quando o editor está pronto e pisca por token.
+:host(.pronto) .linha.atual:not(.vazia)::after {
+  content: '';
+  display: inline-block;
+  inline-size: 0.15em;
+  block-size: 1.1em;
+  margin-inline-start: 0.1em;
+  background: var(--cor-sintaxe-texto);
+  vertical-align: text-bottom;
+  animation: piscar var(--duracao-cursor) var(--curva-cursor) infinite;
+}
+
+@keyframes piscar {
+  50% {
+    opacity: 0;
+  }
+}
+
+// Digitação: o texto completo continua no DOM; cada item é recortado da direita para a esquerda
+// conforme `--digitado` (itens revelados, com fração) passa do seu `--indice`.
+:host(.digitando) {
+  .linha,
+  .paragrafo,
+  .javadoc {
+    --progresso: clamp(0, var(--digitado, 0) - var(--indice, 0), 1);
+
+    inline-size: fit-content;
+    clip-path: inset(0 calc((1 - var(--progresso)) * 100%) 0 0);
+  }
+
+  .atual {
+    background: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host(.digitando) {
+    .linha,
+    .paragrafo,
+    .javadoc {
+      clip-path: none;
+    }
+  }
+
+  // Mesma especificidade da regra do cursor (com `:not(.vazia)`), senão a animação vence.
+  :host(.pronto) .linha.atual:not(.vazia)::after {
+    animation: none;
+  }
 }

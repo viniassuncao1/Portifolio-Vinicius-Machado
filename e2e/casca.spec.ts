@@ -1,4 +1,10 @@
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
+
+import { abrirHidratada } from './apoio';
+
+/** A árvore de seções (a seção com várias páginas tem outra `nav`, com `aria-current` próprio). */
+const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
 
 const SECOES = [
   { slug: 'sobre-mim', titulo: 'Sobre Mim' },
@@ -26,13 +32,20 @@ test.describe('Estrutura da IDE', () => {
     await expect(arvore.getByRole('link')).toHaveText(SECOES.map((secao) => secao.titulo));
   });
 
-  test('mostra a barra, o painel, a aba e o editor em qualquer seção', async ({ page }) => {
+  test('mostra a barra, o painel, a faixa de abas, o editor e a barra de status em qualquer seção', async ({
+    page,
+  }) => {
     await page.goto('/projeto-2');
 
     await expect(page.locator('app-barra-de-ferramentas')).toBeVisible();
     await expect(page.locator('app-painel-lateral')).toBeVisible();
-    await expect(page.locator('app-aba-do-editor')).toContainText('Portfolio_Vinicius');
+    await expect(page.getByRole('tablist', { name: 'Arquivos abertos' })).toBeVisible();
+    await expect(page.getByRole('tab', { name: 'Projeto2.java' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
     await expect(page.getByRole('main')).toBeVisible();
+    await expect(page.getByRole('status')).toContainText('Projeto2.java');
   });
 
   test('destaca "Sobre Mim" no Início, sem marcar página atual', async ({ page }) => {
@@ -44,14 +57,13 @@ test.describe('Estrutura da IDE', () => {
       'rotate',
       '90deg',
     );
-    await expect(page.locator('nav [aria-current]')).toHaveCount(0);
+    await expect(arvore(page).locator('[aria-current]')).toHaveCount(0);
   });
 
-  test('mantém barra e controles de janela fora da árvore de acessibilidade', async ({ page }) => {
+  test('mantém a barra de ferramentas fora da árvore de acessibilidade', async ({ page }) => {
     await page.goto('/');
 
     await expect(page.locator('app-barra-de-ferramentas')).toHaveAttribute('aria-hidden', 'true');
-    await expect(page.locator('app-aba-do-editor')).toHaveAttribute('aria-hidden', 'true');
     await expect(
       page.locator('app-barra-de-ferramentas').locator('button, a, [tabindex]'),
     ).toHaveCount(0);
@@ -71,7 +83,7 @@ test.describe('Navegação pela árvore', () => {
       'aria-current',
       'page',
     );
-    await expect(page.locator('nav [aria-current="page"]')).toHaveCount(1);
+    await expect(arvore(page).locator('[aria-current="page"]')).toHaveCount(1);
   });
 
   test('troca o item atual ao navegar de uma seção para outra', async ({ page }) => {
@@ -123,17 +135,15 @@ test.describe('Navegação pela árvore', () => {
 });
 
 test.describe('Teclado', () => {
-  test('chega a "Eventos" com Tab, mostra o foco e abre com Enter', async ({ page }) => {
-    await page.goto('/');
+  test('chega a "Eventos" com Tab e setas, mostra o foco e abre com Enter', async ({ page }) => {
+    await abrirHidratada(page, '/');
     const eventos = page.getByRole('link', { name: 'Eventos' });
+    const posicao = SECOES.findIndex((secao) => secao.slug === 'eventos');
 
-    for (
-      let i = 0;
-      i < SECOES.length && !(await eventos.evaluate((e) => e === document.activeElement));
-      i++
-    ) {
-      await page.keyboard.press('Tab');
-    }
+    // A árvore tem um só item na ordem de Tab (roving tabindex); as setas percorrem o resto.
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeFocused();
+    for (let i = 0; i < posicao; i++) await page.keyboard.press('ArrowDown');
 
     await expect(eventos).toBeFocused();
     await expect(eventos).toHaveCSS('outline-style', 'solid');

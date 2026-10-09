@@ -27,6 +27,8 @@
   --cor-linha-selecionada: #1b1b1b;
   --cor-aba-ativa: #2b2b2b;
   --cor-aba-inativa: #5e5e5e;
+  --cor-aba-passando: #686868;
+  --cor-texto-aba-inativa: #f0f0f0;
   --cor-faixa-abas: #575757;
   --cor-editor: #2b2b2b;
   --cor-borda: #1b1b1b;
@@ -38,6 +40,7 @@
   --cor-icone: #aaaaaa;
   --cor-texto-esmaecido: #aaaaaa;
   --cor-foco: #de60d2;
+  --cor-fundo-modal: rgb(0 0 0 / 55%);
 
   // Sintaxe
   --cor-sintaxe-palavra-chave: #de60d2;
@@ -46,6 +49,7 @@
   --cor-sintaxe-valor: #4fafac;
   --cor-sintaxe-anotacao: #7489f8;
   --cor-sintaxe-comentario-marcador: #939191;
+  --cor-sintaxe-comentario: #9b9999;
   --cor-sintaxe-texto: var(--cor-texto);
 
   // Tipografia
@@ -54,6 +58,7 @@
   --peso-negrito: 700;
   --texto-arvore: 1.38rem;
   --texto-aba: 1.38rem;
+  --texto-status: 1.2rem;
   --texto-comentario: 1.44rem;
   --texto-codigo: 1.44rem;
   --texto-numero-linha: 1.74rem;
@@ -77,12 +82,19 @@
   // Dimensões da casca
   --altura-barra-ferramentas: 3.3rem;
   --altura-faixa-abas: 3.12rem;
+  --altura-barra-status: 2.4rem;
+  --largura-busca: 56rem;
+  --tamanho-icone-busca: 1.5rem;
+  --largura-marcador-opcao: 3px;
+  --distancia-topo-busca: 12vh;
+  --altura-maxima-resultados-busca: 36vh;
   --largura-painel-lateral: 33.36rem;
   --altura-linha-selecionada: 3.12rem;
   --tamanho-scrollbar: 1.2rem;
   --altura-cabecalho-painel: 6.2rem;
   --largura-titulo-painel: 20.9rem;
   --largura-aba: 24.8rem;
+  --largura-minima-aba: 11rem;
   --altura-scrollbar-rodape: 1.1rem;
   --largura-polegar-rodape: 15.3rem;
   --tamanho-glifo: 1.2rem;
