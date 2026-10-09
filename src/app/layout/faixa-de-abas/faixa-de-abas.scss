@@ -1,0 +1,105 @@
+:host {
+  display: block;
+  min-width: 0;
+  height: var(--altura-faixa-abas);
+  user-select: none;
+}
+
+.lista {
+  display: flex;
+  height: 100%;
+  // Com muitas abas a faixa rola na horizontal, sem barra visível.
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.aba {
+  position: relative;
+  display: flex;
+  flex: 0 1 var(--largura-aba);
+  align-items: center;
+  box-sizing: border-box;
+  min-width: var(--largura-minima-aba);
+  height: 100%;
+  border-start-start-radius: var(--raio-aba);
+  border-start-end-radius: var(--raio-aba);
+  color: var(--cor-texto-aba-inativa);
+  font-size: var(--texto-aba);
+  white-space: nowrap;
+
+  &.ativa {
+    background: var(--cor-aba-ativa);
+    color: var(--cor-texto);
+  }
+
+  &:not(.ativa):hover {
+    background: var(--cor-aba-passando);
+  }
+}
+
+button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+}
+
+.arquivo {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--espaco-3);
+  min-width: 0;
+  height: 100%;
+  padding-inline: 1.7rem 0;
+  text-align: start;
+}
+
+.nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icone-java {
+  flex: none;
+  width: var(--tamanho-icone);
+  height: var(--tamanho-icone);
+  fill: none;
+  stroke-width: 1;
+
+  .folha {
+    stroke: currentColor;
+  }
+
+  .letra {
+    stroke: var(--cor-sintaxe-campo);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+}
+
+.fechar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tamanho-alvo-toque);
+  height: 100%;
+  padding: 0;
+  margin-inline-end: var(--espaco-1);
+  color: var(--cor-icone);
+
+  &:hover {
+    color: var(--cor-texto);
+  }
+}
+
+.aba:not(.ativa) .fechar {
+  color: var(--cor-texto-aba-inativa);
+}

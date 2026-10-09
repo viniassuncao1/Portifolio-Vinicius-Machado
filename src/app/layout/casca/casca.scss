@@ -17,6 +17,17 @@
   min-width: 0;
 }
 
+// Faixa de abas: o degradê fica aqui e a aba ativa se funde com o editor.
+.faixa {
+  display: flex;
+  height: var(--altura-faixa-abas);
+  background: linear-gradient(to bottom, var(--cor-faixa-abas), var(--cor-aba-inativa) 35%);
+
+  app-faixa-de-abas {
+    flex: 1 1 auto;
+  }
+}
+
 .editor {
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--largura-coluna-scrollbar);
