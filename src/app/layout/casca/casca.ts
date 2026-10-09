@@ -13,6 +13,7 @@ import { filter, map, startWith } from 'rxjs';
 
 import { DADO_ARVORE_NO_INICIO } from '../../core/secoes';
 import { EstrategiaDeTitulo } from '../../core/estrategia-de-titulo';
+import { BarraDeStatus } from '../barra-de-status/barra-de-status';
 import { BarraDeFerramentas } from '../barra-de-ferramentas/barra-de-ferramentas';
 import { FaixaDeAbas } from '../faixa-de-abas/faixa-de-abas';
 import { PainelLateral } from '../painel-lateral/painel-lateral';
@@ -24,7 +25,7 @@ import { PainelLateral } from '../painel-lateral/painel-lateral';
  */
 @Component({
   selector: 'app-casca',
-  imports: [RouterOutlet, BarraDeFerramentas, PainelLateral, FaixaDeAbas],
+  imports: [RouterOutlet, BarraDeFerramentas, PainelLateral, FaixaDeAbas, BarraDeStatus],
   templateUrl: './casca.html',
   styleUrl: './casca.scss',
   host: { '(keydown.escape)': 'fecharEDevolverFoco()' },

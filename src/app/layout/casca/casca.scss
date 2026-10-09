@@ -1,5 +1,6 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   min-height: 100dvh;
 }
 
@@ -7,7 +8,7 @@
   display: grid;
   grid-template-columns: var(--largura-painel-lateral) minmax(0, 1fr);
   column-gap: var(--espaco-2);
-  min-height: calc(100dvh - var(--altura-barra-ferramentas));
+  flex: 1 1 auto;
 }
 
 .coluna-editor {
