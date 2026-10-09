@@ -3,6 +3,7 @@
   display: block;
   height: var(--altura-barra-ferramentas);
   background: var(--degrade-barra-ferramentas);
+  overflow: hidden;
   user-select: none;
 }
 
