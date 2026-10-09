@@ -24,7 +24,7 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 | Diferenciais                               | 03               | `Diferenciais`                 | `features/diferenciais/`       |
 | Como uso a IA                              | 04               | `ComoUsoIa`                    | `features/como-uso-ia/`        |
 | Skills / STACK (2 páginas)                 | 05, 06           | `Skills`                       | `features/skills/`             |
-| Controle de páginas `◂ 1/2 ▸`              | 05, 06 (nosso)   | `PaginasDaSecao`               | `shared/paginas-da-secao/`     |
+| Controle de páginas (1/2, setas SVG)       | 05, 06 (nosso)   | `PaginasDaSecao`               | `shared/paginas-da-secao/`     |
 | Seção sem conteúdo ainda                   | 07-30            | `SecaoEmConstrucao`            | `shared/secao-em-construcao/`  |
 | Janela de preview de site                  | 11-15            | fora do escopo (change futura) | -                              |
 
