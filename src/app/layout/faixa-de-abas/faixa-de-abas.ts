@@ -38,9 +38,11 @@ export class FaixaDeAbas {
   constructor() {
     effect(() => {
       this.slugAtivo();
-      if (!this.devolverFocoParaAtiva) return;
+      this.abas();
       afterNextRender(
         () => {
+          this.mostrarAbaAtiva();
+          if (!this.devolverFocoParaAtiva) return;
           this.devolverFocoParaAtiva = false;
           this.focarAbaAtiva();
         },
@@ -89,6 +91,17 @@ export class FaixaDeAbas {
       );
     }
     this.estado.fechar(aba.slug);
+  }
+
+  /** Leva a aba ativa para a área visível da faixa, sem animar com movimento reduzido. */
+  private mostrarAbaAtiva(): void {
+    const indice = this.abas().findIndex((aba) => aba.slug === this.slugAtivo());
+    const reduzido = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    this.botoes()[indice]?.nativeElement.parentElement?.scrollIntoView?.({
+      block: 'nearest',
+      inline: 'nearest',
+      behavior: reduzido ? 'auto' : 'smooth',
+    });
   }
 
   private focarAbaAtiva(): void {

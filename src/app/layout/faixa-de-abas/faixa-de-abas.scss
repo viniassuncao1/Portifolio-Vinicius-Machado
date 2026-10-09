@@ -16,7 +16,7 @@
 .aba {
   position: relative;
   display: flex;
-  flex: 0 1 var(--largura-aba);
+  flex: 0 0 auto;
   align-items: center;
   box-sizing: border-box;
   min-width: var(--largura-minima-aba);
@@ -58,12 +58,12 @@ button {
   min-width: 0;
   height: 100%;
   padding-inline: 1.7rem 0;
+  white-space: nowrap;
   text-align: start;
 }
 
 .nome {
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding-inline-end: var(--espaco-2);
 }
 
 .icone-java {
