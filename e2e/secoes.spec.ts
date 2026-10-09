@@ -1,12 +1,12 @@
 import { expect, test } from '@playwright/test';
 import type { Locator } from '@playwright/test';
 
-const normalizar = (texto: string | null) => (texto ?? '').replace(/\s+/g, ' ').trim();
+import { linhasDoCodigo, normalizar } from './apoio';
 
-const linhasDoCodigo = async (codigo: Locator) =>
-  (await codigo.locator('> span').evaluateAll((els) => els.map((el) => el.textContent ?? '')))
-    .map(normalizar)
-    .filter((linha) => linha !== '');
+const COR_VALOR = 'rgb(79, 175, 172)';
+const COR_DECLARACAO = 'rgb(213, 150, 62)';
+const COR_PALAVRA_CHAVE = 'rgb(222, 96, 210)';
+const COR_ANOTACAO = 'rgb(116, 137, 248)';
 
 const cor = (alvo: Locator) => alvo.evaluate((el) => getComputedStyle(el).color);
 
@@ -24,54 +24,77 @@ function contraste(a: string, b: string): number {
 }
 
 test.describe('Sobre Mim (/sobre-mim)', () => {
-  test('exibe a interface, a anotação e o método da tela 02', async ({ page }) => {
+  test('exibe a interface, a implementação, o Javadoc e o método em Java moderno', async ({
+    page,
+  }) => {
     await page.goto('/sobre-mim');
 
-    const linhas = await linhasDoCodigo(page.locator('main code'));
-
-    expect(linhas).toEqual([
-      'public interface ViniciusMachado {',
-      'void sobreMim();',
+    expect(await linhasDoCodigo(page)).toEqual([
+      'public interface Developer {',
+      'String aboutMe();',
       '}',
-      '@Override',
-      'public void sobreMim() {',
+      'public final class ViniciusMachado implements Developer {',
+      'private static final String ABOUT_ME = "Full Stack: Java, Spring Boot, Angular e SQL";',
       expect.stringContaining('Sou desenvolvedor Full Stack'),
+      '@Override',
+      'public String aboutMe() {',
+      'return ABOUT_ME;',
+      '}',
       '}',
     ]);
   });
 
-  test('começa e termina o parágrafo com os textos da spec', async ({ page }) => {
+  test('começa e termina o texto do Javadoc com as frases da tela 02', async ({ page }) => {
     await page.goto('/sobre-mim');
 
-    const paragrafo = normalizar(await page.locator('main .paragrafo').textContent());
+    const texto = normalizar(await page.locator('main .javadoc').textContent());
 
     expect(
-      paragrafo.startsWith('Sou desenvolvedor Full Stack com cerca de 2 anos de experiência'),
+      texto.startsWith('Sou desenvolvedor Full Stack com cerca de 2 anos de experiência'),
     ).toBe(true);
-    expect(paragrafo.endsWith('Sistemas Distribuídos e Arquitetura de Software.')).toBe(true);
-    expect(paragrafo).toContain('UniCEUB');
+    expect(texto.endsWith('Sistemas Distribuídos e Arquitetura de Software.')).toBe(true);
+  });
+
+  test('preserva as informações: Memora, Watts Company, CRM, agentes de IA e UniCEUB', async ({
+    page,
+  }) => {
+    await page.goto('/sobre-mim');
+    const bloco = page.locator('main .javadoc');
+
+    for (const trecho of [
+      'Java, Spring Boot, Angular e SQL em sistemas críticos de produção',
+      'Memora Processos Inovadores',
+      'Scrum, com dailies, previsões de conclusão e reviews',
+      'Watts Company, agência de automação e IA',
+      'sistemas de CRM e agentes de IA para atendimento',
+      'Ciência da Computação no UniCEUB',
+    ]) {
+      await expect(bloco).toContainText(trecho);
+    }
   });
 
   test('colore palavra-chave e anotação com tokens distintos', async ({ page }) => {
     await page.goto('/sobre-mim');
 
-    expect(await cor(page.locator('main .papel-palavra-chave').first())).toBe('rgb(222, 96, 210)');
-    expect(await cor(page.locator('main .papel-anotacao'))).toBe('rgb(116, 137, 248)');
+    expect(await cor(page.locator('main .papel-palavra-chave').first())).toBe(COR_PALAVRA_CHAVE);
+    expect(await cor(page.locator('main .papel-anotacao'))).toBe(COR_ANOTACAO);
   });
 
-  test('quebra o parágrafo em várias linhas dentro da largura de 72 colunas', async ({ page }) => {
+  test('o texto do Javadoc quebra em várias linhas dentro da largura do editor', async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto('/sobre-mim');
-    const paragrafo = page.locator('main .paragrafo');
+    const javadoc = page.locator('main .javadoc-texto');
 
-    const { largura, linhas } = await paragrafo.evaluate((el) => {
+    const { largura, linhas } = await javadoc.evaluate((el) => {
       const caixa = el.getBoundingClientRect();
       const alturaDaLinha = parseFloat(getComputedStyle(el).lineHeight);
       return { largura: caixa.width, linhas: Math.round(caixa.height / alturaDaLinha) };
     });
     const editor = await page.locator('main app-editor-de-codigo').boundingBox();
 
-    expect(linhas).toBeGreaterThan(5);
+    expect(linhas).toBeGreaterThan(4);
     expect(largura).toBeLessThan(editor!.width);
   });
 
@@ -91,60 +114,80 @@ test.describe('Sobre Mim (/sobre-mim)', () => {
     const texto = (await page.locator('main code').textContent()) ?? '';
 
     expect(texto).not.toContain('*');
-    // "2 anos" é texto do parágrafo; o que não pode aparecer é a coluna 1, 2, 3...
+    // "2 anos" é texto do Javadoc; o que não pode aparecer é a coluna 1, 2, 3...
     expect(texto).not.toMatch(/1\s*2\s*3/);
   });
 });
 
 test.describe('Diferenciais (/diferenciais)', () => {
-  test('exibe a classe PersonalData, os campos, a anotação e o método da tela 03', async ({
+  test('exibe os imports, o record e a constante com os dados em Java moderno', async ({
     page,
   }) => {
     await page.goto('/diferenciais');
 
-    const linhas = await linhasDoCodigo(page.locator('main code'));
-
-    expect(linhas).toEqual([
-      'public class PersonalData {',
-      'String origem = “Mineiro”;',
-      'String cidade = “Brasília”;',
-      'boolean extrovertido = true;',
-      'boolean curioso = true;',
-      'boolean gostaDeAprender = true;',
-      '@Override',
-      'public void diferenciais() {',
+    expect(await linhasDoCodigo(page)).toEqual([
+      'import java.time.Period;',
       expect.stringContaining('Moro em Brasília há 20 anos.'),
+      'public record PersonalData(',
+      'String origin,',
+      'String city,',
+      'Period livingInCityFor,',
+      'boolean extrovert,',
+      'boolean curious,',
+      'boolean loveToLearn',
+      ') {',
+      'public static final PersonalData VINICIUS = new PersonalData(',
+      '"Mineiro",',
+      '"Brasília",',
+      'Period.ofYears(20),',
+      'true, // extrovertido',
+      'true, // curioso',
+      'true // gosta de aprender',
+      ');',
       '}',
     ]);
   });
 
-  test('começa e termina o parágrafo com os textos da spec', async ({ page }) => {
+  test('começa e termina o texto do Javadoc com as frases da tela 03', async ({ page }) => {
     await page.goto('/diferenciais');
 
-    const paragrafo = normalizar(await page.locator('main .paragrafo').textContent());
+    const texto = normalizar(await page.locator('main .javadoc').textContent());
 
-    expect(paragrafo.startsWith('Moro em Brasília há 20 anos.')).toBe(true);
-    expect(paragrafo.endsWith('encarar o que aparecer pela frente.')).toBe(true);
+    expect(texto.startsWith('Moro em Brasília há 20 anos.')).toBe(true);
+    expect(texto.endsWith('encarar o que aparecer pela frente.')).toBe(true);
+    expect(texto).toContain('gosto de uma boa discussão');
+    expect(texto).toContain('back-end ou front-end');
   });
 
-  test('colore "boolean curioso" como declaração e "true" como valor', async ({ page }) => {
+  test('colore os campos como declaração e os três true, e o 20, como valor', async ({ page }) => {
     await page.goto('/diferenciais');
-    const linha = page.locator('main code > span', { hasText: 'boolean curioso' });
+    const valores = page.locator('main .papel-valor');
 
-    const declaracao = await cor(linha.locator('.papel-declaracao'));
-    const valor = await cor(linha.locator('.papel-valor'));
-    const texto = await cor(page.locator('main .papel-literal').first());
-
-    expect(declaracao).toBe('rgb(213, 150, 62)');
-    expect(valor).toBe('rgb(79, 175, 172)');
-    expect(valor).not.toBe(texto);
-    await expect(linha.locator('.papel-valor')).toHaveText('true');
+    await expect(valores).toHaveText(['20', 'true', 'true', 'true']);
+    for (let i = 0; i < 4; i++) expect(await cor(valores.nth(i))).toBe(COR_VALOR);
+    expect(await cor(page.locator('main .papel-declaracao').first())).toBe(COR_DECLARACAO);
   });
 
-  test('colore os três booleanos com a cor de valor', async ({ page }) => {
+  test('o campo city fica como declaração e "Brasília" como texto entre aspas', async ({
+    page,
+  }) => {
     await page.goto('/diferenciais');
+    const linha = page.locator('main code > span', { hasText: 'String city' });
 
-    await expect(page.locator('main .papel-valor')).toHaveText(['true', 'true', 'true']);
+    await expect(linha.locator('.papel-declaracao')).toHaveText('String city');
+    await expect(page.locator('main .papel-literal', { hasText: '"Brasília"' })).toHaveCount(1);
+  });
+
+  test('os comentários de linha usam o papel de comentário, diferente do texto comum', async ({
+    page,
+  }) => {
+    await page.goto('/diferenciais');
+    const comentarios = page.locator('main .papel-comentario');
+
+    await expect(comentarios).toHaveText(['// extrovertido', '// curioso', '// gosta de aprender']);
+    expect(await cor(comentarios.first())).not.toBe(
+      await cor(page.locator('main .papel-comum').first()),
+    );
   });
 
   test('a cor de valor tem contraste de pelo menos 4,5:1 com o fundo do editor', async ({
@@ -173,28 +216,16 @@ test.describe('Diferenciais (/diferenciais)', () => {
     );
     await expect(page).toHaveTitle('Diferenciais | Vinicius Machado');
   });
-
-  test('os campos compactos ficam mais juntos que as linhas comuns', async ({ page }) => {
-    await page.setViewportSize({ width: 1920, height: 1080 });
-    await page.goto('/diferenciais');
-    const altura = (texto: string) =>
-      page
-        .locator('main code > span', { hasText: texto })
-        .first()
-        .evaluate((el) => el.getBoundingClientRect().height);
-
-    expect(await altura('boolean curioso')).toBeLessThan(await altura('public void diferenciais'));
-  });
 });
 
 test.describe('Seções sem JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
-  test('/sobre-mim entrega o código, o parágrafo e o item atual no HTML', async ({ page }) => {
+  test('/sobre-mim entrega o código, o Javadoc e o item atual no HTML', async ({ page }) => {
     await page.goto('/sobre-mim');
 
-    await expect(page.locator('main code')).toContainText('public interface');
-    await expect(page.locator('main .paragrafo')).toContainText('Sou desenvolvedor Full Stack');
+    await expect(page.locator('main code')).toContainText('public interface Developer');
+    await expect(page.locator('main .javadoc')).toContainText('Sou desenvolvedor Full Stack');
     await expect(page.getByRole('link', { name: 'Sobre Mim' })).toHaveAttribute(
       'aria-current',
       'page',
@@ -202,12 +233,12 @@ test.describe('Seções sem JavaScript', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Sobre Mim');
   });
 
-  test('/diferenciais entrega o código, o valor e o parágrafo no HTML', async ({ page }) => {
+  test('/diferenciais entrega o código, os valores e o Javadoc no HTML', async ({ page }) => {
     await page.goto('/diferenciais');
 
-    await expect(page.locator('main code')).toContainText('public class');
-    await expect(page.locator('main .papel-valor')).toHaveCount(3);
-    await expect(page.locator('main .paragrafo')).toContainText('Moro em Brasília há 20 anos.');
+    await expect(page.locator('main code')).toContainText('public record PersonalData(');
+    await expect(page.locator('main .papel-valor')).toHaveCount(4);
+    await expect(page.locator('main .javadoc')).toContainText('Moro em Brasília há 20 anos.');
     await expect(page.getByRole('link', { name: 'Diferenciais' })).toHaveAttribute(
       'aria-current',
       'page',

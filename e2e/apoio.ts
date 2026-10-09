@@ -22,3 +22,14 @@ export async function abrirComFocoNaCasca(page: Page, url: string): Promise<void
     .and(page.locator('[tabindex="0"]'))
     .focus();
 }
+
+export const normalizar = (texto: string | null): string =>
+  (texto ?? '').replace(/\s+/g, ' ').trim();
+
+/** Linhas do código como o visitante lê, sem as vazias e com espaços normalizados. */
+export async function linhasDoCodigo(page: Page): Promise<string[]> {
+  const linhas = await page
+    .locator('main code > span')
+    .evaluateAll((els) => els.map((el) => el.textContent ?? ''));
+  return linhas.map(normalizar).filter((linha) => linha !== '');
+}

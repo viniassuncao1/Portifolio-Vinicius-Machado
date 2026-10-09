@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+import { linhasDoCodigo } from './apoio';
+
 test.describe('Página inicial', () => {
   test('exibe o título do portfólio', async ({ page }) => {
     await page.goto('/');
@@ -25,37 +27,34 @@ test.describe('Pré-renderização', () => {
   });
 });
 
-const TELA_01 = [
-  'package   portfolio.viniciusmachado;',
-  'public class  ViniciusMachado',
-  'extends  DesenvolvedorFullStack {',
-  'String cargo  = “Full Stack Júnior”;',
-  'String[] stack = {',
-  '“Java”,',
-  '“Spring Boot”,',
-  '“Angular”,',
-  '“SQL”',
-  '};',
+const CODIGO_DO_INICIO = [
+  'package portfolio.viniciusmachado;',
+  'import java.util.List;',
+  expect.stringContaining('Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL.'),
+  'public record ViniciusMachado(',
+  'String role,',
+  'List<String> stack',
+  ') implements FullStackDeveloper {',
+  'public static final ViniciusMachado PROFILE = new ViniciusMachado(',
+  '"Full Stack Júnior",',
+  'List.of(',
+  '"Java",',
+  '"Spring Boot",',
+  '"Angular",',
+  '"SQL"',
+  ')',
+  ');',
   '}',
 ];
 
-const normalizar = (texto: string | null) => (texto ?? '').replace(/\s+/g, ' ').trim();
-
-test.describe('Código da tela 01', () => {
-  test('mostra o pacote, a classe, o cargo e a stack, com aspas curvas', async ({ page }) => {
+test.describe('Código do Início em Java moderno', () => {
+  test('mostra o pacote, o record, o cargo e a stack em List.of', async ({ page }) => {
     await page.goto('/');
 
-    const linhas = await page
-      .locator('main code > span')
-      .evaluateAll((els) => els.map((el) => el.textContent ?? ''));
-
-    expect(linhas.filter((linha) => linha.trim() !== '').map(normalizar)).toEqual(
-      TELA_01.map(normalizar),
-    );
-    expect(linhas.join('')).not.toMatch(/["']/);
+    expect(await linhasDoCodigo(page)).toEqual(CODIGO_DO_INICIO);
   });
 
-  test('colore palavras-chave, campo e textos com tokens distintos', async ({ page }) => {
+  test('colore palavras-chave, componentes e textos com tokens distintos', async ({ page }) => {
     await page.goto('/');
     const cor = (seletor: string) =>
       page
@@ -74,16 +73,23 @@ test.describe('Código da tela 01', () => {
     expect(literal).toBe('rgb(143, 194, 88)');
   });
 
-  test('exibe a pilha com as quatro tecnologias na ordem', async ({ page }) => {
+  test('exibe o cargo e a pilha com as quatro tecnologias na ordem', async ({ page }) => {
     await page.goto('/');
 
     await expect(page.locator('main .papel-literal')).toHaveText([
-      '“Full Stack Júnior”',
-      '“Java”',
-      '“Spring Boot”',
-      '“Angular”',
-      '“SQL”',
+      '"Full Stack Júnior"',
+      '"Java"',
+      '"Spring Boot"',
+      '"Angular"',
+      '"SQL"',
     ]);
+  });
+
+  test('não usa arrays String[]: a stack é uma lista imutável', async ({ page }) => {
+    await page.goto('/');
+
+    await expect(page.locator('main code')).not.toContainText('String[]');
+    await expect(page.locator('main code')).toContainText('List.of(');
   });
 });
 
@@ -137,7 +143,7 @@ test.describe('Árvore no Início', () => {
       await page.goto('/');
 
       await expect(page.locator('main code')).toContainText('portfolio.viniciusmachado;');
-      await expect(page.locator('main code')).toContainText('“Spring Boot”');
+      await expect(page.locator('main code')).toContainText('"Spring Boot"');
       await expect(page.getByRole('link', { name: 'Sobre Mim' }).locator('.seta')).toHaveCSS(
         'rotate',
         '90deg',
