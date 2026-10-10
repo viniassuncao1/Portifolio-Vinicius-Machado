@@ -16,13 +16,14 @@ e eu quero mostrar o processo, não só o resultado.
 
 ## Entradas
 
-| Entrada                                           | Data       | Resumo                                                                                                  |
-| ------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------- |
-| [0001](0001-fundacao-do-projeto.md)               | 2026-10-08 | Angular 22 pré-renderizado, CI/CD na Vercel, ADRs, OpenSpec e equipe de IA.                             |
-| [0002](0002-fundacao-visual-e-casca-da-ide.md)    | 2026-10-09 | Tokens, casca da IDE como rota-pai, editor de código com dados tipados, gaveta no celular e axe.        |
-| [0003](0003-secoes-sobre-mim-e-diferenciais.md)   | 2026-10-09 | Primeiras seções só com dados, papel de sintaxe `valor`, parágrafo em 72 colunas e mapa de features.    |
-| [0004](0004-secoes-como-uso-ia-e-skills.md)       | 2026-10-09 | Seções de IA e Skills, páginas com endereço próprio, densidade das linhas e correção do nome da classe. |
-| [0005](0005-experiencia-de-ide-e-java-moderno.md) | 2026-10-09 | Design como referência (ADR-0010), experiência de IDE, Java moderno e a equipe com seis especialistas.  |
+| Entrada                                             | Data       | Resumo                                                                                                  |
+| --------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------- |
+| [0001](0001-fundacao-do-projeto.md)                 | 2026-10-08 | Angular 22 pré-renderizado, CI/CD na Vercel, ADRs, OpenSpec e equipe de IA.                             |
+| [0002](0002-fundacao-visual-e-casca-da-ide.md)      | 2026-10-09 | Tokens, casca da IDE como rota-pai, editor de código com dados tipados, gaveta no celular e axe.        |
+| [0003](0003-secoes-sobre-mim-e-diferenciais.md)     | 2026-10-09 | Primeiras seções só com dados, papel de sintaxe `valor`, parágrafo em 72 colunas e mapa de features.    |
+| [0004](0004-secoes-como-uso-ia-e-skills.md)         | 2026-10-09 | Seções de IA e Skills, páginas com endereço próprio, densidade das linhas e correção do nome da classe. |
+| [0005](0005-experiencia-de-ide-e-java-moderno.md)   | 2026-10-09 | Design como referência (ADR-0010), experiência de IDE, Java moderno e a equipe com seis especialistas.  |
+| [0006](0006-certificacoes-niveis-e-legibilidade.md) | 2026-10-09 | Escala de 23px para ~17px só por tokens, Java legível, Certificações e níveis em Skills.                |
 
 ## Modelo de entrada
 
