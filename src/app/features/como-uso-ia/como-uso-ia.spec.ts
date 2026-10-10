@@ -45,18 +45,19 @@ describe('ComoUsoIa', () => {
       'import java.util.List;',
       expect.stringContaining(INICIO_DO_PARAGRAFO),
       'public final class ArtificialIntelligence {',
-      'public static final boolean FAD = false;',
-      'public static final boolean PART_OF_THE_JOB = true;',
+      '// Minha visão: IA é parte do trabalho, não modismo',
+      'public static final boolean IS_JUST_A_TREND = false;',
+      'public static final boolean IS_PART_OF_THE_JOB = true;',
+      '// Ferramentas e método que uso no dia a dia',
       'public static final List<String> TOOLS = List.of("Claude Code", "Codex");',
       'public static final String METHODOLOGY = "SDD (Spec-Driven Development)";',
-      'private ArtificialIntelligence() {}',
       '}',
     ]);
   });
 
   it.each([
-    ['FAD', 'false'],
-    ['PART_OF_THE_JOB', 'true'],
+    ['IS_JUST_A_TREND', 'false'],
+    ['IS_PART_OF_THE_JOB', 'true'],
   ])('colore boolean %s como declaração e %s como valor', async (campo, valor) => {
     const linha = linhaDe(await renderizar(), `boolean ${campo}`);
 
@@ -67,7 +68,7 @@ describe('ComoUsoIa', () => {
   it('recua os campos um nível e a classe zero', async () => {
     const raiz = await renderizar();
 
-    for (const campo of ['boolean FAD', 'boolean PART_OF_THE_JOB', 'TOOLS']) {
+    for (const campo of ['boolean IS_JUST_A_TREND', 'boolean IS_PART_OF_THE_JOB', 'TOOLS']) {
       expect(linhaDe(raiz, campo)?.style.getPropertyValue('--recuo')).toBe('1');
     }
     expect(linhaDe(raiz, 'final class')?.style.getPropertyValue('--recuo')).toBe('0');

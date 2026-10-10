@@ -16,6 +16,7 @@ describe('Contato', () => {
     expect(texto).toContain('+55 61 98283-7805');
     expect(texto).toContain('linkedin.com/in/viniassuncao');
     expect(texto).toContain('github.com/viniassuncao1');
+    expect(texto).not.toContain('URI');
   });
 
   it('transforma os quatro contatos em links reais', async () => {

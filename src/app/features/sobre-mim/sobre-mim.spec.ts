@@ -29,9 +29,11 @@ describe('SobreMim', () => {
     const raiz = await renderizar();
 
     expect(linhas(raiz).filter((texto) => texto !== '' && texto !== undefined)).toEqual([
+      '// Todo desenvolvedor sabe se apresentar',
       'public interface Developer {',
       'String aboutMe();',
       '}',
+      '// Eu: Vinicius Machado',
       'public final class ViniciusMachado implements Developer {',
       'private static final String ABOUT_ME = "Full Stack: Java, Spring Boot, Angular e SQL";',
       expect.stringContaining(INICIO_DO_PARAGRAFO),
@@ -114,7 +116,7 @@ describe('SobreMim', () => {
     expect(raiz.querySelector('.compacta')).toBeNull();
   });
 
-  it('tem o conteúdo tipado com 14 linhas', () => {
-    expect(CONTEUDO_SOBRE_MIM).toHaveLength(14);
+  it('tem o conteúdo tipado com 16 linhas', () => {
+    expect(CONTEUDO_SOBRE_MIM).toHaveLength(16);
   });
 });

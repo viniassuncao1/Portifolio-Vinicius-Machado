@@ -63,10 +63,10 @@
   }
 }
 
-// Cresce com o código até a altura disponível; passando disso, `.conteudo` rola.
+// Sempre preenche a altura até a barra de status, como numa IDE; passando disso, `.conteudo` rola.
 .editor {
   display: grid;
-  flex: 0 1 auto;
+  flex: 1 1 0;
   grid-template-columns: minmax(0, 1fr) var(--largura-coluna-scrollbar);
   grid-template-rows: minmax(0, 1fr);
   min-height: 0;

@@ -29,6 +29,7 @@ export const CONTEUDO_EVENTOS: ConteudoDoEditor = [
   vazia(),
   linha(0, palavraChave('public class'), comum('  Events {')),
   vazia(),
+  linha(1, comentario('// Cada evento tem o nome e quantas vezes eu participei')),
   linha(
     1,
     palavraChave('record'),
@@ -39,6 +40,7 @@ export const CONTEUDO_EVENTOS: ConteudoDoEditor = [
     comum(') {}'),
   ),
   vazia(),
+  linha(1, comentario('// Eventos de tecnologia dos quais participei')),
   linha(1, palavraChave('static final'), declaracao(' List<Event>'), comum(' ATTENDED = List.of(')),
   evento('Brasília IT', 1, false),
   evento('Campus Party Brasília', 2, false),

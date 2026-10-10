@@ -30,15 +30,19 @@ test.describe('Sobre Mim (/sobre-mim)', () => {
     await page.goto('/sobre-mim');
 
     expect(await linhasDoCodigo(page)).toEqual([
+      expect.stringMatching(/^\/\/ .+/),
       'public interface Developer {',
       'String aboutMe();',
       '}',
+      expect.stringMatching(/^\/\/ .+/),
       'public final class ViniciusMachado implements Developer {',
-      'private static final String ABOUT_ME = "Full Stack: Java, Spring Boot, Angular e SQL";',
+      expect.stringMatching(
+        /^private static final String [A-Z_]+ = "Full Stack: Java, Spring Boot, Angular e SQL";$/,
+      ),
       expect.stringContaining('Sou desenvolvedor Full Stack'),
       '@Override',
       'public String aboutMe() {',
-      'return ABOUT_ME;',
+      expect.stringMatching(/^return [A-Z_]+;$/),
       '}',
       '}',
     ]);
@@ -126,20 +130,20 @@ test.describe('Diferenciais (/diferenciais)', () => {
     await page.goto('/diferenciais');
 
     expect(await linhasDoCodigo(page)).toEqual([
-      'import java.time.Period;',
       expect.stringContaining('Moro em Brasília há 20 anos.'),
       'public record PersonalData(',
-      'String origin,',
+      'String hometown,',
       'String city,',
-      'Period livingInCityFor,',
+      'int yearsInCity,',
       'boolean extrovert,',
       'boolean curious,',
       'boolean loveToLearn',
       ') {',
-      'public static final PersonalData VINICIUS = new PersonalData(',
+      expect.stringMatching(/^\/\/ .+/),
+      expect.stringMatching(/^public static final PersonalData [A-Z_]+ = new PersonalData\($/),
       '"Mineiro",',
       '"Brasília",',
-      'Period.ofYears(20),',
+      '20, // anos em Brasília',
       'true, // extrovertido',
       'true, // curioso',
       'true // gosta de aprender',
@@ -184,7 +188,13 @@ test.describe('Diferenciais (/diferenciais)', () => {
     await page.goto('/diferenciais');
     const comentarios = page.locator('main .papel-comentario');
 
-    await expect(comentarios).toHaveText(['// extrovertido', '// curioso', '// gosta de aprender']);
+    await expect(comentarios).toHaveText([
+      '// Quem sou eu, em dados',
+      '// anos em Brasília',
+      '// extrovertido',
+      '// curioso',
+      '// gosta de aprender',
+    ]);
     expect(await cor(comentarios.first())).not.toBe(
       await cor(page.locator('main .papel-comum').first()),
     );

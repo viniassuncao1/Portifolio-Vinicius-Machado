@@ -82,7 +82,7 @@ describe('Inicio', () => {
     expect(raiz.querySelector('code')?.textContent).not.toContain('String[]');
   });
 
-  it('indenta o record com zero, os componentes com dois e a stack com quatro níveis', async () => {
+  it('indenta o record com zero, os componentes com dois e a stack com três níveis', async () => {
     const raiz = await renderizar();
     const todas = Array.from(raiz.querySelectorAll<HTMLElement>('code > span'));
     const recuo = (texto: string) =>
@@ -91,8 +91,8 @@ describe('Inicio', () => {
     expect([
       recuo('public record ViniciusMachado('),
       recuo('String role,'),
-      recuo('"Java",'),
-    ]).toEqual(['0', '2', '4']);
+      recuo('List.of("Java", "Spring Boot", "Angular", "SQL")'),
+    ]).toEqual(['0', '2', '3']);
   });
 
   it('não tem h1 próprio: o título vem da casca', async () => {

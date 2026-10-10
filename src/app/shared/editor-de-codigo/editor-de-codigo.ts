@@ -78,7 +78,7 @@ export class EditorDeCodigo {
     const indice = Number(alvo?.getAttribute('data-indice'));
     if (!alvo || Number.isNaN(indice)) return;
     this.itemAtual.set(indice);
-    this.estado.posicionar(indice + 1, 1);
+    this.estado.posicionar(this.linhaVisual(alvo), 1);
   }
 
   protected completarDigitacao(): void {
@@ -95,6 +95,7 @@ export class EditorDeCodigo {
 
     if (!janela || reduzido || !primeiraVez || total === 0) {
       this.pronto.set(true);
+      this.estado.posicionar(this.linhaVisual(this.elementoDoItem(this.itemAtual())), 1);
       return;
     }
 
@@ -120,6 +121,24 @@ export class EditorDeCodigo {
     this.host.style.removeProperty('--digitado');
     this.digitando.set(false);
     this.pronto.set(true);
-    this.estado.posicionar(this.itemAtual() + 1, 1);
+    this.estado.posicionar(this.linhaVisual(this.elementoDoItem(this.itemAtual())), 1);
+  }
+
+  private elementoDoItem(indice: number): Element | null {
+    return this.host.querySelector(`[data-indice="${indice}"]`);
+  }
+
+  /**
+   * Número da linha visual (base 1) em que o item começa, igual ao da coluna de números. Um javadoc
+   * ou parágrafo ocupa várias linhas na tela, então o índice do item não serve. Sem layout (por
+   * exemplo, fora do navegador), cai no índice do item.
+   */
+  private linhaVisual(item: Element | null): number {
+    const indice = Number(item?.getAttribute('data-indice') ?? this.itemAtual());
+    const alturaDaLinha = this.host.querySelector('.numeros span')?.getBoundingClientRect().height;
+    const topoDoCodigo = this.host.querySelector('.numeros')?.getBoundingClientRect().top;
+    if (!item || !alturaDaLinha || topoDoCodigo === undefined) return indice + 1;
+    const distancia = item.getBoundingClientRect().top - topoDoCodigo;
+    return Math.max(1, Math.floor((distancia + alturaDaLinha / 2) / alturaDaLinha) + 1);
   }
 }

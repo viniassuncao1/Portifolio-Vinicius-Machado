@@ -8,32 +8,33 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 
 ## Inventário das telas
 
-| Elemento da tela                           | Telas            | Componente                     | Pasta                          |
-| ------------------------------------------ | ---------------- | ------------------------------ | ------------------------------ |
-| Barra de ferramentas e controles de janela | todas            | `BarraDeFerramentas`           | `layout/barra-de-ferramentas/` |
-| Painel lateral (título, controles, rodapé) | todas            | `PainelLateral`                | `layout/painel-lateral/`       |
-| Árvore de seções com ícones                | todas            | `ArvoreDeSecoes`               | `layout/arvore-de-secoes/`     |
-| Faixa de abas dos arquivos abertos         | todas (nossa)    | `FaixaDeAbas`                  | `layout/faixa-de-abas/`        |
-| Barra de status no rodapé                  | (nossa)          | `BarraDeStatus`                | `layout/barra-de-status/`      |
-| Busca de seções (Ctrl/Cmd+P)               | (nossa)          | `BuscaDeSecoes`                | `layout/busca-de-secoes/`      |
-| Casca (junta tudo e hospeda as rotas)      | todas            | `Casca`                        | `layout/casca/`                |
-| Editor com numeração e sintaxe             | todas            | `EditorDeCodigo`               | `shared/editor-de-codigo/`     |
-| Bloco de comentário com `*`                | 02-04, 07-18, 29 | parte do `EditorDeCodigo`      | `shared/editor-de-codigo/`     |
-| Ícones (arquivo, pasta, ferramenta, IA...) | todas            | `Icone`                        | `shared/icone/`                |
-| "×" fino do Eclipse                        | todas            | `GlifoFechar`                  | `shared/glifo-fechar/`         |
-| Início                                     | 01               | `Inicio`                       | `features/inicio/`             |
-| Sobre Mim                                  | 02               | `SobreMim`                     | `features/sobre-mim/`          |
-| Diferenciais                               | 03               | `Diferenciais`                 | `features/diferenciais/`       |
-| Como uso a IA                              | 04               | `ComoUsoIa`                    | `features/como-uso-ia/`        |
-| Skills / STACK (2 páginas)                 | 05, 06           | `Skills`                       | `features/skills/`             |
-| Controle de páginas (1/2, setas SVG)       | 05, 06 (nosso)   | `PaginasDaSecao`               | `shared/paginas-da-secao/`     |
-| Experiências (3 páginas)                   | 07-09            | `Experiencias`                 | `features/experiencias/`       |
-| Eventos                                    | 22               | `Eventos`                      | `features/eventos/`            |
-| Formação                                   | 28               | `Formacao`                     | `features/formacao/`           |
-| Idiomas                                    | 28               | `Idiomas`                      | `features/idiomas/`            |
-| Contato (links reais)                      | 30               | `Contato`                      | `features/contato/`            |
-| Seção sem conteúdo ainda                   | 10-21, 23-27, 29 | `SecaoEmConstrucao`            | `shared/secao-em-construcao/`  |
-| Janela de preview de site                  | 11-15            | fora do escopo (change futura) | -                              |
+| Elemento da tela                                               | Telas            | Componente                     | Pasta                          |
+| -------------------------------------------------------------- | ---------------- | ------------------------------ | ------------------------------ |
+| Barra de ferramentas e controles de janela                     | todas            | `BarraDeFerramentas`           | `layout/barra-de-ferramentas/` |
+| Painel lateral (título, controles, rodapé)                     | todas            | `PainelLateral`                | `layout/painel-lateral/`       |
+| Árvore de seções com ícones                                    | todas            | `ArvoreDeSecoes`               | `layout/arvore-de-secoes/`     |
+| Faixa de abas dos arquivos abertos                             | todas (nossa)    | `FaixaDeAbas`                  | `layout/faixa-de-abas/`        |
+| Barra de status no rodapé                                      | (nossa)          | `BarraDeStatus`                | `layout/barra-de-status/`      |
+| Busca de seções (Ctrl/Cmd+P)                                   | (nossa)          | `BuscaDeSecoes`                | `layout/busca-de-secoes/`      |
+| Casca (junta tudo e hospeda as rotas)                          | todas            | `Casca`                        | `layout/casca/`                |
+| Editor com numeração e sintaxe                                 | todas            | `EditorDeCodigo`               | `shared/editor-de-codigo/`     |
+| Bloco de comentário com `*`                                    | 02-04, 07-18, 29 | parte do `EditorDeCodigo`      | `shared/editor-de-codigo/`     |
+| Ícones (arquivo, pasta, ferramenta, IA...)                     | todas            | `Icone`                        | `shared/icone/`                |
+| "×" fino do Eclipse                                            | todas            | `GlifoFechar`                  | `shared/glifo-fechar/`         |
+| Início                                                         | 01               | `Inicio`                       | `features/inicio/`             |
+| Sobre Mim                                                      | 02               | `SobreMim`                     | `features/sobre-mim/`          |
+| Diferenciais                                                   | 03               | `Diferenciais`                 | `features/diferenciais/`       |
+| Como uso a IA                                                  | 04               | `ComoUsoIa`                    | `features/como-uso-ia/`        |
+| Skills / STACK (3 páginas, a 3ª com os níveis de conhecimento) | 05, 06 e níveis  | `Skills`                       | `features/skills/`             |
+| Controle de páginas (1/2, setas SVG)                           | 05, 06 (nosso)   | `PaginasDaSecao`               | `shared/paginas-da-secao/`     |
+| Experiências (3 páginas)                                       | 07-09            | `Experiencias`                 | `features/experiencias/`       |
+| Eventos                                                        | 22               | `Eventos`                      | `features/eventos/`            |
+| Certificações (3 páginas, 9 cursos)                            | (nossa)          | `Certificacoes`                | `features/certificacoes/`      |
+| Formação                                                       | 28               | `Formacao`                     | `features/formacao/`           |
+| Idiomas                                                        | 28               | `Idiomas`                      | `features/idiomas/`            |
+| Contato (links reais)                                          | 30               | `Contato`                      | `features/contato/`            |
+| Seção sem conteúdo ainda                                       | 10-21, 23-27, 29 | `SecaoEmConstrucao`            | `shared/secao-em-construcao/`  |
+| Janela de preview de site                                      | 11-15            | fora do escopo (change futura) | -                              |
 
 O design é **referência de identidade visual** ([ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md)).
 Por isso o site tem o que as telas, estáticas, não mostram: a faixa de abas, a barra de status, a
@@ -103,7 +104,7 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 ### `BarraDeStatus`
 
 - **Onde:** `layout/barra-de-status/barra-de-status.ts`, seletor `app-barra-de-status`.
-- **O que faz:** rodapé de IDE com o arquivo aberto, a posição `linha:coluna` (do `EstadoDoEditor`),
+- **O que faz:** rodapé de IDE com o arquivo aberto, a posição `linha:coluna` (do `EstadoDoEditor`, que conta a **linha visual**, já que o Javadoc ocupa várias linhas),
   `UTF-8`, `Java 21` e o ramo `main`. É um `<footer role="status">`, mas só o nome do arquivo é
   lido: a posição muda a cada clique e fica em `aria-hidden`.
 - **Entradas e saídas:** nenhuma.
@@ -298,21 +299,21 @@ Por decisão do [ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md), o
 telas. O design é referência de identidade visual, não de sintaxe: o "pseudo-Java" das telas não é
 copiado.
 
-| Informação                 | Em Java moderno                                                       |
-| -------------------------- | --------------------------------------------------------------------- |
-| Dados de uma entidade      | `record` (`record Experience(String company, ...)`)                   |
-| Listas de textos           | `List.of("Java", "Spring Boot", ...)`, não `String[]`                 |
-| Datas e períodos           | `YearMonth.of(2026, 8)`                                               |
-| Valor que pode não existir | `Optional.empty()` (em andamento) ou `Optional.of(YearMonth.of(...))` |
-| Texto longo                | Javadoc (`javadoc()`) acima da declaração                             |
-| Contatos                   | `URI.create("https://...")` com `link()`                              |
+| Informação                 | Em Java moderno                                          |
+| -------------------------- | -------------------------------------------------------- |
+| Dados de uma entidade      | `record` (`record Experience(String company, ...)`)      |
+| Listas de textos           | `List.of("Java", "Spring Boot", ...)`, não `String[]`    |
+| Datas e períodos           | `YearMonth.of(2026, 8)`                                  |
+| Valor que pode não existir | um texto que já diz o resultado (`"08/2026 - Presente"`) |
+| Texto longo                | Javadoc (`javadoc()`) acima da declaração                |
+| Contatos                   | texto literal com `link()` (sem `URI.create`)            |
 
 Identificadores seguem as convenções do Java (classes em PascalCase, campos e métodos em
 camelCase, constantes em UPPER_SNAKE_CASE) e ficam **em inglês**; os textos para o leitor (cargos,
 descrições) ficam em pt-BR.
 
 Exemplo real, de `features/experiencias/experiencias.conteudo.ts`: o `record` e uma constante com
-o período, o `Optional` do fim e os destaques.
+o período já escrito como texto e os destaques.
 
 ```java
 public class Experiences {
@@ -320,22 +321,56 @@ public class Experiences {
   record Experience(
       String company,
       String role,
-      YearMonth start,
-      Optional<YearMonth> end,
+      String period,
       List<String> highlights) {}
 
+  // Experiência atual
   static final Experience MEMORA = new Experience(
       "Memora",
       "Desenvolvedor Full Stack Júnior",
-      YearMonth.of(2026, 8),
-      Optional.empty(),   // em andamento (Presente)
+      "08/2026 - Presente",
       List.of("Liderança de squad", ...)
   );
 }
 ```
 
 Em TypeScript, o arquivo de conteúdo monta as linhas com as construtoras, por exemplo
-`linha(2, comum('Optional.empty(),'), comum('  '), comentario('// em andamento (Presente)'))`.
+`linha(2, comentario('// Experiência atual'))`.
+
+### Guia de legibilidade
+
+O site é lido por recrutadores, não só por quem programa em Java. Por isso o código precisa ser
+**Java que qualquer pessoa entende** (decisão 2 do design da change
+`certificacoes-niveis-e-legibilidade`):
+
+- **Nomes que se explicam.** `Certification(String course, int hours, LocalDate completedOn)` dispensa
+  explicação.
+- **Um comentário `//` em pt-BR por bloco**, no início, dizendo o que o bloco é (por exemplo,
+  `// Inglês` em Idiomas). Os identificadores continuam em inglês.
+- **Listas de até 5 tecnologias numa linha.** Listas maiores são quebradas por grupos.
+- **Sem ruído técnico.** Evite `Optional`, `URI.create`, genéricos aninhados e imports que não
+  ajudam: quando um texto resolve, use o texto (`"08/2026 - Presente"` no lugar de
+  `Optional<YearMonth>`). Os links continuam clicáveis via `link()`.
+- **Javadoc só para parágrafos** de texto.
+
+Manter `record`, `List.of` e `java.time` onde ajudam: simplificar não é abrir mão do Java moderno.
+`legibilidade-das-secoes.spec.ts` cobre parte destas regras.
+
+### Escala de tipografia
+
+Os tamanhos vêm de `src/styles/_tokens.scss`. A escala 1,2× das telas deixava o site grande
+demais (código em 23px); os tokens foram multiplicados por ~0,74 sem mexer em componentes:
+
+| Elemento                    | Token                                             | Valor (desktop) |
+| --------------------------- | ------------------------------------------------- | --------------- |
+| Código e comentário         | `--texto-codigo`, `--texto-comentario`            | 1,06rem (~17px) |
+| Árvore, abas e barra status | `--texto-arvore`, `--texto-aba`, `--texto-status` | 1rem (16px)     |
+| Números de linha            | `--texto-numero-linha`                            | 1,29rem         |
+
+As alturas de linha, recuos, a coluna de números, as linhas da árvore, as abas, a barra de status
+e o painel lateral foram reduzidos na mesma proporção, e as cores não mudaram. No editor cabem
+cerca de 28 linhas (antes, ~15). Abaixo de 768px vale uma **escala própria** (código e comentário
+em 0,95rem), definida no bloco `@media (max-width: 767.98px)` do mesmo arquivo.
 
 ## Como criar uma seção nova só com dados
 

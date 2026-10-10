@@ -25,8 +25,8 @@ describe('Experiencias', () => {
 
     expect(codigo(raiz)).toContain('record Experience(');
     expect(codigo(raiz)).toContain('"Desenvolvedor Full Stack Júnior"');
-    expect(codigo(raiz)).toContain('YearMonth.of(2026, 8)');
-    expect(codigo(raiz)).toContain('Optional.empty()');
+    expect(codigo(raiz)).toContain('"08/2026 - Presente"');
+    expect(codigo(raiz)).not.toContain('Optional');
     expect(raiz.querySelector('[aria-current="page"]')?.textContent?.trim()).toBe('1/3');
   });
 
@@ -34,8 +34,7 @@ describe('Experiencias', () => {
     const texto = codigo(await renderizar(2));
 
     expect(texto).toContain('"Estagiário de Desenvolvimento"');
-    expect(texto).toContain('YearMonth.of(2025, 8)');
-    expect(texto).toContain('Optional.of(YearMonth.of(2026, 7))');
+    expect(texto).toContain('"08/2025 - 07/2026"');
     expect(texto).toContain('Oracle para PostgreSQL');
     expect(texto).toContain('Playwright');
     expect(texto).toContain('AyoForms');
@@ -46,7 +45,7 @@ describe('Experiencias', () => {
 
     expect(texto).toContain('"Watts Company"');
     expect(texto).toContain('"Co-fundador & Desenvolvedor Full Stack"');
-    expect(texto).toContain('YearMonth.of(2025, 2)');
+    expect(texto).toContain('"02/2025 - Presente"');
   });
 
   it('declara o record só na página 1', async () => {

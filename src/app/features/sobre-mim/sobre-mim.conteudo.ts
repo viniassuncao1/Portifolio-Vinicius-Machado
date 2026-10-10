@@ -1,5 +1,6 @@
 import {
   anotacao,
+  comentario,
   comum,
   linha,
   literal,
@@ -12,10 +13,12 @@ import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
 /** Conteúdo da tela 02 (design/telas/tela-02.png) em Java moderno: interface, implementação e Javadoc. */
 export const CONTEUDO_SOBRE_MIM: ConteudoDoEditor = [
   vazia(),
+  linha(0, comentario('// Todo desenvolvedor sabe se apresentar')),
   linha(0, palavraChave('public interface'), comum(' Developer {')),
   linha(1, palavraChave('String'), comum(' aboutMe();')),
   linha(0, comum('}')),
   vazia(),
+  linha(0, comentario('// Eu: Vinicius Machado')),
   linha(
     0,
     palavraChave('public final class'),
