@@ -27,4 +27,4 @@ Responsável entre colchetes. Os grupos 2, 3 e 4 rodam em paralelo; o 5 acompanh
 ## 6. Documentação e integração
 
 - [x] 6.1 [Escriba] Atualizar `docs/componentes.md` com o guia de legibilidade e a escala, e escrever a entrada `0006-certificacoes-niveis-e-legibilidade.md` do diário — verificar com `npm run format:check`
-- [ ] 6.2 [Regente] Revisar, rodar `npm run lint && npm run test:ci && npm run build && npm run e2e`, abrir o PR, arquivar a change no PR, esperar o CI e fazer o merge — verificar pelo PR mesclado e pelo deploy
+- [x] 6.2 [Regente] Revisar, rodar `npm run lint && npm run test:ci && npm run build && npm run e2e`, abrir o PR, arquivar a change no PR, esperar o CI e fazer o merge — verificar pelo PR mesclado e pelo deploy

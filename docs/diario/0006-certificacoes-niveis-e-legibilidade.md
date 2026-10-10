@@ -1,7 +1,7 @@
 # 0006: Certificações, níveis de conhecimento e legibilidade
 
 - **Data:** 2026-10-09
-- **Change:** [certificacoes-niveis-e-legibilidade](../../openspec/changes/certificacoes-niveis-e-legibilidade/)
+- **Change:** [certificacoes-niveis-e-legibilidade](../../openspec/changes/archive/2026-10-09-certificacoes-niveis-e-legibilidade/)
 - **PR:** [#17](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/17)
 - **ADRs:** nenhum novo. A change segue o [ADR-0010](../adr/0010-design-como-referencia-e-java-moderno.md).
 
@@ -53,7 +53,7 @@ também as certificações e os níveis de conhecimento das tecnologias.
 
 ## Links
 
-- Change: [`openspec/changes/certificacoes-niveis-e-legibilidade`](../../openspec/changes/certificacoes-niveis-e-legibilidade/)
+- Change: [`openspec/changes/archive/2026-10-09-certificacoes-niveis-e-legibilidade`](../../openspec/changes/archive/2026-10-09-certificacoes-niveis-e-legibilidade/)
 - Documentação: [componentes](../componentes.md)
 - Entrada anterior: [0005 experiência de IDE e Java moderno](0005-experiencia-de-ide-e-java-moderno.md)
 
