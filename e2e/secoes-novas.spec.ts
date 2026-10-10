@@ -227,10 +227,12 @@ test.describe('Idiomas (/idiomas)', () => {
       expect.arrayContaining([
         'public class Languages {',
         expect.stringMatching(/^\/\/ .+/),
-        expect.stringMatching(/^static final String \w+ = "Básico";$/),
-        expect.stringMatching(/^static final String \w+ = "Básico";$/),
+        expect.stringMatching(/^static final String \w+ = "Básico";( \/\/ Inglês)?$/),
+        expect.stringMatching(/^static final String \w+ = "Básico";( \/\/ Espanhol)?$/),
       ]),
     );
+    await expect(codigo(page)).toContainText('Inglês');
+    await expect(codigo(page)).toContainText('Espanhol');
     await expect(codigo(page)).toContainText(/english/i);
     await expect(codigo(page)).toContainText(/spanish/i);
     await expect(codigo(page)).not.toContainText('Map.of');
