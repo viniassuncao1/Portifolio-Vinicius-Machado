@@ -11,7 +11,10 @@ import {
 } from '../../shared/editor-de-codigo/conteudo';
 import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
 
-/** Texto da recomendação de Luana Porto, um item por parágrafo, como foi escrito no LinkedIn. */
+/**
+ * Texto da recomendação de Luana Porto, um item por parágrafo, como foi escrito no LinkedIn. Os
+ * parágrafos formam um só Javadoc, separados por uma linha em branco.
+ */
 const TEXTO_LUANA_PORTO: readonly string[] = [
   'Tive a oportunidade de trabalhar com o Vinícius e acompanhar de perto seu trabalho no dia a dia. É um profissional muito comprometido, responsável e colaborativo, sempre disposto a ajudar o time e contribuir para que as entregas aconteçam da melhor forma possível.',
   'Além da parte técnica, se destaca pela facilidade de comunicação, organização e pela forma como lida com desafios e aprende novas tecnologias. É uma pessoa em quem o time pode confiar e que agrega muito ao ambiente de trabalho.',
@@ -46,7 +49,7 @@ export const CONTEUDO_DEPOIMENTOS: ConteudoDoEditor = [
   ),
   vazia(),
   linha(1, comentario('// Recomendação recebida no LinkedIn')),
-  ...TEXTO_LUANA_PORTO.flatMap((paragrafo) => [javadoc(1, paragrafo)]),
+  javadoc(1, TEXTO_LUANA_PORTO.join('\n\n')),
   linha(
     1,
     palavraChave('static final'),
