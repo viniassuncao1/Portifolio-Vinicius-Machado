@@ -60,13 +60,26 @@ test.describe('Estrutura da IDE', () => {
     await expect(arvore(page).locator('[aria-current]')).toHaveCount(0);
   });
 
-  test('mantém a barra de ferramentas fora da árvore de acessibilidade', async ({ page }) => {
+  test('deixa os controles decorativos fora da árvore de acessibilidade e Buscar e Projeto como botões', async ({
+    page,
+  }) => {
     await page.goto('/');
 
-    await expect(page.locator('app-barra-de-ferramentas')).toHaveAttribute('aria-hidden', 'true');
-    await expect(
-      page.locator('app-barra-de-ferramentas').locator('button, a, [tabindex]'),
-    ).toHaveCount(0);
+    for (const seletor of [
+      '.widget.projeto',
+      '.widget.ramo',
+      '.widget.configuracao',
+      'app-barra-de-ferramentas .depurar',
+      'app-barra-de-ferramentas .configuracoes',
+      'app-barra-de-ferramentas .executar',
+      'app-faixa-de-ferramentas span.botao',
+    ]) {
+      for (const item of await page.locator(seletor).all()) {
+        await expect(item).toHaveAttribute('aria-hidden', 'true');
+      }
+    }
+    await expect(page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Projeto' })).toBeVisible();
   });
 });
 
@@ -140,7 +153,12 @@ test.describe('Teclado', () => {
     const eventos = page.getByRole('link', { name: 'Eventos' });
     const posicao = SECOES.findIndex((secao) => secao.slug === 'eventos');
 
-    // A árvore tem um só item na ordem de Tab (roving tabindex); as setas percorrem o resto.
+    // Antes da árvore ficam só os botões Buscar e Projeto; a árvore tem um só item na ordem de Tab
+    // (roving tabindex) e as setas percorrem o resto.
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' })).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('button', { name: 'Projeto' })).toBeFocused();
     await page.keyboard.press('Tab');
     await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeFocused();
     for (let i = 0; i < posicao; i++) await page.keyboard.press('ArrowDown');
@@ -165,7 +183,7 @@ test.describe('Teclado', () => {
         await page.evaluate(
           () =>
             document.activeElement?.closest(
-              'app-barra-de-ferramentas, app-aba-do-editor, .cabecalho',
+              '.widget, .depurar, .configuracoes, .executar:not(button), app-faixa-de-ferramentas span, app-aba-do-editor, .cabecalho',
             )?.tagName ?? null,
         ),
       );

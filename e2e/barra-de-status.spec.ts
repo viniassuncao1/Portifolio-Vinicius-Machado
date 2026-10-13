@@ -9,15 +9,17 @@ test.describe('Barra de status', () => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
   });
 
-  test('mostra o arquivo, UTF-8, Java 21 e main na seção Skills', async ({ page }) => {
+  test('mostra o arquivo, LF, UTF-8, 4 spaces e master na seção Skills', async ({ page }) => {
     await page.goto('/skills');
 
     const barra = status(page);
 
     await expect(barra).toContainText('Skills.java');
     await expect(barra).toContainText('UTF-8');
-    await expect(barra).toContainText('Java 21');
-    await expect(barra).toContainText('main');
+    await expect(barra).toContainText('LF');
+    await expect(barra).toContainText('4 spaces');
+    await expect(barra).toContainText('master');
+    await expect(barra).not.toContainText('Java 21');
   });
 
   test('mostra ViniciusMachado.java no Início', async ({ page }) => {

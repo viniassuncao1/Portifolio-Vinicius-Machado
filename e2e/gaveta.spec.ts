@@ -5,10 +5,10 @@ import { abrirHidratada } from './apoio';
 test.describe('Gaveta de seções no celular (390x844)', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
-  test('começa recolhida, com o botão "Seções" fechado', async ({ page }) => {
+  test('começa recolhida, com o botão Projeto fechado', async ({ page }) => {
     await page.goto('/');
 
-    const botao = page.getByRole('button', { name: 'Seções', exact: true });
+    const botao = page.getByRole('button', { name: 'Projeto', exact: true });
     await expect(botao).toBeVisible();
     await expect(botao).toHaveAttribute('aria-expanded', 'false');
     await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeHidden();
@@ -18,7 +18,7 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
     page,
   }) => {
     await page.goto('/');
-    const botao = page.getByRole('button', { name: 'Seções', exact: true });
+    const botao = page.getByRole('button', { name: 'Projeto', exact: true });
 
     await botao.click();
 
@@ -29,7 +29,7 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
 
   test('fecha com Escape e devolve o foco ao botão', async ({ page }) => {
     await page.goto('/');
-    const botao = page.getByRole('button', { name: 'Seções', exact: true });
+    const botao = page.getByRole('button', { name: 'Projeto', exact: true });
     await botao.click();
     await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeFocused();
 
@@ -40,9 +40,9 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
     await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeHidden();
   });
 
-  test('fecha pelo botão "Fechar seções" e devolve o foco ao botão "Seções"', async ({ page }) => {
+  test('fecha pelo botão "Fechar seções" e devolve o foco ao botão Projeto', async ({ page }) => {
     await page.goto('/');
-    const botao = page.getByRole('button', { name: 'Seções', exact: true });
+    const botao = page.getByRole('button', { name: 'Projeto', exact: true });
     await botao.click();
 
     await page.getByRole('button', { name: 'Fechar seções' }).click();
@@ -51,9 +51,9 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
     await expect(botao).toBeFocused();
   });
 
-  test('fecha ao clicar de novo no botão "Seções"', async ({ page }) => {
+  test('fecha ao clicar de novo no botão Projeto', async ({ page }) => {
     await page.goto('/');
-    const botao = page.getByRole('button', { name: 'Seções', exact: true });
+    const botao = page.getByRole('button', { name: 'Projeto', exact: true });
     await botao.click();
 
     await botao.click();
@@ -63,7 +63,7 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
 
   test('escolher "Formação" abre a seção e recolhe a gaveta', async ({ page }) => {
     await page.goto('/');
-    const botao = page.getByRole('button', { name: 'Seções', exact: true });
+    const botao = page.getByRole('button', { name: 'Projeto', exact: true });
     await botao.click();
 
     await page.getByRole('link', { name: 'Formação' }).click();
@@ -76,7 +76,7 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
 
   test('escolhe uma seção só com o teclado: seta para baixo e Enter', async ({ page }) => {
     await abrirHidratada(page, '/');
-    await page.getByRole('button', { name: 'Seções', exact: true }).click();
+    await page.getByRole('button', { name: 'Projeto', exact: true }).click();
     await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeFocused();
 
     await page.keyboard.press('ArrowDown');
@@ -94,7 +94,7 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
 
       expect(await cabe()).toBe(true);
 
-      await page.getByRole('button', { name: 'Seções', exact: true }).click();
+      await page.getByRole('button', { name: 'Projeto', exact: true }).click();
 
       expect(await cabe()).toBe(true);
     });
@@ -104,11 +104,34 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
 test.describe('Gaveta no desktop', () => {
   test.use({ viewport: { width: 1920, height: 1080 } });
 
-  test('não mostra o botão "Seções" e deixa a árvore sempre visível', async ({ page }) => {
+  test('não mostra o botão Projeto e deixa a árvore sempre visível', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page.getByRole('button', { name: 'Seções', exact: true })).toBeHidden();
+    await expect(page.locator('.projeto-celular')).toBeHidden();
     await expect(page.getByRole('button', { name: 'Fechar seções' })).toBeHidden();
+    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeVisible();
+  });
+
+  test('Projeto da faixa esconde e mostra o painel, e o editor ocupa o espaço', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    const botao = page.getByRole('button', { name: 'Projeto', exact: true });
+    const editor = page.getByRole('main');
+    const largura = async () => (await editor.boundingBox())?.width ?? 0;
+    const comPainel = await largura();
+
+    await expect(botao).toHaveAttribute('aria-pressed', 'true');
+    await botao.click();
+
+    await expect(botao).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeHidden();
+    expect(await largura()).toBeGreaterThan(comPainel + 200);
+
+    await botao.click();
+
+    await expect(botao).toHaveAttribute('aria-pressed', 'true');
     await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeVisible();
   });
 });
