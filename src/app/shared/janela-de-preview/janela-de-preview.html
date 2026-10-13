@@ -1,0 +1,56 @@
+<dialog
+  #dialogo
+  class="janela"
+  aria-labelledby="titulo-da-janela"
+  [attr.data-estado]="estado.preview() ? 'aberto' : 'fechado'"
+  (close)="fechar()"
+>
+  @if (estado.preview(); as preview) {
+    <header class="barra-de-titulo">
+      <h2 id="titulo-da-janela" class="titulo">{{ preview.titulo }}</h2>
+      <span class="controle decorativo" aria-hidden="true">
+        <svg viewBox="0 0 16 16" focusable="false"><path d="M2 12h12" /></svg>
+      </span>
+      <span class="controle decorativo" aria-hidden="true">
+        <svg viewBox="0 0 16 16" focusable="false"><path d="M3 3h10v10H3z" /></svg>
+      </span>
+      <button type="button" class="controle fechar" aria-label="Fechar a janela" (click)="fechar()">
+        <app-glifo-fechar />
+      </button>
+    </header>
+    <div class="acoes">
+      <button type="button" class="acao" (click)="alternarAoVivo()">
+        {{ aoVivo() ? 'Ver captura' : 'Ver ao vivo' }}
+      </button>
+      <a class="acao" [href]="preview.url" target="_blank" rel="noopener noreferrer">
+        Abrir em nova aba
+      </a>
+    </div>
+    <div class="area">
+      @if (aoVivo()) {
+        <iframe
+          class="site"
+          [src]="urlDoSite(preview.url)"
+          [title]="'Site ' + preview.titulo + ' ao vivo'"
+          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+          referrerpolicy="no-referrer"
+          loading="lazy"
+        ></iframe>
+      } @else {
+        <div
+          class="captura"
+          tabindex="0"
+          role="region"
+          [attr.aria-label]="'Captura do site ' + preview.titulo"
+        >
+          <img
+            [ngSrc]="preview.captura.src"
+            [width]="preview.captura.largura"
+            [height]="preview.captura.altura"
+            [alt]="preview.captura.alt"
+          />
+        </div>
+      }
+    </div>
+  }
+</dialog>
