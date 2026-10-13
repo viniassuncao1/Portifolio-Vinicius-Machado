@@ -162,6 +162,15 @@ $quantidade-de-marcadores: 60;
   }
 }
 
+.javadoc-paragrafo {
+  display: block;
+
+  // Entre parágrafos, uma linha inteira: a coluna de `*` do bloco desenha o ` *` dela.
+  & + & {
+    margin-block-start: var(--altura-linha-comentario);
+  }
+}
+
 .papel-palavra-chave {
   color: var(--cor-sintaxe-palavra-chave);
 }
