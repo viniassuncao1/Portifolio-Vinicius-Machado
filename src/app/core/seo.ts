@@ -34,8 +34,7 @@ export const DADOS_DA_PESSOA = {
 /** Descrição da rota: a da seção (inclusive nas páginas internas) ou a do Início. */
 export function descricaoDaRota(caminho: string): string {
   const slug = caminho.split('/').find(Boolean);
-  const secao = SECOES.find((s) => s.slug === slug) as
-    ((typeof SECOES)[number] & { descricao?: string }) | undefined;
+  const secao = SECOES.find((s) => s.slug === slug);
   return secao?.descricao ?? DESCRICAO_DO_INICIO;
 }
 
