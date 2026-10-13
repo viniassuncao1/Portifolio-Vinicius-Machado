@@ -87,8 +87,8 @@ esse comportamento é decisão nossa, mantendo as cores e fontes do design.
 
 Todo valor visual vem de variáveis CSS declaradas em `:root`:
 
-- `src/styles/_tokens.scss`: cores da interface e da sintaxe, tipografia, medidas, espaços, raios
-  e bordas, extraídos das telas.
+- `src/styles/_tokens.scss`: cores da interface e da sintaxe (paleta Dark do IntelliJ New UI, com o
+  azul `#3574F0` como único acento), tipografia, medidas, espaços, raios e bordas.
 - `src/styles/_movimento.scss`: durações (`--duracao-*`), curvas (`--curva-*`) e a animação da
   troca de seção. Com `prefers-reduced-motion: reduce` as durações zeram e a transição de rota é
   pulada.
@@ -96,11 +96,19 @@ Todo valor visual vem de variáveis CSS declaradas em `:root`:
 **Regra:** os componentes usam só tokens. Cor, tamanho ou duração solta num componente é erro de
 revisão; se faltar um valor, cria-se o token. As animações usam apenas `transform` e `opacity`.
 
-### Fonte
+### Fontes
 
-A **JetBrains Mono** vem do pacote `@fontsource/jetbrains-mono` (pesos 400 e 700, subset latino,
-`font-display: swap`) e é servida pelo próprio site. Não há Google Fonts nem outra requisição
-externa para texto.
+A identidade visual é a do IntelliJ IDEA New UI ([ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md)),
+com duas fontes: **Inter** (13px) na interface, do pacote `@fontsource/inter` (pesos 400 e 500), e
+**JetBrains Mono** (14px) no código, de `@fontsource/jetbrains-mono` (pesos 400 e 700). As duas usam
+o subset latino e `font-display: swap` e são servidas pelo próprio site: não há Google Fonts nem
+outra requisição externa para texto.
+
+### Ajustes nativos
+
+`color-scheme: dark` (controles e barras de rolagem nativos escuros), `theme-color` `#2B2D30`
+(a barra do navegador no celular), números tabulares nos números de linha e na posição do cursor
+e `translate="no"` no código, para o tradutor automático não mexer no Java exibido.
 
 ## Acessibilidade
 
@@ -172,9 +180,9 @@ teste ao lado (`inicio.spec.ts`).
 
 ## Design
 
-O design de referência (identidade visual, não especificação pixel a pixel: veja o
-[ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md)) é um PDF do Illustrator (30 telas, exportadas do PDF original de 1920×1080) que simula uma IDE escura
-no estilo Eclipse: barra de ferramentas no topo, árvore de seções à esquerda e editor com código
+O design original (hoje fonte das **informações**, e não do visual: veja o
+[ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md) e o
+[ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md)) é um PDF do Illustrator (30 telas, exportadas do PDF original de 1920×1080) que simula uma IDE escura: barra de ferramentas no topo, árvore de seções à esquerda e editor com código
 Java à direita. Como o PDF não é legível pelas ferramentas de IA, cada tela foi exportada como
 imagem (`design/telas/tela-01.png` a `tela-30.png`, de 1600×900: o design real é o PNG × 1,2), e os textos de cada tela ficam em
 `design/telas/textos.md`. Nada disso é versionado (`design/` está no `.gitignore`). Cores,
