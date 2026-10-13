@@ -1,8 +1,8 @@
 # 0008: Seção Depoimentos/Recomendações
 
 - **Data:** 2026-10-13
-- **Change:** [secao-depoimentos](../../openspec/changes/secao-depoimentos/)
-- **PR:** a definir
+- **Change:** [secao-depoimentos](../../openspec/changes/archive/2026-10-13-secao-depoimentos/)
+- **PR:** [#23](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/23)
 - **ADRs:** nenhum novo. A change segue o [ADR-0010](../adr/0010-design-como-referencia-e-java-moderno.md).
 
 ![Seção Depoimentos/Recomendações no desktop](imagens/0008-depoimentos.png)
@@ -48,7 +48,7 @@ esta entrada fecha o conteúdo.
 
 ## Links
 
-- Change: [`openspec/changes/secao-depoimentos`](../../openspec/changes/secao-depoimentos/)
+- Change: [`openspec/changes/archive/2026-10-13-secao-depoimentos`](../../openspec/changes/archive/2026-10-13-secao-depoimentos/)
 - Documentação: [componentes](../componentes.md)
 - Entrada anterior: [0007 projetos e janela de preview](0007-projetos-e-janela-de-preview.md)
 
