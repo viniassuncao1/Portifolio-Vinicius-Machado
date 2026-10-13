@@ -64,4 +64,26 @@ describe('SECOES', () => {
     }
     expect(new Set(descricoes).size).toBe(SECOES.length);
   });
+
+  it('agrupa as seções nos pacotes do ADR-0011', () => {
+    const pacotes = Object.fromEntries(SECOES.map((secao) => [secao.slug, secao.pacote]));
+
+    expect(pacotes).toEqual({
+      'sobre-mim': 'sobre',
+      diferenciais: 'sobre',
+      'como-uso-ia': 'sobre',
+      skills: 'skills',
+      experiencias: 'experiencias',
+      'projeto-1': 'projetos',
+      'projeto-2': 'projetos',
+      'projeto-3': 'projetos',
+      'projeto-4': 'projetos',
+      certificacoes: 'formacao',
+      eventos: 'formacao',
+      formacao: 'formacao',
+      idiomas: 'formacao',
+      depoimentos: 'recomendacoes',
+      contato: 'contato',
+    });
+  });
 });

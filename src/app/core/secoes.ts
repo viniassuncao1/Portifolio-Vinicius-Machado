@@ -1,11 +1,17 @@
 import type { NomeDoIcone } from '../shared/icone/icone';
 
+/** Pacotes do projeto Spring que organiza as seções por assunto (ADR-0011). */
+export type Pacote =
+  'sobre' | 'skills' | 'experiencias' | 'projetos' | 'formacao' | 'recomendacoes' | 'contato';
+
 export interface Secao {
   readonly slug: string;
   readonly titulo: string;
   readonly icone: NomeDoIcone;
   /** Nome do arquivo `.java` da seção, mostrado na aba, na barra de status e na busca. */
   readonly arquivo: string;
+  /** Pacote Java da seção na árvore do projeto (ADR-0011). */
+  readonly pacote: Pacote;
   /** Descrição da seção para quem recruta, com 80 a 160 caracteres: alimenta a meta description. */
   readonly descricao: string;
   /** Quantas páginas a seção tem (padrão 1): `/<slug>` e `/<slug>/2` até `/<slug>/N`. */
@@ -19,6 +25,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Sobre Mim',
     icone: 'arquivo',
     arquivo: 'SobreMim.java',
+    pacote: 'sobre',
     descricao:
       'Vinicius Machado, desenvolvedor Full Stack com cerca de 2 anos de experiência em Java, Spring Boot, Angular e SQL, líder de squad na Memora.',
   },
@@ -27,6 +34,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Diferenciais',
     icone: 'pasta',
     arquivo: 'Diferenciais.java',
+    pacote: 'sobre',
     descricao:
       'Mineiro morando em Brasília há 20 anos, extrovertido e curioso, Vinicius gosta de aprender e encarar tanto back-end quanto front-end.',
   },
@@ -35,6 +43,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Como uso a IA',
     icone: 'ia',
     arquivo: 'ComoUsoIA.java',
+    pacote: 'sobre',
     descricao:
       'Como Vinicius usa IA no trabalho: agentes de IA na Watts Company e Claude Code e Codex com SDD (Spec-Driven Development) no dia a dia.',
   },
@@ -43,6 +52,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Skills / STACK',
     icone: 'ferramenta',
     arquivo: 'Skills.java',
+    pacote: 'skills',
     descricao:
       'Stack de Vinicius Machado: Java, Spring Boot, Angular, TypeScript e SQL, com níveis de conhecimento por tecnologia.',
     paginas: 3,
@@ -52,6 +62,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Experiências',
     icone: 'pasta',
     arquivo: 'Experiencias.java',
+    pacote: 'experiencias',
     descricao:
       'Experiências de Vinicius: dev Full Stack e líder de squad na Memora, estagiário na Memora e co-fundador da Watts Company, agência de IA.',
     paginas: 3,
@@ -61,6 +72,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Projeto 1',
     icone: 'arquivo',
     arquivo: 'Projeto1.java',
+    pacote: 'projetos',
     descricao:
       'Ana, agente de IA em n8n que atende pacientes de uma fisioterapeuta pelo WhatsApp, e o painel CRM em React feito com Claude Code e SDD.',
   },
@@ -69,6 +81,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Projeto 2',
     icone: 'arquivo',
     arquivo: 'Projeto2.java',
+    pacote: 'projetos',
     descricao:
       'Landing page em HTML e JavaScript da Dra. Juliana Maluhy, com design autoral e foco em conversão, levando o visitante ao WhatsApp.',
   },
@@ -77,6 +90,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Projeto 3',
     icone: 'arquivo',
     arquivo: 'Projeto3.java',
+    pacote: 'projetos',
     descricao:
       'Landing page em React da Watts Company, agência de automação e IA, com foco em conversão de leads e diagnóstico gratuito.',
   },
@@ -85,6 +99,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Projeto 4',
     icone: 'arquivo',
     arquivo: 'Projeto4.java',
+    pacote: 'projetos',
     descricao:
       'Cases da Memora: migração de Oracle para PostgreSQL, scrapers em Java com Playwright (Coren e Sanesul) e o AyoForms em PHP e MySQL.',
     paginas: 3,
@@ -94,6 +109,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Certificações',
     icone: 'pasta',
     arquivo: 'Certificacoes.java',
+    pacote: 'formacao',
     descricao:
       'Certificações de Vinicius em Spring Boot, Spring Data JPA, Angular, TypeScript, HTTP, Git, GitHub e Python, com horas e data de conclusão.',
     paginas: 3,
@@ -103,6 +119,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Eventos',
     icone: 'projeto',
     arquivo: 'Eventos.java',
+    pacote: 'formacao',
     descricao:
       'Eventos de tecnologia de que Vinicius participou: Brasília IT, Campus Party Brasília (2 vezes) e BB Digital Week.',
   },
@@ -111,6 +128,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Formação',
     icone: 'globo',
     arquivo: 'Formacao.java',
+    pacote: 'formacao',
     descricao:
       'Formação de Vinicius: Bacharelado em Ciência da Computação no UniCEUB, com formatura prevista para 2027.',
   },
@@ -119,6 +137,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Idiomas',
     icone: 'executar',
     arquivo: 'Idiomas.java',
+    pacote: 'formacao',
     descricao:
       'Idiomas de Vinicius Machado: inglês e espanhol, ambos em nível básico, com o nível de cada idioma listado no código.',
   },
@@ -127,6 +146,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Depoimentos/Recomendações',
     icone: 'arquivo',
     arquivo: 'Depoimentos.java',
+    pacote: 'recomendacoes',
     descricao:
       'Recomendação recebida no LinkedIn de um colega de equipe, desenvolvedor backend Java, sobre o trabalho e a colaboração de Vinicius.',
   },
@@ -135,6 +155,7 @@ export const SECOES: readonly Secao[] = [
     titulo: 'Contato',
     icone: 'pasta',
     arquivo: 'Contato.java',
+    pacote: 'contato',
     descricao:
       'Fale com Vinicius Machado: e-mail, telefone, LinkedIn e GitHub, com links diretos para cada contato.',
   },
