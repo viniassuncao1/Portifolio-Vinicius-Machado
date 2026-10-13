@@ -53,6 +53,7 @@ test('a varredura inclui o Início, as seções e as páginas de Skills, Experi�
       '/projeto-4',
       '/projeto-4/2',
       '/projeto-4/3',
+      '/depoimentos',
     ]),
   );
 });

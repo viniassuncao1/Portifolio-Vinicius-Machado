@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { describe, expect, it } from 'vitest';
 
-import { comum, javadoc, linha, paragrafo } from './conteudo';
+import { comum, javadoc, linha, paragrafo, paragrafosDoJavadoc } from './conteudo';
 import type { ConteudoDoEditor } from './conteudo';
 import { EditorDeCodigo } from './editor-de-codigo';
 
@@ -107,6 +107,53 @@ describe('javadoc', () => {
       const raiz = renderizar();
 
       expect(raiz.querySelector('.paragrafo')?.textContent).toBe('Parágrafo antigo.');
+    });
+  });
+
+  describe('com parágrafos', () => {
+    const DOIS = 'Primeiro parágrafo.\n\nSegundo parágrafo.';
+
+    it('mantém um único bloco javadoc e um trecho por parágrafo', () => {
+      const fixture = TestBed.createComponent(EditorDeCodigo);
+      fixture.componentRef.setInput('conteudo', [javadoc(0, DOIS), linha(0, comum('int x;'))]);
+      fixture.detectChanges();
+      const raiz = fixture.nativeElement as HTMLElement;
+
+      const paragrafos = raiz.querySelectorAll('.javadoc .javadoc-paragrafo');
+
+      expect(raiz.querySelectorAll('.javadoc')).toHaveLength(1);
+      expect(Array.from(paragrafos, (p) => p.textContent?.trim())).toEqual([
+        'Primeiro parágrafo.',
+        'Segundo parágrafo.',
+      ]);
+    });
+
+    it('preserva a quebra no texto copiável com um espaço entre os parágrafos', () => {
+      const fixture = TestBed.createComponent(EditorDeCodigo);
+      fixture.componentRef.setInput('conteudo', [javadoc(0, DOIS)]);
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('.javadoc').textContent).toBe(
+        'Primeiro parágrafo. Segundo parágrafo.',
+      );
+    });
+
+    it('separa parágrafos por uma linha de altura inteira', () => {
+      const fixture = TestBed.createComponent(EditorDeCodigo);
+      fixture.componentRef.setInput('conteudo', [javadoc(0, DOIS)]);
+      fixture.detectChanges();
+      const css = Array.from(document.head.querySelectorAll('style'))
+        .map((estilo) => estilo.textContent ?? '')
+        .join('\n');
+
+      expect(css).toMatch(
+        /\.javadoc-paragrafo[^{]*\+[^{]*\{[^}]*margin-block-start:\s*var\(--altura-linha-comentario\)/,
+      );
+    });
+
+    it('ignora linhas em branco sobrando e texto sem parágrafos continua igual', () => {
+      expect(paragrafosDoJavadoc('\n\nA\n\n\n\nB\n\n')).toEqual(['A', 'B']);
+      expect(paragrafosDoJavadoc(TEXTO)).toEqual([TEXTO]);
     });
   });
 });

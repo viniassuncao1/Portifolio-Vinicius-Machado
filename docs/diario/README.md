@@ -25,6 +25,7 @@ e eu quero mostrar o processo, não só o resultado.
 | [0005](0005-experiencia-de-ide-e-java-moderno.md)   | 2026-10-09 | Design como referência (ADR-0010), experiência de IDE, Java moderno e a equipe com seis especialistas.  |
 | [0006](0006-certificacoes-niveis-e-legibilidade.md) | 2026-10-09 | Escala de 23px para ~17px só por tokens, Java legível, Certificações e níveis em Skills.                |
 | [0007](0007-projetos-e-janela-de-preview.md)        | 2026-10-13 | Janela de preview com captura primeiro e ao vivo sob demanda, botão Executar e os quatro projetos.      |
+| [0008](0008-secao-depoimentos.md)                   | 2026-10-13 | Última seção com a primeira recomendação real, Javadoc com parágrafos e as 15 seções completas.         |
 
 ## Modelo de entrada
 

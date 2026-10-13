@@ -13,6 +13,7 @@ import {
 import { Router } from '@angular/router';
 
 import { EstadoDoEditor } from '../../core/estado-do-editor';
+import { paragrafosDoJavadoc } from './conteudo';
 import type { ConteudoDoEditor } from './conteudo';
 import { HistoricoDeDigitacao } from './historico-de-digitacao';
 
@@ -69,6 +70,8 @@ export class EditorDeCodigo {
     afterNextRender(() => this.iniciar());
     inject(DestroyRef).onDestroy(() => this.cancelarAgendamentos());
   }
+
+  protected readonly paragrafosDoJavadoc = paragrafosDoJavadoc;
 
   protected ehExterno(href: string): boolean {
     return href.startsWith('http');

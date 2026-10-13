@@ -31,6 +31,8 @@ export interface LinhaDeParagrafo {
 /**
  * Comentário Javadoc: o editor desenha a abertura, a coluna de asteriscos e o fechamento como
  * elementos só visuais, então o texto copiado e lido por leitores de tela é apenas `texto`.
+ * Uma linha em branco no `texto` (`\n\n`) separa parágrafos dentro do mesmo bloco, com uma linha
+ * só de ` *` entre eles, como no Javadoc de verdade.
  */
 export interface LinhaDeJavadoc {
   readonly tipo: 'javadoc';
@@ -89,6 +91,13 @@ export const javadoc = (recuo: number, texto: string): LinhaDeJavadoc => ({
   recuo,
   texto,
 });
+
+/** Parágrafos de um bloco Javadoc: o texto dividido nas linhas em branco, sem vazios. */
+export const paragrafosDoJavadoc = (texto: string): readonly string[] =>
+  texto
+    .split(/\n\s*\n/)
+    .map((paragrafo) => paragrafo.trim())
+    .filter((paragrafo) => paragrafo !== '');
 
 export const vazia = (): LinhaVazia => ({ tipo: 'vazia' });
 export const vaziaCompacta = (): LinhaVazia => ({ tipo: 'vazia', densidade: 'compacta' });
