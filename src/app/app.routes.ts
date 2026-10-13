@@ -19,6 +19,8 @@ const FEATURES_DAS_SECOES: Readonly<Record<string, CarregadorDeSecao>> = {
   experiencias: () => import('./features/experiencias/experiencias').then((m) => m.Experiencias),
   certificacoes: () =>
     import('./features/certificacoes/certificacoes').then((m) => m.Certificacoes),
+  'projeto-2': () => import('./features/projeto-2/projeto-2').then((m) => m.Projeto2),
+  'projeto-3': () => import('./features/projeto-3/projeto-3').then((m) => m.Projeto3),
   eventos: () => import('./features/eventos/eventos').then((m) => m.Eventos),
   formacao: () => import('./features/formacao/formacao').then((m) => m.Formacao),
   idiomas: () => import('./features/idiomas/idiomas').then((m) => m.Idiomas),
