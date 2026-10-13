@@ -26,6 +26,7 @@ e eu quero mostrar o processo, não só o resultado.
 | [0006](0006-certificacoes-niveis-e-legibilidade.md) | 2026-10-09 | Escala de 23px para ~17px só por tokens, Java legível, Certificações e níveis em Skills.                |
 | [0007](0007-projetos-e-janela-de-preview.md)        | 2026-10-13 | Janela de preview com captura primeiro e ao vivo sob demanda, botão Executar e os quatro projetos.      |
 | [0008](0008-secao-depoimentos.md)                   | 2026-10-13 | Última seção com a primeira recomendação real, Javadoc com parágrafos e as 15 seções completas.         |
+| [0009](0009-seo-e-compartilhamento.md)              | 2026-10-13 | Metadados Open Graph, descrição por seção, JSON-LD, sitemap no build e o cartão de compartilhamento.    |
 
 ## Modelo de entrada
 

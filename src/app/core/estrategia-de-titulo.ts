@@ -17,11 +17,18 @@ export class EstrategiaDeTitulo extends TitleStrategy {
   readonly titulo = this.tituloAtual.asReadonly();
 
   override updateTitle(snapshot: RouterStateSnapshot): void {
-    const titulo = this.comPagina(this.buildTitle(snapshot) ?? TITULO_INICIO, snapshot);
-    this.tituloAtual.set(titulo);
-    this.janela.setTitle(
-      titulo === TITULO_INICIO ? TITULO_DA_JANELA_INICIO : `${titulo} | ${TITULO_DO_SITE}`,
-    );
+    this.tituloAtual.set(this.tituloDaPagina(snapshot));
+    this.janela.setTitle(this.tituloDaJanela(snapshot));
+  }
+
+  /** Título da janela da rota: o mesmo que `updateTitle` grava, para quem precisa dele já. */
+  tituloDaJanela(snapshot: RouterStateSnapshot): string {
+    const titulo = this.tituloDaPagina(snapshot);
+    return titulo === TITULO_INICIO ? TITULO_DA_JANELA_INICIO : `${titulo} | ${TITULO_DO_SITE}`;
+  }
+
+  private tituloDaPagina(snapshot: RouterStateSnapshot): string {
+    return this.comPagina(this.buildTitle(snapshot) ?? TITULO_INICIO, snapshot);
   }
 
   /** A partir da página 2 de uma seção, o título leva "(X/N)". */

@@ -58,13 +58,30 @@ A aplicação fica disponível em `http://localhost:4200`.
 | Comando                | O que faz                                                 |
 | ---------------------- | --------------------------------------------------------- |
 | `npm start`            | Servidor de desenvolvimento                               |
-| `npm run build`        | Build de produção com pré-renderização em `dist/`         |
+| `npm run build`        | Build de produção com pré-renderização e `sitemap.xml`    |
 | `npm test`             | Testes unitários em modo watch                            |
 | `npm run test:ci`      | Testes unitários uma vez, com cobertura (mínimo 80%)      |
 | `npm run e2e`          | Testes E2E sobre o build de produção (rode o build antes) |
 | `npm run lint`         | ESLint em TypeScript e templates                          |
 | `npm run format`       | Formata o projeto com Prettier                            |
 | `npm run format:check` | Verifica a formatação sem alterar arquivos                |
+
+## Compartilhamento no LinkedIn
+
+O LinkedIn guarda a prévia do link em cache. Depois de um deploy que mude título, descrição ou
+imagem, abra o [Post Inspector](https://www.linkedin.com/post-inspector/), cole o endereço do
+portfólio e clique em inspecionar para atualizar a prévia.
+
+Para regenerar a imagem do cartão (`public/compartilhamento/portfolio.png`, 1200x630) quando o
+visual do Início mudar:
+
+```bash
+npm run build
+node scripts/gerar-imagem-de-compartilhamento.mjs
+```
+
+Confira a imagem antes de commitar. Os metadados vêm do serviço `Seo`; veja a seção
+[SEO e compartilhamento](docs/arquitetura.md#seo-e-compartilhamento).
 
 ## Estrutura
 
