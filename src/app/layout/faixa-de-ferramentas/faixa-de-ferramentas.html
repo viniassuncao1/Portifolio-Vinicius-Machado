@@ -1,0 +1,12 @@
+<button
+  type="button"
+  class="botao"
+  aria-label="Projeto"
+  aria-controls="painel-lateral"
+  [attr.aria-pressed]="painelVisivel()"
+  (click)="alternarPainel.emit()"
+>
+  <app-icone nome="projeto" />
+</button>
+<span class="botao" aria-hidden="true"><app-icone nome="commit" /></span>
+<span class="botao" aria-hidden="true"><app-icone nome="estrutura" /></span>
