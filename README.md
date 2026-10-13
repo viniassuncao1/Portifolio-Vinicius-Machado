@@ -111,6 +111,13 @@ Tudo roda no workflow [`ci.yml`](.github/workflows/ci.yml):
 
 Detalhes em [docs/deploy.md](docs/deploy.md).
 
+## Créditos
+
+Os ícones da interface são da **IntelliJ Platform** (conjunto New UI), da JetBrains, usados sob a
+licença Apache 2.0. A origem, o copyright e o mapa de arquivos estão em
+[`public/icones/new-ui/CREDITOS.md`](public/icones/new-ui/CREDITOS.md). Este projeto não é
+afiliado à JetBrains e não usa logotipos de produto.
+
 ## Documentação
 
 - [Decisões de arquitetura (ADRs)](docs/adr/README.md)
