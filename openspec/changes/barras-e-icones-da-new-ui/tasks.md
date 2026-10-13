@@ -12,10 +12,10 @@
 
 ## 3. Moldura [Pincel]
 
-- [ ] 3.1 Barra superior (projeto, branch, configuração de execução, Executar, Depurar, Buscar, Configurações) — verificar com captura `new-ui-desktop.png`
-- [ ] 3.2 Faixa de ferramentas com Projeto mostrando e escondendo o painel, e cabeçalho "Projeto" — verificar com captura `new-ui-sem-painel.png`
-- [ ] 3.3 Barra de status com breadcrumbs, `linha:coluna`, `LF`, `UTF-8`, `4 spaces`, `master` e o commit — verificar com captura `new-ui-status.png`
-- [ ] 3.4 Celular: barra compacta com Projeto abrindo a gaveta e Buscar — verificar com captura `new-ui-mobile.png`
+- [x] 3.1 Barra superior (projeto, branch, configuração de execução, Executar, Depurar, Buscar, Configurações) — verificar com captura `new-ui-desktop.png`
+- [x] 3.2 Faixa de ferramentas com Projeto mostrando e escondendo o painel, e cabeçalho "Projeto" — verificar com captura `new-ui-sem-painel.png`
+- [x] 3.3 Barra de status com breadcrumbs, `linha:coluna`, `LF`, `UTF-8`, `4 spaces`, `master` e o commit — verificar com captura `new-ui-status.png`
+- [x] 3.4 Celular: barra compacta com Projeto abrindo a gaveta e Buscar — verificar com captura `new-ui-mobile.png`
 
 ## 4. Testes [Sentinela]
 
