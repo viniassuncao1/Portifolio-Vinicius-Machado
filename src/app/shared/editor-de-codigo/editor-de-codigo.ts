@@ -92,7 +92,7 @@ export class EditorDeCodigo {
   }
 
   private cancelarAgendamentos(): void {
-    this.documento.defaultView?.cancelAnimationFrame(this.quadro);
+    this.documento.defaultView?.cancelAnimationFrame?.(this.quadro);
     clearTimeout(this.temporizador);
   }
 
