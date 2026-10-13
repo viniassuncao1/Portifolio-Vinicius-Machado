@@ -5,7 +5,7 @@
 - **PR:** a definir
 - **ADRs:** nenhum novo.
 
-Imagem do cartão de compartilhamento: a definir.
+![Cartão de compartilhamento do portfólio](imagens/0009-cartao.png)
 
 ## Problema
 
@@ -44,7 +44,7 @@ canônico nem dados estruturados.
   nome em destaque.
 - **A prévia do LinkedIn fica em cache.** Depois de um deploy, é preciso pedir a atualização no
   Post Inspector. O passo a passo está no README.
-- **Números finais.** Testes unitários: a definir. Testes E2E: a definir.
+- **Números finais.** 635 testes unitários (98,4% das linhas), 461 testes E2E e 24 rotas pré-renderizadas, com o axe sem violações.
 
 ## Links
 
