@@ -1,4 +1,9 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import {
   TitleStrategy,
@@ -9,6 +14,7 @@ import {
 
 import { routes } from './app.routes';
 import { EstrategiaDeTitulo } from './core/estrategia-de-titulo';
+import { Seo } from './core/seo';
 import { pularTransicaoSeMovimentoReduzido } from './core/transicao-de-rota';
 
 export const appConfig: ApplicationConfig = {
@@ -20,6 +26,7 @@ export const appConfig: ApplicationConfig = {
       withComponentInputBinding(),
     ),
     { provide: TitleStrategy, useExisting: EstrategiaDeTitulo },
+    provideAppInitializer(() => void inject(Seo)),
     provideClientHydration(withEventReplay()),
   ],
 };
