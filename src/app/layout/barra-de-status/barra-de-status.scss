@@ -5,6 +5,7 @@
 .barra {
   display: flex;
   align-items: center;
+  box-sizing: border-box;
   gap: var(--espaco-4);
   min-height: var(--altura-barra-status);
   padding-inline: var(--espaco-4);

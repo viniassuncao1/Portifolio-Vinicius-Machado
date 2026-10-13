@@ -15,5 +15,9 @@ body {
   background: var(--cor-fundo-pagina);
   color: var(--cor-texto);
   font-family: var(--fonte-interface);
+}
+
+// O tamanho base fica só no body: no html ele redefiniria o 1rem e encolheria todos os tokens.
+body {
   font-size: var(--texto-arvore);
 }

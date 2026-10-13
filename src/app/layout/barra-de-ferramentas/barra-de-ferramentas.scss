@@ -1,6 +1,7 @@
 :host {
   position: relative;
   display: block;
+  box-sizing: border-box;
   height: var(--altura-barra-ferramentas);
   border-block-end: var(--borda-painel);
   background: var(--cor-barra-ferramentas);
