@@ -91,7 +91,7 @@ describe('ArvoreDeSecoes', () => {
 
     SECOES.forEach((secao, i) => {
       expect(links[i].querySelector('app-icone img')?.getAttribute('src')).toContain(
-        `icones/${secao.icone}.svg`,
+        `icones/new-ui/${secao.icone}.svg`,
       );
     });
   });

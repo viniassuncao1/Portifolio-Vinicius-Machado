@@ -9,7 +9,7 @@ import type { NomeDoIcone } from './icone';
   template: `<app-icone [nome]="nome" />`,
 })
 class Hospedeiro {
-  nome: NomeDoIcone = 'globo';
+  nome: NomeDoIcone = 'java';
 }
 
 describe('Icone', () => {
@@ -18,12 +18,12 @@ describe('Icone', () => {
     await fixture.whenStable();
     const imagem = (fixture.nativeElement as HTMLElement).querySelector('img');
 
-    expect(imagem?.getAttribute('src')).toContain('icones/globo.svg');
+    expect(imagem?.getAttribute('src')).toContain('icones/new-ui/java.svg');
     expect(imagem?.getAttribute('alt')).toBe('');
   });
 
-  it('expõe os nove ícones usados nas telas', () => {
-    expect(NOMES_DE_ICONE).toHaveLength(9);
+  it('expõe os dezessete ícones da New UI', () => {
+    expect(NOMES_DE_ICONE).toHaveLength(17);
   });
 
   it.each(NOMES_DE_ICONE)('aponta o ícone %s para o seu arquivo SVG', async (nome) => {
@@ -32,7 +32,7 @@ describe('Icone', () => {
     await fixture.whenStable();
     const imagem = (fixture.nativeElement as HTMLElement).querySelector('img');
 
-    expect(imagem?.getAttribute('src')).toContain(`icones/${nome}.svg`);
+    expect(imagem?.getAttribute('src')).toContain(`icones/new-ui/${nome}.svg`);
   });
 
   it('não tem papel de imagem para tecnologias assistivas', async () => {

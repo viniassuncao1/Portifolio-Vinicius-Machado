@@ -24,17 +24,17 @@ describe('BarraDeFerramentas', () => {
     await fixture.whenStable();
     const origens = Array.from(
       (fixture.nativeElement as HTMLElement).querySelectorAll('app-icone img'),
-    ).map((img) => /icones\/(.+)\.svg/.exec(img.getAttribute('src') ?? '')?.[1]);
+    ).map((img) => /icones\/new-ui\/(.+)\.svg/.exec(img.getAttribute('src') ?? '')?.[1]);
 
     expect(origens).toEqual([
-      'arquivo',
+      'java',
       'pasta',
       'projeto',
       'executar',
-      'ferramenta',
-      'ia',
-      'relogio',
-      'monitor',
+      'configuracoes',
+      'buscar',
+      'depurar',
+      'estrutura',
     ]);
   });
 

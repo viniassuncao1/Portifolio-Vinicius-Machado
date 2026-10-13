@@ -70,24 +70,6 @@ button {
   }
 }
 
-.icone-java {
-  flex: none;
-  width: var(--tamanho-icone);
-  height: var(--tamanho-icone);
-  fill: none;
-  stroke-width: 1;
-
-  .folha {
-    stroke: currentColor;
-  }
-
-  .letra {
-    stroke: var(--cor-sintaxe-campo);
-    stroke-width: 1.6;
-    stroke-linecap: round;
-  }
-}
-
 .fechar {
   display: flex;
   align-items: center;
