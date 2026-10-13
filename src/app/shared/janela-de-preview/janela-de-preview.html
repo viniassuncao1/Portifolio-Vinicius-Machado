@@ -2,10 +2,12 @@
   #dialogo
   class="janela"
   aria-labelledby="titulo-da-janela"
-  [attr.data-estado]="estado.preview() ? 'aberto' : 'fechado'"
+  [attr.data-estado]="saindo() ? 'fechando' : exibido() ? 'aberto' : 'fechado'"
+  (cancel)="aoCancelar($event)"
   (close)="fechar()"
+  (animationend)="aoTerminarAnimacao($event)"
 >
-  @if (estado.preview(); as preview) {
+  @if (exibido(); as preview) {
     <header class="barra-de-titulo">
       <h2 id="titulo-da-janela" class="titulo">{{ preview.titulo }}</h2>
       <span class="controle decorativo" aria-hidden="true">

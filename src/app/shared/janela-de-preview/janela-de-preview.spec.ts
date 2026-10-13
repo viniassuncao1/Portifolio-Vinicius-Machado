@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { JanelaDePreview } from '../../core/janela-de-preview';
 import { PREVIEWS } from '../../core/previews';
@@ -85,5 +86,75 @@ describe('JanelaDePreviewComponente', () => {
     expect(TestBed.inject(JanelaDePreview).preview()).toBeNull();
     expect(elemento.querySelector('dialog')?.hasAttribute('open')).toBe(false);
     expect(document.activeElement).toBe(origem);
+  });
+
+  describe('animação', () => {
+    const matchMediaOriginal = document.defaultView!.matchMedia;
+    const simularMovimento = (reduzido: boolean) => {
+      document.defaultView!.matchMedia = ((consulta: string) => ({
+        matches: reduzido && consulta.includes('reduce'),
+      })) as typeof matchMedia;
+    };
+
+    afterEach(() => {
+      document.defaultView!.matchMedia = matchMediaOriginal;
+      vi.useRealTimers();
+    });
+
+    it('com movimento reduzido fecha na hora, sem estado de saída', async () => {
+      simularMovimento(true);
+      const { fixture, elemento } = await abrir();
+
+      elemento.querySelector<HTMLButtonElement>('.fechar')!.click();
+      await fixture.whenStable();
+      const dialogo = elemento.querySelector('dialog')!;
+
+      expect(dialogo.hasAttribute('open')).toBe(false);
+      expect(dialogo.getAttribute('data-estado')).toBe('fechado');
+    });
+
+    it('com movimento passa por "fechando" e só fecha ao fim da animação', async () => {
+      simularMovimento(false);
+      const { fixture, elemento } = await abrir();
+      const dialogo = elemento.querySelector('dialog')!;
+
+      elemento.querySelector<HTMLButtonElement>('.fechar')!.click();
+      await fixture.whenStable();
+
+      expect(dialogo.getAttribute('data-estado')).toBe('fechando');
+      expect(dialogo.hasAttribute('open')).toBe(true);
+      expect(elemento.querySelector('img')).not.toBeNull();
+
+      dialogo.dispatchEvent(new Event('animationend'));
+      await fixture.whenStable();
+
+      expect(dialogo.hasAttribute('open')).toBe(false);
+      expect(dialogo.getAttribute('data-estado')).toBe('fechado');
+      expect(elemento.querySelector('img')).toBeNull();
+    });
+
+    it('fecha pelo teto de tempo se o animationend nunca vier', async () => {
+      simularMovimento(false);
+      const { elemento } = await abrir();
+      vi.useFakeTimers();
+
+      elemento.querySelector<HTMLButtonElement>('.fechar')!.click();
+      TestBed.tick();
+      vi.advanceTimersByTime(300);
+      TestBed.tick();
+
+      expect(elemento.querySelector('dialog')?.hasAttribute('open')).toBe(false);
+    });
+
+    it('declara as animações e as desliga com movimento reduzido', async () => {
+      await abrir();
+      const css = Array.from(document.head.querySelectorAll('style'))
+        .map((estilo) => estilo.textContent ?? '')
+        .join('\n');
+
+      expect(css).toMatch(/@keyframes\s+\S*janela-abrir/);
+      expect(css).toMatch(/@keyframes\s+\S*janela-fechar/);
+      expect(css).toMatch(/prefers-reduced-motion:\s*reduce\)[^]*animation:\s*none/);
+    });
   });
 });

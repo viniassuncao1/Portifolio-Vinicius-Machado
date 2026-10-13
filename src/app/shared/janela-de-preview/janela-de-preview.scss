@@ -19,6 +19,56 @@
   &::backdrop {
     background: var(--cor-fundo-modal);
   }
+
+  // Abrir e fechar como janela de IDE: só `transform` e `opacity`, com os tokens de movimento.
+  &[open] {
+    animation: janela-abrir var(--duracao-media) var(--curva-saida);
+
+    &::backdrop {
+      animation: janela-fundo-abrir var(--duracao-media) var(--curva-saida);
+    }
+  }
+
+  &[data-estado='fechando'] {
+    animation: janela-fechar var(--duracao-rapida) var(--curva-entrada) forwards;
+
+    &::backdrop {
+      animation: janela-fundo-fechar var(--duracao-rapida) var(--curva-entrada) forwards;
+    }
+  }
+}
+
+@keyframes janela-abrir {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes janela-fechar {
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes janela-fundo-abrir {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes janela-fundo-fechar {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .janela,
+  .janela::backdrop {
+    animation: none !important;
+  }
 }
 
 .barra-de-titulo {
