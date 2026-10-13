@@ -10,8 +10,9 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 
 | Elemento da tela                                               | Telas            | Componente                  | Pasta                          |
 | -------------------------------------------------------------- | ---------------- | --------------------------- | ------------------------------ |
-| Barra de ferramentas e controles de janela                     | todas            | `BarraDeFerramentas`        | `layout/barra-de-ferramentas/` |
-| Painel lateral (título, controles, rodapé)                     | todas            | `PainelLateral`             | `layout/painel-lateral/`       |
+| Barra superior da New UI (projeto, branch, Executar, Buscar)   | todas            | `BarraDeFerramentas`        | `layout/barra-de-ferramentas/` |
+| Faixa de ferramentas à esquerda (Projeto, Commit, Estrutura)   | desktop (nossa)  | `FaixaDeFerramentas`        | `layout/faixa-de-ferramentas/` |
+| Painel do projeto (cabeçalho "Projeto", árvore, rodapé)        | todas            | `PainelLateral`             | `layout/painel-lateral/`       |
 | Árvore de seções com ícones                                    | todas            | `ArvoreDeSecoes`            | `layout/arvore-de-secoes/`     |
 | Faixa de abas dos arquivos abertos                             | todas (nossa)    | `FaixaDeAbas`               | `layout/faixa-de-abas/`        |
 | Barra de status no rodapé                                      | (nossa)          | `BarraDeStatus`             | `layout/barra-de-status/`      |
@@ -51,21 +52,24 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 ### `Casca`
 
 - **Onde:** `layout/casca/casca.ts`, seletor `app-casca`.
-- **O que faz:** é a rota-pai de todas as páginas. Monta a barra de ferramentas, o painel lateral,
+- **O que faz:** é a rota-pai de todas as páginas. Monta a barra superior, a faixa de ferramentas, o painel do projeto,
   a `FaixaDeAbas` com o botão de busca, o `<router-outlet>` dentro do `<main>`, a `BarraDeStatus`
   e a `BuscaDeSecoes`. A casca **ocupa a janela inteira** (`100dvh`, sem rolagem da página): só a
   área do editor rola, e cada navegação volta ao topo. O atalho Ctrl/Cmd+P (`keydown.control.p` e
   `keydown.meta.p` no `host`) abre a busca com `preventDefault`. Contém o `h1` visualmente oculto, com o título
-  da rota (vem da `EstrategiaDeTitulo`). Abaixo de 768px controla a gaveta: abre pelo botão
-  "Seções" (`aria-expanded`, `aria-controls`), move o foco para o primeiro item e, com Escape ou
-  ao escolher uma seção, fecha e devolve o foco ao botão.
+  da rota (vem da `EstrategiaDeTitulo`). No desktop, o botão Projeto da faixa de ferramentas
+  mostra e esconde o painel do projeto. Abaixo de 768px controla a gaveta: abre pelo botão
+  Projeto da barra superior (`aria-expanded`, `aria-controls`), move o foco para o primeiro item e,
+  com Escape ou ao escolher uma seção, fecha e devolve o foco ao botão.
 - **Entradas e saídas:** nenhuma. Quem a usa é o roteador (`app.routes.ts`).
-- **Estado:** `gavetaAberta` (signal). O painel recebe `data-aberta`, que o CSS usa para animar.
+- **Estado:** `gavetaAberta` (celular) e `painelVisivel` (desktop), ambos signals. O painel recebe
+  `data-aberta`, que o CSS usa para animar, e a área do editor recebe `data-painel`.
 
 ### `PainelLateral`
 
 - **Onde:** `layout/painel-lateral/painel-lateral.ts`, seletor `app-painel-lateral`.
-- **O que faz:** moldura da árvore: cabeçalho decorativo (`aria-hidden`), a `ArvoreDeSecoes` e o
+- **O que faz:** moldura da árvore: cabeçalho "Projeto" com o chevron, no estilo da New UI
+  (decorativo, `aria-hidden`; os botões de janela do Eclipse saíram), a `ArvoreDeSecoes` e o
   rodapé com a barra de rolagem decorativa. No celular mostra o botão "Fechar seções".
 - **Saídas:** `secaoEscolhida` (repassa a escolha da árvore) e `fecharGaveta` (botão "Fechar
   seções"). Método público: `focarPrimeiroItem()`.
@@ -91,12 +95,24 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 
 - **Onde:** `layout/barra-de-ferramentas/barra-de-ferramentas.ts`, seletor
   `app-barra-de-ferramentas`.
-- **O que faz:** imita a barra superior do IntelliJ (cor sólida `--cor-barra-ferramentas`, ícones e controles de janela). É decorativa:
-  `aria-hidden="true"` e fora da ordem de foco. Os ícones que não cabem no celular ficam ocultos.
-- **Exceção, o play:** nas rotas que têm preview (`JanelaDePreview.previewDaRota()`), o ícone de
-  play vira o botão "Executar o projeto" e a barra deixa de ser `aria-hidden`; nas demais rotas
-  continua decorativa. Clicar abre a janela de preview do projeto.
-- **Entradas e saídas:** nenhuma.
+- **O que faz:** a barra superior da New UI (40px, cor sólida). À esquerda, os widgets do projeto
+  (`PV portfolio-vinicius`) e da branch (`master`); à direita, a configuração de execução
+  (`PortfolioApplication`), **Executar**, **Depurar**, **Buscar** e **Configurações**. O widget do
+  projeto, o da branch, a configuração, Depurar e Configurações só imitam a IDE: ficam fora da
+  leitura e do foco. São botões de verdade o **Buscar** (emite `buscar`, que abre a busca de seções),
+  o **Executar** (só nas rotas com preview: `JanelaDePreview.previewDaRota()`; abre a janela) e,
+  no celular, o **Projeto**, que abre e fecha a gaveta.
+- **Entrada e saídas:** `gavetaAberta = input(false)`; `alternarGaveta` e `buscar`. Método
+  público: `focarProjeto()`, usado para devolver o foco quando a gaveta fecha.
+- **Celular:** a barra fica compacta, com Projeto (ícone), o nome do projeto e Buscar.
+
+### `FaixaDeFerramentas`
+
+- **Onde:** `layout/faixa-de-ferramentas/faixa-de-ferramentas.ts`, seletor
+  `app-faixa-de-ferramentas`.
+- **O que faz:** a faixa de 40px à esquerda, só no desktop. **Projeto** mostra e esconde o painel
+  do projeto; **Commit** e **Estrutura** só imitam a IDE (fora da leitura e do foco).
+- **Entrada e saída:** `painelVisivel = input.required<boolean>()` e `alternarPainel`.
 
 ### `FaixaDeAbas`
 
@@ -112,9 +128,15 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 ### `BarraDeStatus`
 
 - **Onde:** `layout/barra-de-status/barra-de-status.ts`, seletor `app-barra-de-status`.
-- **O que faz:** rodapé de IDE com o arquivo aberto, a posição `linha:coluna` (do `EstadoDoEditor`, que conta a **linha visual**, já que o Javadoc ocupa várias linhas),
-  `UTF-8`, `Java 21` e o ramo `main`. É um `<footer role="status">`, mas só o nome do arquivo é
-  lido: a posição muda a cada clique e fica em `aria-hidden`.
+- **O que faz:** a barra de status da New UI (24px). À esquerda, os **breadcrumbs** do arquivo
+  aberto (`portfolio-vinicius › src › main › java › … › Skills.java`, calculados por
+  `core/breadcrumbs.ts`; o trecho do meio encolhe com reticências quando falta espaço). À direita,
+  `linha:coluna` (do `EstadoDoEditor`, que conta a **linha visual**, já que o Javadoc ocupa várias
+  linhas), `LF`, `UTF-8`, `4 spaces`, a branch `master` e o **SHA curto do commit do deploy**, com
+  link para o commit no GitHub. Sem SHA (build local), o item não aparece.
+- **Leitura por tecnologias assistivas:** é um `<footer role="status">`, mas só o nome do arquivo é
+  lido; o caminho e a posição, que muda a cada clique, ficam em `aria-hidden`.
+- **No celular:** só o arquivo e `linha:coluna`.
 - **Entradas e saídas:** nenhuma.
 
 ### `BuscaDeSecoes`
@@ -159,9 +181,12 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 ### `Icone`
 
 - **Onde:** `shared/icone/icone.ts`, seletor `app-icone`.
-- **O que faz:** mostra um SVG de `public/icones/` com `NgOptimizedImage` e `alt=""` (decorativo:
-  o texto ao lado já é o rótulo). A lista de nomes válidos é `NOMES_DE_ICONE`; o tipo é
-  `NomeDoIcone`.
+- **O que faz:** mostra um SVG oficial da **IntelliJ Platform (New UI, tema escuro)** de
+  `public/icones/new-ui/`, com `NgOptimizedImage` e `alt=""` (decorativo: o texto ao lado já é o
+  rótulo). A lista de nomes válidos é `NOMES_DE_ICONE`; o tipo é `NomeDoIcone`. Os ícones têm
+  licença Apache 2.0 e os créditos ficam em
+  [`public/icones/new-ui/CREDITOS.md`](../public/icones/new-ui/CREDITOS.md); nenhum logotipo de
+  produto da JetBrains é usado.
 - **Entrada:** `nome = input.required<NomeDoIcone>()`. O tamanho vem do token `--tamanho-icone`.
 
 ```html
@@ -248,6 +273,11 @@ O estado da IDE mora em serviços (`@Service`), e não nos componentes da casca.
   somente leitura), o elemento que abriu a janela e o preview da rota atual (`previewDaRota`, calculado
   a partir da URL). `abrir(preview, origem)` abre; `fechar()` fecha e devolve o foco à origem.
   O componente da janela, o `BotaoExecutar` e o play da barra de ferramentas usam este serviço.
+- **`breadcrumbs`** (`core/breadcrumbs.ts`): função pura que devolve os segmentos do caminho de um
+  arquivo, do projeto até o `.java` (`portfolio-vinicius › src › main › java › dev › vinicius ›
+portfolio › <pacote> › <Arquivo>`). Usa o campo `pacote` de cada `Secao` (`sobre`, `skills`,
+  `experiencias`, `projetos`, `formacao`, `recomendacoes` ou `contato`, conforme o ADR-0011); o
+  Início não tem pacote e fica na raiz. Truncar os segmentos do meio é com quem desenha a barra.
 - **`PREVIEWS`** (`core/previews.ts`): o registro `slug -> PreviewDeProjeto` (`titulo`, `url` e
   `captura` com `src`, `largura`, `altura` e `alt`). Só os projetos que estão aqui mostram o
   "Executar".

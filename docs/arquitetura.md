@@ -39,7 +39,7 @@ O raciocínio completo, com alternativas descartadas, está no design da change 
 `app.routes.ts` tem uma rota-pai `''` com o componente `Casca` (`layout/`) e as rotas filhas:
 o Início (`''`) e as 15 seções de `core/secoes.ts` (`sobre-mim`, `skills`, `contato` etc.), mais
 uma rota por página extra das seções que declaram `paginas` (`/skills/2`). A casca
-(barra de ferramentas, painel lateral, faixa de abas, editor e barra de status) é montada uma vez e não recarrega entre
+(barra superior, faixa de ferramentas, painel do projeto, faixa de abas, editor e barra de status) é montada uma vez e não recarrega entre
 seções: só o conteúdo do `<router-outlet>` troca, e a View Transitions API anima apenas ele.
 
 `core/secoes.ts` é a fonte única da lista de seções: dela saem os itens da árvore, as rotas e os
@@ -76,12 +76,39 @@ Além da estrutura do design, a casca tem comportamento de IDE ([ADR-0010](adr/0
 O código exibido é Java 21 válido, e as informações do design são preservadas. Os detalhes de
 cada componente e o modelo de conteúdo estão em [componentes.md](componentes.md).
 
+### Moldura da New UI
+
+A moldura segue o IntelliJ New UI ([ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md)):
+
+- **Barra superior (40px):** widgets de projeto e branch, configuração de execução, Executar,
+  Depurar, Buscar e Configurações. Só Buscar e Executar (nas rotas com preview) funcionam; o resto
+  é decorativo, fora da leitura e do foco.
+- **Faixa de ferramentas (40px, só no desktop):** o botão Projeto mostra e esconde o painel do
+  projeto (signal `painelVisivel` na casca, com transição que respeita `prefers-reduced-motion`);
+  Commit e Estrutura são decorativos.
+- **Barra de status com breadcrumbs:** o caminho vem de `core/breadcrumbs.ts`, que usa o campo
+  `pacote` de cada `Secao` em `core/secoes.ts`. Mostra também `linha:coluna`, `LF`, `UTF-8`,
+  `4 spaces`, a branch e o commit do deploy.
+- **Ícones oficiais da IntelliJ Platform** (Apache 2.0), em `public/icones/new-ui/`, com os
+  créditos em `CREDITOS.md`.
+
+### Commit do deploy na barra de status
+
+O SHA mostrado na barra vem de `scripts/gerar-informacoes-do-build.mjs`, que roda nos scripts `pre*`
+(`prestart`, `prebuild`, `pretest`, `prelint`, `pretest:ci`) e escreve `src/app/core/build.gerado.ts`
+(no `.gitignore`). O script só lê variáveis de ambiente, sem `git`, na ordem `SHA_DO_COMMIT`,
+`GITHUB_SHA` e `VERCEL_GIT_COMMIT_SHA`; sem nenhuma, o valor é `null` e o item não aparece.
+
+`SHA_DO_COMMIT` existe porque, num evento `pull_request`, o `GITHUB_SHA` é o commit temporário de
+**merge**, que não existe na branch e daria um link quebrado. O deploy de preview do
+`ci.yml` define `SHA_DO_COMMIT` com `github.event.pull_request.head.sha`, o commit real da branch.
+
 ### Gaveta no celular
 
-Abaixo de 768px o painel lateral vira uma **gaveta**. O botão "Seções" (`aria-expanded` e
-`aria-controls`) a abre e leva o foco ao primeiro item; Escape, o botão "Fechar seções" ou a
-escolha de uma seção a fecham e devolvem o foco ao botão. O design só tem telas de desktop, então
-esse comportamento é decisão nossa, mantendo as cores e fontes do design.
+Abaixo de 768px o painel do projeto vira uma **gaveta**. O botão Projeto da barra superior
+(`aria-expanded` e `aria-controls`) a abre e leva o foco ao primeiro item; Escape, o botão "Fechar
+seções" ou a escolha de uma seção a fecham e devolvem o foco ao botão. O design só tem telas de
+desktop, então esse comportamento é decisão nossa.
 
 ## Design tokens e estilos
 
