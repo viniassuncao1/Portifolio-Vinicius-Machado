@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import type { Locator } from '@playwright/test';
 
+import { SECOES, totalDePaginas } from '../src/app/core/secoes';
 import { linhasDoCodigo, normalizar } from './apoio';
 
 const COR_VALOR = 'rgb(79, 175, 172)';
@@ -255,8 +256,14 @@ test.describe('Seções sem JavaScript', () => {
     );
   });
 
-  test('não deixa as seções com o aviso de em construção', async ({ page }) => {
-    for (const rota of ['/sobre-mim', '/diferenciais']) {
+  test('nenhuma seção, em nenhuma página, mostra o aviso de em construção', async ({ page }) => {
+    const rotas = SECOES.flatMap((secao) =>
+      Array.from({ length: totalDePaginas(secao) }, (_, i) =>
+        i === 0 ? `/${secao.slug}` : `/${secao.slug}/${i + 1}`,
+      ),
+    );
+
+    for (const rota of ['/', ...rotas]) {
       await page.goto(rota);
 
       await expect(page.locator('main')).not.toContainText('em construção');

@@ -28,10 +28,7 @@ for (const { nome, rotas } of GRUPOS) {
       const comentarios: string[] = [];
 
       await page.goto(rotas[0]);
-      test.skip(
-        (await page.locator('main').getByText('em construção').count()) > 0,
-        'seção ainda sem conteúdo (aviso de em construção)',
-      );
+      await expect(page.locator('main')).not.toContainText('em construção');
 
       for (const rota of rotas) {
         await page.goto(rota);

@@ -48,8 +48,7 @@ test.describe('Java plausível no que o visitante vê', () => {
       page,
     }) => {
       await page.goto(rota);
-      const emConstrucao = await page.locator('main').getByText('em construção').count();
-      test.skip(emConstrucao > 0, 'seção ainda sem conteúdo (aviso de em construção)');
+      await expect(page.locator('main')).not.toContainText('em construção');
 
       // Só o código que o compilador lê: sem textos entre aspas, comentários e Javadoc.
       const codigo = await page.locator('main code > .linha').evaluateAll((linhas) =>
