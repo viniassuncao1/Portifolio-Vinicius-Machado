@@ -1,8 +1,8 @@
 # 0007: Projetos e janela de preview
 
 - **Data:** 2026-10-13
-- **Change:** [projetos-e-janela-de-preview](../../openspec/changes/projetos-e-janela-de-preview/)
-- **PR:** a definir
+- **Change:** [projetos-e-janela-de-preview](../../openspec/changes/archive/2026-10-13-projetos-e-janela-de-preview/)
+- **PR:** [#18](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/18)
 - **ADRs:** nenhum novo. A change segue o [ADR-0010](../adr/0010-design-como-referencia-e-java-moderno.md).
 
 ![Janela de preview aberta sobre a IDE, com a captura de um site](imagens/0007-preview-desktop.png)
@@ -49,7 +49,7 @@ deixá-lo pesado nem carregar nada que o visitante não pediu.
 
 ## Links
 
-- Change: [`openspec/changes/projetos-e-janela-de-preview`](../../openspec/changes/projetos-e-janela-de-preview/)
+- Change: [`openspec/changes/archive/2026-10-13-projetos-e-janela-de-preview`](../../openspec/changes/archive/2026-10-13-projetos-e-janela-de-preview/)
 - Documentação: [componentes](../componentes.md)
 - Entrada anterior: [0006 certificações, níveis e legibilidade](0006-certificacoes-niveis-e-legibilidade.md)
 
