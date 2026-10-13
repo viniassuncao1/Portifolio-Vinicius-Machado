@@ -2,8 +2,8 @@
 
 ## 1. Ícones [Pincel]
 
-- [ ] 1.1 Copiar os SVGs da New UI (tema escuro) usados para `public/icones/new-ui/` com `CREDITOS.md` (origem, copyright, Apache 2.0) e sem logotipos — verificar pela lista de arquivos e pelo README
-- [ ] 1.2 Trocar `shared/icone` e os ícones da árvore e das abas pelos oficiais — verificar com captura `new-ui-arvore.png`
+- [x] 1.1 Copiar os SVGs da New UI (tema escuro) usados para `public/icones/new-ui/` com `CREDITOS.md` (origem, copyright, Apache 2.0) e sem logotipos — verificar pela lista de arquivos e pelo README
+- [x] 1.2 Trocar `shared/icone` e os ícones da árvore e das abas pelos oficiais — verificar com captura `new-ui-arvore.png`
 
 ## 2. Dados e build [Grafite e Nanquim]
 
