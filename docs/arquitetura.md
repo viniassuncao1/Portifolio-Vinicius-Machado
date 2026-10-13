@@ -116,6 +116,28 @@ poucas linhas que **imita a Vercel**: entrega o HTML pré-renderizado da rota e,
 cai no `index.csr.html`. O `serve --single` foi removido porque devolveria o `index.html` da raiz
 também para `/contato`, escondendo um erro de pré-renderização que só apareceria em produção.
 
+## SEO e compartilhamento
+
+O portfólio é divulgado no LinkedIn, e o link precisa aparecer com imagem e resumo. Como o
+LinkedIn e os buscadores **não executam JavaScript**, tudo isto é escrito durante a
+pré-renderização e já está no HTML de cada rota.
+
+- **Serviço `Seo`** (`core/seo.ts`, `@Service`): a cada `NavigationEnd` atualiza, com `Meta` e
+  `DOCUMENT` (sem `window`, por isso funciona no servidor), a `description`, o
+  `link[rel=canonical]`, as tags Open Graph (`og:*`) e as do Twitter/X (`twitter:*`). O título vem de
+  `EstrategiaDeTitulo.tituloDaJanela`, o mesmo cálculo que grava o título da janela.
+- **Domínio:** a constante `URL_DO_SITE` é o único lugar a trocar quando o site ganhar domínio próprio.
+- **Descrições:** cada `Secao` (`core/secoes.ts`) tem um campo `descricao` em pt-BR, de até 160
+  caracteres. As páginas internas (`/skills/2`) usam a da seção, e o Início usa
+  `DESCRICAO_DO_INICIO`.
+- **JSON-LD:** o `<script type="application/ld+json">` com o `Person` (nome, cargo, LinkedIn, GitHub
+  e stack) existe só no Início e é removido nas outras rotas.
+- **Imagem de compartilhamento:** `public/compartilhamento/portfolio.png`, 1200x630, versionada e
+  gerada por `scripts/gerar-imagem-de-compartilhamento.mjs` (Playwright, com movimento reduzido).
+- **Sitemap e robots:** `scripts/gerar-sitemap.mjs` roda no script `build`, depois do `ng build`,
+  percorre os `index.html` pré-renderizados em `dist/` e escreve o `sitemap.xml`, então ele
+  acompanha as rotas sozinho. O `public/robots.txt` é estático e aponta para o sitemap.
+
 ## Diário de desenvolvimento
 
 Cada change do OpenSpec ganha uma entrada em [`docs/diario/`](diario/README.md), com o problema, o
