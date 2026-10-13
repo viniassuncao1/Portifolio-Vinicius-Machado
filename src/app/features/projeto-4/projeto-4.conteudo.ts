@@ -50,7 +50,7 @@ export const CONTEUDOS_PROJETO_4: readonly ConteudoDoEditor[] = [
     'Atuei na migração de APIs e microsserviços em produção (login, financeiro), adaptando entidades, DTOs e scripts SQL nativos um a um pra manter compatibilidade sem quebrar regras de negócio.',
     'migration',
     'Oracle → PostgreSQL',
-    ['Java', 'Spring Boot', 'Oracle', 'PostgreSQL', 'SQL'],
+    ['Java', 'Oracle', 'PostgreSQL', 'SQL'],
   ),
   paginaDoCase(
     'Desenvolvi scrapers em Java com Playwright pra automatizar coleta de dados em sistemas como Coren e Sanesul, sem usar APIs, só interface web, entendendo o HTML e a lógica de cada sistema individualmente.',
