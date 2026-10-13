@@ -27,3 +27,7 @@ updates:
       interval: weekly
     commit-message:
       prefix: ci
+    # Todas as atualizações de Actions chegam num único PR por semana.
+    groups:
+      github-actions:
+        patterns: ['*']
