@@ -19,19 +19,20 @@ pelo GitHub Actions no arquivo [`.github/workflows/ci.yml`](../.github/workflows
 
 ## Conceitos do GitHub Actions
 
-| Conceito      | No nosso workflow                                                               |
-| ------------- | ------------------------------------------------------------------------------- |
-| `on`          | Gatilhos: `pull_request` e `push` na `main`                                     |
-| `jobs`        | Rodam em paralelo, cada um numa máquina virtual nova (`runs-on: ubuntu-latest`) |
-| `steps`       | Rodam em sequência dentro de um job                                             |
-| `uses`        | Ação pronta do Marketplace (ex.: `actions/checkout` baixa o código)             |
-| `run`         | Comando de terminal                                                             |
-| `needs`       | Dependência entre jobs: o deploy espera os jobs de CI                           |
-| `if`          | Condição: preview só em PR, produção só em push na `main`                       |
-| `secrets`     | Valores sensíveis, guardados criptografados no GitHub                           |
-| `environment` | Agrupa deploys (preview/production) e mostra a URL no PR                        |
-| `concurrency` | Em PR, um push novo cancela a execução antiga; na `main`, nunca cancela         |
-| `permissions` | O workflow só tem permissão de leitura no repositório                           |
+| Conceito            | No nosso workflow                                                                                                   |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `on`                | Gatilhos: `pull_request` e `push` na `main`                                                                         |
+| `jobs`              | Rodam em paralelo, cada um numa máquina virtual nova (`runs-on: ubuntu-latest`)                                     |
+| `steps`             | Rodam em sequência dentro de um job                                                                                 |
+| `uses`              | Ação pronta do Marketplace (ex.: `actions/checkout` baixa o código)                                                 |
+| `run`               | Comando de terminal                                                                                                 |
+| `needs`             | Dependência entre jobs: o deploy espera os jobs de CI                                                               |
+| `if`                | Condição: preview só em PR, produção só na `main` (push ou disparo manual)                                          |
+| `workflow_dispatch` | Botão "Run workflow" na aba Actions: roda o pipeline e publica a `main` se o GitHub não disparar o push de um merge |
+| `secrets`           | Valores sensíveis, guardados criptografados no GitHub                                                               |
+| `environment`       | Agrupa deploys (preview/production) e mostra a URL no PR                                                            |
+| `concurrency`       | Em PR, um push novo cancela a execução antiga; na `main`, nunca cancela                                             |
+| `permissions`       | O workflow só tem permissão de leitura no repositório                                                               |
 
 ## Deploy na Vercel
 
