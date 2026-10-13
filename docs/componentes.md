@@ -20,7 +20,7 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 | Editor com numeração e sintaxe                                 | todas            | `EditorDeCodigo`            | `shared/editor-de-codigo/`     |
 | Bloco de comentário com `*`                                    | 02-04, 07-18, 29 | parte do `EditorDeCodigo`   | `shared/editor-de-codigo/`     |
 | Ícones (arquivo, pasta, ferramenta, IA...)                     | todas            | `Icone`                     | `shared/icone/`                |
-| "×" fino do Eclipse                                            | todas            | `GlifoFechar`               | `shared/glifo-fechar/`         |
+| "×" fino                                                       | todas            | `GlifoFechar`               | `shared/glifo-fechar/`         |
 | Início                                                         | 01               | `Inicio`                    | `features/inicio/`             |
 | Sobre Mim                                                      | 02               | `SobreMim`                  | `features/sobre-mim/`          |
 | Diferenciais                                                   | 03               | `Diferenciais`              | `features/diferenciais/`       |
@@ -91,7 +91,7 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 
 - **Onde:** `layout/barra-de-ferramentas/barra-de-ferramentas.ts`, seletor
   `app-barra-de-ferramentas`.
-- **O que faz:** imita a barra do Eclipse (degradê, ícones e controles de janela). É decorativa:
+- **O que faz:** imita a barra superior do IntelliJ (cor sólida `--cor-barra-ferramentas`, ícones e controles de janela). É decorativa:
   `aria-hidden="true"` e fora da ordem de foco. Os ícones que não cabem no celular ficam ocultos.
 - **Exceção, o play:** nas rotas que têm preview (`JanelaDePreview.previewDaRota()`), o ícone de
   play vira o botão "Executar o projeto" e a barra deixa de ser `aria-hidden`; nas demais rotas
@@ -171,7 +171,7 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 ### `GlifoFechar`
 
 - **Onde:** `shared/glifo-fechar/glifo-fechar.ts`, seletor `app-glifo-fechar`.
-- **O que faz:** o "×" fino do Eclipse, em SVG, decorativo. Herda a cor do texto; o tamanho vem do
+- **O que faz:** o "×" fino, em SVG, decorativo. Herda a cor do texto; o tamanho vem do
   token `--tamanho-glifo`.
 - **Entradas e saídas:** nenhuma.
 
@@ -312,24 +312,24 @@ O papel `valor` (verde-azulado, `#4fafac`) é o dos valores literais que não s�
 
 Funções curtas para o arquivo de conteúdo ficar legível:
 
-| Função                             | Cria                                        |
-| ---------------------------------- | ------------------------------------------- |
-| `palavraChave(texto)`              | `Trecho` rosa (`public class`, `extends`)   |
-| `declaracao(texto)`                | `Trecho` laranja (`String cargo`)           |
-| `literal(texto)`                   | `Trecho` verde (`“Java”`)                   |
-| `valor(texto)`                     | `Trecho` verde-azulado (`true`)             |
-| `anotacao(texto)`                  | `Trecho` azul (`@Anotacao`)                 |
-| `comentario(texto)`                | `Trecho` cinza de comentário (`// 2x`)      |
-| `link(trecho, href)`               | O mesmo trecho com `href` (link)            |
-| `comum(texto)`                     | `Trecho` na cor padrão do texto             |
-| `linha(recuo, ...trechos)`         | `LinhaDeCodigo`                             |
-| `linhaCompacta(recuo, ...trechos)` | `LinhaDeCodigo` com `densidade: 'compacta'` |
-| `linhaApertada(recuo, ...trechos)` | `LinhaDeCodigo` com `densidade: 'apertada'` |
-| `paragrafo(recuo, texto)`          | `LinhaDeParagrafo`                          |
-| `javadoc(recuo, texto)`            | `LinhaDeJavadoc`                            |
-| `vazia()`                          | `LinhaVazia`                                |
-| `vaziaCompacta()`                  | `LinhaVazia` com `densidade: 'compacta'`    |
-| `vaziaApertada()`                  | `LinhaVazia` com `densidade: 'apertada'`    |
+| Função                             | Cria                                         |
+| ---------------------------------- | -------------------------------------------- |
+| `palavraChave(texto)`              | `Trecho` laranja (`public class`, `extends`) |
+| `declaracao(texto)`                | `Trecho` lilás (`String cargo`)              |
+| `literal(texto)`                   | `Trecho` verde (`“Java”`)                    |
+| `valor(texto)`                     | `Trecho` turquesa (`true`)                   |
+| `anotacao(texto)`                  | `Trecho` amarelo-oliva (`@Anotacao`)         |
+| `comentario(texto)`                | `Trecho` cinza de comentário (`// 2x`)       |
+| `link(trecho, href)`               | O mesmo trecho com `href` (link)             |
+| `comum(texto)`                     | `Trecho` na cor padrão do texto              |
+| `linha(recuo, ...trechos)`         | `LinhaDeCodigo`                              |
+| `linhaCompacta(recuo, ...trechos)` | `LinhaDeCodigo` com `densidade: 'compacta'`  |
+| `linhaApertada(recuo, ...trechos)` | `LinhaDeCodigo` com `densidade: 'apertada'`  |
+| `paragrafo(recuo, texto)`          | `LinhaDeParagrafo`                           |
+| `javadoc(recuo, texto)`            | `LinhaDeJavadoc`                             |
+| `vazia()`                          | `LinhaVazia`                                 |
+| `vaziaCompacta()`                  | `LinhaVazia` com `densidade: 'compacta'`     |
+| `vaziaApertada()`                  | `LinhaVazia` com `densidade: 'apertada'`     |
 
 **Densidade das linhas.** Sem `densidade`, a linha tem a altura normal. As listas das telas
 ocupam menos espaço que o número de linha, e o campo `densidade` reproduz isso:
@@ -424,21 +424,55 @@ O site é lido por recrutadores, não só por quem programa em Java. Por isso o 
 Manter `record`, `List.of` e `java.time` onde ajudam: simplificar não é abrir mão do Java moderno.
 `legibilidade-das-secoes.spec.ts` cobre parte destas regras.
 
-### Escala de tipografia
+### Identidade visual e tokens
 
-Os tamanhos vêm de `src/styles/_tokens.scss`. A escala 1,2× das telas deixava o site grande
-demais (código em 23px); os tokens foram multiplicados por ~0,74 sem mexer em componentes:
+A identidade visual é a do **IntelliJ IDEA New UI, tema escuro**
+([ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md)). Todos os valores vêm de
+`src/styles/_tokens.scss`; os componentes só usam tokens.
 
-| Elemento                    | Token                                             | Valor (desktop) |
-| --------------------------- | ------------------------------------------------- | --------------- |
-| Código e comentário         | `--texto-codigo`, `--texto-comentario`            | 1,06rem (~17px) |
-| Árvore, abas e barra status | `--texto-arvore`, `--texto-aba`, `--texto-status` | 1rem (16px)     |
-| Números de linha            | `--texto-numero-linha`                            | 1,29rem         |
+**Paleta Dark, com um único acento.**
 
-As alturas de linha, recuos, a coluna de números, as linhas da árvore, as abas, a barra de status
-e o painel lateral foram reduzidos na mesma proporção, e as cores não mudaram. No editor cabem
-cerca de 28 linhas (antes, ~15). Abaixo de 768px vale uma **escala própria** (código e comentário
-em 0,95rem), definida no bloco `@media (max-width: 767.98px)` do mesmo arquivo.
+| Uso                             | Token                                                                      | Valor                                                 |
+| ------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------- |
+| Editor, abas ativas             | `--cor-editor`, `--cor-aba-ativa`                                          | `#1E1F22`                                             |
+| Painéis, barras e faixa de abas | `--cor-painel`, `--cor-barra-ferramentas`, `--cor-faixa-abas`              | `#2B2D30`                                             |
+| Linha atual                     | `--cor-linha-atual`                                                        | `#26282E`                                             |
+| Seleção na árvore               | `--cor-linha-selecionada`                                                  | `#2E436E`                                             |
+| Texto e texto forte             | `--cor-texto`, `--cor-texto-forte`                                         | `#BCBEC4`, `#DFE1E5`                                  |
+| Acento e anel de foco           | `--cor-acento`, `--cor-foco`                                               | `#3574F0` (anel de 2px)                               |
+| Sintaxe                         | `--cor-sintaxe-palavra-chave`, `-literal`, `-valor`, `-anotacao`, `-campo` | `#CF8E6D`, `#6AAB73`, `#2AACB8`, `#B3AE60`, `#C77DBA` |
+| Comentário                      | `--cor-sintaxe-comentario`                                                 | `#8C9097`                                             |
+
+O azul é o **único acento**; o rosa do design antigo saiu. O comentário do IntelliJ original
+(`#7A7E85`) reprovava no contraste AA (4,04:1) e foi clareado para `#8C9097` (5,14:1). O foco
+visível é um anel azul de 2px (`--largura-anel-foco`) em todos os controles.
+
+**Duas fontes, as duas servidas pelo próprio site.** A interface (árvore, abas e barras) usa
+**Inter** (`--fonte-interface`, pesos 400 e 500) e o código usa **JetBrains Mono**
+(`--fonte-mono`), ambas por `@fontsource` e importadas em `src/styles.scss`.
+
+**Escala compacta** (a de uma IDE, e não a das telas do design):
+
+| Elemento                   | Token                                                 | Valor (desktop)     |
+| -------------------------- | ----------------------------------------------------- | ------------------- |
+| Árvore e abas              | `--texto-arvore`, `--texto-aba`                       | 13px (0,8125rem)    |
+| Barra de status            | `--texto-status`                                      | 12px                |
+| Código e comentário        | `--texto-codigo`, `--texto-comentario`                | 14px, linha de 22px |
+| Números de linha           | `--texto-numero-linha`                                | 13px                |
+| Linha da árvore            | `--altura-linha-arvore`                               | 24px                |
+| Painel lateral             | `--largura-painel-lateral`                            | 280px               |
+| Barra superior e de status | `--altura-barra-ferramentas`, `--altura-barra-status` | 40px, 24px          |
+
+A aba tem a largura do nome mais 32px (`width` automática), e o editor e as abas não têm raio
+(`--raio-editor: 0`). Abaixo de 768px vale uma **escala própria**, no bloco
+`@media (max-width: 767.98px)` do mesmo arquivo, com o código em no mínimo 13px e alvos de toque
+maiores (`--tamanho-alvo-toque`).
+
+**Ajustes nativos do navegador.** `color-scheme: dark` no `:root` (`src/styles.scss`), para
+controles e barras de rolagem nativos escuros; `<meta name="theme-color" content="#2B2D30">` em
+`src/index.html`; `font-variant-numeric: tabular-nums` nos números de linha e na posição do
+cursor da barra de status; e `translate="no"` no código do editor, para o tradutor automático do
+navegador não alterar o Java.
 
 ## Como criar uma seção nova só com dados
 

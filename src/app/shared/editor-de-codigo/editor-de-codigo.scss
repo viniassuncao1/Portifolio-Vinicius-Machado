@@ -28,6 +28,7 @@ $quantidade-de-marcadores: 60;
   overflow: hidden;
   color: var(--cor-numero-linha);
   font-size: var(--texto-numero-linha);
+  font-variant-numeric: tabular-nums;
   line-height: var(--altura-linha-codigo);
   text-align: end;
   user-select: none;
@@ -45,7 +46,7 @@ $quantidade-de-marcadores: 60;
   font: inherit;
 
   &:focus-visible {
-    outline: 2px solid var(--cor-foco);
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: -2px;
   }
 
@@ -209,7 +210,7 @@ a[class^='papel-'] {
   }
 
   &:focus-visible {
-    outline: 2px solid var(--cor-foco);
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: 2px;
   }
 }
@@ -218,7 +219,7 @@ a[class^='papel-'] {
 .linha.atual,
 .paragrafo.atual,
 .javadoc.atual {
-  background: var(--cor-linha-selecionada);
+  background: var(--cor-linha-atual);
 }
 
 // Cursor no fim da linha atual: aparece quando o editor está pronto e pisca por token.

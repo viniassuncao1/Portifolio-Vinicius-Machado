@@ -22,12 +22,12 @@ li:first-child {
   white-space: nowrap;
 
   &:focus-visible {
-    outline: 2px solid var(--cor-foco);
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: -2px;
   }
 
   // Primeiro item (Sobre Mim): o design o mostra sempre em cinza.
-  &.inicial .titulo {
+  &.inicial:not(.atual, .destacado) .titulo {
     color: var(--cor-texto-esmaecido);
   }
 
@@ -46,6 +46,7 @@ li:first-child {
   &.atual,
   &.destacado {
     min-height: var(--altura-linha-selecionada);
+    color: var(--cor-texto-forte);
     padding-inline-start: var(--recuo-item-atual);
 
     &::before {
@@ -57,7 +58,7 @@ li:first-child {
     }
 
     &.inicial {
-      padding-inline-start: calc(var(--recuo-item-atual) + 0.5rem);
+      padding-inline-start: calc(var(--recuo-item-atual) + var(--espaco-2));
     }
   }
 }

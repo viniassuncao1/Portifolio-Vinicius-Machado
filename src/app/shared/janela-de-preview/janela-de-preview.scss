@@ -7,7 +7,7 @@
   padding: 0;
   overflow: hidden;
   border: var(--borda-painel);
-  border-radius: var(--raio-aba);
+  border-radius: var(--raio-controle);
   background: var(--cor-editor);
   color: var(--cor-texto);
 
@@ -77,9 +77,9 @@
   align-items: center;
   height: var(--altura-faixa-abas);
   padding-inline-start: var(--espaco-4);
-  background: linear-gradient(to bottom, var(--cor-faixa-abas), var(--cor-aba-inativa) 35%);
+  background: var(--cor-faixa-abas);
   color: var(--cor-texto-aba-inativa);
-  font-family: var(--fonte-mono);
+  font-family: var(--fonte-interface);
   font-size: var(--texto-aba);
 }
 
@@ -121,7 +121,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--cor-foco);
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: -2px;
   }
 }
@@ -142,10 +142,10 @@
   min-block-size: var(--tamanho-alvo-toque);
   padding-inline: var(--espaco-3);
   border: var(--borda-divisoria);
-  border-radius: var(--raio-aba);
-  background: var(--cor-aba-inativa);
+  border-radius: var(--raio-controle);
+  background: var(--cor-botao);
   color: var(--cor-texto-aba-inativa);
-  font-family: var(--fonte-mono);
+  font-family: var(--fonte-interface);
   font-size: var(--texto-arvore);
   text-decoration: none;
   cursor: pointer;
@@ -155,7 +155,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--cor-foco);
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: 2px;
   }
 }
@@ -175,7 +175,7 @@
   scrollbar-width: thin;
 
   &:focus-visible {
-    outline: 2px solid var(--cor-foco);
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: -2px;
   }
 

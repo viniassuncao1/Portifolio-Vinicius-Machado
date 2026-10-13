@@ -1,8 +1,10 @@
 :host {
   position: relative;
   display: block;
+  box-sizing: border-box;
   height: var(--altura-barra-ferramentas);
-  background: var(--degrade-barra-ferramentas);
+  border-block-end: var(--borda-painel);
+  background: var(--cor-barra-ferramentas);
   overflow: hidden;
   user-select: none;
 }
@@ -28,7 +30,7 @@
   min-height: var(--tamanho-alvo-toque);
   padding: 0;
   border: 0;
-  border-radius: var(--raio-aba);
+  border-radius: var(--raio-controle);
   background: transparent;
   cursor: pointer;
 
@@ -37,7 +39,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--cor-foco);
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: -2px;
   }
 }

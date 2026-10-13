@@ -5,7 +5,7 @@
 Portfólio pessoal de **Vinicius Machado**, desenvolvedor Full Stack (Java, Spring Boot, Angular
 e SQL).
 
-O site imita uma IDE: as seções do portfólio aparecem como arquivos numa árvore de projeto e o
+O site imita o **IntelliJ IDEA (New UI, tema escuro)**: as seções do portfólio aparecem como arquivos numa árvore de projeto e o
 conteúdo é apresentado como código. Além de portfólio, este repositório é um exemplo de como eu
 desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 
@@ -19,7 +19,7 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 - **Casca de IDE como rota-pai:** a barra, o painel e a aba são montados uma vez; as 15 seções
   são rotas filhas pré-renderizadas, com o conteúdo definido como dados tipados.
 - **Design tokens:** cores, tipografia e movimento em variáveis CSS (`src/styles/`); os
-  componentes usam só tokens. Fonte JetBrains Mono servida pelo próprio site.
+  componentes usam só tokens. Fontes Inter (interface) e JetBrains Mono (código) servidas pelo próprio site.
 - **Responsivo e acessível:** no celular o painel vira uma gaveta; `prefers-reduced-motion` é
   respeitado e o axe verifica o WCAG AA em todas as rotas nos testes E2E.
 - **Qualidade automatizada:** ESLint, Prettier, testes unitários com cobertura mínima de 80% e
