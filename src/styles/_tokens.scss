@@ -1,74 +1,66 @@
-// Design tokens extraídos de design/telas (telas 01, 02, 07 e 24).
-// Valores amostrados por pixel nas imagens de 1600x900 (exportações reduzidas do design de 1920x1080).
-// As medidas foram convertidas para a escala de 1920x1080 (x1,2) e para rem (1rem = 16px) e reduzidas por ~0,74 (legibilidade); as cores não mudam.
+// Design tokens do IntelliJ IDEA New UI, tema escuro (ADR-0011): paleta Dark, Inter 13px na interface,
+// JetBrains Mono 14px no código e densidade compacta. Contrastes medidos na note "Design Tokens".
 // A escala --espaco-* e a borda de 1px não vêm de medição e ficam como estão.
-// Cores de texto abaixo de 4,5:1 foram ajustadas (ver note "Design Tokens").
 // Os tokens de movimento ficam com o Compasso (src/styles/_movimento.scss).
 
 :root {
   // Interface
-  --cor-fundo-pagina: #1c1c1c;
-  // Degradê da barra de ferramentas: pontos amostrados na coluna x=800 da tela 02 (y 0 a 43 do PNG)
-  --degrade-barra-ferramentas: linear-gradient(
-    to bottom,
-    #929292 0%,
-    #706f6f 2%,
-    #a5a5a5 9%,
-    #cbcbcb 18%,
-    #dadada 34%,
-    #d9d9d9 64%,
-    #cccccc 75%,
-    #acacac 82%,
-    #646463 91%,
-    #464646 100%
-  );
-  --cor-controle-janela: #adadad;
-  --cor-painel: #2b2b2b;
-  --cor-linha-selecionada: #1b1b1b;
-  --cor-aba-ativa: #2b2b2b;
-  --cor-aba-inativa: #5e5e5e;
-  --cor-aba-passando: #686868;
-  --cor-texto-aba-inativa: #f0f0f0;
-  --cor-faixa-abas: #575757;
-  --cor-editor: #2b2b2b;
-  --cor-borda: #1b1b1b;
-  --cor-separador: #6f6d6d;
-  --cor-scrollbar-trilho: #2b2b2b;
-  --cor-scrollbar-polegar: #8b8989;
-  --cor-texto: #d6d6d6;
-  --cor-numero-linha: #d6d6d6;
-  --cor-icone: #aaaaaa;
-  --cor-texto-esmaecido: #aaaaaa;
-  --cor-foco: #de60d2;
+  --cor-fundo-pagina: #1e1f22;
+  --cor-controle-janela: #9da0a8;
+  --cor-painel: #2b2d30;
+  --cor-linha-atual: #26282e;
+  --cor-linha-selecionada: #2e436e;
+  --cor-aba-ativa: #1e1f22;
+  --cor-aba-inativa: #2b2d30;
+  --cor-aba-passando: #393b40;
+  --cor-botao: #393b40;
+  --cor-texto-aba-inativa: #bcbec4;
+  --cor-faixa-abas: #2b2d30;
+  --cor-barra-ferramentas: #2b2d30;
+  --cor-editor: #1e1f22;
+  --cor-borda: #1e1f22;
+  --cor-separador: #393b40;
+  --cor-scrollbar-trilho: #1e1f22;
+  --cor-scrollbar-polegar: #4e5157;
+  --cor-texto: #bcbec4;
+  --cor-texto-forte: #dfe1e5;
+  --cor-numero-linha: #6f737a;
+  --cor-icone: #8c9097;
+  --cor-texto-esmaecido: #9a9da3;
+  --cor-acento: #3574f0;
+  --cor-foco: var(--cor-acento);
+  --largura-anel-foco: 2px;
   --cor-fundo-modal: rgb(0 0 0 / 55%);
 
   // Sintaxe
-  --cor-sintaxe-palavra-chave: #de60d2;
-  --cor-sintaxe-campo: #d5963e;
-  --cor-sintaxe-literal: #8fc258;
-  --cor-sintaxe-valor: #4fafac;
-  --cor-sintaxe-anotacao: #7489f8;
-  --cor-sintaxe-comentario-marcador: #939191;
-  --cor-sintaxe-comentario: #9b9999;
+  --cor-sintaxe-palavra-chave: #cf8e6d;
+  --cor-sintaxe-campo: #c77dba;
+  --cor-sintaxe-literal: #6aab73;
+  --cor-sintaxe-valor: #2aacb8;
+  --cor-sintaxe-anotacao: #b3ae60;
+  --cor-sintaxe-comentario-marcador: #8c9097;
+  --cor-sintaxe-comentario: #8c9097;
   --cor-sintaxe-texto: var(--cor-texto);
 
-  // Tipografia
+  // Tipografia: interface em Inter 13px, código em JetBrains Mono 14px com linha de 22px
+  --fonte-interface: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --fonte-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   --peso-regular: 400;
+  --peso-medio: 500;
   --peso-negrito: 700;
-  --texto-arvore: 1rem;
-  --texto-aba: 1rem;
-  --texto-status: 1rem;
-  --texto-comentario: 1.06rem;
-  --texto-codigo: 1.06rem;
-  --texto-numero-linha: 1.29rem;
-  --espacamento-letras-codigo: 0.0642em;
-  --altura-linha-arvore: 2.04rem;
-  --altura-linha-codigo: 2.09rem;
-  --altura-linha-comentario: 1.38rem;
+  --texto-arvore: 0.8125rem;
+  --texto-aba: 0.8125rem;
+  --texto-status: 0.75rem;
+  --texto-comentario: 0.875rem;
+  --texto-codigo: 0.875rem;
+  --texto-numero-linha: 0.8125rem;
+  --espacamento-letras-codigo: 0em;
+  --altura-linha-arvore: 1.5rem;
+  --altura-linha-codigo: 1.375rem;
+  --altura-linha-comentario: 1.375rem;
 
-  // Ícones (medidos nas telas 01 e 02: ~20 px no PNG)
-  --tamanho-icone: 1.37rem;
+  // Ícones
+  --tamanho-icone: 1rem;
 
   // Espaço
   --espaco-1: 0.25rem;
@@ -80,54 +72,55 @@
   --espaco-7: 3rem;
 
   // Dimensões da casca
-  --altura-barra-ferramentas: 2.44rem;
-  --altura-faixa-abas: 2.31rem;
-  --altura-barra-status: 1.78rem;
-  --largura-busca: 41.4rem;
-  --tamanho-icone-busca: 1.1rem;
+  --altura-barra-ferramentas: 2.5rem;
+  --altura-faixa-abas: 2.25rem;
+  --altura-barra-status: 1.5rem;
+  --largura-busca: 36rem;
+  --tamanho-icone-busca: 1rem;
   --largura-marcador-opcao: 3px;
   --distancia-topo-busca: 12vh;
   --altura-maxima-resultados-busca: 36vh;
-  --largura-painel-lateral: 24.7rem;
-  --altura-linha-selecionada: 2.31rem;
-  --tamanho-scrollbar: 0.89rem;
-  --altura-cabecalho-painel: 4.59rem;
-  --largura-titulo-painel: 15.5rem;
-  --largura-aba: 18.4rem;
-  --largura-minima-aba: 8.1rem;
-  --altura-scrollbar-rodape: 0.81rem;
-  --largura-polegar-rodape: 11.3rem;
-  --tamanho-glifo: 0.89rem;
-  --tamanho-seta-arvore: 1rem;
-  --recuo-item-arvore: 3.26rem;
-  --afastamento-primeiro-item: 0.37rem;
-  --afastamento-topo-arvore: 0.19rem;
-  --recuo-item-atual: 1.22rem;
-  --afastamento-icone-arvore: 0.37rem;
-  --afastamento-texto-arvore: 0.22rem;
-  --espaco-editor-topo: 1.26rem;
-  --espaco-editor-base: 2.22rem;
-  --largura-coluna-scrollbar: 2.78rem;
+  --largura-painel-lateral: 17.5rem;
+  --altura-linha-selecionada: 1.5rem;
+  --tamanho-scrollbar: 0.5rem;
+  --altura-cabecalho-painel: 2.25rem;
+  --largura-titulo-painel: 10rem;
+  --largura-fechar-aba: 1.5rem;
+  --altura-rodape-painel: 1.5rem;
+  --altura-scrollbar-rodape: 0.5rem;
+  --largura-polegar-rodape: 7rem;
+  --tamanho-glifo: 0.75rem;
+  --tamanho-seta-arvore: 0.75rem;
+  --recuo-item-arvore: 1.75rem;
+  --afastamento-primeiro-item: 0.25rem;
+  --afastamento-topo-arvore: 0.25rem;
+  --recuo-item-atual: 0.5rem;
+  --afastamento-icone-arvore: 0.25rem;
+  --afastamento-texto-arvore: 0.25rem;
+  --espaco-editor-topo: 0.5rem;
+  --espaco-editor-base: 1.5rem;
+  --largura-coluna-scrollbar: 0.875rem;
   --altura-polegar-editor: 47%;
   --largura-janela-preview: min(70vw, 110rem);
   --altura-janela-preview: min(88dvh, 90rem);
-  --altura-barra-gaveta: 2.22rem;
+  --altura-barra-gaveta: 2.25rem;
   --camada-gaveta: 10;
 
-  // Editor de código (colunas medidas na tela 02, x1,2)
+  // Editor de código
   --linhas-minimas-editor: 15;
-  --largura-numeros-linha: 2.96rem;
-  --afastamento-codigo: 4.44rem;
-  --afastamento-marcador: 1.11rem;
+  --largura-numeros-linha: 2.25rem;
+  --afastamento-codigo: 1.5rem;
+  --afastamento-marcador: 0.5rem;
   --colunas-paragrafo: 72.5;
-  --tamanho-alvo-toque: 2.4rem;
-  --tamanho-seta-pagina: 0.81rem;
-  --recuo-codigo: 2.66rem;
+  --tamanho-alvo-toque: 1.5rem;
+  --tamanho-seta-pagina: 0.75rem;
+  --recuo-codigo: 2.1rem;
 
-  // Raio
-  --raio-scrollbar: 0.44rem;
-  --raio-editor: 1.11rem;
-  --raio-aba: 0.74rem;
+  // Raio: editor e abas retos; só controles pequenos têm cantos de 4px
+  --raio-scrollbar: 0.25rem;
+  --raio-editor: 0;
+  --raio-aba: 0;
+  --raio-controle: 0.25rem;
 
   // Borda
   --borda-largura: 1px;
@@ -135,21 +128,28 @@
   --borda-painel: var(--borda-largura) solid var(--cor-borda);
 }
 
-// Telas pequenas (< 768px): o design só tem desktop, então fontes, linhas e recuos encolhem
-// para o código e a árvore caberem em 390px.
+// Telas pequenas (< 768px): escala própria para o código e a árvore caberem em 390px, com o
+// código em no mínimo 13px e alvos de toque maiores.
 @media (max-width: 767.98px) {
   :root {
-    --texto-arvore: 1rem;
-    --texto-codigo: 0.95rem;
-    --texto-comentario: 0.95rem;
-    --texto-numero-linha: 1.05rem;
-    --altura-linha-codigo: 1.8rem;
-    --altura-linha-comentario: 1.35rem;
-    --recuo-item-arvore: 1.4rem;
-    --recuo-item-atual: 1.05rem;
-    --largura-numeros-linha: 2.2rem;
-    --afastamento-codigo: 2rem;
+    --texto-arvore: 0.875rem;
+    --texto-aba: 0.875rem;
+    --texto-status: 0.75rem;
+    --texto-codigo: 0.8125rem;
+    --texto-comentario: 0.8125rem;
+    --texto-numero-linha: 0.8125rem;
+    --altura-linha-arvore: 2.25rem;
+    --altura-linha-selecionada: 2.25rem;
+    --altura-linha-codigo: 1.25rem;
+    --altura-linha-comentario: 1.25rem;
+    --altura-barra-status: 1.75rem;
+    --recuo-item-arvore: 1.5rem;
+    --recuo-item-atual: 0.75rem;
+    --largura-numeros-linha: 1.75rem;
+    --afastamento-codigo: 1rem;
     --recuo-codigo: 1.5rem;
     --largura-coluna-scrollbar: 0rem;
+    --largura-fechar-aba: 2.25rem;
+    --tamanho-alvo-toque: 2.75rem;
   }
 }

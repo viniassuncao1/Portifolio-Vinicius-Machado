@@ -6,13 +6,12 @@
   overflow: hidden;
 }
 
-// Cabeçalho que imita a vista do Eclipse: título com "×" e os controles — e ▢.
+// Cabeçalho da vista: título com "×" e os controles — e ▢ (a estrutura da New UI vem nas próximas changes).
 .cabecalho {
   box-sizing: border-box;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   height: var(--altura-cabecalho-painel);
-  padding-block-start: var(--espaco-4);
   color: var(--cor-texto);
   font-size: var(--texto-arvore);
   user-select: none;
@@ -21,15 +20,11 @@
 .titulo {
   display: flex;
   align-items: center;
-  gap: 1.9rem;
+  gap: var(--espaco-3);
   box-sizing: border-box;
   width: var(--largura-titulo-painel);
-  height: 4.1rem;
-  margin-block-start: calc(-1 * var(--espaco-4));
-  padding-block-start: var(--espaco-4);
-  padding-inline-start: 1.9rem;
-  border-inline-end: var(--borda-largura) solid var(--cor-texto);
-  border-start-end-radius: 1.6rem;
+  height: 100%;
+  padding-inline-start: var(--espaco-3);
   line-height: var(--altura-linha-arvore);
   white-space: nowrap;
 }
@@ -41,24 +36,22 @@
 .minimizar,
 .restaurar {
   box-sizing: border-box;
-  border: 1.5px solid var(--cor-texto);
-  border-radius: 0.2rem;
+  border: var(--borda-largura) solid var(--cor-icone);
+  border-radius: 1px;
 }
 
 .minimizar {
-  width: 2.2rem;
-  height: 0.6rem;
-  margin-block-start: 1.05rem;
-  margin-inline-start: 1.9rem;
+  width: 0.75rem;
+  height: 0.25rem;
+  margin-block-start: 0.5rem;
+  margin-inline-start: var(--espaco-3);
 }
 
 .restaurar {
-  width: 2.45rem;
-  height: 2.15rem;
-  margin-block-start: 0.3rem;
-  margin-inline-start: 3.2rem;
-  border-radius: 0.5rem;
-  border-block-start-width: 3px;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-inline-start: var(--espaco-3);
+  border-block-start-width: 2px;
 }
 
 app-arvore-de-secoes {
@@ -72,8 +65,8 @@ app-arvore-de-secoes {
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  height: 3.3rem;
-  padding-inline-start: 3.15rem;
+  height: var(--altura-rodape-painel);
+  padding-inline-start: var(--espaco-3);
   border-block-start: var(--borda-largura) solid var(--cor-separador);
 }
 
@@ -123,7 +116,7 @@ app-arvore-de-secoes {
     cursor: pointer;
 
     &:focus-visible {
-      outline: 2px solid var(--cor-foco);
+      outline: var(--largura-anel-foco) solid var(--cor-foco);
       outline-offset: -2px;
     }
   }

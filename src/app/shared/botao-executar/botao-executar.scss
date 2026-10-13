@@ -14,10 +14,10 @@
   min-height: var(--tamanho-alvo-toque);
   padding-inline: var(--espaco-3);
   border: var(--borda-divisoria);
-  border-radius: var(--raio-aba);
-  background: var(--cor-aba-inativa);
+  border-radius: var(--raio-controle);
+  background: var(--cor-botao);
   color: var(--cor-texto-aba-inativa);
-  font-family: var(--fonte-mono);
+  font-family: var(--fonte-interface);
   font-size: var(--texto-arvore);
   cursor: pointer;
 
@@ -26,7 +26,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--cor-foco);
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: 2px;
   }
 }

@@ -12,7 +12,7 @@ nav {
   margin-block-start: calc(var(--espaco-editor-base) * -1);
   padding-inline-end: var(--espaco-4);
   color: var(--cor-texto-esmaecido);
-  font-family: var(--fonte-mono);
+  font-family: var(--fonte-interface);
   font-size: var(--texto-arvore);
 }
 
@@ -31,7 +31,7 @@ nav {
   }
 
   &:focus-visible {
-    outline: 2px solid var(--cor-foco);
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: -2px;
   }
 }

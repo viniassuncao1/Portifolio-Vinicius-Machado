@@ -11,7 +11,7 @@
   border-block-start: var(--borda-painel);
   background: var(--cor-painel);
   color: var(--cor-texto-esmaecido);
-  font-family: var(--fonte-mono);
+  font-family: var(--fonte-interface);
   font-size: var(--texto-status);
   white-space: nowrap;
 }
@@ -27,6 +27,10 @@
 .posicao,
 .item {
   flex: none;
+}
+
+.posicao {
+  font-variant-numeric: tabular-nums;
 }
 
 .posicao,
