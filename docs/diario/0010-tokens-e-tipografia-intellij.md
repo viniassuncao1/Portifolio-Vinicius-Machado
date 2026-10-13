@@ -1,8 +1,8 @@
 # 0010: Tokens e tipografia do IntelliJ New UI
 
 - **Data:** 2026-10-13
-- **Change:** [tokens-e-tipografia-intellij](../../openspec/changes/tokens-e-tipografia-intellij/)
-- **PR:** a definir
+- **Change:** [tokens-e-tipografia-intellij](../../openspec/changes/archive/2026-10-13-tokens-e-tipografia-intellij/)
+- **PR:** [#26](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/26)
 - **ADRs:** [0011](../adr/0011-identidade-visual-intellij-new-ui.md)
 
 ![Uma seção no desktop, com a paleta e a escala do IntelliJ New UI](imagens/0010-secao.png)
@@ -68,7 +68,7 @@ Medidas de produção, antes e depois:
 
 ## Links
 
-- Change: [`openspec/changes/tokens-e-tipografia-intellij`](../../openspec/changes/tokens-e-tipografia-intellij/)
+- Change: [`openspec/changes/archive/2026-10-13-tokens-e-tipografia-intellij`](../../openspec/changes/archive/2026-10-13-tokens-e-tipografia-intellij/)
 - ADR: [0011 identidade visual do IntelliJ New UI](../adr/0011-identidade-visual-intellij-new-ui.md)
 - Documentação: [componentes](../componentes.md) e [arquitetura](../arquitetura.md)
 - Entrada anterior: [0009 SEO e compartilhamento](0009-seo-e-compartilhamento.md)
