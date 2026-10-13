@@ -19,18 +19,21 @@ import { BuscaDeSecoes } from '../busca-de-secoes/busca-de-secoes';
 import { BarraDeStatus } from '../barra-de-status/barra-de-status';
 import { BarraDeFerramentas } from '../barra-de-ferramentas/barra-de-ferramentas';
 import { FaixaDeAbas } from '../faixa-de-abas/faixa-de-abas';
+import { FaixaDeFerramentas } from '../faixa-de-ferramentas/faixa-de-ferramentas';
 import { PainelLateral } from '../painel-lateral/painel-lateral';
 
 /**
- * Casca da IDE: barra de ferramentas, painel lateral e a aba com o editor onde as rotas entram.
- * Abaixo de 768px o painel vira uma gaveta aberta pelo botão "Seções" (o estado fica em
- * `data-aberta` no painel, para o Compasso animar).
+ * Casca da IDE: barra superior, faixa de ferramentas, painel do projeto e a aba com o editor onde
+ * as rotas entram. No desktop o botão Projeto da faixa mostra e esconde o painel (`data-painel` na
+ * área). Abaixo de 768px o painel vira uma gaveta aberta pelo botão Projeto da barra superior (o
+ * estado fica em `data-aberta` no painel, para o Compasso animar).
  */
 @Component({
   selector: 'app-casca',
   imports: [
     RouterOutlet,
     BarraDeFerramentas,
+    FaixaDeFerramentas,
     PainelLateral,
     FaixaDeAbas,
     BarraDeStatus,
@@ -52,10 +55,11 @@ export class Casca {
   private readonly painel = viewChild.required(PainelLateral);
   private readonly busca = viewChild.required(BuscaDeSecoes);
   private readonly conteudo = viewChild<ElementRef<HTMLElement>>('conteudo');
-  private readonly botao = viewChild.required<ElementRef<HTMLButtonElement>>('botaoSecoes');
+  private readonly barra = viewChild.required(BarraDeFerramentas);
 
   protected readonly titulo = inject(EstrategiaDeTitulo).titulo;
   protected readonly gavetaAberta = signal(false);
+  protected readonly painelVisivel = signal(true);
 
   private readonly router = inject(Router);
   /** A rota aberta pede a árvore como no Início (design da tela 01). */
@@ -82,6 +86,10 @@ export class Casca {
       .subscribe(() => this.conteudo()?.nativeElement.scrollTo?.({ top: 0 }));
   }
 
+  protected alternarPainel(): void {
+    this.painelVisivel.update((visivel) => !visivel);
+  }
+
   protected alternarGaveta(): void {
     if (this.gavetaAberta()) {
       this.fecharGaveta();
@@ -101,10 +109,10 @@ export class Casca {
     this.gavetaAberta.set(false);
   }
 
-  /** Fecha a gaveta (Escape ou escolha de seção) e devolve o foco ao botão "Seções". */
+  /** Fecha a gaveta (Escape ou escolha de seção) e devolve o foco ao botão Projeto. */
   protected fecharEDevolverFoco(): void {
     if (!this.gavetaAberta()) return;
     this.fecharGaveta();
-    this.botao().nativeElement.focus();
+    this.barra().focarProjeto();
   }
 }
