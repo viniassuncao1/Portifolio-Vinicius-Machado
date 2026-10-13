@@ -45,7 +45,7 @@ deixá-lo pesado nem carregar nada que o visitante não pediu.
   cuidado entrou no fechamento da janela (um teto de 300 ms se `animationend` não vier).
 - **Acessibilidade e movimento valem para a janela também.** `<dialog>` modal dá foco preso e
   Escape de graça, o foco volta a quem abriu, e com movimento reduzido não há animação.
-- **Números finais.** 616 testes unitários e mais de 300 testes E2E.
+- **Números finais.** 616 testes unitários e 410 testes E2E.
 
 ## Links
 
@@ -69,7 +69,7 @@ deixá-lo pesado nem carregar nada que o visitante não pediu.
 > não terminava em abas em segundo plano, porque o requestAnimationFrame pausa; entrou um fallback
 > por tempo.
 >
-> A change fechou com 616 testes unitários e mais de 300 testes E2E.
+> A change fechou com 616 testes unitários e 410 testes E2E.
 >
 > Você prefere ver o site ao vivo ou uma captura num portfólio?
 >
