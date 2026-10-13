@@ -1,6 +1,7 @@
 # ADR-0010: Design como referência e Java moderno no código exibido
 
-- **Status:** Aceito
+- **Status:** Aceito; substituído em parte pelo [ADR-0011](0011-identidade-visual-intellij-new-ui.md)
+  (identidade visual e idioma dos identificadores)
 - **Data:** 2026-10-09
 
 ## Contexto
