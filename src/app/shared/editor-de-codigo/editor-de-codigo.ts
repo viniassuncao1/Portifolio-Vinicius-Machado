@@ -4,6 +4,7 @@ import {
   ElementRef,
   afterNextRender,
   computed,
+  DestroyRef,
   inject,
   input,
   linkedSignal,
@@ -18,6 +19,8 @@ import { HistoricoDeDigitacao } from './historico-de-digitacao';
 const QUANTIDADE_DE_NUMEROS = 99;
 const DURACAO_MAXIMA_DA_DIGITACAO_MS = 1500;
 const DURACAO_POR_ITEM_MS = 40;
+/** Folga do fallback por tempo sobre a duração da digitação. */
+const FOLGA_DO_FALLBACK_MS = 100;
 const MOVIMENTO_REDUZIDO = '(prefers-reduced-motion: reduce)';
 
 /**
@@ -43,6 +46,7 @@ export class EditorDeCodigo {
   private readonly historico = inject(HistoricoDeDigitacao);
   private readonly estado = inject(EstadoDoEditor);
   private quadro = 0;
+  private temporizador: ReturnType<typeof setTimeout> | undefined;
 
   readonly conteudo = input.required<ConteudoDoEditor>();
 
@@ -63,6 +67,7 @@ export class EditorDeCodigo {
 
   constructor() {
     afterNextRender(() => this.iniciar());
+    inject(DestroyRef).onDestroy(() => this.cancelarAgendamentos());
   }
 
   protected ehExterno(href: string): boolean {
@@ -83,8 +88,12 @@ export class EditorDeCodigo {
 
   protected completarDigitacao(): void {
     if (!this.digitando()) return;
-    this.documento.defaultView?.cancelAnimationFrame(this.quadro);
     this.concluir();
+  }
+
+  private cancelarAgendamentos(): void {
+    this.documento.defaultView?.cancelAnimationFrame(this.quadro);
+    clearTimeout(this.temporizador);
   }
 
   private iniciar(): void {
@@ -115,9 +124,12 @@ export class EditorDeCodigo {
       }
     };
     this.quadro = janela.requestAnimationFrame(passo);
+    // Em aba oculta o requestAnimationFrame pausa; o tempo garante que o código nunca fique escondido.
+    this.temporizador = setTimeout(() => this.completarDigitacao(), duracao + FOLGA_DO_FALLBACK_MS);
   }
 
   private concluir(): void {
+    this.cancelarAgendamentos();
     this.host.style.removeProperty('--digitado');
     this.digitando.set(false);
     this.pronto.set(true);
