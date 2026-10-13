@@ -32,7 +32,13 @@ export const SECOES: readonly Secao[] = [
   { slug: 'projeto-1', titulo: 'Projeto 1', icone: 'arquivo', arquivo: 'Projeto1.java' },
   { slug: 'projeto-2', titulo: 'Projeto 2', icone: 'arquivo', arquivo: 'Projeto2.java' },
   { slug: 'projeto-3', titulo: 'Projeto 3', icone: 'arquivo', arquivo: 'Projeto3.java' },
-  { slug: 'projeto-4', titulo: 'Projeto 4', icone: 'arquivo', arquivo: 'Projeto4.java' },
+  {
+    slug: 'projeto-4',
+    titulo: 'Projeto 4',
+    icone: 'arquivo',
+    arquivo: 'Projeto4.java',
+    paginas: 3,
+  },
   {
     slug: 'certificacoes',
     titulo: 'Certificações',
