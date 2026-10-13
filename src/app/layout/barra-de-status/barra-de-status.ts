@@ -1,15 +1,21 @@
 import { Component, computed, inject } from '@angular/core';
 
 import { AbasAbertas } from '../../core/abas-abertas';
+import { breadcrumbs } from '../../core/breadcrumbs';
+import { SHA_CURTO_DO_BUILD, SHA_DO_BUILD } from '../../core/build.gerado';
 import { EstadoDoEditor } from '../../core/estado-do-editor';
-import { ARQUIVO_INICIO } from '../../core/secoes';
+import { ARQUIVO_INICIO, SECOES } from '../../core/secoes';
+import { Icone } from '../../shared/icone/icone';
+
+const REPOSITORIO = 'https://github.com/viniassuncao1/Portifolio-Vinicius-Machado';
 
 /**
- * Barra de status no rodapé da casca. É uma região `status`, mas só o nome do arquivo é lido:
- * a posição do cursor muda a cada clique e fica fora da leitura (`aria-hidden`).
+ * Barra de status da New UI no rodapé da casca. É uma região `status`, mas só o nome do arquivo é
+ * lido: o caminho e a posição do cursor (que muda a cada clique) ficam fora da leitura.
  */
 @Component({
   selector: 'app-barra-de-status',
+  imports: [Icone],
   templateUrl: './barra-de-status.html',
   styleUrl: './barra-de-status.scss',
 })
@@ -17,9 +23,23 @@ export class BarraDeStatus {
   private readonly abas = inject(AbasAbertas);
   private readonly editor = inject(EstadoDoEditor);
 
-  protected readonly arquivo = computed(() => this.abas.ativa()?.arquivo ?? ARQUIVO_INICIO);
+  private readonly segmentos = computed(() => {
+    const arquivo = this.abas.ativa()?.arquivo ?? ARQUIVO_INICIO;
+    return breadcrumbs({ arquivo, pacote: SECOES.find((s) => s.arquivo === arquivo)?.pacote });
+  });
+
+  /** Os segmentos antes do arquivo: o do meio encolhe com reticências quando falta espaço. */
+  protected readonly projeto = computed(() => this.segmentos()[0]);
+  protected readonly caminho = computed(() => this.segmentos().slice(1, -1).join(' › '));
+  protected readonly arquivo = computed(() => this.segmentos().at(-1) ?? ARQUIVO_INICIO);
   protected readonly posicao = computed(() => `${this.editor.linha()}:${this.editor.coluna()}`);
+  protected readonly quebraDeLinha = 'LF';
   protected readonly codificacao = 'UTF-8';
-  protected readonly versaoDoJava = 'Java 21';
-  protected readonly ramo = 'main';
+  protected readonly indentacao = '4 spaces';
+  protected readonly ramo = 'master';
+  /** Commit do deploy; sem ele (build local) o item não aparece. */
+  protected readonly commit =
+    SHA_DO_BUILD && SHA_CURTO_DO_BUILD
+      ? { curto: SHA_CURTO_DO_BUILD, endereco: `${REPOSITORIO}/commit/${SHA_DO_BUILD}` }
+      : null;
 }

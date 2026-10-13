@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
+import { SHA_DO_BUILD } from '../../core/build.gerado';
 import { EstadoDoEditor } from '../../core/estado-do-editor';
 import { BarraDeStatus } from './barra-de-status';
 
@@ -32,11 +33,30 @@ describe('BarraDeStatus', () => {
     return { harness, fixture, raiz: fixture.nativeElement as HTMLElement };
   }
 
-  it('mostra o arquivo da aba ativa, UTF-8, Java 21 e main', async () => {
+  it('mostra o arquivo da aba ativa, LF, UTF-8, 4 spaces e master', async () => {
     const { raiz } = await abrir('/skills');
     const texto = raiz.textContent ?? '';
 
-    ['Skills.java', 'UTF-8', 'Java 21', 'main', '1:1'].forEach((t) => expect(texto).toContain(t));
+    ['Skills.java', 'LF', 'UTF-8', '4 spaces', 'master', '1:1'].forEach((t) =>
+      expect(texto).toContain(t),
+    );
+    expect(texto).not.toContain('Java 21');
+  });
+
+  it('mostra os breadcrumbs do projeto até o arquivo, com o meio truncável', async () => {
+    const { raiz } = await abrir('/skills');
+
+    expect(raiz.querySelector('.projeto')?.textContent).toBe('portfolio-vinicius');
+    expect(raiz.querySelector('.meio')?.textContent).toBe(
+      'src › main › java › dev › vinicius › portfolio › skills',
+    );
+    expect(raiz.querySelector('.prefixo')?.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('só mostra o item do commit quando o build trouxe o SHA', async () => {
+    const { raiz } = await abrir('/skills');
+
+    expect(raiz.querySelector('.commit') !== null).toBe(SHA_DO_BUILD !== null);
   });
 
   it('mostra ViniciusMachado.java no Início', async () => {

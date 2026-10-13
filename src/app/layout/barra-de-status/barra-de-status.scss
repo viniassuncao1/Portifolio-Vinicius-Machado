@@ -17,12 +17,36 @@
   white-space: nowrap;
 }
 
-// O arquivo fica à esquerda e o resto à direita, como nas barras de status das IDEs.
-.arquivo {
+// Breadcrumbs à esquerda: o projeto e o arquivo ficam inteiros e só o meio encolhe com "…".
+.caminho {
+  display: flex;
+  flex: 0 1 auto;
+  min-width: 0;
   margin-inline-end: auto;
+  gap: var(--espaco-1);
+}
+
+.prefixo {
+  display: flex;
+  flex: 0 1 auto;
+  min-width: 0;
+  gap: var(--espaco-1);
+}
+
+.projeto,
+.separador,
+.arquivo {
+  flex: none;
+}
+
+.meio {
+  min-width: 0;
   overflow: hidden;
-  color: var(--cor-texto);
   text-overflow: ellipsis;
+}
+
+.arquivo {
+  color: var(--cor-texto);
 }
 
 .posicao,
@@ -34,15 +58,31 @@
   font-variant-numeric: tabular-nums;
 }
 
-.posicao,
-.item + .item {
-  padding-inline-start: var(--espaco-4);
-  border-inline-start: var(--borda-divisoria);
+.ramo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-1);
 }
 
-// No celular o nome do arquivo tem prioridade: a codificação e a versão do Java saem.
+.commit {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--cor-texto-forte);
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: 2px;
+  }
+}
+
+// No celular só ficam o arquivo e a linha:coluna.
 @media (max-width: 767.98px) {
-  .item:not(:last-child) {
+  .prefixo,
+  .item {
     display: none;
   }
 }
