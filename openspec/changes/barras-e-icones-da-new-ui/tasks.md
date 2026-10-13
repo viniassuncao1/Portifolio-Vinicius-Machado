@@ -23,5 +23,5 @@
 
 ## 5. Documentação e integração
 
-- [ ] 5.1 [Escriba] README (créditos dos ícones), `docs/componentes.md`, `docs/arquitetura.md` e a entrada `0011-barras-e-icones-da-new-ui.md` do diário — verificar com `npm run format:check`
+- [x] 5.1 [Escriba] README (créditos dos ícones), `docs/componentes.md`, `docs/arquitetura.md` e a entrada `0011-barras-e-icones-da-new-ui.md` do diário — verificar com `npm run format:check`
 - [ ] 5.2 [Regente] Revisar, abrir o PR, arquivar a change e fazer o merge — verificar pelo PR mesclado e pelo deploy
