@@ -1,0 +1,32 @@
+// Fica na faixa de respiro abaixo do código, à esquerda, na linha do controle de páginas.
+:host {
+  display: block;
+  width: fit-content;
+  min-height: var(--espaco-editor-base);
+  margin-block-start: calc(var(--espaco-editor-base) * -1);
+  padding-inline-start: var(--afastamento-codigo);
+}
+
+.executar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  min-height: var(--tamanho-alvo-toque);
+  padding-inline: var(--espaco-3);
+  border: var(--borda-divisoria);
+  border-radius: var(--raio-aba);
+  background: var(--cor-aba-inativa);
+  color: var(--cor-texto-aba-inativa);
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-arvore);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--cor-aba-passando);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: 2px;
+  }
+}

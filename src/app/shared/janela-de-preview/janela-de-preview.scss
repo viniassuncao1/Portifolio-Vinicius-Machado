@@ -1,0 +1,204 @@
+.janela {
+  // O <dialog> modal já centraliza e prende o foco; aqui só a aparência de janela de IDE.
+  inline-size: var(--largura-janela-preview);
+  block-size: var(--altura-janela-preview);
+  max-inline-size: none;
+  max-block-size: none;
+  padding: 0;
+  overflow: hidden;
+  border: var(--borda-painel);
+  border-radius: var(--raio-aba);
+  background: var(--cor-editor);
+  color: var(--cor-texto);
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &::backdrop {
+    background: var(--cor-fundo-modal);
+  }
+
+  // Abrir e fechar como janela de IDE: só `transform` e `opacity`, com os tokens de movimento.
+  &[open] {
+    animation: janela-abrir var(--duracao-media) var(--curva-saida);
+
+    &::backdrop {
+      animation: janela-fundo-abrir var(--duracao-media) var(--curva-saida);
+    }
+  }
+
+  &[data-estado='fechando'] {
+    animation: janela-fechar var(--duracao-rapida) var(--curva-entrada) forwards;
+
+    &::backdrop {
+      animation: janela-fundo-fechar var(--duracao-rapida) var(--curva-entrada) forwards;
+    }
+  }
+}
+
+@keyframes janela-abrir {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes janela-fechar {
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes janela-fundo-abrir {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes janela-fundo-fechar {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .janela,
+  .janela::backdrop {
+    animation: none !important;
+  }
+}
+
+.barra-de-titulo {
+  display: flex;
+  flex: none;
+  align-items: center;
+  height: var(--altura-faixa-abas);
+  padding-inline-start: var(--espaco-4);
+  background: linear-gradient(to bottom, var(--cor-faixa-abas), var(--cor-aba-inativa) 35%);
+  color: var(--cor-texto-aba-inativa);
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-aba);
+}
+
+.titulo {
+  flex: 1 1 auto;
+  margin: 0;
+  overflow: hidden;
+  font: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.controle {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  min-inline-size: var(--tamanho-alvo-toque);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+
+  svg {
+    inline-size: var(--tamanho-glifo);
+    block-size: var(--tamanho-glifo);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.1;
+  }
+}
+
+.fechar {
+  cursor: pointer;
+
+  &:hover {
+    background: var(--cor-aba-passando);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+}
+
+.acoes {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+  padding: var(--espaco-2) var(--espaco-4);
+  border-block-end: var(--borda-divisoria);
+  background: var(--cor-painel);
+}
+
+.acao {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--tamanho-alvo-toque);
+  padding-inline: var(--espaco-3);
+  border: var(--borda-divisoria);
+  border-radius: var(--raio-aba);
+  background: var(--cor-aba-inativa);
+  color: var(--cor-texto-aba-inativa);
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-arvore);
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--cor-aba-passando);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: 2px;
+  }
+}
+
+.area {
+  display: flex;
+  flex: 1 1 0;
+  min-block-size: 0;
+}
+
+// Região rolável com a captura de página inteira (alcançável por teclado).
+.captura {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  overflow: auto;
+  scrollbar-color: var(--cor-scrollbar-polegar) var(--cor-scrollbar-trilho);
+  scrollbar-width: thin;
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+
+  img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+}
+
+.site {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  border: 0;
+  background: var(--cor-fundo-pagina);
+}
+
+// Telas pequenas: a janela ocupa a tela inteira, com os mesmos controles.
+@media (max-width: 767.98px) {
+  .janela {
+    inline-size: 100%;
+    block-size: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+}

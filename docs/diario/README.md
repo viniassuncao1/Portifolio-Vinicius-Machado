@@ -24,6 +24,7 @@ e eu quero mostrar o processo, não só o resultado.
 | [0004](0004-secoes-como-uso-ia-e-skills.md)         | 2026-10-09 | Seções de IA e Skills, páginas com endereço próprio, densidade das linhas e correção do nome da classe. |
 | [0005](0005-experiencia-de-ide-e-java-moderno.md)   | 2026-10-09 | Design como referência (ADR-0010), experiência de IDE, Java moderno e a equipe com seis especialistas.  |
 | [0006](0006-certificacoes-niveis-e-legibilidade.md) | 2026-10-09 | Escala de 23px para ~17px só por tokens, Java legível, Certificações e níveis em Skills.                |
+| [0007](0007-projetos-e-janela-de-preview.md)        | 2026-10-13 | Janela de preview com captura primeiro e ao vivo sob demanda, botão Executar e os quatro projetos.      |
 
 ## Modelo de entrada
 

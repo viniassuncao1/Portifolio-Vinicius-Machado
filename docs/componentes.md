@@ -8,33 +8,38 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 
 ## Inventário das telas
 
-| Elemento da tela                                               | Telas            | Componente                     | Pasta                          |
-| -------------------------------------------------------------- | ---------------- | ------------------------------ | ------------------------------ |
-| Barra de ferramentas e controles de janela                     | todas            | `BarraDeFerramentas`           | `layout/barra-de-ferramentas/` |
-| Painel lateral (título, controles, rodapé)                     | todas            | `PainelLateral`                | `layout/painel-lateral/`       |
-| Árvore de seções com ícones                                    | todas            | `ArvoreDeSecoes`               | `layout/arvore-de-secoes/`     |
-| Faixa de abas dos arquivos abertos                             | todas (nossa)    | `FaixaDeAbas`                  | `layout/faixa-de-abas/`        |
-| Barra de status no rodapé                                      | (nossa)          | `BarraDeStatus`                | `layout/barra-de-status/`      |
-| Busca de seções (Ctrl/Cmd+P)                                   | (nossa)          | `BuscaDeSecoes`                | `layout/busca-de-secoes/`      |
-| Casca (junta tudo e hospeda as rotas)                          | todas            | `Casca`                        | `layout/casca/`                |
-| Editor com numeração e sintaxe                                 | todas            | `EditorDeCodigo`               | `shared/editor-de-codigo/`     |
-| Bloco de comentário com `*`                                    | 02-04, 07-18, 29 | parte do `EditorDeCodigo`      | `shared/editor-de-codigo/`     |
-| Ícones (arquivo, pasta, ferramenta, IA...)                     | todas            | `Icone`                        | `shared/icone/`                |
-| "×" fino do Eclipse                                            | todas            | `GlifoFechar`                  | `shared/glifo-fechar/`         |
-| Início                                                         | 01               | `Inicio`                       | `features/inicio/`             |
-| Sobre Mim                                                      | 02               | `SobreMim`                     | `features/sobre-mim/`          |
-| Diferenciais                                                   | 03               | `Diferenciais`                 | `features/diferenciais/`       |
-| Como uso a IA                                                  | 04               | `ComoUsoIa`                    | `features/como-uso-ia/`        |
-| Skills / STACK (3 páginas, a 3ª com os níveis de conhecimento) | 05, 06 e níveis  | `Skills`                       | `features/skills/`             |
-| Controle de páginas (1/2, setas SVG)                           | 05, 06 (nosso)   | `PaginasDaSecao`               | `shared/paginas-da-secao/`     |
-| Experiências (3 páginas)                                       | 07-09            | `Experiencias`                 | `features/experiencias/`       |
-| Eventos                                                        | 22               | `Eventos`                      | `features/eventos/`            |
-| Certificações (3 páginas, 9 cursos)                            | (nossa)          | `Certificacoes`                | `features/certificacoes/`      |
-| Formação                                                       | 28               | `Formacao`                     | `features/formacao/`           |
-| Idiomas                                                        | 28               | `Idiomas`                      | `features/idiomas/`            |
-| Contato (links reais)                                          | 30               | `Contato`                      | `features/contato/`            |
-| Seção sem conteúdo ainda                                       | 10-21, 23-27, 29 | `SecaoEmConstrucao`            | `shared/secao-em-construcao/`  |
-| Janela de preview de site                                      | 11-15            | fora do escopo (change futura) | -                              |
+| Elemento da tela                                               | Telas            | Componente                  | Pasta                          |
+| -------------------------------------------------------------- | ---------------- | --------------------------- | ------------------------------ |
+| Barra de ferramentas e controles de janela                     | todas            | `BarraDeFerramentas`        | `layout/barra-de-ferramentas/` |
+| Painel lateral (título, controles, rodapé)                     | todas            | `PainelLateral`             | `layout/painel-lateral/`       |
+| Árvore de seções com ícones                                    | todas            | `ArvoreDeSecoes`            | `layout/arvore-de-secoes/`     |
+| Faixa de abas dos arquivos abertos                             | todas (nossa)    | `FaixaDeAbas`               | `layout/faixa-de-abas/`        |
+| Barra de status no rodapé                                      | (nossa)          | `BarraDeStatus`             | `layout/barra-de-status/`      |
+| Busca de seções (Ctrl/Cmd+P)                                   | (nossa)          | `BuscaDeSecoes`             | `layout/busca-de-secoes/`      |
+| Casca (junta tudo e hospeda as rotas)                          | todas            | `Casca`                     | `layout/casca/`                |
+| Editor com numeração e sintaxe                                 | todas            | `EditorDeCodigo`            | `shared/editor-de-codigo/`     |
+| Bloco de comentário com `*`                                    | 02-04, 07-18, 29 | parte do `EditorDeCodigo`   | `shared/editor-de-codigo/`     |
+| Ícones (arquivo, pasta, ferramenta, IA...)                     | todas            | `Icone`                     | `shared/icone/`                |
+| "×" fino do Eclipse                                            | todas            | `GlifoFechar`               | `shared/glifo-fechar/`         |
+| Início                                                         | 01               | `Inicio`                    | `features/inicio/`             |
+| Sobre Mim                                                      | 02               | `SobreMim`                  | `features/sobre-mim/`          |
+| Diferenciais                                                   | 03               | `Diferenciais`              | `features/diferenciais/`       |
+| Como uso a IA                                                  | 04               | `ComoUsoIa`                 | `features/como-uso-ia/`        |
+| Skills / STACK (3 páginas, a 3ª com os níveis de conhecimento) | 05, 06 e níveis  | `Skills`                    | `features/skills/`             |
+| Controle de páginas (1/2, setas SVG)                           | 05, 06 (nosso)   | `PaginasDaSecao`            | `shared/paginas-da-secao/`     |
+| Experiências (3 páginas)                                       | 07-09            | `Experiencias`              | `features/experiencias/`       |
+| Eventos                                                        | 22               | `Eventos`                   | `features/eventos/`            |
+| Projeto 1: Ana, agente de IA no WhatsApp                       | 10               | `Projeto1`                  | `features/projeto-1/`          |
+| Projeto 2: landing page da Dra. Juliana (com preview)          | 11-13            | `Projeto2`                  | `features/projeto-2/`          |
+| Projeto 3: landing page da Watts Company (com preview)         | 14, 15           | `Projeto3`                  | `features/projeto-3/`          |
+| Projeto 4: cases da Memora (3 páginas)                         | 16-18            | `Projeto4`                  | `features/projeto-4/`          |
+| Certificações (3 páginas, 9 cursos)                            | (nossa)          | `Certificacoes`             | `features/certificacoes/`      |
+| Formação                                                       | 28               | `Formacao`                  | `features/formacao/`           |
+| Idiomas                                                        | 28               | `Idiomas`                   | `features/idiomas/`            |
+| Contato (links reais)                                          | 30               | `Contato`                   | `features/contato/`            |
+| Seção sem conteúdo ainda                                       | 10-21, 23-27, 29 | `SecaoEmConstrucao`         | `shared/secao-em-construcao/`  |
+| Janela de preview de site                                      | 11-15            | `JanelaDePreviewComponente` | `shared/janela-de-preview/`    |
+| Botão "Executar" (abre o preview)                              | (nosso)          | `BotaoExecutar`             | `shared/botao-executar/`       |
 
 O design é **referência de identidade visual** ([ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md)).
 Por isso o site tem o que as telas, estáticas, não mostram: a faixa de abas, a barra de status, a
@@ -88,6 +93,9 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   `app-barra-de-ferramentas`.
 - **O que faz:** imita a barra do Eclipse (degradê, ícones e controles de janela). É decorativa:
   `aria-hidden="true"` e fora da ordem de foco. Os ícones que não cabem no celular ficam ocultos.
+- **Exceção, o play:** nas rotas que têm preview (`JanelaDePreview.previewDaRota()`), o ícone de
+  play vira o botão "Executar o projeto" e a barra deixa de ser `aria-hidden`; nas demais rotas
+  continua decorativa. Clicar abre a janela de preview do projeto.
 - **Entradas e saídas:** nenhuma.
 
 ### `FaixaDeAbas`
@@ -185,6 +193,34 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 <app-paginas-da-secao slug="skills" [pagina]="pagina()" [total]="totalDePaginas()" />
 ```
 
+### `JanelaDePreviewComponente`
+
+- **Onde:** `shared/janela-de-preview/janela-de-preview.ts`, seletor `app-janela-de-preview`,
+  montada uma vez na `Casca`.
+- **O que faz:** janela no estilo da IDE, sobre a casca, que mostra o site de um projeto. É um
+  `<dialog>` modal: o foco fica preso dentro dela e Escape fecha (o `cancel` passa pela animação de
+  saída). A barra de título tem o nome do projeto, dois controles decorativos e o "×" funcional.
+- **Captura primeiro, ao vivo sob demanda.** A janela abre com a **captura** do site (uma imagem
+  rolável, com `NgOptimizedImage`). O botão **"Ver ao vivo"** troca a captura por um `<iframe>` do
+  site real; **"Ver captura"** volta. O iframe só é criado a pedido do visitante, para não
+  carregar site de terceiros sem ele querer, com `sandbox="allow-scripts allow-same-origin
+allow-popups allow-forms"`, `referrerpolicy="no-referrer"`, `loading="lazy"` e `title`.
+  **"Abrir em nova aba"** é um link com `rel="noopener noreferrer"`.
+- **Foco e animação.** Ao fechar, o foco volta ao elemento que abriu a janela. A abertura e o
+  fechamento animam `transform` e `opacity` (`data-estado`: `aberto` e `fechando`), com um teto de
+  300 ms para fechar mesmo se `animationend` não vier (aba oculta). Com `prefers-reduced-motion:
+reduce` não há animação e a janela fecha direto.
+- **Celular.** Abaixo de 768px a janela ocupa a tela inteira (`100dvh`, sem borda); no desktop
+  ocupa 70% da largura e 88% da altura.
+- **Entradas e saídas:** nenhuma; o estado vem do serviço `JanelaDePreview`.
+
+### `BotaoExecutar`
+
+- **Onde:** `shared/botao-executar/botao-executar.ts`, seletor `app-botao-executar`, na `Casca`,
+  logo abaixo do `<router-outlet>`.
+- **O que faz:** o botão "Executar", como rodar o projeto numa IDE: abre a janela de preview. Só
+  é renderizado nas rotas com preview; nas demais não existe.
+
 ### `SecaoEmConstrucao`
 
 - **Onde:** `shared/secao-em-construcao/secao-em-construcao.ts`, seletor
@@ -208,6 +244,38 @@ O estado da IDE mora em serviços (`@Service`), e não nos componentes da casca.
 - **`Secao.arquivo`** (`core/secoes.ts`): o nome do arquivo `.java` de cada seção
   (`SobreMim.java`), usado pela aba, pela barra de status e pela busca. O Início tem
   `ARQUIVO_INICIO` (`ViniciusMachado.java`).
+- **`JanelaDePreview`** (`core/janela-de-preview.ts`): guarda o preview aberto (`preview`, signal
+  somente leitura), o elemento que abriu a janela e o preview da rota atual (`previewDaRota`, calculado
+  a partir da URL). `abrir(preview, origem)` abre; `fechar()` fecha e devolve o foco à origem.
+  O componente da janela, o `BotaoExecutar` e o play da barra de ferramentas usam este serviço.
+- **`PREVIEWS`** (`core/previews.ts`): o registro `slug -> PreviewDeProjeto` (`titulo`, `url` e
+  `captura` com `src`, `largura`, `altura` e `alt`). Só os projetos que estão aqui mostram o
+  "Executar".
+
+### Como acrescentar o preview de um projeto novo
+
+1. Acrescente o site em `SITES` de `scripts/capturar-previews.mjs` (`arquivo`, `url` e, se
+   precisar, `css` para ajustar a captura) e gere a imagem (abaixo).
+2. Registre o slug da seção em `PREVIEWS` (`core/previews.ts`) com o título, a `url` e a captura
+   (`src` relativo, como `projetos/dra-juliana.jpg`, e as dimensões reais).
+3. Confira nos cabeçalhos do site que ele aceita `iframe` (sem `X-Frame-Options` nem CSP
+   `frame-ancestors` restritiva); se não aceitar, o "Ver ao vivo" não funcionará.
+
+O play e o `BotaoExecutar` passam a aparecer na rota, sem mais nenhuma mudança.
+
+### Capturas dos sites (`scripts/capturar-previews.mjs`)
+
+O script usa o Playwright do projeto para gerar uma captura de página inteira de cada site,
+em 1440px de largura, e salva um JPEG em `public/projetos/` (até 400 KB, baixando a qualidade se
+precisar). Ele rola a página até o fim para carregar as imagens, fecha banners de cookies e
+**emula `prefers-reduced-motion`**, porque alguns sites animam a entrada de elementos e a
+captura saía sem eles (a foto da Dra. Juliana, por exemplo). Para atualizar quando um site mudar:
+
+```bash
+node scripts/capturar-previews.mjs
+```
+
+Confira as imagens antes de commitar.
 
 ## Modelo de conteúdo do editor
 

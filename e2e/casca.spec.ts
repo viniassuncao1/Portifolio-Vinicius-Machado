@@ -175,12 +175,12 @@ test.describe('Teclado', () => {
   });
 });
 
-test.describe('Seção em construção', () => {
-  test('mostra o aviso como comentário de código no editor', async ({ page }) => {
+test.describe('Seção de projeto', () => {
+  test('mostra o código do projeto no editor, sem o aviso de em construção', async ({ page }) => {
     await page.goto('/projeto-3');
 
-    await expect(page.getByRole('main')).toContainText('Esta seção está em construção');
-    await expect(page.getByRole('main').locator('code')).toBeVisible();
+    await expect(page.getByRole('main').locator('code')).toContainText('WattsCompany');
+    await expect(page.getByRole('main')).not.toContainText('em construção');
   });
 });
 
