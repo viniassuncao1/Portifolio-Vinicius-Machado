@@ -54,7 +54,15 @@ Medidas de produção, antes e depois:
   não garante acessibilidade.
 - **Fatiar deixa cada passo entregável.** Cada change vai ao ar completa e coerente, mesmo que o
   site fique "meio IntelliJ" até a última. Aceitei isso em troca de risco menor.
-- **Números finais.** Testes unitários: a definir. Testes E2E: a definir.
+- **Um `font-size` no `<html>` encolheu tudo.** A primeira versão aplicou os 13px da interface
+  também no `<html>`, e `1rem` passou a valer 13px: todos os tokens em `rem` saíram 19% menores
+  (código com 11,4px em vez de 14). A Sentinela mediu os valores calculados no build e achou; a
+  correção foi deixar o tamanho só no `body`.
+- **Nem os números de linha escapam do contraste.** O cinza escolhido (`#6F737A`) dava 3,46:1 e
+  o axe reprovou todas as rotas. Em vez de excluir os números da verificação, o token subiu para
+  `#8B8F96`, o menor tom que passa em AA sobre o editor e sobre a linha atual.
+- **Números finais.** 635 testes unitários (98,4% das linhas), 490 testes E2E e 24 rotas
+  pré-renderizadas, com o axe sem violações e sem exclusões.
 
 ![A mesma seção no celular](imagens/0010-mobile.png)
 
