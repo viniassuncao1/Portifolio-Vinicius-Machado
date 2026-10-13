@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
-const TAMANHO_DO_CODIGO = 17;
-const TAMANHO_DA_INTERFACE = 16;
-const TOLERANCIA_EM_PX = 0.6;
+const TOLERANCIA_EM_PX = 0.5;
 const MINIMO_DE_LINHAS_VISIVEIS = 20;
+
+const ARVORE = 'nav[aria-label="Seções do portfólio"] a[aria-current="page"]';
+const LINHA_DE_CODIGO = 'main code > span.linha:not(.vazia)';
 
 /** Tamanho da fonte, em px, do primeiro elemento que casa com o seletor. */
 const tamanhoDaFonte = async (page: Page, seletor: string): Promise<number> =>
@@ -15,47 +16,81 @@ const tamanhoDaFonte = async (page: Page, seletor: string): Promise<number> =>
       .evaluate((el) => getComputedStyle(el).fontSize),
   );
 
+/** Largura e altura, em px, do primeiro elemento que casa com o seletor. */
+const medidas = async (page: Page, seletor: string): Promise<{ largura: number; altura: number }> =>
+  page
+    .locator(seletor)
+    .first()
+    .evaluate((el) => {
+      const caixa = el.getBoundingClientRect();
+      return { largura: caixa.width, altura: caixa.height };
+    });
+
+const quase = (obtido: number, esperado: number, rotulo: string): void =>
+  expect(
+    Math.abs(obtido - esperado),
+    `${rotulo}: ${obtido}px (esperado ${esperado}px)`,
+  ).toBeLessThanOrEqual(TOLERANCIA_EM_PX);
+
 test.describe('Escala da tipografia no desktop (1920x1080)', () => {
   test.use({ viewport: { width: 1920, height: 1080 } });
 
-  test('o código usa cerca de 17px', async ({ page }) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('/skills');
-
-    const token = await tamanhoDaFonte(page, 'main code .papel-palavra-chave');
-
-    expect(Math.abs(token - TAMANHO_DO_CODIGO)).toBeLessThanOrEqual(TOLERANCIA_EM_PX);
   });
 
-  test('a árvore, as abas e a barra de status usam cerca de 16px', async ({ page }) => {
-    await page.goto('/skills');
-
-    const medidas = {
-      arvore: await tamanhoDaFonte(
-        page,
-        'nav[aria-label="Seções do portfólio"] a[aria-current="page"]',
-      ),
-      aba: await tamanhoDaFonte(page, '[role="tab"][aria-selected="true"]'),
-      status: await tamanhoDaFonte(page, '[role="status"]:has-text("UTF-8")'),
-    };
-
-    for (const [nome, medida] of Object.entries(medidas)) {
-      expect(Math.abs(medida - TAMANHO_DA_INTERFACE), nome).toBeLessThanOrEqual(TOLERANCIA_EM_PX);
-    }
+  test('o código usa 14px com linhas de 22px', async ({ page }) => {
+    quase(await tamanhoDaFonte(page, 'main code .papel-palavra-chave'), 14, 'fonte do código');
+    quase((await medidas(page, LINHA_DE_CODIGO)).altura, 22, 'altura da linha do código');
   });
 
-  test('a interface é menor que o código, mas não passa de 1px de diferença', async ({ page }) => {
-    await page.goto('/skills');
+  test('os números de linha usam 13px', async ({ page }) => {
+    quase(await tamanhoDaFonte(page, 'main .numeros span'), 13, 'número de linha');
+  });
 
+  test('a árvore usa 13px com linhas de 24px', async ({ page }) => {
+    quase(await tamanhoDaFonte(page, ARVORE), 13, 'fonte da árvore');
+    quase((await medidas(page, ARVORE)).altura, 24, 'altura da linha da árvore');
+  });
+
+  test('a aba usa 13px e a barra de status usa 12px', async ({ page }) => {
+    quase(await tamanhoDaFonte(page, '[role="tab"][aria-selected="true"]'), 13, 'fonte da aba');
+    quase(await tamanhoDaFonte(page, '[role="status"]'), 12, 'fonte da barra de status');
+  });
+
+  test('o painel lateral tem 280px, a barra superior 40px e a de status 24px', async ({ page }) => {
+    quase((await medidas(page, 'app-painel-lateral')).largura, 280, 'largura do painel');
+    quase((await medidas(page, 'app-barra-de-ferramentas')).altura, 40, 'barra superior');
+    quase((await medidas(page, '[role="status"]')).altura, 24, 'barra de status');
+  });
+
+  test('a faixa de abas tem 36px e a aba tem a largura do nome, não a do painel', async ({
+    page,
+  }) => {
+    quase((await medidas(page, '[role="tablist"]')).altura, 36, 'faixa de abas');
+    const aba = (await medidas(page, '[role="tab"]')).largura;
+
+    expect(aba).toBeGreaterThan(80);
+    expect(aba).toBeLessThan(220);
+  });
+
+  test('a aba acompanha o tamanho do nome do arquivo', async ({ page }) => {
+    await page.goto('/depoimentos');
+    const longa = (await medidas(page, '[role="tab"][aria-selected="true"]')).largura;
+    await page.goto('/eventos');
+    const curta = (await medidas(page, '[role="tab"][aria-selected="true"]')).largura;
+
+    expect(longa).toBeGreaterThan(curta);
+  });
+
+  test('a interface (13px) é menor que o código (14px) por 1px', async ({ page }) => {
     const codigo = await tamanhoDaFonte(page, 'main code .papel-palavra-chave');
-    const arvore = await tamanhoDaFonte(page, 'nav[aria-label="Seções do portfólio"] a');
+    const arvore = await tamanhoDaFonte(page, ARVORE);
 
-    expect(arvore).toBeLessThanOrEqual(codigo);
-    expect(codigo - arvore).toBeLessThanOrEqual(1.5);
+    quase(codigo - arvore, 1, 'diferença entre código e árvore');
   });
 
   test('cabem pelo menos 20 linhas de código no editor sem rolar', async ({ page }) => {
-    await page.goto('/skills');
-
     // Do topo do código até a barra de status é o espaço que o editor tem para as linhas.
     const linhasQueCabem = await page.locator('main code').evaluate((codigo) => {
       const base = document.querySelector('[role="status"]')?.getBoundingClientRect().top;
@@ -89,13 +124,17 @@ test.describe('Escala da tipografia no desktop (1920x1080)', () => {
 test.describe('Escala no celular (390x844)', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
-  test('o código é legível: entre 14px e o tamanho do desktop', async ({ page }) => {
+  test('o código usa 13px com linhas de 20px', async ({ page }) => {
     await page.goto('/skills');
 
-    const token = await tamanhoDaFonte(page, 'main code .papel-palavra-chave');
+    quase(await tamanhoDaFonte(page, 'main code .papel-palavra-chave'), 13, 'fonte do código');
+    quase((await medidas(page, LINHA_DE_CODIGO)).altura, 20, 'altura da linha do código');
+  });
 
-    expect(token).toBeGreaterThanOrEqual(14);
-    expect(token).toBeLessThanOrEqual(TAMANHO_DO_CODIGO + TOLERANCIA_EM_PX);
+  test('a barra de status tem 28px', async ({ page }) => {
+    await page.goto('/skills');
+
+    quase((await medidas(page, '[role="status"]')).altura, 28, 'barra de status');
   });
 
   test('a página não rola na horizontal', async ({ page }) => {
