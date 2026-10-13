@@ -35,7 +35,7 @@ describe('PainelLateral', () => {
     await fixture.whenStable();
     const cabecalho = (fixture.nativeElement as HTMLElement).querySelector('.cabecalho');
 
-    expect(cabecalho?.textContent).toContain('Portfolio_Vinicius');
+    expect(cabecalho?.textContent).toContain('Projeto');
   });
 
   it('não tem controles focáveis fora da árvore', async () => {

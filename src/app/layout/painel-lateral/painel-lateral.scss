@@ -6,52 +6,23 @@
   overflow: hidden;
 }
 
-// Cabeçalho da vista: título com "×" e os controles — e ▢ (a estrutura da New UI vem nas próximas changes).
+// Cabeçalho do painel na New UI: o nome da vista e o chevron, sem os controles de janela do Eclipse.
 .cabecalho {
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  gap: var(--espaco-2);
   height: var(--altura-cabecalho-painel);
-  color: var(--cor-texto);
+  padding-inline: var(--espaco-3);
+  color: var(--cor-texto-forte);
   font-size: var(--texto-arvore);
+  font-weight: var(--peso-medio);
   user-select: none;
 }
 
 .titulo {
-  display: flex;
-  align-items: center;
-  gap: var(--espaco-3);
-  box-sizing: border-box;
-  width: var(--largura-titulo-painel);
-  height: 100%;
-  padding-inline-start: var(--espaco-3);
   line-height: var(--altura-linha-arvore);
   white-space: nowrap;
-}
-
-.fechar {
-  color: var(--cor-icone);
-}
-
-.minimizar,
-.restaurar {
-  box-sizing: border-box;
-  border: var(--borda-largura) solid var(--cor-icone);
-  border-radius: 1px;
-}
-
-.minimizar {
-  width: 0.75rem;
-  height: 0.25rem;
-  margin-block-start: 0.5rem;
-  margin-inline-start: var(--espaco-3);
-}
-
-.restaurar {
-  width: 0.75rem;
-  height: 0.75rem;
-  margin-inline-start: var(--espaco-3);
-  border-block-start-width: 2px;
 }
 
 app-arvore-de-secoes {
