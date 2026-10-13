@@ -1,8 +1,8 @@
 # 0009: SEO e compartilhamento
 
 - **Data:** 2026-10-13
-- **Change:** [seo-e-compartilhamento](../../openspec/changes/seo-e-compartilhamento/)
-- **PR:** a definir
+- **Change:** [seo-e-compartilhamento](../../openspec/changes/archive/2026-10-13-seo-e-compartilhamento/)
+- **PR:** [#24](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/24)
 - **ADRs:** nenhum novo.
 
 ![Cartão de compartilhamento do portfólio](imagens/0009-cartao.png)
@@ -48,7 +48,7 @@ canônico nem dados estruturados.
 
 ## Links
 
-- Change: [`openspec/changes/seo-e-compartilhamento`](../../openspec/changes/seo-e-compartilhamento/)
+- Change: [`openspec/changes/archive/2026-10-13-seo-e-compartilhamento`](../../openspec/changes/archive/2026-10-13-seo-e-compartilhamento/)
 - Documentação: [arquitetura](../arquitetura.md#seo-e-compartilhamento) e o
   [README](../../README.md#compartilhamento-no-linkedin)
 - Entrada anterior: [0008 seção de depoimentos](0008-secao-depoimentos.md)
