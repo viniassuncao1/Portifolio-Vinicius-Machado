@@ -1,57 +1,96 @@
+import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { BarraDeFerramentas } from './barra-de-ferramentas';
 
+@Component({
+  imports: [BarraDeFerramentas],
+  template: `<app-barra-de-ferramentas
+    [gavetaAberta]="aberta"
+    (alternarGaveta)="gaveta = gaveta + 1"
+    (buscar)="busca = busca + 1"
+  />`,
+})
+class Hospedeiro {
+  aberta = false;
+  gaveta = 0;
+  busca = 0;
+}
+
 describe('BarraDeFerramentas', () => {
-  it('é decorativa: fica fora da leitura e não tem controles focáveis', async () => {
-    const fixture = TestBed.createComponent(BarraDeFerramentas);
+  async function montar() {
+    const fixture = TestBed.createComponent(Hospedeiro);
     await fixture.whenStable();
-    const elemento = fixture.nativeElement as HTMLElement;
+    return { fixture, raiz: fixture.nativeElement as HTMLElement };
+  }
 
-    expect(elemento.getAttribute('aria-hidden')).toBe('true');
-    expect(elemento.querySelectorAll('button, a, [tabindex]')).toHaveLength(0);
+  it('mostra o projeto e a branch à esquerda, ambos decorativos', async () => {
+    const { raiz } = await montar();
+    const projeto = raiz.querySelector('.widget.projeto');
+    const ramo = raiz.querySelector('.widget.ramo');
+
+    expect(projeto?.textContent).toContain('PV');
+    expect(projeto?.textContent).toContain('portfolio-vinicius');
+    expect(ramo?.textContent).toContain('master');
+    expect(projeto?.getAttribute('aria-hidden')).toBe('true');
+    expect(ramo?.getAttribute('aria-hidden')).toBe('true');
   });
 
-  it('exibe os oito ícones da barra', async () => {
-    const fixture = TestBed.createComponent(BarraDeFerramentas);
-    await fixture.whenStable();
+  it('mostra a configuração de execução à direita, decorativa', async () => {
+    const { raiz } = await montar();
+    const configuracao = raiz.querySelector('.widget.configuracao');
 
-    expect((fixture.nativeElement as HTMLElement).querySelectorAll('app-icone')).toHaveLength(8);
+    expect(configuracao?.textContent).toContain('PortfolioApplication');
+    expect(configuracao?.getAttribute('aria-hidden')).toBe('true');
   });
 
-  it('exibe os ícones na ordem do design', async () => {
-    const fixture = TestBed.createComponent(BarraDeFerramentas);
-    await fixture.whenStable();
-    const origens = Array.from(
-      (fixture.nativeElement as HTMLElement).querySelectorAll('app-icone img'),
-    ).map((img) => /icones\/new-ui\/(.+)\.svg/.exec(img.getAttribute('src') ?? '')?.[1]);
+  it('deixa Executar, Depurar e Configurações decorativos e sem foco fora dos projetos com site', async () => {
+    const { raiz } = await montar();
 
-    expect(origens).toEqual([
-      'java',
-      'pasta',
-      'projeto',
-      'executar',
-      'configuracoes',
-      'buscar',
-      'depurar',
-      'estrutura',
-    ]);
+    for (const classe of ['executar', 'depurar', 'configuracoes']) {
+      const controle = raiz.querySelector(`.${classe}`);
+      expect(controle?.getAttribute('aria-hidden')).toBe('true');
+      expect(controle?.matches('button, a, [tabindex]')).toBe(false);
+    }
   });
 
-  it('posiciona cada ícone pela variável --x', async () => {
-    const fixture = TestBed.createComponent(BarraDeFerramentas);
-    await fixture.whenStable();
-    const botoes = (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLElement>('.botao');
+  it('só tem como botões o Projeto do celular e o Buscar', async () => {
+    const { raiz } = await montar();
+    const nomes = Array.from(raiz.querySelectorAll('button')).map((b) =>
+      b.getAttribute('aria-label'),
+    );
 
-    expect(botoes[0].style.getPropertyValue('--x')).toBe('2.75');
-    expect(botoes[7].style.getPropertyValue('--x')).toBe('25.1');
+    expect(nomes).toEqual(['Projeto', 'Buscar seção (Ctrl+P)']);
   });
 
-  it('inclui os controles de janela sem foco', async () => {
-    const fixture = TestBed.createComponent(BarraDeFerramentas);
-    await fixture.whenStable();
-    const controles = (fixture.nativeElement as HTMLElement).querySelector('.controles-janela');
+  it('pede a busca ao ativar Buscar', async () => {
+    const { fixture, raiz } = await montar();
 
-    expect(controles?.getAttribute('focusable')).toBe('false');
+    raiz.querySelector<HTMLButtonElement>('.botao-busca')!.click();
+
+    expect(fixture.componentInstance.busca).toBe(1);
+  });
+
+  it('pede a gaveta pelo botão Projeto e reflete o estado em aria-expanded', async () => {
+    const { fixture, raiz } = await montar();
+    const botao = raiz.querySelector<HTMLButtonElement>('.projeto-celular')!;
+
+    botao.click();
+    fixture.componentInstance.aberta = true;
+    fixture.changeDetectorRef.markForCheck();
+    await fixture.whenStable();
+
+    expect(fixture.componentInstance.gaveta).toBe(1);
+    expect(botao.getAttribute('aria-expanded')).toBe('true');
+  });
+
+  it('usa só ícones da New UI', async () => {
+    const { raiz } = await montar();
+    const origens = Array.from(raiz.querySelectorAll('app-icone img')).map((img) =>
+      img.getAttribute('src'),
+    );
+
+    expect(origens.length).toBeGreaterThan(0);
+    origens.forEach((origem) => expect(origem).toContain('icones/new-ui/'));
   });
 });
