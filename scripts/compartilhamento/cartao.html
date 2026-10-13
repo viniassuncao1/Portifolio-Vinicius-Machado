@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Cartão de compartilhamento</title>
+    <style>
+      /* Espelha os tokens de src/styles/_tokens.scss: este cartão não passa pelo build do Angular. */
+      @font-face {
+        font-family: 'JetBrains Mono';
+        font-weight: 400;
+        src: url('../../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2')
+          format('woff2');
+      }
+      @font-face {
+        font-family: 'JetBrains Mono';
+        font-weight: 700;
+        src: url('../../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2')
+          format('woff2');
+      }
+      :root {
+        --cor-fundo-pagina: #1c1c1c;
+        --cor-editor: #2b2b2b;
+        --cor-faixa-abas: #575757;
+        --cor-aba-inativa: #5e5e5e;
+        --cor-texto: #d6d6d6;
+        --cor-borda: #1b1b1b;
+        --cor-sintaxe-palavra-chave: #de60d2;
+        --cor-sintaxe-campo: #d5963e;
+        --cor-sintaxe-literal: #8fc258;
+        --cor-sintaxe-valor: #4fafac;
+        --cor-sintaxe-comentario: #9b9999;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        inline-size: 1200px;
+        block-size: 630px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        background: var(--cor-fundo-pagina);
+        color: var(--cor-texto);
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .barra {
+        flex: none;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        block-size: 64px;
+        padding-inline: 48px;
+        background: linear-gradient(to bottom, var(--cor-faixa-abas), var(--cor-aba-inativa) 35%);
+        border-block-end: 2px solid var(--cor-borda);
+      }
+      .barra img {
+        inline-size: 28px;
+        block-size: 28px;
+      }
+      .aba {
+        margin-inline-start: auto;
+        padding: 8px 20px;
+        border-radius: 6px 6px 0 0;
+        background: var(--cor-editor);
+        font-size: 22px;
+        align-self: flex-end;
+      }
+      .editor {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 22px;
+        padding: 0 72px;
+        background: var(--cor-editor);
+        white-space: nowrap;
+      }
+      .comentario {
+        color: var(--cor-sintaxe-comentario);
+        font-size: 34px;
+      }
+      .nome {
+        font-size: 84px;
+        font-weight: 700;
+        line-height: 1.1;
+      }
+      .declaracao {
+        font-size: 38px;
+        margin-block-end: -14px;
+      }
+      .kw {
+        color: var(--cor-sintaxe-palavra-chave);
+      }
+      .nome .tipo {
+        color: var(--cor-texto);
+      }
+      .stack {
+        font-size: 36px;
+      }
+      .campo {
+        color: var(--cor-sintaxe-campo);
+      }
+      .lit {
+        color: var(--cor-sintaxe-literal);
+      }
+      .url {
+        color: var(--cor-sintaxe-valor);
+        font-size: 30px;
+        margin-block-start: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="barra">
+      <img src="../../public/icones/arquivo.svg" alt="" />
+      <img src="../../public/icones/pasta.svg" alt="" />
+      <img src="../../public/icones/projeto.svg" alt="" />
+      <img src="../../public/icones/executar.svg" alt="" />
+      <img src="../../public/icones/ferramenta.svg" alt="" />
+      <img src="../../public/icones/ia.svg" alt="" />
+      <span class="aba">ViniciusMachado.java</span>
+    </div>
+    <main class="editor">
+      <div class="comentario">// Desenvolvedor Full Stack</div>
+      <div class="declaracao"><span class="kw">public record</span></div>
+      <div class="nome">ViniciusMachado<span class="tipo">(...)</span></div>
+      <div class="stack">
+        <span class="campo">stack</span>: <span class="lit">Java</span> ·
+        <span class="lit">Spring Boot</span> · <span class="lit">Angular</span> ·
+        <span class="lit">SQL</span>
+      </div>
+      <div class="url">portfolio-vinicius-machado.vercel.app</div>
+    </main>
+  </body>
+</html>
