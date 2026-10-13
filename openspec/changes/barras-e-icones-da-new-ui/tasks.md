@@ -7,7 +7,7 @@
 
 ## 2. Dados e build [Grafite e Nanquim]
 
-- [ ] 2.1 [Grafite] Campo `pacote` em `Secao` e função que monta os breadcrumbs — verificar com teste unitário
+- [x] 2.1 [Grafite] Campo `pacote` em `Secao` e função que monta os breadcrumbs — verificar com teste unitário
 - [ ] 2.2 [Nanquim] `scripts/gerar-informacoes-do-build.mjs` (SHA de `GITHUB_SHA`/`VERCEL_GIT_COMMIT_SHA`), ligado a `build`, `start` e testes, com o arquivo gerado no `.gitignore` — verificar com `GITHUB_SHA=abc1234def npm run build` e o SHA no HTML
 
 ## 3. Moldura [Pincel]
