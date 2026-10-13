@@ -47,6 +47,12 @@ test('a varredura inclui o Início, as seções e as páginas de Skills, Experi�
       '/certificacoes',
       '/certificacoes/2',
       '/certificacoes/3',
+      '/projeto-1',
+      '/projeto-2',
+      '/projeto-3',
+      '/projeto-4',
+      '/projeto-4/2',
+      '/projeto-4/3',
     ]),
   );
 });

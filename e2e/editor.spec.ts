@@ -58,9 +58,9 @@ test.describe('Editor de código', () => {
     await page.keyboard.press('ControlOrMeta+C');
     const copiado = await page.evaluate(() => navigator.clipboard.readText());
 
-    expect(copiado).toContain('em construção');
+    expect(copiado).toContain('class Ana');
     expect(copiado).not.toContain('*');
-    expect(copiado).not.toMatch(/\d/);
+    expect(copiado).not.toMatch(/(^|\s)1\s+2\s+3(\s|$)/);
   });
 
   test('selecionar a página inteira também deixa os números de fora', async ({ page }) => {
@@ -71,7 +71,7 @@ test.describe('Editor de código', () => {
     await page.keyboard.press('ControlOrMeta+C');
     const copiado = await page.evaluate(() => navigator.clipboard.readText());
 
-    expect(copiado).toContain('em construção');
+    expect(copiado).toContain('class Ana');
     expect(copiado).not.toContain('*');
     expect(copiado).not.toMatch(/(^|\s)1\s+2\s+3(\s|$)/);
   });
