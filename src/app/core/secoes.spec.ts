@@ -54,4 +54,14 @@ describe('SECOES', () => {
   it('usa slugs seguros para endereço: minúsculos, sem acento nem espaço', () => {
     expect(SECOES.every((secao) => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(secao.slug))).toBe(true);
   });
+
+  it('descreve cada seção em pt-BR com 80 a 160 caracteres, sem repetição', () => {
+    const descricoes = SECOES.map((secao) => secao.descricao);
+
+    for (const descricao of descricoes) {
+      expect(descricao.length).toBeGreaterThanOrEqual(80);
+      expect(descricao.length).toBeLessThanOrEqual(160);
+    }
+    expect(new Set(descricoes).size).toBe(SECOES.length);
+  });
 });
