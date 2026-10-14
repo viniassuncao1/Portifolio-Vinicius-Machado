@@ -23,7 +23,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'sobre-mim',
     titulo: 'Sobre Mim',
-    icone: 'java',
+    icone: 'design-arquivo',
     arquivo: 'SobreMim.java',
     pacote: 'sobre',
     descricao:
@@ -32,7 +32,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'diferenciais',
     titulo: 'Diferenciais',
-    icone: 'pasta',
+    icone: 'design-arquivo',
     arquivo: 'Diferenciais.java',
     pacote: 'sobre',
     descricao:
@@ -41,7 +41,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'como-uso-ia',
     titulo: 'Como uso a IA',
-    icone: 'interface',
+    icone: 'design-ia',
     arquivo: 'ComoUsoIA.java',
     pacote: 'sobre',
     descricao:
@@ -50,7 +50,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'skills',
     titulo: 'Skills / STACK',
-    icone: 'classe',
+    icone: 'design-ferramenta',
     arquivo: 'Skills.java',
     pacote: 'skills',
     descricao:
@@ -60,7 +60,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'experiencias',
     titulo: 'Experiências',
-    icone: 'pasta',
+    icone: 'design-arquivo',
     arquivo: 'Experiencias.java',
     pacote: 'experiencias',
     descricao:
@@ -70,7 +70,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'projeto-1',
     titulo: 'Projeto 1',
-    icone: 'java',
+    icone: 'design-arquivo',
     arquivo: 'Projeto1.java',
     pacote: 'projetos',
     descricao:
@@ -79,7 +79,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'projeto-2',
     titulo: 'Projeto 2',
-    icone: 'java',
+    icone: 'design-arquivo',
     arquivo: 'Projeto2.java',
     pacote: 'projetos',
     descricao:
@@ -88,7 +88,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'projeto-3',
     titulo: 'Projeto 3',
-    icone: 'java',
+    icone: 'design-arquivo',
     arquivo: 'Projeto3.java',
     pacote: 'projetos',
     descricao:
@@ -97,7 +97,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'projeto-4',
     titulo: 'Projeto 4',
-    icone: 'java',
+    icone: 'design-arquivo',
     arquivo: 'Projeto4.java',
     pacote: 'projetos',
     descricao:
@@ -107,7 +107,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'certificacoes',
     titulo: 'Certificações',
-    icone: 'pasta',
+    icone: 'design-arquivo',
     arquivo: 'Certificacoes.java',
     pacote: 'formacao',
     descricao:
@@ -117,7 +117,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'eventos',
     titulo: 'Eventos',
-    icone: 'registro',
+    icone: 'design-projeto',
     arquivo: 'Eventos.java',
     pacote: 'formacao',
     descricao:
@@ -126,7 +126,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'formacao',
     titulo: 'Formação',
-    icone: 'enumeracao',
+    icone: 'design-globo',
     arquivo: 'Formacao.java',
     pacote: 'formacao',
     descricao:
@@ -135,7 +135,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'idiomas',
     titulo: 'Idiomas',
-    icone: 'pacote',
+    icone: 'design-executar',
     arquivo: 'Idiomas.java',
     pacote: 'formacao',
     descricao:
@@ -144,7 +144,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'depoimentos',
     titulo: 'Depoimentos/Recomendações',
-    icone: 'java',
+    icone: 'design-arquivo',
     arquivo: 'Depoimentos.java',
     pacote: 'recomendacoes',
     descricao:
@@ -153,7 +153,7 @@ export const SECOES: readonly Secao[] = [
   {
     slug: 'contato',
     titulo: 'Contato',
-    icone: 'pasta',
+    icone: 'design-arquivo',
     arquivo: 'Contato.java',
     pacote: 'contato',
     descricao:

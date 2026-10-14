@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { Icone, NOMES_DE_ICONE } from './icone';
+import { Icone, NOMES_DE_ICONE, caminhoDoIcone } from './icone';
 import type { NomeDoIcone } from './icone';
 
 @Component({
@@ -9,7 +9,7 @@ import type { NomeDoIcone } from './icone';
   template: `<app-icone [nome]="nome" />`,
 })
 class Hospedeiro {
-  nome: NomeDoIcone = 'java';
+  nome: NomeDoIcone = 'design-pasta';
 }
 
 describe('Icone', () => {
@@ -18,12 +18,12 @@ describe('Icone', () => {
     await fixture.whenStable();
     const imagem = (fixture.nativeElement as HTMLElement).querySelector('img');
 
-    expect(imagem?.getAttribute('src')).toContain('icones/new-ui/java.svg');
+    expect(imagem?.getAttribute('src')).toContain('icones/pasta.svg');
     expect(imagem?.getAttribute('alt')).toBe('');
   });
 
-  it('expõe os dezessete ícones da New UI', () => {
-    expect(NOMES_DE_ICONE).toHaveLength(17);
+  it('expõe os nove ícones do design e os seis da IntelliJ Platform', () => {
+    expect(NOMES_DE_ICONE).toHaveLength(15);
   });
 
   it.each(NOMES_DE_ICONE)('aponta o ícone %s para o seu arquivo SVG', async (nome) => {
@@ -32,7 +32,12 @@ describe('Icone', () => {
     await fixture.whenStable();
     const imagem = (fixture.nativeElement as HTMLElement).querySelector('img');
 
-    expect(imagem?.getAttribute('src')).toContain(`icones/new-ui/${nome}.svg`);
+    expect(imagem?.getAttribute('src')).toContain(caminhoDoIcone(nome));
+  });
+
+  it('manda os ícones do design para public/icones e os da IntelliJ para icones/new-ui', () => {
+    expect(caminhoDoIcone('design-arquivo')).toBe('icones/arquivo.svg');
+    expect(caminhoDoIcone('executar')).toBe('icones/new-ui/executar.svg');
   });
 
   it('não tem papel de imagem para tecnologias assistivas', async () => {

@@ -47,13 +47,13 @@ describe('ArvoreDeSecoes', () => {
     await fixture.whenStable();
   };
 
-  it('mostra as 7 pastas na ordem definida, em minúsculas e com o ícone de pacote', async () => {
+  it('mostra as 7 pastas na ordem definida, em minúsculas e com o ícone de pasta do design', async () => {
     const { raiz } = await abrir('/');
     const pastas = Array.from(raiz.querySelectorAll('[data-tipo=pasta]'));
 
     expect(pastas.map((p) => p.querySelector('.titulo')?.textContent)).toEqual(PACOTES);
     pastas.forEach((p) =>
-      expect(p.querySelector('app-icone img')?.getAttribute('src')).toContain('pacote.svg'),
+      expect(p.querySelector('app-icone img')?.getAttribute('src')).toContain('icones/pasta.svg'),
     );
   });
 
@@ -107,12 +107,12 @@ describe('ArvoreDeSecoes', () => {
     expect(raiz.querySelector('.grupo:not([hidden])')?.id).toBe('grupo-sobre');
   });
 
-  it('os arquivos têm ícone de Java, nome do .java e nenhuma seta', async () => {
+  it('os arquivos têm o ícone do design da sua seção, nome do .java e nenhuma seta', async () => {
     const { raiz } = await abrir('/projeto-2');
 
     raiz.querySelectorAll('a').forEach((arquivo) => {
       expect(arquivo.querySelector('.seta')).toBeNull();
-      expect(arquivo.querySelector('app-icone img')?.getAttribute('src')).toContain('java.svg');
+      expect(arquivo.querySelector('app-icone img')?.getAttribute('src')).toContain('icones/');
     });
     expect(raiz.querySelector('a .titulo')?.textContent).toBe('SobreMim.java');
   });

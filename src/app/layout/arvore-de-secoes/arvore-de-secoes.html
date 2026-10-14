@@ -20,7 +20,7 @@
           <svg class="seta" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
             <path d="M3 1.5v17L17 10z" />
           </svg>
-          <app-icone nome="pacote" />
+          <app-icone nome="design-pasta" />
           <span class="titulo">{{ pasta.pacote }}</span>
         </div>
         <ul
@@ -51,7 +51,7 @@
                 (focus)="focar(chaveDoArquivo(secao.slug))"
                 (click)="secaoEscolhida.emit()"
               >
-                <app-icone nome="java" />
+                <app-icone [nome]="secao.icone" />
                 <span class="titulo">{{ secao.arquivo }}</span>
               </a>
             </li>
