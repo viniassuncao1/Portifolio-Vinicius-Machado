@@ -13,7 +13,6 @@ import { filter, map, startWith } from 'rxjs';
 
 import { DADO_ARVORE_NO_INICIO } from '../../core/secoes';
 import { EstrategiaDeTitulo } from '../../core/estrategia-de-titulo';
-import { BotaoExecutar } from '../../shared/botao-executar/botao-executar';
 import { JanelaDePreviewComponente } from '../../shared/janela-de-preview/janela-de-preview';
 import { BuscaDeSecoes } from '../busca-de-secoes/busca-de-secoes';
 import { BarraDeStatus } from '../barra-de-status/barra-de-status';
@@ -38,7 +37,6 @@ import { PainelLateral } from '../painel-lateral/painel-lateral';
     FaixaDeAbas,
     BarraDeStatus,
     BuscaDeSecoes,
-    BotaoExecutar,
     JanelaDePreviewComponente,
   ],
   templateUrl: './casca.html',

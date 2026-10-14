@@ -13,6 +13,7 @@ import {
 import { Router } from '@angular/router';
 
 import { EstadoDoEditor } from '../../core/estado-do-editor';
+import { BotaoExecutar } from '../botao-executar/botao-executar';
 import { paragrafosDoJavadoc } from './conteudo';
 import type { ConteudoDoEditor } from './conteudo';
 import { HistoricoDeDigitacao } from './historico-de-digitacao';
@@ -31,11 +32,13 @@ const MOVIMENTO_REDUZIDO = '(prefers-reduced-motion: reduce)';
  */
 @Component({
   selector: 'app-editor-de-codigo',
+  imports: [BotaoExecutar],
   templateUrl: './editor-de-codigo.html',
   styleUrl: './editor-de-codigo.scss',
   host: {
     '[class.digitando]': 'digitando()',
     '[class.pronto]': 'pronto()',
+    '[class.com-calha]': 'temCalha()',
     '(click)': 'aoClicar($event)',
     '(document:keydown)': 'completarDigitacao()',
   },
@@ -52,6 +55,10 @@ export class EditorDeCodigo {
   readonly conteudo = input.required<ConteudoDoEditor>();
 
   protected readonly numeros = Array.from({ length: QUANTIDADE_DE_NUMEROS }, (_, i) => i + 1);
+  /** Reserva a calha à esquerda dos números só quando alguma linha tem o ▶ de executar. */
+  protected readonly temCalha = computed(() =>
+    this.conteudo().some((item) => item.tipo === 'codigo' && item.executavel),
+  );
   protected readonly digitando = signal(false);
   protected readonly pronto = signal(false);
 
