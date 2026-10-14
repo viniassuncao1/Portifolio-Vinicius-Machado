@@ -16,7 +16,7 @@ const DECORATIVOS = [
 ];
 
 const buscar = (page: Page) => page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' });
-const status = (page: Page) => page.getByRole('status').filter({ hasText: 'UTF-8' });
+const status = (page: Page) => page.getByRole('contentinfo');
 
 async function violacoes(page: Page): Promise<string[]> {
   await esperarLogDoRun(page);

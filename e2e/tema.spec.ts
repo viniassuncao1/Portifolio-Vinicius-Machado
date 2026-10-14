@@ -76,8 +76,8 @@ test.describe('Paleta e formas do design original', () => {
   }) => {
     await page.goto('/skills');
 
-    expect(await cor(page, '[role="status"]', 'backgroundColor')).toBe(FUNDO_DO_PAINEL);
-    expect(await cor(page, '[role="status"] .item')).toBe('rgb(170, 170, 170)');
+    expect(await cor(page, 'app-barra-de-status footer', 'backgroundColor')).toBe(FUNDO_DO_PAINEL);
+    expect(await cor(page, 'app-barra-de-status footer .item')).toBe('rgb(170, 170, 170)');
   });
 });
 
@@ -127,7 +127,7 @@ test.describe('Fontes servidas pelo próprio site', () => {
 
     expect(await familia(`${ARVORE} a`)).toMatch(/^"?Inter"?,/);
     expect(await familia('[role="tab"]')).toMatch(/^"?Inter"?,/);
-    expect(await familia('[role="status"]')).toMatch(/^"?Inter"?,/);
+    expect(await familia('app-barra-de-status footer')).toMatch(/^"?Inter"?,/);
     expect(await familia('main code')).toMatch(/^"?JetBrains Mono"?,/);
     expect(await familia('main .numeros')).toMatch(/^"?JetBrains Mono"?,/);
   });
@@ -328,7 +328,7 @@ test.describe('Ajustes nativos do navegador', () => {
         .evaluate((el) => getComputedStyle(el).fontVariantNumeric);
 
     expect(await variante('main .numeros span')).toContain('tabular-nums');
-    expect(await variante('[role="status"] .posicao')).toContain('tabular-nums');
+    expect(await variante('app-barra-de-status footer .posicao')).toContain('tabular-nums');
   });
 
   test('o bloco de código não é traduzido pelo tradutor do navegador', async ({ browser }) => {
@@ -415,8 +415,8 @@ test.describe('Cores de sintaxe com contraste AA', () => {
     for (const seletor of [
       `${ARVORE} a`,
       '[role="tab"]',
-      '[role="status"] .arquivo',
-      '[role="status"] .item',
+      'app-barra-de-status footer .arquivo',
+      'app-barra-de-status footer .item',
     ]) {
       const texto = await cor(page, seletor);
       const fundo =

@@ -215,10 +215,7 @@ for (const [nome, viewport] of [
     test.use({ viewport });
 
     for (const tema of ['dark', 'light'] as const) {
-      // No celular a barra compacta esconde o Executar (`display: none` abaixo de 768 px) e nada
-      // mais abre a janela de Run: sem entrada, não há o que medir. Ver o relatório ao Regente.
-      const testar = nome === 'celular' ? test.fixme : test;
-      testar(`passa no axe e não rola a página na horizontal (${tema})`, async ({ page }) => {
+      test(`passa no axe e não rola a página na horizontal (${tema})`, async ({ page }) => {
         await page.emulateMedia({ colorScheme: tema });
         await page.goto('/skills');
         await executar(page).click();
@@ -246,8 +243,7 @@ for (const [nome, viewport] of [
   });
 }
 
-// Mesmo motivo do axe no celular: o Executar não existe na barra compacta.
-test.fixme('no celular a janela não passa de 40% da altura e deixa a barra de status à mostra', async ({
+test('no celular a janela não passa de 40% da altura e deixa a barra de status à mostra', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -257,7 +253,7 @@ test.fixme('no celular a janela não passa de 40% da altura e deixa a barra de s
   await expect(janela(page)).toHaveCSS('opacity', '1');
 
   const caixa = (await janela(page).boundingBox())!;
-  const status = (await page.getByRole('status').boundingBox())!;
+  const status = (await page.getByRole('contentinfo').boundingBox())!;
 
   expect(caixa.height).toBeLessThanOrEqual(844 * 0.4 + 1);
   expect(caixa.y + caixa.height).toBeLessThanOrEqual(status.y + 1);

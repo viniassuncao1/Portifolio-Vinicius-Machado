@@ -55,13 +55,13 @@ test.describe('Escala da tipografia no desktop (1920x1080)', () => {
 
   test('a aba usa 13px e a barra de status usa 12px', async ({ page }) => {
     quase(await tamanhoDaFonte(page, '[role="tab"][aria-selected="true"]'), 13, 'fonte da aba');
-    quase(await tamanhoDaFonte(page, '[role="status"]'), 12, 'fonte da barra de status');
+    quase(await tamanhoDaFonte(page, 'app-barra-de-status footer'), 12, 'fonte da barra de status');
   });
 
   test('o painel lateral tem 280px, a barra superior 40px e a de status 24px', async ({ page }) => {
     quase((await medidas(page, 'app-painel-lateral')).largura, 280, 'largura do painel');
     quase((await medidas(page, 'app-barra-de-ferramentas')).altura, 40, 'barra superior');
-    quase((await medidas(page, '[role="status"]')).altura, 24, 'barra de status');
+    quase((await medidas(page, 'app-barra-de-status footer')).altura, 24, 'barra de status');
   });
 
   test('a faixa de abas tem 36px e a aba tem a largura do nome, não a do painel', async ({
@@ -93,7 +93,9 @@ test.describe('Escala da tipografia no desktop (1920x1080)', () => {
   test('cabem pelo menos 20 linhas de código no editor sem rolar', async ({ page }) => {
     // Do topo do código até a barra de status é o espaço que o editor tem para as linhas.
     const linhasQueCabem = await page.locator('main code').evaluate((codigo) => {
-      const base = document.querySelector('[role="status"]')?.getBoundingClientRect().top;
+      const base = document
+        .querySelector('app-barra-de-status footer')
+        ?.getBoundingClientRect().top;
       const linha = codigo.querySelector<HTMLElement>('span .papel-palavra-chave')?.parentElement;
       if (base === undefined || !linha) return 0;
       const espaco = base - codigo.getBoundingClientRect().top;
@@ -109,7 +111,9 @@ test.describe('Escala da tipografia no desktop (1920x1080)', () => {
     await page.goto('/skills/3');
 
     const visiveis = await page.evaluate(() => {
-      const limite = document.querySelector('[role="status"]')?.getBoundingClientRect().top;
+      const limite = document
+        .querySelector('app-barra-de-status footer')
+        ?.getBoundingClientRect().top;
       const linhas = Array.from(document.querySelectorAll('main code > span'));
       return linhas.filter((linha) => {
         const caixa = linha.getBoundingClientRect();
@@ -134,7 +138,7 @@ test.describe('Escala no celular (390x844)', () => {
   test('a barra de status tem 28px', async ({ page }) => {
     await page.goto('/skills');
 
-    quase((await medidas(page, '[role="status"]')).altura, 28, 'barra de status');
+    quase((await medidas(page, 'app-barra-de-status footer')).altura, 28, 'barra de status');
   });
 
   test('a página não rola na horizontal', async ({ page }) => {

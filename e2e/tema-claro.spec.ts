@@ -361,7 +361,7 @@ test.describe('theme-color e color-scheme nos dois temas', () => {
         .evaluate((el) => getComputedStyle(el).fontVariantNumeric);
 
     expect(await variante('main .numeros span')).toContain('tabular-nums');
-    expect(await variante('[role="status"] .posicao')).toContain('tabular-nums');
+    expect(await variante('app-barra-de-status footer .posicao')).toContain('tabular-nums');
   });
 });
 
@@ -536,7 +536,7 @@ test.describe('Contraste das cores de sintaxe no claro', () => {
       ['main .numeros span', FUNDO_DO_EDITOR.claro],
       ['main .numeros span', FUNDO_DA_LINHA_ATUAL],
       ['nav[aria-label="Seções do portfólio"] a', 'rgb(236, 236, 236)'],
-      ['[role="status"] .item', 'rgb(236, 236, 236)'],
+      ['app-barra-de-status footer .item', 'rgb(236, 236, 236)'],
     ] as const) {
       const texto = await cor(seletor);
       expect(contraste(texto, fundoEsperado), `${seletor} ${texto}`).toBeGreaterThanOrEqual(4.5);

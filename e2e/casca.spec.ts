@@ -50,7 +50,7 @@ test.describe('Estrutura da IDE', () => {
       'true',
     );
     await expect(page.getByRole('main')).toBeVisible();
-    await expect(page.getByRole('status')).toContainText('Projeto2.java');
+    await expect(page.getByRole('contentinfo')).toContainText('Projeto2.java');
   });
 
   test('destaca "Sobre Mim" no Início, sem marcar página atual', async ({ page }) => {
