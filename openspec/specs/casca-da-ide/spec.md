@@ -7,23 +7,30 @@ ferramentas, árvore de seções, aba e editor) e permitir navegar entre as seç
 ## Requirements
 
 ### Requirement: Estrutura fixa da IDE
-Toda página SHALL exibir a barra de ferramentas no topo, o painel lateral com a árvore de seções
-à esquerda e, à direita, a faixa de abas sobre a área do editor, com a barra de status no
-rodapé.
+Toda página SHALL exibir a barra de ferramentas escura no topo, a faixa de ferramentas e o
+painel do projeto (com o cabeçalho `Portfolio_Vinicius` do design) à esquerda e, à direita, a
+faixa de abas sobre o editor de cantos arredondados, com a barra de status no rodapé.
 
 #### Scenario: Abertura de qualquer seção
 - **WHEN** o visitante abre a página inicial ou a rota de qualquer seção
-- **THEN** a barra de ferramentas, o painel lateral, a faixa de abas e a barra de status
-  aparecem nas mesmas posições
+- **THEN** a barra de ferramentas, a faixa de ferramentas, o painel, a faixa de abas, o editor e
+  a barra de status aparecem nas mesmas posições
 
 ### Requirement: Árvore com as seções do portfólio
-O painel lateral SHALL listar, nesta ordem, as seções: Sobre Mim, Diferenciais, Como uso a IA,
-Skills / STACK, Experiências, Projeto 1, Projeto 2, Projeto 3, Projeto 4, Certificações,
-Eventos, Formação, Idiomas, Depoimentos/Recomendações e Contato.
+O painel lateral SHALL mostrar o projeto em pastas, nesta ordem: `sobre` (Sobre Mim,
+Diferenciais, Como uso a IA), `skills`, `experiencias`, `projetos` (Projeto 1 a 4), `formacao`
+(Certificações, Eventos, Formação, Idiomas), `recomendacoes` e `contato`. Cada seção é um
+arquivo `.java` na sua pasta, com os ícones do design, e clicar numa pasta SHALL expandir ou
+recolher os arquivos dela.
 
 #### Scenario: Lista completa
 - **WHEN** a página inicial é aberta
-- **THEN** a árvore mostra as 15 seções na ordem definida, cada uma com o seu ícone
+- **THEN** a árvore mostra as 7 pastas na ordem definida e, ao expandi-las, os 15 arquivos das
+  seções, cada um com o seu ícone
+
+#### Scenario: Abrir a pasta de projetos
+- **WHEN** o visitante clica na pasta `projetos` recolhida
+- **THEN** a pasta expande e mostra `Projeto1.java` a `Projeto4.java`, com `aria-expanded="true"`
 
 ### Requirement: Navegação pela árvore
 Cada item da árvore SHALL levar à rota da sua seção, e a rota SHALL ter um endereço próprio que
@@ -38,12 +45,12 @@ pode ser aberto diretamente ou compartilhado.
 - **THEN** a página carrega já com "Contato" selecionado na árvore
 
 ### Requirement: Seção atual em destaque
-O item da seção aberta SHALL aparecer destacado e expandido na árvore, como no design, e MUST
+O arquivo da seção aberta SHALL aparecer destacado na árvore, com a sua pasta expandida, e MUST
 ser anunciado como a página atual para tecnologias assistivas.
 
 #### Scenario: Seção selecionada
 - **WHEN** a seção "Sobre Mim" está aberta
-- **THEN** o item "Sobre Mim" aparece destacado, com a seta apontando para baixo, e é marcado
+- **THEN** a pasta `sobre` está expandida e o arquivo de "Sobre Mim" aparece destacado e marcado
   como página atual
 
 ### Requirement: Seção ainda não construída
@@ -63,17 +70,20 @@ foco visível, e ativados pela tecla Enter.
 - **THEN** o foco fica visível durante o percurso e a seção "Eventos" é aberta
 
 ### Requirement: Elementos decorativos ocultos
-Os botões da barra de ferramentas e os controles de janela, que imitam a IDE sem ter função,
-MUST ser ignorados por tecnologias assistivas e MUST NOT receber foco.
+Os controles que imitam a IDE sem ter função (ícones da barra, controles de janela, indicador de
+branch, Commit e Estrutura, botões do cabeçalho do painel e Executar fora dos projetos com site)
+MUST ser ignorados por tecnologias assistivas e MUST NOT receber foco. Buscar, Projeto e
+Executar nos projetos com site são botões reais, com nome acessível.
 
 #### Scenario: Leitor de tela na barra de ferramentas
 - **WHEN** um leitor de tela percorre a página
-- **THEN** os ícones da barra de ferramentas e os controles de janela não são anunciados
+- **THEN** os controles decorativos não são anunciados, e Buscar e Projeto são anunciados como
+  botões
 
 ### Requirement: Adaptação a telas pequenas
-Em telas com largura menor que 768px, o painel lateral SHALL ficar recolhido, abrindo por um
-botão identificado, e o editor SHALL ocupar a largura disponível sem rolagem horizontal da
-página.
+Em telas com largura menor que 768px, a faixa de ferramentas SHALL ficar oculta, o painel do
+projeto SHALL ficar recolhido, abrindo pelo botão Projeto da barra superior, e o editor SHALL
+ocupar a largura disponível sem rolagem horizontal da página.
 
 #### Scenario: Celular de 390px
 - **WHEN** a página inicial é aberta numa tela de 390x844
@@ -91,3 +101,11 @@ exibir a casca e o conteúdo inicial.
 #### Scenario: Seção sem JavaScript
 - **WHEN** a rota de uma seção é carregada com JavaScript desabilitado
 - **THEN** a casca da IDE e o conteúdo do editor aparecem no HTML recebido
+
+### Requirement: Mostrar e esconder o painel do projeto
+No desktop, o botão Projeto da faixa de ferramentas SHALL mostrar e esconder o painel do projeto,
+indicando o estado com `aria-pressed`, e o editor SHALL ocupar o espaço liberado.
+
+#### Scenario: Esconder o projeto
+- **WHEN** o visitante ativa Projeto com o painel aberto
+- **THEN** o painel some, o editor ocupa a largura e o botão fica com `aria-pressed="false"`

@@ -36,4 +36,4 @@
 
 - [x] 5.1 [Escriba] README (créditos dos ícones), `docs/componentes.md`, `docs/arquitetura.md` e a entrada 0011 do diário (primeira versão)
 - [x] 5.2 [Escriba] Reescrever docs e a entrada 0011 do diário com a virada de rumo (ADR-0012) — verificar com `npm run format:check`
-- [ ] 5.3 [Regente] Revisar, abrir o PR, arquivar a change e fazer o merge — verificar pelo PR mesclado e pelo deploy
+- [x] 5.3 [Regente] Revisar, abrir o PR, arquivar a change e fazer o merge — verificar pelo PR mesclado e pelo deploy
