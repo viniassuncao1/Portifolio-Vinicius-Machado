@@ -105,7 +105,7 @@ test.describe('Barra superior (desktop)', () => {
     }
   });
 
-  test('o leitor de tela só encontra como botões Buscar, a branch, Projeto e Commit', async ({
+  test('o leitor de tela só encontra como botões Buscar, o tema, a branch, Projeto e Commit', async ({
     page,
   }) => {
     await page.goto('/skills');
@@ -118,6 +118,7 @@ test.describe('Barra superior (desktop)', () => {
 
     expect(botoes).toEqual([
       'Buscar seção (Ctrl+P)',
+      'Usar tema claro',
       'Branch master, abrir o painel do Git',
       'Projeto',
       'Commit',
@@ -179,7 +180,9 @@ test.describe('Ícones da barra de ferramentas do design', () => {
     const daArvore = await origens('app-arvore-de-secoes app-icone img');
 
     expect(daBarra.length).toBeGreaterThanOrEqual(8);
-    expect(daBarra.filter((src) => src.includes('icones/new-ui/')).length).toBe(2);
+    expect(
+      daBarra.filter((src) => src.includes('icones/new-ui/') && !src.includes('/claro/')).length,
+    ).toBe(2);
     expect(daArvore.length).toBeGreaterThan(0);
     for (const src of daArvore) expect(src).not.toContain('icones/new-ui/');
   });
@@ -370,7 +373,7 @@ test.describe('Ícones da New UI e créditos', () => {
       if (!r.url().startsWith('http://localhost')) externas.push(r.url());
     });
     await page.goto('/');
-    await expect(page.locator('app-barra-de-ferramentas .botao-busca img')).toBeVisible();
+    await expect(page.locator('app-barra-de-ferramentas .botao-busca img').first()).toBeVisible();
 
     // Ícones de controles escondidos neste tamanho (o Projeto do celular) nem chegam a carregar.
     const imagens = await page.locator('app-icone img').evaluateAll((els) =>

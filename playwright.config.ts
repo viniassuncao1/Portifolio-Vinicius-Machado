@@ -12,6 +12,8 @@ export default defineConfig({
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: 'on-first-retry',
+    // A suíte foi escrita para o tema escuro; o tema claro é pedido por teste (emulateMedia).
+    colorScheme: 'dark',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   // Testa o build de produção pré-renderizado, o mesmo que vai ao ar.

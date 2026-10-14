@@ -290,18 +290,20 @@ test.describe('Anel de foco rosa de 2px', () => {
 });
 
 test.describe('Ajustes nativos do navegador', () => {
-  test('o HTML declara color-scheme dark para controles e barras de rolagem nativos', async ({
+  test('o color-scheme dos controles nativos acompanha o tema (o sistema decide na primeira visita)', async ({
     page,
   }) => {
+    const esquema = () =>
+      page.evaluate(() => getComputedStyle(document.documentElement).colorScheme);
+
     await page.emulateMedia({ colorScheme: 'light' });
     await page.goto('/');
+    expect(await esquema()).toBe('light');
 
-    const esquema = await page.evaluate(
-      () => getComputedStyle(document.documentElement).colorScheme,
-    );
-
-    expect(esquema).toContain('dark');
-    expect(esquema).not.toContain('light');
+    await page.evaluate(() => localStorage.clear());
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.goto('/');
+    expect(await esquema()).toBe('dark');
   });
 
   test('o theme-color é o fundo dos painéis (#2B2B2B), já no HTML pré-renderizado', async ({

@@ -314,7 +314,9 @@ test.describe('Executar na calha', () => {
       expect(b.y + b.height).toBeGreaterThanOrEqual(l.y);
       expect(b.width).toBeGreaterThanOrEqual(24);
       expect(b.height).toBeGreaterThanOrEqual(24);
-      expect(await botao.locator('img').getAttribute('src')).toContain('icones/new-ui/executar');
+      expect(await botao.locator('img').first().getAttribute('src')).toContain(
+        'icones/new-ui/executar',
+      );
     });
 
     test(`${rota}: o ▶ tem foco visível e abre o preview`, async ({ page }) => {
