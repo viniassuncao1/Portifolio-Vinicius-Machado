@@ -199,6 +199,13 @@
   --cor-sintaxe-comentario: #6a6a6a;
 }
 
+// O build só inlina no HTML o CSS crítico que casa com o HTML pré-renderizado, e o `<html>` sai
+// sem `data-tema`: estes blocos ficariam só na folha carregada depois e o primeiro quadro sairia
+// escuro (o beasties não aceita marcadores `/*!`). Os marcadores abaixo (o `!` os preserva no CSS
+// final, com `removeSpecialComments: false` no angular.json) delimitam o que `scripts/inlinar-tokens-claros.mjs` copia para o `<style>`
+// inline de cada página depois do `ng build`. Não tire os marcadores nem acrescente regras fora
+// deles que o tema claro precise no primeiro quadro.
+/*! tokens-claros:inicio */
 :root[data-tema='claro'] {
   @include tema-claro;
 }
@@ -208,6 +215,7 @@
     @include tema-claro;
   }
 }
+/*! tokens-claros:fim */
 
 // Telas pequenas (< 768px): escala própria para o código e a árvore caberem em 390px, com o
 // código em no mínimo 13px e alvos de toque maiores.

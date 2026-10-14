@@ -6,7 +6,7 @@
     "prestart": "node scripts/gerar-informacoes-do-build.mjs && node scripts/gerar-historico-do-git.mjs",
     "start": "ng serve",
     "prebuild": "node scripts/gerar-informacoes-do-build.mjs && node scripts/gerar-historico-do-git.mjs",
-    "build": "ng build && node scripts/gerar-sitemap.mjs",
+    "build": "ng build && node scripts/inlinar-tokens-claros.mjs && node scripts/gerar-sitemap.mjs",
     "prewatch": "node scripts/gerar-informacoes-do-build.mjs && node scripts/gerar-historico-do-git.mjs",
     "watch": "ng build --watch --configuration development",
     "pretest": "node scripts/gerar-informacoes-do-build.mjs && node scripts/gerar-historico-do-git.mjs",

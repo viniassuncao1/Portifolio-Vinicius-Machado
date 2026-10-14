@@ -70,13 +70,9 @@ async function abrirNoClaro(page: Page, rota: string): Promise<void> {
 test.describe('Tema inicial: sistema no claro', () => {
   test.use({ colorScheme: 'light', viewport: DESKTOP });
 
-  // Bug aberto: o CSS crítico inlinado pelo build só tem os tokens escuros (o `:root[data-tema='claro']`
-  // e o `prefers-color-scheme` não casam com o HTML pré-renderizado e ficam só no styles-*.css, carregado
-  // depois). Com o estilo atrasado, o 1º quadro sai escuro mesmo com `data-tema="claro"`. Trocar por `test`
-  // quando os tokens claros estiverem no CSS crítico.
-  test.fixme('na primeira visita já pinta claro, sem nunca passar pelo escuro', async ({
-    page,
-  }) => {
+  // O CSS crítico inlinado pelo build só ganha os tokens claros pelo scripts/inlinar-tokens-claros.mjs;
+  // com o estilo atrasado, só ele pinta o 1º quadro.
+  test('na primeira visita já pinta claro, sem nunca passar pelo escuro', async ({ page }) => {
     // Atrasa a folha de estilos externa: só o CSS crítico inlinado no HTML pinta o 1º quadro.
     await page.route('**/styles-*.css', async (rota) => {
       await new Promise((resolver) => setTimeout(resolver, 800));
