@@ -6,7 +6,7 @@
 
 ## 2. Página [Grafite]
 
-- [ ] 2.1 Feature `repositorio` (rota, aba, cabeçalho, números, tipos, PRs, commits, link para tudo), `master` e Commit abrindo a aba, remoção do painel antigo e da área de baixo dividida — verificar com capturas `repositorio-desktop.png` e `repositorio-mobile.png` nos dois temas
+- [x] 2.1 Feature `repositorio` (rota, aba, cabeçalho, números, tipos, PRs, commits, link para tudo), `master` e Commit abrindo a aba, remoção do painel antigo e da área de baixo dividida — verificar com capturas `repositorio-desktop.png` e `repositorio-mobile.png` nos dois temas
 
 ## 3. Testes [Sentinela]
 
