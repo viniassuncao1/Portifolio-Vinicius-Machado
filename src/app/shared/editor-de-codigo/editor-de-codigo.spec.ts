@@ -273,19 +273,22 @@ describe('EditorDeCodigo', () => {
       expect(numeros?.getAttribute('aria-hidden')).toBe('true');
     });
 
-    it('exibe os números de 1 a 99 em ordem', () => {
-      const numeros = renderizar().querySelectorAll('.numeros > span');
+    it('exibe os números em ordem crescente, do 1 ao 99', () => {
+      const numeros = Array.from(renderizar().querySelectorAll('.numeros > span')).map((span) =>
+        Number(span.textContent),
+      );
+      const comNumero = numeros.filter((numero) => numero > 0);
 
-      expect(numeros).toHaveLength(99);
-      expect(numeros[0].textContent).toBe('1');
-      expect(numeros[14].textContent).toBe('15');
-      expect(numeros[98].textContent).toBe('99');
+      expect(comNumero[0]).toBe(1);
+      expect(comNumero.at(-1)).toBe(99);
+      expect(comNumero).toEqual([...comNumero].sort((a, b) => a - b));
     });
 
-    it('mantém os 99 números mesmo com conteúdo curto', () => {
+    it('mantém os números até o 99 mesmo com conteúdo curto', () => {
       const numeros = renderizar([vazia()]).querySelectorAll('.numeros > span');
 
       expect(numeros).toHaveLength(99);
+      expect(numeros[98].textContent).toBe('99');
     });
 
     it('reserva a área mínima de 15 linhas pelo estilo do host', () => {

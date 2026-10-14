@@ -9,7 +9,7 @@ import { EditorDeCodigo } from './editor-de-codigo';
 const ALTURA_DA_LINHA = 30;
 const TOPO_DO_EDITOR = 100;
 
-/** Linhas visuais que cada item ocupa; a coluna de números tem uma linha por número. */
+/** Linhas visuais que cada item ocupa na tela (o número é por linha lógica). */
 const LINHAS_POR_ITEM = [1, 4, 1, 3, 1];
 
 describe('Linha visual na barra de status', () => {
@@ -59,10 +59,10 @@ describe('Linha visual na barra de status', () => {
     return fixture.nativeElement as HTMLElement;
   };
 
-  it('reporta a linha visual do último item de código, não o seu índice', () => {
+  it('reporta o número da linha lógica do último item de código, não o seu índice', () => {
     abrir();
 
-    expect(TestBed.inject(EstadoDoEditor).linha()).toBe(10);
+    expect(TestBed.inject(EstadoDoEditor).linha()).toBe(9);
   });
 
   it('reporta a linha visual ao clicar num javadoc de várias linhas', () => {
@@ -71,7 +71,7 @@ describe('Linha visual na barra de status', () => {
     editor.querySelector<HTMLElement>('[data-indice="3"]')!.click();
     TestBed.tick();
 
-    expect(TestBed.inject(EstadoDoEditor).linha()).toBe(7);
+    expect(TestBed.inject(EstadoDoEditor).linha()).toBe(6);
   });
 
   it('reporta a primeira linha visual de um item que ocupa várias', () => {

@@ -12,20 +12,19 @@ import {
   linkedSignal,
   signal,
 } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { EstadoDoEditor } from '../../core/estado-do-editor';
 import { ProximoArquivo } from '../proximo-arquivo/proximo-arquivo';
 import { VisaoDeCodigo } from '../visao-de-codigo/visao-de-codigo';
 import { BotaoExecutar } from '../botao-executar/botao-executar';
-import { Icone } from '../icone/icone';
+import { JavadocDoEditor } from './javadoc-do-editor';
+import { FAIXAS_PADRAO, faixasDeNumeracao } from './numeracao';
+import type { Faixa, Numeracao } from './numeracao';
 import { ModoDeLeitura } from './modo-de-leitura';
-import { LADO_DO_RETRATO, paragrafosDoJavadoc } from './conteudo';
 import type { ConteudoDoEditor, Linha } from './conteudo';
 import { HistoricoDeDigitacao } from './historico-de-digitacao';
 
-const QUANTIDADE_DE_NUMEROS = 99;
 const DURACAO_MAXIMA_DA_DIGITACAO_MS = 1500;
 const DURACAO_POR_ITEM_MS = 40;
 /** Folga do fallback por tempo sobre a duração da digitação. */
@@ -39,7 +38,7 @@ const MOVIMENTO_REDUZIDO = '(prefers-reduced-motion: reduce)';
  */
 @Component({
   selector: 'app-editor-de-codigo',
-  imports: [BotaoExecutar, ProximoArquivo, VisaoDeCodigo, Icone, NgOptimizedImage],
+  imports: [BotaoExecutar, JavadocDoEditor, ProximoArquivo, VisaoDeCodigo],
   templateUrl: './editor-de-codigo.html',
   styleUrl: './editor-de-codigo.scss',
   host: {
@@ -57,13 +56,15 @@ export class EditorDeCodigo {
   private readonly historico = inject(HistoricoDeDigitacao);
   private readonly estado = inject(EstadoDoEditor);
   private readonly injector = inject(Injector);
-  protected readonly leitura = inject(ModoDeLeitura);
+  private readonly leitura = inject(ModoDeLeitura);
+  private observador: ResizeObserver | undefined;
   private quadro = 0;
   private temporizador: ReturnType<typeof setTimeout> | undefined;
 
   readonly conteudo = input.required<ConteudoDoEditor>();
 
-  protected readonly numeros = Array.from({ length: QUANTIDADE_DE_NUMEROS }, (_, i) => i + 1);
+  /** A coluna de números: por linha lógica, medida no navegador (1 a 99 até a primeira medição). */
+  protected readonly faixas = signal<readonly Faixa[]>(FAIXAS_PADRAO);
   /** Reserva a calha à esquerda dos números só quando alguma linha tem o ▶ de executar. */
   protected readonly temCalha = computed(() =>
     this.conteudo().some(
@@ -71,11 +72,6 @@ export class EditorDeCodigo {
     ),
   );
   protected readonly digitando = signal(false);
-  /**
-   * Número da linha onde a coluna de números ganha um espaço do tamanho da linha de code vision, que
-   * não tem número (como no IntelliJ); `null` sem code vision.
-   */
-  protected readonly linhaDaVisao = signal<number | null>(null);
   protected readonly pronto = signal(false);
 
   /** Índice (base 0) da última linha de código: onde o cursor começa. */
@@ -91,18 +87,16 @@ export class EditorDeCodigo {
 
   constructor() {
     afterNextRender(() => this.iniciar());
-    // O code vision só existe depois que o botão renderiza, então a medida é refeita a cada mudança.
+    // A numeração acompanha o conteúdo, o modo de leitura e o tamanho da tela (o texto quebra).
     effect(() => {
       void this.conteudo();
       void this.leitura.ativo();
-      afterNextRender(() => this.medirVisao(), { injector: this.injector });
+      afterNextRender(() => this.medirNumeracao(), { injector: this.injector });
     });
     inject(DestroyRef).onDestroy(() => this.cancelarAgendamentos());
   }
 
   protected readonly ehJavadoc = (item: Linha | undefined): boolean => item?.tipo === 'javadoc';
-  protected readonly paragrafosDoJavadoc = paragrafosDoJavadoc;
-  protected readonly ladoDoRetrato = LADO_DO_RETRATO;
 
   protected ehExterno(href: string): boolean {
     return href.startsWith('http');
@@ -118,7 +112,7 @@ export class EditorDeCodigo {
     const indice = Number(alvo?.getAttribute('data-indice'));
     if (!alvo || Number.isNaN(indice)) return;
     this.itemAtual.set(indice);
-    this.estado.posicionar(this.linhaVisual(alvo), 1);
+    this.estado.posicionar(this.numeroDoItem(indice), 1);
   }
 
   /**
@@ -141,12 +135,23 @@ export class EditorDeCodigo {
     this.concluir();
   }
 
+  /** Mede de novo quando o texto quebra diferente: a tela mudou de tamanho ou as fontes chegaram. */
+  private observarTamanho(): void {
+    const Observador = this.documento.defaultView?.ResizeObserver;
+    const codigo = this.host.querySelector('.codigo');
+    if (!Observador || !codigo) return;
+    this.observador = new Observador(() => this.medirNumeracao());
+    this.observador.observe(codigo);
+  }
+
   private cancelarAgendamentos(): void {
+    this.observador?.disconnect();
     this.documento.defaultView?.cancelAnimationFrame?.(this.quadro);
     clearTimeout(this.temporizador);
   }
 
   private iniciar(): void {
+    this.observarTamanho();
     const janela = this.documento.defaultView;
     const reduzido = janela?.matchMedia?.(MOVIMENTO_REDUZIDO).matches ?? false;
     const primeiraVez = this.historico.registrarPrimeiraVista(this.router.url.split(/[?#]/)[0]);
@@ -154,7 +159,7 @@ export class EditorDeCodigo {
 
     if (!janela || reduzido || !primeiraVez || total === 0) {
       this.pronto.set(true);
-      this.estado.posicionar(this.linhaVisual(this.elementoDoItem(this.itemAtual())), 1);
+      this.estado.posicionar(this.numeroDoItem(this.itemAtual()), 1);
       return;
     }
 
@@ -183,37 +188,50 @@ export class EditorDeCodigo {
     this.host.style.removeProperty('--digitado');
     this.digitando.set(false);
     this.pronto.set(true);
-    this.estado.posicionar(this.linhaVisual(this.elementoDoItem(this.itemAtual())), 1);
-  }
-
-  private medirVisao(): void {
-    const lente = this.host.querySelector('.visao-de-codigo');
-    const linha = lente?.querySelector('button') ? lente.nextElementSibling : null;
-    this.linhaDaVisao.set(linha ? this.linhaVisual(linha) : null);
+    this.estado.posicionar(this.numeroDoItem(this.itemAtual()), 1);
   }
 
   private elementoDoItem(indice: number): Element | null {
     return this.host.querySelector(`[data-indice="${indice}"]`);
   }
 
-  /**
-   * Número da linha visual (base 1) em que o item começa, igual ao da coluna de números. Um javadoc
-   * ou parágrafo ocupa várias linhas na tela, então o índice do item não serve. Sem layout (por
-   * exemplo, fora do navegador), cai no índice do item.
-   */
-  private linhaVisual(item: Element | null): number {
-    const indice = Number(item?.getAttribute('data-indice') ?? this.itemAtual());
-    const alturaDaLinha = this.host.querySelector('.numeros span')?.getBoundingClientRect().height;
-    const topoDoCodigo = this.host.querySelector('.numeros')?.getBoundingClientRect().top;
-    if (!item || !alturaDaLinha || topoDoCodigo === undefined) return indice + 1;
+  /** Número da linha (base 1) em que o item começa, igual ao da coluna de números. */
+  private numeroDoItem(indice: number): number {
+    return this.calcularNumeracao()?.numeroDoItem[indice] ?? indice + 1;
+  }
+
+  private medirNumeracao(): void {
+    const numeracao = this.calcularNumeracao();
+    if (numeracao) this.faixas.set(numeracao.faixas);
+  }
+
+  /** Mede os itens no navegador; `null` sem layout (servidor) ou com o conteúdo ainda por renderizar. */
+  private calcularNumeracao(): Numeracao | null {
+    const itens = this.conteudo();
+    const porIndice = new Map(
+      Array.from(this.host.querySelectorAll('[data-indice]'), (el) => [
+        Number(el.getAttribute('data-indice')),
+        el,
+      ]),
+    );
+    const elementos = itens.map((_, i) => porIndice.get(i));
+    if (itens.length === 0 || elementos.some((elemento) => !elemento)) return null;
+    const alturas = elementos.map((elemento) => elemento!.getBoundingClientRect().height);
+    if (alturas.every((altura) => altura === 0)) return null;
+
+    const javadoc = elementos.find((_, i) => itens[i].tipo === 'javadoc');
+    const alturaDaLinhaDoJavadoc = javadoc
+      ? parseFloat(getComputedStyle(javadoc).lineHeight) || 0
+      : 0;
     const lente = this.host.querySelector<HTMLElement>('.visao-de-codigo');
-    const lenteAntes =
-      lente?.querySelector('button') &&
-      lente.compareDocumentPosition(item) & Node.DOCUMENT_POSITION_FOLLOWING;
-    const distancia =
-      item.getBoundingClientRect().top -
-      topoDoCodigo -
-      (lente && lenteAntes ? lente.offsetHeight : 0);
-    return Math.max(1, Math.floor((distancia + alturaDaLinha / 2) / alturaDaLinha) + 1);
+    const antesDoItem = itens.findIndex((item) => item.tipo === 'codigo' && item.executavel);
+    const comLente = lente?.querySelector('button') && antesDoItem !== -1;
+    return faixasDeNumeracao(itens, {
+      alturas,
+      alturaDaLinhaDoJavadoc: alturaDaLinhaDoJavadoc || alturas[0],
+      leitura: this.leitura.ativo(),
+      visao:
+        comLente && lente ? { antesDoItem, altura: lente.getBoundingClientRect().height } : null,
+    });
   }
 }

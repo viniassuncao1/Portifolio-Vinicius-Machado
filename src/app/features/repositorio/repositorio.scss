@@ -202,11 +202,12 @@ button:focus-visible {
   background: var(--cor-sintaxe-campo);
 }
 
-[data-tipo='chore'],
-[data-tipo='outros'] {
+[data-tipo='chore'] {
   background: var(--cor-texto-esmaecido);
 }
 
+// `outros` reúne os tipos pequenos; um tipo raro sozinho nunca convive com ele e usa a mesma cor.
+[data-tipo='outros'],
 [data-tipo='perf'],
 [data-tipo='ci'],
 [data-tipo='build'],

@@ -1,15 +1,4 @@
-@use 'sass:string';
-
-// Coluna de "*" do bloco de comentário: o pseudo-elemento é recortado pela altura do bloco.
-$quantidade-de-marcadores: 60;
-
-@function coluna-de-marcadores($quantidade) {
-  $coluna: '*';
-  @for $i from 2 through $quantidade {
-    $coluna: $coluna + '\A *';
-  }
-  @return $coluna;
-}
+@use 'marcadores' as *;
 
 :host {
   display: grid;
@@ -106,7 +95,7 @@ $quantidade-de-marcadores: 60;
   overflow-wrap: anywhere;
 
   &::before {
-    content: coluna-de-marcadores($quantidade-de-marcadores) / '';
+    content: coluna-de-marcadores() / '';
     position: absolute;
     inset-block: 0;
     inset-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo) - var(--afastamento-marcador));
@@ -131,141 +120,6 @@ $quantidade-de-marcadores: 60;
 
   &:not(:has(button)) {
     display: none;
-  }
-}
-
-.espaco-da-visao {
-  display: block;
-  height: var(--altura-visao-de-codigo);
-}
-
-// Botão da calha que alterna o modo de leitura, na primeira linha do bloco de Javadoc.
-.alternar-leitura {
-  position: absolute;
-  inset-inline-start: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  width: var(--largura-calha);
-  height: var(--largura-calha);
-  margin-block-start: calc((var(--altura-linha-comentario) - var(--largura-calha)) / 2);
-  padding: 0;
-  border: 0;
-  border-radius: var(--raio-controle);
-  background: transparent;
-  cursor: pointer;
-  opacity: 0.7;
-
-  &[aria-pressed='true'] {
-    opacity: 1;
-    background: var(--cor-aba-passando);
-  }
-
-  &:hover {
-    opacity: 1;
-  }
-
-  &:focus-visible {
-    opacity: 1;
-    outline: var(--largura-anel-foco) solid var(--cor-foco);
-    outline-offset: -2px;
-  }
-}
-
-// Javadoc: `/**`, a coluna de `*` e `*/` são pseudo-elementos (fora do texto copiado e lido). O `*`
-// fica uma coluna à direita do `/`, como numa IDE; o texto começa três colunas depois do recuo.
-.javadoc {
-  --avanco: calc(0.6em + var(--espacamento-letras-codigo));
-
-  display: block;
-  padding-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo));
-  color: var(--cor-sintaxe-comentario);
-  font-size: var(--texto-comentario);
-  letter-spacing: var(--espacamento-letras-codigo);
-  line-height: var(--altura-linha-comentario);
-  white-space: normal;
-
-  &::before,
-  &::after {
-    display: block;
-    white-space: pre;
-    user-select: none;
-  }
-
-  &::before {
-    // Strings separadas: `/` e `*` juntos seriam lidos como comentário de CSS pelo Angular.
-    content: '/' '*' '*' / '';
-  }
-
-  &::after {
-    content: '*' '/' / '';
-    padding-inline-start: var(--avanco);
-  }
-}
-
-.javadoc-texto {
-  position: relative;
-  box-sizing: content-box;
-  // O retrato (se houver) fica à esquerda do corpo; o bloco cresce para o maior dos dois e a coluna
-  // de `*` a acompanha.
-  display: flex;
-  gap: var(--espaco-3);
-  align-items: flex-start;
-  padding-inline-start: calc(3 * var(--avanco));
-  overflow-wrap: anywhere;
-
-  &::before {
-    content: coluna-de-marcadores($quantidade-de-marcadores) / '';
-    position: absolute;
-    inset-block: 0;
-    inset-inline-start: var(--avanco);
-    overflow: hidden;
-    color: var(--cor-sintaxe-comentario-marcador);
-    white-space: pre;
-    user-select: none;
-  }
-}
-
-.javadoc-corpo {
-  display: block;
-  min-inline-size: 0;
-  // Mesma quebra do parágrafo: 72 colunas de texto depois das três colunas de ` * `.
-  max-inline-size: calc(var(--colunas-paragrafo) * var(--avanco));
-}
-
-.retrato {
-  flex: none;
-  box-sizing: border-box;
-  width: var(--lado-retrato-grande);
-  height: var(--lado-retrato-grande);
-  margin-block: var(--espaco-1);
-  border: var(--borda-largura) solid var(--cor-borda);
-  border-radius: 50%;
-  object-fit: cover;
-
-  &.pequeno {
-    width: var(--lado-retrato-pequeno);
-    height: var(--lado-retrato-pequeno);
-  }
-}
-
-.aviso-nova-aba {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.javadoc-paragrafo {
-  display: block;
-
-  // Entre parágrafos, uma linha inteira: a coluna de `*` do bloco desenha o ` *` dela.
-  & + & {
-    margin-block-start: var(--altura-linha-comentario);
   }
 }
 
@@ -309,43 +163,6 @@ a[class^='papel-'] {
   &:focus-visible {
     outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: 2px;
-  }
-}
-
-// Modo de leitura (Rendered View do IntelliJ): o mesmo texto, sem `/**`, `*` e `*/`, em Inter, na cor
-// de texto, com ~65 caracteres por linha e fundo próprio. O DOM é o mesmo do modo cru, então o texto
-// copiado e lido é igual.
-.javadoc[data-modo='leitura'] {
-  box-sizing: border-box;
-  inline-size: fit-content;
-  max-inline-size: 100%;
-  margin-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo));
-  padding: var(--espaco-2) var(--espaco-4);
-  padding-inline-start: var(--espaco-4);
-  border-radius: var(--raio-controle);
-  background: var(--cor-javadoc-renderizado);
-  color: var(--cor-texto);
-  font-family: var(--fonte-interface);
-  font-size: var(--texto-arvore);
-  letter-spacing: normal;
-  line-height: 1.6;
-
-  &::before,
-  &::after,
-  .javadoc-texto::before {
-    content: none;
-  }
-
-  .javadoc-texto {
-    padding-inline-start: 0;
-  }
-
-  .javadoc-corpo {
-    max-inline-size: 65ch;
-  }
-
-  .javadoc-paragrafo + .javadoc-paragrafo {
-    margin-block-start: var(--espaco-2);
   }
 }
 
