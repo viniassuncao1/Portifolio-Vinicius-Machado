@@ -116,15 +116,15 @@ describe('conteúdo das seções em Java moderno', () => {
       constantes.forEach((nome) => expect(nome).toMatch(/^[A-Z][A-Z0-9_]*$/));
     });
 
-    it('os campos do Diferenciais estão em inglês: city, extrovert, curious', () => {
+    it('os campos do Diferenciais estão em português: cidade, extrovertido, curioso', () => {
       const texto = textoDe(CONTEUDO_DIFERENCIAIS);
 
-      for (const campo of ['String city', 'boolean extrovert', 'boolean curious']) {
+      for (const campo of ['String cidade', 'boolean extrovertido', 'boolean curioso']) {
         expect(texto).toContain(campo);
       }
     });
 
-    it('a cidade é "Brasília" no campo city, e o texto do leitor fica em pt-BR', () => {
+    it('a cidade é "Brasília" no campo cidade, e o texto do leitor fica em pt-BR', () => {
       expect(literaisDe(CONTEUDO_DIFERENCIAIS)).toContain('"Brasília"');
       expect(textoDe(CONTEUDO_DIFERENCIAIS)).toContain('Moro em Brasília há 20 anos.');
     });

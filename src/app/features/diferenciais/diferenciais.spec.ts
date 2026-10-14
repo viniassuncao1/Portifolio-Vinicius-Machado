@@ -25,24 +25,26 @@ describe('Diferenciais', () => {
     expect(raiz.querySelector('h1')).toBeNull();
   });
 
-  it('declara o record PersonalData e a constante VINICIUS, na ordem', async () => {
+  it('declara o pacote, a classe, o record DadosPessoais e a variável vinicius, na ordem', async () => {
     const raiz = await renderizar();
     const textos = Array.from(raiz.querySelectorAll('code > span'))
       .map((linha) => linha.textContent?.replace(/\s+/g, ' ').trim())
       .filter((texto) => texto);
 
     expect(textos).toEqual([
+      'package dev.vinicius.portfolio.sobre;',
       expect.stringContaining(INICIO_DO_PARAGRAFO),
-      'public record PersonalData(',
-      'String hometown,',
-      'String city,',
-      'int yearsInCity,',
-      'boolean extrovert,',
-      'boolean curious,',
-      'boolean loveToLearn',
-      ') {',
+      'public class Diferenciais {',
+      '// Os dados que me definem',
+      'record DadosPessoais(',
+      'String origem,',
+      'String cidade,',
+      'int anosNaCidade,',
+      'boolean extrovertido,',
+      'boolean curioso,',
+      'boolean gostaDeAprender) {}',
       '// Quem sou eu, em dados',
-      'public static final PersonalData VINICIUS = new PersonalData(',
+      'DadosPessoais vinicius = new DadosPessoais(',
       '"Mineiro",',
       '"Brasília",',
       '20, // anos em Brasília',
@@ -63,7 +65,7 @@ describe('Diferenciais', () => {
     ]);
   });
 
-  it.each(['extrovert', 'curious', 'loveToLearn'])(
+  it.each(['extrovertido', 'curioso', 'gostaDeAprender'])(
     'declara boolean %s como declaração',
     async (campo) => {
       const raiz = await renderizar();
@@ -96,15 +98,15 @@ describe('Diferenciais', () => {
     );
   });
 
-  it('recua os componentes dois níveis, a constante um e o parágrafo zero', async () => {
+  it('recua os componentes três níveis, a variável um e o parágrafo zero', async () => {
     const raiz = await renderizar();
     const recuo = (texto: string) =>
       (linhaDe(raiz, texto) as HTMLElement).style.getPropertyValue('--recuo');
 
-    expect(recuo('String hometown,')).toBe('2');
-    expect(recuo('PersonalData VINICIUS')).toBe('1');
+    expect(recuo('String origem,')).toBe('3');
+    expect(recuo('DadosPessoais vinicius')).toBe('1');
     expect(recuo('"Mineiro"')).toBe('3');
-    expect(recuo('public record PersonalData')).toBe('0');
+    expect(recuo('public class Diferenciais')).toBe('0');
     expect(recuo(INICIO_DO_PARAGRAFO)).toBe('0');
   });
 
@@ -117,7 +119,7 @@ describe('Diferenciais', () => {
     expect(texto.endsWith(FIM_DO_PARAGRAFO)).toBe(true);
   });
 
-  it('fecha o record com a chave de fechamento no recuo zero', async () => {
+  it('fecha a classe com a chave de fechamento no recuo zero', async () => {
     const ultima = CONTEUDO_DIFERENCIAIS.at(-1);
 
     expect(ultima).toMatchObject({ tipo: 'codigo', recuo: 0 });
