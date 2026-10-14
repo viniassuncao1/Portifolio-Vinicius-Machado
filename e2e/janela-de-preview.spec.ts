@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import type { Locator, Page } from '@playwright/test';
 
-import { abrirHidratada, abrirPastas, arquivoDaArvore } from './apoio';
+import { abrirHidratada, abrirPastas, arquivoDaArvore, esperarLogDoRun } from './apoio';
 
 interface Projeto {
   rota: string;
@@ -425,6 +425,7 @@ test.describe('Janela de preview no celular (390x844)', () => {
 const TAGS = ['wcag2a', 'wcag2aa'];
 
 async function violacoes(page: Page): Promise<string[]> {
+  await esperarLogDoRun(page);
   const { violations } = await new AxeBuilder({ page }).withTags(TAGS).analyze();
   return violations.flatMap((v) =>
     v.nodes.map((no) => `[${v.impact}] ${v.id}: ${no.target.join(' ')}\n${no.html}`),

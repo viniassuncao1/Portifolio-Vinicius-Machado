@@ -23,6 +23,25 @@ export async function abrirComFocoNaCasca(page: Page, url: string): Promise<void
     .focus();
 }
 
+/**
+ * Espera a janela de Run terminar a revelação do log. Na primeira página ela abre sozinha e cada
+ * linha faz um fade de `opacity`: o axe medido no meio dele reprova o contraste de uma linha que
+ * ainda aparece. Sem a janela aberta (movimento reduzido, sessão já vista) volta na hora.
+ */
+export async function esperarLogDoRun(page: Page): Promise<void> {
+  await expect(page.locator('main app-editor-de-codigo')).toHaveClass(/pronto/);
+  await expect(
+    page.locator('app-janela-de-run[data-aberto="true"] section[data-terminado="false"]'),
+  ).toHaveCount(0);
+  await expect
+    .poll(() =>
+      page
+        .locator('app-janela-de-run')
+        .evaluate((el) => el.getAnimations({ subtree: true }).length),
+    )
+    .toBe(0);
+}
+
 export const normalizar = (texto: string | null): string =>
   (texto ?? '').replace(/\s+/g, ' ').trim();
 

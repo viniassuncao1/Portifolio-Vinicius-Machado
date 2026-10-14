@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test';
 import type { Result } from 'axe-core';
 
 import { SECOES, totalDePaginas } from '../src/app/core/secoes';
+import { esperarLogDoRun } from './apoio';
 
 /** Início e todas as páginas de todas as seções, geradas de SECOES (uma seção nova entra sozinha). */
 const ROTAS = [
@@ -66,8 +67,7 @@ for (const { nome, viewport } of TELAS) {
       test(`${rota} não tem violações`, async ({ page }) => {
         await page.goto(rota);
         await expect(page.getByRole('heading', { level: 1 })).toBeAttached();
-        // A janela de Run abre sozinha na primeira página; o axe mede depois do fade de entrada.
-        await expect(page.locator('app-janela-de-run')).toHaveCSS('opacity', '1');
+        await esperarLogDoRun(page);
 
         const { violations } = await new AxeBuilder({ page }).withTags(TAGS).analyze();
 

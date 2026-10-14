@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
-import { linhasDoCodigo, textoDoCodigo } from './apoio';
+import { esperarLogDoRun, linhasDoCodigo, textoDoCodigo } from './apoio';
 
 const controle = (page: Page) => page.getByRole('navigation', { name: 'Páginas da seção' });
 const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
@@ -138,8 +138,7 @@ test.describe('Certificações (/certificacoes)', () => {
     test(`${rota} não tem violações de acessibilidade (axe, WCAG 2 A e AA)`, async ({ page }) => {
       await page.goto(rota);
       await expect(page.getByRole('heading', { level: 1 })).toBeAttached();
-      // A janela de Run abre sozinha na primeira página; o axe mede depois do fade de entrada.
-      await expect(page.locator('app-janela-de-run')).toHaveCSS('opacity', '1');
+      await esperarLogDoRun(page);
 
       const { violations } = await new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa'])

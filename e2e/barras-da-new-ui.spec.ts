@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 import { readFile, readdir } from 'node:fs/promises';
 
-import { abrirHidratada, arquivoDaArvore } from './apoio';
+import { abrirHidratada, arquivoDaArvore, esperarLogDoRun } from './apoio';
 
 const TAGS = ['wcag2a', 'wcag2aa'];
 const DESKTOP = { width: 1920, height: 1080 };
@@ -19,6 +19,7 @@ const buscar = (page: Page) => page.getByRole('button', { name: 'Buscar seção 
 const status = (page: Page) => page.getByRole('status').filter({ hasText: 'UTF-8' });
 
 async function violacoes(page: Page): Promise<string[]> {
+  await esperarLogDoRun(page);
   const { violations } = await new AxeBuilder({ page }).withTags(TAGS).analyze();
   return violations.flatMap((v) => v.nodes.map((n) => `${v.id}: ${n.target.join(' ')}`));
 }
