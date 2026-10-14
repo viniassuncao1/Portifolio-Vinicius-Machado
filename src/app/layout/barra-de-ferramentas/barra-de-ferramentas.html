@@ -37,10 +37,17 @@
 >
   <app-icone nome="buscar" />
 </button>
-<span class="ramo" aria-hidden="true">
+<button
+  type="button"
+  class="ramo"
+  aria-controls="painel-do-git"
+  aria-label="Branch master, abrir o painel do Git"
+  [attr.aria-expanded]="git.aberto()"
+  (click)="git.alternar($any($event.currentTarget))"
+>
   <app-icone nome="ramo" />
   {{ ramo }}
-</span>
+</button>
 <svg class="controles-janela" viewBox="0 0 120 24" focusable="false" aria-hidden="true">
   <path d="M8 13h14" />
   <path d="M52 5h11v11H52z M63 5l2-2v11l-2 2" />

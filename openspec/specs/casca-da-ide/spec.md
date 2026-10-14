@@ -70,15 +70,15 @@ foco visível, e ativados pela tecla Enter.
 - **THEN** o foco fica visível durante o percurso e a seção "Eventos" é aberta
 
 ### Requirement: Elementos decorativos ocultos
-Os controles que imitam a IDE sem ter função (ícones da barra, controles de janela, indicador de
-branch, Commit e Estrutura, botões do cabeçalho do painel e Executar fora dos projetos com site)
-MUST ser ignorados por tecnologias assistivas e MUST NOT receber foco. Buscar, Projeto e
+Os controles que imitam a IDE sem ter função (ícones da barra, controles de janela, Estrutura,
+botões do cabeçalho do painel e Executar fora dos projetos com site) MUST ser ignorados por
+tecnologias assistivas e MUST NOT receber foco. Buscar, Projeto, Commit, o indicador `master` e
 Executar nos projetos com site são botões reais, com nome acessível.
 
 #### Scenario: Leitor de tela na barra de ferramentas
 - **WHEN** um leitor de tela percorre a página
-- **THEN** os controles decorativos não são anunciados, e Buscar e Projeto são anunciados como
-  botões
+- **THEN** os controles decorativos não são anunciados, e Buscar, Projeto, Commit e `master`
+  são anunciados como botões
 
 ### Requirement: Adaptação a telas pequenas
 Em telas com largura menor que 768px, a faixa de ferramentas SHALL ficar oculta, o painel do
@@ -109,3 +109,11 @@ indicando o estado com `aria-pressed`, e o editor SHALL ocupar o espaço liberad
 #### Scenario: Esconder o projeto
 - **WHEN** o visitante ativa Projeto com o painel aberto
 - **THEN** o painel some, o editor ocupa a largura e o botão fica com `aria-pressed="false"`
+
+### Requirement: Abrir o Git pela faixa de ferramentas
+O botão Commit da faixa de ferramentas SHALL abrir e fechar o painel do Git, indicando o estado
+com `aria-pressed`.
+
+#### Scenario: Commit na faixa
+- **WHEN** o visitante ativa Commit com o painel fechado
+- **THEN** o painel do Git abre e o botão fica com `aria-pressed="true"`

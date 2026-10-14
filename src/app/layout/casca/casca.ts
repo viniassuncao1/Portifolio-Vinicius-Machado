@@ -19,6 +19,7 @@ import { BarraDeStatus } from '../barra-de-status/barra-de-status';
 import { BarraDeFerramentas } from '../barra-de-ferramentas/barra-de-ferramentas';
 import { FaixaDeAbas } from '../faixa-de-abas/faixa-de-abas';
 import { FaixaDeFerramentas } from '../faixa-de-ferramentas/faixa-de-ferramentas';
+import { PainelDoGitComponente } from '../painel-do-git/painel-do-git';
 import { PainelLateral } from '../painel-lateral/painel-lateral';
 
 /**
@@ -34,6 +35,7 @@ import { PainelLateral } from '../painel-lateral/painel-lateral';
     BarraDeFerramentas,
     FaixaDeFerramentas,
     PainelLateral,
+    PainelDoGitComponente,
     FaixaDeAbas,
     BarraDeStatus,
     BuscaDeSecoes,

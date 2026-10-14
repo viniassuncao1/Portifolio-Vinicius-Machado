@@ -33,6 +33,13 @@
   --cor-acento: #de60d2;
   --largura-anel-foco: 2px;
   --cor-fundo-modal: rgb(0 0 0 / 55%);
+  // Cores das faixas do grafo do Git (paleta do design, todas acima de 3:1 sobre o painel)
+  --cor-grafo-1: #de60d2;
+  --cor-grafo-2: #d5963e;
+  --cor-grafo-3: #8fc258;
+  --cor-grafo-4: #4fafac;
+  --cor-grafo-5: #7489f8;
+  --cor-grafo-6: #aaaaaa;
 
   // Sintaxe: o Java do IntelliJ sobre os fundos do design. O comentário é o #8C9097 do IntelliJ
   // clareado para #8F939A, que dá 4,59:1 sobre o editor (#2B2B2B); o original dava 4,42:1.
@@ -108,6 +115,10 @@
   --altura-janela-preview: min(88dvh, 90rem);
   --altura-barra-gaveta: 2.25rem;
   --camada-gaveta: 10;
+  --camada-painel-git: 11;
+  --altura-painel-git: 40%;
+  --altura-linha-git: 1.5rem;
+  --largura-faixa-grafo: 0.875rem;
   --largura-faixa-ferramentas: 2.5rem;
   --largura-calha: 1.5rem;
   --tamanho-botao-barra: 1.75rem;

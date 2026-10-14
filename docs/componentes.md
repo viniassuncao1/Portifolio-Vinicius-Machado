@@ -12,6 +12,7 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 | -------------------------------------------------------------- | ---------------- | --------------------------- | ------------------------------ |
 | Barra de ferramentas do design (ícones, branch, Buscar)        | todas            | `BarraDeFerramentas`        | `layout/barra-de-ferramentas/` |
 | Faixa de ferramentas à esquerda (Projeto, Commit, Estrutura)   | desktop (nossa)  | `FaixaDeFerramentas`        | `layout/faixa-de-ferramentas/` |
+| Painel do Git (grafo, commits e detalhes)                      | (nosso)          | `PainelDoGitComponente`     | `layout/painel-do-git/`        |
 | Painel do projeto (cabeçalho "Projeto", árvore, rodapé)        | todas            | `PainelLateral`             | `layout/painel-lateral/`       |
 | Árvore de seções com ícones                                    | todas            | `ArvoreDeSecoes`            | `layout/arvore-de-secoes/`     |
 | Faixa de abas dos arquivos abertos                             | todas (nossa)    | `FaixaDeAbas`               | `layout/faixa-de-abas/`        |
@@ -111,6 +112,8 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   projeto" só nas rotas com preview (`JanelaDePreview.previewDaRota()`); o foco é um anel rosa.
 - **Entrada e saídas:** `gavetaAberta = input(false)`; `alternarGaveta` e `buscar`. Método
   público: `focarProjeto()`, usado para devolver o foco quando a gaveta fecha.
+- **Branch `master`:** é um botão de verdade que abre e fecha o painel do Git
+  (`aria-controls="painel-do-git"`, `aria-expanded`).
 - **Celular:** a barra fica compacta e escura, com Projeto (ícone) e Buscar.
 
 ### `FaixaDeFerramentas`
@@ -118,8 +121,30 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 - **Onde:** `layout/faixa-de-ferramentas/faixa-de-ferramentas.ts`, seletor
   `app-faixa-de-ferramentas`.
 - **O que faz:** a faixa de 40px à esquerda, só no desktop. **Projeto** mostra e esconde o painel
-  do projeto; **Commit** e **Estrutura** só imitam a IDE (fora da leitura e do foco).
+  do projeto; **Commit** abre e fecha o painel do Git (`aria-pressed`); **Estrutura** só imita a
+  IDE (fora da leitura e do foco).
 - **Entrada e saída:** `painelVisivel = input.required<boolean>()` e `alternarPainel`.
+
+### `PainelDoGitComponente`
+
+- **Onde:** `layout/painel-do-git/painel-do-git.ts`, seletor `app-painel-do-git`, montado na
+  `Casca` com `id="painel-do-git"`.
+- **O que faz:** o painel do Git na parte de baixo da área do editor, como o Git Log do IntelliJ
+  (no celular, em tela cheia). Cabeçalho "Git" com a aba visual "Log" e o botão de fechar; abaixo,
+  a lista de commits e os detalhes do escolhido. Cada linha tem o grafo (SVG, `aria-hidden`), o
+  assunto, o autor e a data relativa. Os detalhes mostram SHA, mensagem, autor, data, o link do
+  commit no GitHub e, nos merges, o link do PR.
+- **Teclado e leitores de tela:** a lista é um `listbox` com `aria-activedescendant`. As setas movem
+  o commit ativo, Enter ou clique mostram os detalhes, e **Esc fecha** e devolve o foco a quem
+  abriu. O foco entra no painel ao abrir e vai para a lista quando o histórico chega.
+- **Estados:** carregando, erro (com "Tentar de novo"), vazio ("O histórico do Git não está
+  disponível nesta versão do site") e pronto.
+- **Estado do serviço:** o serviço `PainelDoGit` (`core/painel-do-git.ts`) tem `aberto`, `estado`,
+  `historico` e `vazio`, e os métodos `abrir(origem)`, `fechar()`, `alternar(origem)` e
+  `tentarDeNovo()`. O histórico só é baixado na primeira abertura. O host recebe `data-aberto`: o CSS
+  anima `opacity` e `transform` com `@starting-style` (entrada a partir de 0,6, nunca de 0) e
+  `transition-behavior: allow-discrete` no `display`, sem animação com movimento reduzido.
+- **Entradas e saídas:** nenhuma.
 
 ### `FaixaDeAbas`
 

@@ -116,6 +116,36 @@ O SHA mostrado na barra vem de `scripts/gerar-informacoes-do-build.mjs`, que rod
 **merge**, que não existe na branch e daria um link quebrado. O deploy de preview do
 `ci.yml` define `SHA_DO_COMMIT` com `github.event.pull_request.head.sha`, o commit real da branch.
 
+### Painel do Git
+
+O indicador `master` da barra de ferramentas e o ícone Commit da faixa abrem o **painel do Git**,
+com o histórico real do repositório ([ADR-0013](adr/0013-historico-do-git-gerado-no-build.md)).
+
+- **Histórico gerado no build.** `scripts/gerar-historico-do-git.mjs` roda nos scripts `pre*`
+  (junto do de informações do build), lê o `git log` com `execFileSync` (sem shell) e grava
+  `public/git/historico.json`, que está no `.gitignore`. Cada commit tem SHA, pais, nome do autor,
+  data, assunto e, nos merges de PR, o número e a branch. **Não há e-mails** no arquivo, e não há
+  token nem chamada à API do GitHub. Sem `git`, sem repositório ou em clone raso, o script grava a
+  lista vazia e nunca falha o build.
+- **Nome do autor unificado.** O `.mailmap` da raiz junta as grafias do nome (`%aN`, o nome já
+  passado pelo `.mailmap`), então o painel mostra uma só.
+- **Histórico completo no CI.** Os jobs que fazem build (`build-e2e`, `deploy-preview` e
+  `deploy-producao`) usam `fetch-depth: 0` no checkout; com o checkout raso, o histórico sairia
+  vazio.
+- **`core/git/`.** `historico.ts` tem os tipos (`CommitDoHistorico`, `HistoricoDoGit`);
+  `ler-historico.ts` valida o JSON no limite do sistema (`lerHistorico` devolve `null` se o formato
+  estiver errado) e monta os endereços do commit e do PR; `faixas.ts` tem `calcularFaixas`.
+- **Faixas do grafo no navegador.** `calcularFaixas` é uma função pura: cada commit ocupa uma
+  coluna, o primeiro pai herda a coluna e os outros pais abrem colunas novas, que fecham quando o
+  pai é alcançado. Ela roda no navegador, e não no script, para ser testada com o Vitest e manter o
+  script simples. O painel desenha o resultado em SVG (`layout/painel-do-git/grafo.ts`), com as
+  cores `--cor-grafo-1` a `--cor-grafo-6`.
+- **Carregamento sob demanda.** O serviço `PainelDoGit` (`core/painel-do-git.ts`) guarda se o painel
+  está aberto, o estado do histórico (`ocioso`, `carregando`, `pronto` ou `erro`) e o JSON. O
+  arquivo só é baixado na **primeira abertura**, nunca no servidor nem no carregamento inicial, e
+  fica guardado no serviço. O painel não é pré-renderizado aberto, então as datas relativas só são
+  calculadas no navegador.
+
 ### Gaveta no celular
 
 Abaixo de 768px o painel do projeto vira uma **gaveta**. O botão Projeto da barra superior

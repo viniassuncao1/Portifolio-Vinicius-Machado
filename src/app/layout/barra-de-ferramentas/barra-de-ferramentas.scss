@@ -40,14 +40,34 @@ button.botao {
   }
 }
 
-// Indicador de branch do Git, ao lado dos ícones.
+// Indicador de branch do Git, ao lado dos ícones: abre o painel do Git.
 .ramo {
   display: flex;
   flex: none;
   align-items: center;
   gap: var(--espaco-1);
+  min-height: var(--tamanho-botao-barra);
   margin-inline-start: var(--espaco-3);
+  padding-inline: var(--espaco-2);
+  border: 0;
+  border-radius: var(--raio-controle);
+  background: transparent;
+  color: inherit;
+  font: inherit;
   white-space: nowrap;
+  cursor: pointer;
+
+  // Fundo escuro no passar do mouse e com o painel aberto: o texto passa de 4,5:1 (no cinza do hover
+  // dos ícones daria 4,0:1).
+  &:hover,
+  &[aria-expanded='true'] {
+    background: var(--cor-linha-selecionada);
+  }
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: -2px;
+  }
 }
 
 // O botão Projeto só existe no celular, onde a faixa de ferramentas some.
@@ -81,7 +101,6 @@ button.botao {
     margin-inline-start: auto;
   }
 
-  .ramo,
   .executar,
   .decorativo,
   .controles-janela {

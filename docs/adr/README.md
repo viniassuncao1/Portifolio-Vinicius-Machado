@@ -20,6 +20,7 @@ Um ADR aceito não é editado. Se a decisão mudar, um novo ADR o substitui e o 
 | [0010](0010-design-como-referencia-e-java-moderno.md)     | Design como referência e Java moderno          | Aceito, substituído em parte pelo 0011 |
 | [0011](0011-identidade-visual-intellij-new-ui.md)         | Identidade visual do IntelliJ IDEA New UI      | Aceito, substituído em parte pelo 0012 |
 | [0012](0012-design-original-com-elementos-do-intellij.md) | Design original com elementos do IntelliJ      | Aceito                                 |
+| [0013](0013-historico-do-git-gerado-no-build.md)          | Histórico do Git gerado no build               | Aceito                                 |
 
 ## Modelo
 

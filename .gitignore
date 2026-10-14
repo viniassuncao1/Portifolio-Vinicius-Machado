@@ -86,3 +86,6 @@ Thumbs.db
 
 # Gerado por scripts/gerar-informacoes-do-build.mjs
 /src/app/core/build.gerado.ts
+
+# Gerado por scripts/gerar-historico-do-git.mjs
+/public/git/historico.json
