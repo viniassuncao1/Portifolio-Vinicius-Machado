@@ -55,7 +55,7 @@ describe('Depoimentos', () => {
     const texto = await codigo();
 
     expect(texto).toContain(
-      'record Recommendation(String author, String role, String relationship, LocalDate date)',
+      'record Recomendacao(String autora, String cargo, String relacao, LocalDate data)',
     );
   });
 
@@ -83,14 +83,18 @@ describe('Depoimentos', () => {
     expect(raiz.textContent).not.toMatch(/lorem|ipsum|dolor sit amet/i);
   });
 
-  it('lista as recomendações em ALL', async () => {
-    expect(await codigo()).toContain('ALL = List.of(');
+  it('lista as recomendações em todas e não usa static final', async () => {
+    const texto = await codigo();
+
+    expect(texto).toContain('package dev.vinicius.portfolio.recomendacoes;');
+    expect(texto).toContain('List<Recomendacao> todas = List.of(luana);');
+    expect(texto).not.toContain('static final');
   });
 
-  it('acrescentar uma recomendação é só uma entrada: cada `new Recommendation` entra em ALL', async () => {
+  it('acrescentar uma recomendação é só uma entrada: cada `new Recomendacao` entra em todas', async () => {
     const texto = await codigo();
-    const criadas = texto.match(/new Recommendation\(/g) ?? [];
-    const lista = /ALL = List\.of\(([^)]*)\)/.exec(texto)?.[1] ?? '';
+    const criadas = texto.match(/new Recomendacao\(/g) ?? [];
+    const lista = /todas = List\.of\(([^)]*)\)/.exec(texto)?.[1] ?? '';
     const itens = lista.split(',').filter((item) => item.trim());
 
     expect(criadas.length).toBeGreaterThan(0);
