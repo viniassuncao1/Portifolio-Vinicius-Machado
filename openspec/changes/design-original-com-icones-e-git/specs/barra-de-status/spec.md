@@ -3,7 +3,7 @@
 ## MODIFIED Requirements
 
 ### Requirement: Informações do arquivo aberto
-A casca SHALL exibir no rodapé uma barra de status da New UI com, à esquerda, os breadcrumbs do
+A casca SHALL exibir no rodapé uma barra de status, nas cores do design, com, à esquerda, os breadcrumbs do
 arquivo da aba ativa (`portfolio-vinicius › src › main › java › … › Arquivo.java`) e, à direita,
 a posição `linha:coluna`, `LF`, `UTF-8`, `4 spaces` e a branch `master`.
 

@@ -2,56 +2,56 @@
 
 ## Why
 
-Depois da change de tokens, o site já tem as cores e a escala do IntelliJ New UI, mas a moldura
-continua a do Eclipse: barra de ferramentas com ícones coloridos antigos espalhados, cabeçalho
-`Portfolio_Vinicius × — ▢`, botão de texto "Seções" no celular e uma barra de status sem os
-elementos da New UI. Esta é a change 2 do [ADR-0011](../../../docs/adr/0011-identidade-visual-intellij-new-ui.md)
-(itens 5 e 6 do briefing): é a que tira de vez a cara de Eclipse.
+As duas primeiras changes do [ADR-0011](../../../docs/adr/0011-identidade-visual-intellij-new-ui.md)
+deixaram o site "literalmente o IntelliJ" e apagaram a identidade do design feito sob encomenda.
+O Vinicius decidiu ([ADR-0012](../../../docs/adr/0012-design-original-com-elementos-do-intellij.md))
+que o **design original predomina**, mantendo do IntelliJ o que dá cara de IDE de verdade: ícones
+de Java, projeto em pastas e pacotes, referências ao Git, a faixa de ferramentas, a barra de
+status com o caminho do arquivo e a tipografia nova (Inter e escala compacta).
+
+Esta change começou como "barras e ícones da New UI" (ícones, campo `pacote`, SHA do build, barra
+superior, faixa e status já implementados na branch) e é ajustada para o novo rumo antes do merge.
 
 ## What Changes
 
-- **Barra superior da New UI (40px):** à esquerda, o widget do projeto (`PV portfolio-vinicius ▾`)
-  e o da branch (`⎇ master ▾`); à direita, a configuração de execução
-  (`PortfolioApplication ▾`), **Executar** (o mesmo botão de hoje, ativo só nos projetos com
-  preview), **Depurar**, **Buscar** (abre a busca de seções que já existe) e **Configurações**.
-- **Faixa de ferramentas à esquerda (40px):** **Projeto** (mostra e esconde o painel do projeto),
-  **Commit** e **Estrutura**.
-- **Painel do projeto** com cabeçalho "Projeto" no estilo da New UI, no lugar de
-  `Portfolio_Vinicius × — ▢`.
-- **Barra de status da New UI (24px):** breadcrumbs do arquivo à esquerda
-  (`portfolio-vinicius › src › main › java › … › Skills.java`) e, à direita, `linha:coluna`,
-  `LF`, `UTF-8`, `4 spaces` e a branch `master`, mais o **SHA curto do commit real do deploy**
-  com link para o GitHub.
-- **Ícones oficiais da IntelliJ Platform** (New UI, tema escuro), em toda a casca, na árvore e
-  nas abas, no lugar dos ícones desenhados no estilo Eclipse, com o arquivo de créditos.
-- **Celular:** a barra superior compacta, sem a faixa de ferramentas; o botão do projeto (ícone)
-  abre a gaveta.
-- Entrada 0011 do diário.
+- **Paleta e formas do design de volta:** fundos `#2B2B2B`/`#1C1C1C`, sintaxe com palavras-chave
+  em rosa, foco rosa, barra de ferramentas com degradê e controles de janela, editor com cantos
+  arredondados, abas e cabeçalho do painel `Portfolio_Vinicius × — ▢` do design. A tipografia
+  (Inter 13px, JetBrains Mono 14px) e a densidade compacta da change de tokens continuam.
+- **Barra de ferramentas do design com Git:** os ícones da IntelliJ Platform (variante clara, por
+  causa do fundo claro do degradê), o indicador de branch `master`, Executar (preview nos
+  projetos com site) e Buscar (abre a busca); o resto decorativo.
+- **Faixa de ferramentas à esquerda** (Projeto mostra e esconde o painel; Commit e Estrutura
+  decorativos), nas cores do design.
+- **Barra de status** com o caminho do arquivo, `linha:coluna`, `LF`, `UTF-8`, `4 spaces`,
+  `master` e o commit do deploy, nas cores e no estilo do design.
+- **Ícones da IntelliJ Platform** (Java, pastas, pacotes) na árvore e nas abas, com créditos.
+- **Celular:** barra compacta com Projeto (abre a gaveta) e Buscar.
+- ADR-0012, `CLAUDE.md` e a entrada 0011 do diário contando a virada de rumo.
 
-Fora do escopo: árvore em pacotes e fim da paginação (change 3), Executar na calha (change 4),
-janela de Run (change 5) e a reescrita do Java (change 6). O campo `pacote` entra agora só para
-os breadcrumbs.
+Fora do escopo: árvore em pacotes e fim da paginação (change 3), Executar na calha (4), janela de
+Run (5) e a reescrita do Java (6), agora no visual do design original.
 
 ## Capabilities
 
 ### New Capabilities
 
-- `barra-superior`: widgets de projeto e branch, configuração de execução e ações da barra
-  superior.
+- `barra-superior`: barra de ferramentas do design com o indicador de branch, Executar e Buscar.
 
 ### Modified Capabilities
 
-- `casca-da-ide`: estrutura com barra superior, faixa de ferramentas e painel do projeto da New
-  UI; quais controles são decorativos; o botão do projeto no celular.
-- `barra-de-status`: breadcrumbs e os indicadores da New UI no lugar de `Java 21` e `main`;
-  commit do deploy.
-- `sistema-visual`: ícones oficiais com créditos.
+- `casca-da-ide`: estrutura com a barra do design, faixa de ferramentas, painel com o cabeçalho
+  do design e editor arredondado; controles decorativos; o botão Projeto no celular.
+- `barra-de-status`: caminho do arquivo e indicadores de IDE; commit do deploy.
+- `sistema-visual`: o design original volta a ser a referência visual; acento e foco rosa;
+  `theme-color` do design; ícones com créditos.
 
 ## Impact
 
-- Código: `layout/` (barra superior, faixa de ferramentas, painel, status), `shared/icone`
-  (conjunto novo), `public/icones/` (ícones da New UI), `core/secoes.ts` (campo `pacote`), um
-  script que gera as informações do build (SHA) e o `package.json`.
-- Licença: `public/icones/CREDITOS.md` (ou `NOTICE`), menção no README.
-- Testes: unitários e E2E das barras, da faixa, do status e do celular; axe.
-- Documentação: `docs/componentes.md`, `docs/arquitetura.md`, README e a entrada 0011 do diário.
+- Código: `src/styles/_tokens.scss` (paleta, degradê, raios), `layout/` (barra, faixa, painel,
+  status), `shared/icone` (variantes clara e escura), `public/icones/new-ui/`, `index.html`.
+- Já entregue na branch: ícones e créditos, campo `pacote` e breadcrumbs, script do SHA do build
+  com `SHA_DO_COMMIT` no preview, faixa, painel escondível, status e celular.
+- Testes: os de cor, foco e formas voltam aos valores do design; os de barras, faixa, status e
+  axe continuam.
+- Documentação: ADR-0012, `CLAUDE.md`, README, `docs/` e o diário 0011.

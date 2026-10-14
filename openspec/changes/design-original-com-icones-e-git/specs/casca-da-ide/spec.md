@@ -3,18 +3,18 @@
 ## MODIFIED Requirements
 
 ### Requirement: Estrutura fixa da IDE
-Toda página SHALL exibir a barra superior da New UI no topo, a faixa de ferramentas e o painel do
-projeto à esquerda e, à direita, a faixa de abas sobre a área do editor, com a barra de status
-no rodapé.
+Toda página SHALL exibir a barra de ferramentas do design no topo, a faixa de ferramentas e o
+painel do projeto (com o cabeçalho `Portfolio_Vinicius` do design) à esquerda e, à direita, a
+faixa de abas sobre o editor de cantos arredondados, com a barra de status no rodapé.
 
 #### Scenario: Abertura de qualquer seção
 - **WHEN** o visitante abre a página inicial ou a rota de qualquer seção
-- **THEN** a barra superior, a faixa de ferramentas, o painel do projeto, a faixa de abas e a
-  barra de status aparecem nas mesmas posições
+- **THEN** a barra de ferramentas, a faixa de ferramentas, o painel, a faixa de abas, o editor e
+  a barra de status aparecem nas mesmas posições
 
 ### Requirement: Elementos decorativos ocultos
-Os controles que imitam a IDE sem ter função (widgets de projeto e branch, configuração de
-execução, Depurar, Configurações, Commit e Estrutura, e Executar fora dos projetos com site)
+Os controles que imitam a IDE sem ter função (ícones da barra, controles de janela, indicador de
+branch, Commit e Estrutura, botões do cabeçalho do painel e Executar fora dos projetos com site)
 MUST ser ignorados por tecnologias assistivas e MUST NOT receber foco. Buscar, Projeto e
 Executar nos projetos com site são botões reais, com nome acessível.
 
