@@ -9,7 +9,6 @@ const FUNDO_DO_PAINEL = 'rgb(43, 43, 43)';
 const FUNDO_DA_FAIXA_DE_ABAS = 'rgb(87, 87, 87)';
 const FUNDO_DA_LINHA_ATUAL = 'rgb(27, 27, 27)';
 /** Foco escuro da barra de ferramentas, cujo fundo é o degradê claro (exceção aceita ao rosa). */
-const COR_DO_FOCO_NA_BARRA = 'rgb(27, 27, 27)';
 const COR_AZUL_DO_INTELLIJ = 'rgb(53, 116, 240)';
 const CONTRASTE_AA = 4.5;
 const ARVORE = 'nav[aria-label="Seções do portfólio"]';
@@ -53,7 +52,7 @@ test.describe('Paleta e formas do design original', () => {
     expect(faixa).toContain(FUNDO_DA_FAIXA_DE_ABAS);
   });
 
-  test('a barra de ferramentas tem o degradê do design e o resto das superfícies é chapado', async ({
+  test('a barra de ferramentas é escura e chapada, no cinza do painel, sem o degradê claro', async ({
     page,
   }) => {
     await page.goto('/skills');
@@ -64,9 +63,9 @@ test.describe('Paleta e formas do design original', () => {
         .first()
         .evaluate((el) => getComputedStyle(el).backgroundImage);
 
-    expect(await imagem('app-barra-de-ferramentas')).toContain('linear-gradient');
     for (const seletor of [
       'body',
+      'app-barra-de-ferramentas',
       'app-painel-lateral',
       'app-barra-de-status',
       'app-editor-de-codigo',
@@ -194,24 +193,24 @@ test.describe('Anel de foco rosa de 2px', () => {
     expect(await anel(page)).toMatchObject({ estilo: 'solid', largura: '2px', cor: COR_DO_FOCO });
   });
 
-  test('os botões focados mostram o anel rosa de 2px, escuro só na barra de ferramentas', async ({
+  test('os botões focados mostram o anel rosa de 2px, inclusive na barra de ferramentas', async ({
     page,
   }) => {
     await abrirHidratada(page, '/projeto-2');
     const esperado = [
-      { nome: 'Executar o projeto', cor: COR_DO_FOCO_NA_BARRA, naBarra: true },
-      { nome: 'Buscar seção (Ctrl+P)', cor: COR_DO_FOCO_NA_BARRA, naBarra: true },
-      { nome: 'Executar Projeto 2', cor: COR_DO_FOCO, naBarra: false },
-      { nome: 'Projeto', cor: COR_DO_FOCO, naBarra: false },
+      { nome: 'Executar o projeto', naBarra: true },
+      { nome: 'Buscar seção (Ctrl+P)', naBarra: true },
+      { nome: 'Executar Projeto 2', naBarra: false },
+      { nome: 'Projeto', naBarra: false },
     ];
 
-    for (const { nome, cor: corEsperada, naBarra } of esperado) {
+    for (const { nome, naBarra } of esperado) {
       await page.getByRole('button', { name: nome, exact: true }).first().focus();
 
       expect(await anel(page), nome).toMatchObject({
         estilo: 'solid',
         largura: '2px',
-        cor: corEsperada,
+        cor: COR_DO_FOCO,
         naBarra,
       });
     }
@@ -224,7 +223,7 @@ test.describe('Anel de foco rosa de 2px', () => {
     expect(await anel(page)).toMatchObject({ estilo: 'solid', largura: '2px', cor: COR_DO_FOCO });
   });
 
-  test('todo controle alcançado por Tab tem o anel de 2px, rosa fora da barra e escuro nela', async ({
+  test('todo controle alcançado por Tab tem o anel de 2px, rosa, inclusive na barra de ferramentas', async ({
     page,
   }) => {
     await abrirHidratada(page, '/projeto-2');
@@ -238,7 +237,7 @@ test.describe('Anel de foco rosa de 2px', () => {
       expect(foco, `Tab ${i + 1} (${foco.rotulo})`).toMatchObject({
         estilo: 'solid',
         largura: '2px',
-        cor: foco.naBarra ? COR_DO_FOCO_NA_BARRA : COR_DO_FOCO,
+        cor: COR_DO_FOCO,
       });
     }
 

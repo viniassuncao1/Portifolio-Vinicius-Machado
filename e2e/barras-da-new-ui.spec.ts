@@ -11,8 +11,7 @@ const CELULAR = { width: 390, height: 844 };
 
 const DECORATIVOS = [
   'app-barra-de-ferramentas .ramo',
-  'app-barra-de-ferramentas .depurar',
-  'app-barra-de-ferramentas .configuracoes',
+  'app-barra-de-ferramentas .decorativo',
   'app-barra-de-ferramentas span.executar',
   'app-faixa-de-ferramentas span.botao',
 ];
@@ -58,22 +57,18 @@ test.describe('Barra superior (desktop)', () => {
     }
   });
 
-  test('põe os ícones à esquerda, com Buscar depois de Executar e Depurar, e a branch ao lado', async ({
+  test('põe os ícones à esquerda, com Executar antes de Buscar, e a branch ao lado', async ({
     page,
   }) => {
     await page.goto('/');
     const x = async (seletor: string) => (await page.locator(seletor).first().boundingBox())!.x;
 
     const executar = await x('app-barra-de-ferramentas .executar');
-    const depurar = await x('app-barra-de-ferramentas .depurar');
     const busca = (await buscar(page).boundingBox())!.x;
-    const configuracoes = await x('app-barra-de-ferramentas .configuracoes');
     const ramo = await x('app-barra-de-ferramentas .ramo');
 
-    expect(executar).toBeLessThan(depurar);
-    expect(depurar).toBeLessThan(busca);
-    expect(busca).toBeLessThan(configuracoes);
-    expect(configuracoes).toBeLessThan(ramo);
+    expect(executar).toBeLessThan(busca);
+    expect(busca).toBeLessThan(ramo);
     expect(ramo).toBeLessThan(960);
   });
 
@@ -157,7 +152,7 @@ test.describe('Barra superior (desktop)', () => {
         .every((n) => n > 0),
     ).toBe(true);
     for (const foco of focados) {
-      expect(foco).not.toMatch(/ramo|depurar|configuracoes|span\|/);
+      expect(foco).not.toMatch(/ramo|decorativo|span\|/);
     }
     expect(focados.some((f) => f.includes('Buscar seção'))).toBe(true);
     expect(focados.some((f) => f.endsWith('|Executar o projeto'))).toBe(true);
@@ -167,20 +162,20 @@ test.describe('Barra superior (desktop)', () => {
 test.describe('Ícones da barra de ferramentas do design', () => {
   test.use({ viewport: DESKTOP });
 
-  test('a barra usa a variante clara dos ícones, por causa do degradê, e o resto a escura', async ({
+  test('a barra usa os ícones do design, e só a busca e a branch são da IntelliJ Platform', async ({
     page,
   }) => {
     await page.goto('/projeto-2');
     const origens = (seletor: string) =>
-      page.locator(seletor).evaluateAll((els) => els.map((el) => el.getAttribute('src')));
+      page.locator(seletor).evaluateAll((els) => els.map((el) => el.getAttribute('src') ?? ''));
 
     const daBarra = await origens('app-barra-de-ferramentas app-icone img');
-    const doPainel = await origens('app-painel-lateral app-icone img');
+    const daArvore = await origens('app-arvore-de-secoes app-icone img');
 
-    expect(daBarra.length).toBeGreaterThanOrEqual(5);
-    for (const src of daBarra) expect(src).toContain('icones/new-ui/claro/');
-    expect(doPainel.length).toBeGreaterThan(0);
-    for (const src of doPainel) expect(src).not.toContain('/claro/');
+    expect(daBarra.length).toBeGreaterThanOrEqual(8);
+    expect(daBarra.filter((src) => src.includes('icones/new-ui/')).length).toBe(2);
+    expect(daArvore.length).toBeGreaterThan(0);
+    for (const src of daArvore) expect(src).not.toContain('icones/new-ui/');
   });
 });
 
@@ -357,14 +352,14 @@ test.describe('Celular (390x844)', () => {
 
     const focados = await focosPorTab(page, 40);
 
-    for (const foco of focados) expect(foco).not.toMatch(/ramo|depurar|configuracoes|span\|/);
+    for (const foco of focados) expect(foco).not.toMatch(/ramo|decorativo|span\|/);
   });
 });
 
 test.describe('Ícones da New UI e créditos', () => {
   test.use({ viewport: DESKTOP });
 
-  test('todos os ícones da casca vêm do próprio site, da pasta new-ui, e carregam', async ({
+  test('todos os ícones da casca vêm do próprio site, do design ou da pasta new-ui, e carregam', async ({
     page,
   }) => {
     const externas: string[] = [];
@@ -386,7 +381,7 @@ test.describe('Ícones da New UI e créditos', () => {
 
     expect(imagens.length).toBeGreaterThan(8);
     for (const { src, ok } of imagens) {
-      expect(src).toContain('icones/new-ui/');
+      expect(src).toMatch(/icones\/(new-ui\/)?[\w-]+\.svg$/);
       expect(ok, `${src} não carregou`).toBe(true);
     }
     expect(externas).toEqual([]);
