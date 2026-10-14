@@ -2,8 +2,8 @@
 
 ## 1. Dados [Nanquim e Grafite]
 
-- [ ] 1.1 [Grafite] `calcularFaixas` (faixa e arestas por commit) com testes de linha reta, merge, branches paralelas e lista vazia — verificar com `npm run test:ci`
-- [ ] 1.2 [Nanquim] `scripts/gerar-historico-do-git.mjs` (sem e-mail, PR e branch nos merges, faixas pela função da Grafite, lista vazia em clone raso), ligado aos pre-scripts, JSON no `.gitignore` — verificar com `npm run build` e `jq '.commits | length' dist/**/git/historico.json`
+- [ ] 1.1 [Grafite] Tipos do histórico e `calcularFaixas` em `src/app/core/git/` (faixa e arestas por commit) com testes de linha reta, merge, branches paralelas e lista vazia — verificar com `npm run test:ci`
+- [ ] 1.2 [Nanquim] `scripts/gerar-historico-do-git.mjs` (sem e-mail, PR e branch nos merges, lista vazia em clone raso), ligado aos pre-scripts, JSON no `.gitignore` — verificar com `npm run build` e `jq '.commits | length' dist/**/git/historico.json`
 - [ ] 1.3 [Nanquim] `fetch-depth: 0` nos jobs de build do CI — verificar no PR
 
 ## 2. Painel [Pincel e Compasso]

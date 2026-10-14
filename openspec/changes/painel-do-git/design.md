@@ -27,13 +27,13 @@ script de build parecido (`scripts/gerar-informacoes-do-build.mjs`, pre-scripts 
 Usa `git log --topo-order --format=<campos separados por \x1f>` (SHA, pais, nome do autor, data
 ISO, assunto) com `execFileSync` (sem shell). Nos merges `Merge pull request #N from
 <usuário>/<branch>`, extrai `pr` e `branch`. Grava `public/git/historico.json`:
-`{ geradoEm, repositorio, commits: [{ sha, pais, autor, data, assunto, pr?, branch?, faixa,
-arestas }] }`. Sem `git` ou com clone raso (`git rev-parse --is-shallow-repository`),
+`{ geradoEm, repositorio, commits: [{ sha, pais, autor, data, assunto, pr?, branch? }] }`. Sem `git` ou com clone raso (`git rev-parse --is-shallow-repository`),
 `commits: []`. O arquivo entra no `.gitignore`.
 
 ### 2. Faixas do grafo
 
-Função pura `calcularFaixas(commits)` (em `scripts/` ou num módulo compartilhado testável) no
+Função pura `calcularFaixas(commits)` em `src/app/core/git/`, executada no navegador ao carregar
+o histórico (assim é testada pelo Vitest e o script fica simples), no
 algoritmo clássico de grafo de commits: cada commit ocupa uma coluna; o primeiro pai herda a
 coluna; os outros pais abrem colunas novas, que fecham quando o pai é alcançado. Saída por
 commit: `faixa` (coluna) e `arestas` (`{ de, para, tipo }`) até a próxima linha. Cores por

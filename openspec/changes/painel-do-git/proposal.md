@@ -13,7 +13,7 @@ contínuos, o que pesa para recrutadores técnicos.
 - **Histórico no build** ([ADR-0013](../../../docs/adr/0013-historico-do-git-gerado-no-build.md)):
   `scripts/gerar-historico-do-git.mjs` lê o `git log` e grava `public/git/historico.json` (não
   versionado) com SHA, pais, autor (sem e-mail), data, assunto e, nos merges, o número do PR e a
-  branch, mais as faixas do grafo já calculadas. O CI passa a usar `fetch-depth: 0`.
+  branch. As faixas do grafo são calculadas no navegador. O CI passa a usar `fetch-depth: 0`.
 - **Painel do Git** na parte de baixo da IDE, como no IntelliJ: grafo das branches com cores,
   assunto, autor e data de cada commit e, ao escolher um commit, os detalhes (SHA, mensagem,
   autor, data, link para o commit e, nos merges, para o PR no GitHub).

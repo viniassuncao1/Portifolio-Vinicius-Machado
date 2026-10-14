@@ -9,8 +9,7 @@ servido como arquivo estático.
 
 ### Requirement: Histórico gerado no build
 O build SHALL gerar um arquivo JSON com os commits do repositório (SHA, pais, nome do autor,
-data, assunto e, nos merges de PR, o número e a branch), sem e-mails, e com as faixas do grafo
-calculadas. Sem histórico disponível, o arquivo MUST ter uma lista vazia e o build MUST NOT
+data, assunto e, nos merges de PR, o número e a branch), sem e-mails. Sem histórico disponível, o arquivo MUST ter uma lista vazia e o build MUST NOT
 falhar.
 
 #### Scenario: Build no CI
