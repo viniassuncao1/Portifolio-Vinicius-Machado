@@ -124,6 +124,11 @@ for (const [nome, viewport] of [
         await page.emulateMedia({ colorScheme: tema });
         await page.goto('/skills');
         await expect(janela(page)).toHaveCSS('opacity', '1');
+        // Durante a revelação cada linha faz fade: o contraste só vale com o log completo.
+        await expect(page.locator('app-janela-de-run section')).toHaveAttribute(
+          'data-terminado',
+          'true',
+        );
 
         const { violations } = await new AxeBuilder({ page })
           .withTags(['wcag2a', 'wcag2aa'])
