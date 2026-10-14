@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 import { abrirPastas, arquivoDaArvore, linhasDoCodigo } from './apoio';
 
@@ -36,7 +36,6 @@ const CODIGO_DO_INICIO = [
   'import java.util.List;',
   'import org.springframework.boot.SpringApplication;',
   'import org.springframework.boot.autoconfigure.SpringBootApplication;',
-  expect.stringContaining('Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL.'),
   '@SpringBootApplication',
   'public class PortfolioApplication {',
   expect.stringMatching(/^\/\/ .+/),
@@ -50,6 +49,8 @@ const CODIGO_DO_INICIO = [
   'SpringApplication.run(PortfolioApplication.class, args);',
   '}',
   '}',
+  '// Próximo: ver os projetos →',
+  '// Fale comigo →',
 ];
 
 test.describe('Código do Início em Java moderno', () => {

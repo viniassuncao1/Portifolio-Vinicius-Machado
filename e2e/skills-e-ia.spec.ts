@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import type { Locator, Page } from '@playwright/test';
 
 import { arquivoDaArvore, linhasDoCodigo, normalizar } from './apoio';
@@ -28,7 +28,6 @@ test.describe('Como uso a IA (/como-uso-ia)', () => {
     expect(await linhasDoCodigo(page)).toEqual([
       'package dev.vinicius.portfolio.sobre;',
       'import java.util.List;',
-      expect.stringContaining('Não vejo IA como modismo'),
       'public class InteligenciaArtificial {',
       expect.stringMatching(/^\/\/ .+/),
       'boolean modismo = false;',

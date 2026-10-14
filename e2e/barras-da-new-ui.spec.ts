@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import type { Page } from '@playwright/test';
 import { readFile, readdir } from 'node:fs/promises';
 
@@ -128,7 +128,7 @@ test.describe('Barra superior (desktop)', () => {
       'Executar PortfolioApplication',
       'Buscar seção (Ctrl+P)',
       'Usar tema claro',
-      'Branch master, abrir o painel do Git',
+      'Branch master, abrir o repositório',
       'Projeto',
       'Commit',
     ]);
@@ -322,7 +322,7 @@ test.describe('Barra de status: commit do deploy', () => {
 test.describe('Celular (390x844)', () => {
   test.use({ viewport: CELULAR });
 
-  test('esconde a faixa de ferramentas e recolhe o painel, com Projeto e Buscar na barra', async ({
+  test('esconde a faixa de ferramentas e recolhe o painel, com Seções e Buscar na barra', async ({
     page,
   }) => {
     await page.goto('/');
@@ -331,7 +331,7 @@ test.describe('Celular (390x844)', () => {
     await expect(
       page.locator('app-painel-lateral').getByRole('link', { name: 'Sobre Mim' }),
     ).toBeHidden();
-    await expect(page.getByRole('button', { name: 'Projeto' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Seções' })).toBeVisible();
     await expect(buscar(page)).toBeVisible();
     // A branch fica na barra compacta: é por ela que o painel do Git abre no celular.
     await expect(page.locator('app-barra-de-ferramentas .ramo')).toBeVisible();
@@ -462,7 +462,7 @@ test.describe('Acessibilidade das barras: estados do painel', () => {
     await page.setViewportSize(CELULAR);
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await abrirHidratada(page, '/');
-    await page.getByRole('button', { name: 'Projeto' }).click();
+    await page.getByRole('button', { name: 'Seções', exact: true }).click();
     await expect(arquivoDaArvore(page, 'Sobre Mim')).toBeVisible();
 
     expect(await violacoes(page)).toEqual([]);

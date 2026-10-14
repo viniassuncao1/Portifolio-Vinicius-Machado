@@ -29,7 +29,9 @@ export async function abrirComFocoNaCasca(page: Page, url: string): Promise<void
  * ainda aparece. Sem a janela aberta (movimento reduzido, sessão já vista) volta na hora.
  */
 export async function esperarLogDoRun(page: Page): Promise<void> {
-  await expect(page.locator('main app-editor-de-codigo')).toHaveClass(/pronto/);
+  // A página do repositório não tem editor; nas demais o editor só fica `pronto` já hidratado.
+  const editor = page.locator('main app-editor-de-codigo');
+  if ((await editor.count()) > 0) await expect(editor).toHaveClass(/pronto/);
   await expect(
     page.locator('app-janela-de-run[data-aberto="true"] section[data-terminado="false"]'),
   ).toHaveCount(0);
