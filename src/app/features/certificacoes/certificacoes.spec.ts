@@ -21,9 +21,7 @@ describe('Certificacoes', () => {
   it('página 1 mostra o record e os três cursos mais recentes', async () => {
     const texto = await codigo();
 
-    expect(texto).toContain(
-      'record Certification(String course, int hours, LocalDate completedOn)',
-    );
+    expect(texto).toContain('record Certificacao(String curso, int horas, LocalDate concluidoEm)');
     expect(texto).toContain('Spring Boot 3: desenvolva uma API Rest em Java');
     expect(texto).toContain('10, LocalDate.of(2025, 12, 19)');
     expect(texto).toContain('Java: persistência de dados e consultas com Spring Data JPA');
@@ -87,7 +85,20 @@ describe('Certificacoes', () => {
     }
   });
 
+  it('declara o package só na página 1 e as variáveis em português, sem static final', async () => {
+    const primeira = await codigo();
+
+    expect(primeira).toContain('package dev.vinicius.portfolio.formacao;');
+    expect(primeira).toContain('Certificacao springBoot = new Certificacao(');
+    expect(await codigo(2)).toContain('Certificacao http = new Certificacao(');
+    expect(await codigo(3)).toContain('Certificacao gitEGithub = new Certificacao(');
+    expect(await codigo(2)).not.toContain('package');
+    for (const pagina of [1, 2, 3]) {
+      expect(await codigo(pagina)).not.toContain('static final');
+    }
+  });
+
   it('declara o record só na página 1', async () => {
-    expect(await codigo(2)).not.toContain('record Certification');
+    expect(await codigo(2)).not.toContain('record Certificacao');
   });
 });
