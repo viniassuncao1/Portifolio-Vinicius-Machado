@@ -32,6 +32,37 @@ test.describe('Árvore em pastas navegável por teclado', () => {
     await expect(arquivoDaArvore(page, 'Projeto 2')).toHaveAttribute('aria-current', 'page');
   });
 
+  test('abrindo a rota direto, os arquivos da pasta aberta ficam visíveis, sem depender de animação', async ({
+    page,
+  }) => {
+    await abrirHidratada(page, '/projeto-2');
+
+    const grupo = arvoreDeSecoes(page).locator('#grupo-projetos');
+    await expect(grupo).toBeVisible();
+    await expect(grupo).toHaveCSS('opacity', '1');
+    await expect(grupo.locator('a')).toHaveCount(4);
+    for (const arquivo of await grupo.locator('a').all()) {
+      await expect(arquivo).toBeVisible();
+      await expect(arquivo).toHaveCSS('opacity', '1');
+    }
+  });
+
+  test('o HTML pré-renderizado tem os 15 links, com as pastas recolhidas escondidas', async ({
+    browser,
+  }) => {
+    const contexto = await browser.newContext({ javaScriptEnabled: false });
+    const semJs = await contexto.newPage();
+
+    await semJs.goto('/projeto-2');
+
+    const arvore = arvoreDeSecoes(semJs);
+    await expect(arvore.locator('a[href]')).toHaveCount(SECOES.length);
+    await expect(arvore.locator('.grupo[hidden]')).toHaveCount(6);
+    await expect(arvore.locator('#grupo-projetos')).toBeVisible();
+    await expect(arvore.locator('#grupo-sobre')).toBeHidden();
+    await contexto.close();
+  });
+
   test('clicar na pasta projetos mostra Projeto1.java a Projeto4.java', async ({ page }) => {
     await abrirHidratada(page, '/');
 

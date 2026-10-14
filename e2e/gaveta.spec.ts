@@ -27,7 +27,9 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
 
     await expect(botao).toHaveAttribute('aria-expanded', 'true');
     await expect(primeiroItem(page)).toBeFocused();
-    await expect(arvoreDeSecoes(page).locator('[data-pacote=contato]')).toBeVisible();
+    await expect(
+      arvoreDeSecoes(page).locator('[data-tipo=pasta][data-pacote=contato]'),
+    ).toBeVisible();
   });
 
   test('fecha com Escape e devolve o foco ao botão', async ({ page }) => {

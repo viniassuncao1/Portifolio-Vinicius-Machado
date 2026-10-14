@@ -219,6 +219,7 @@ test.describe('Pré-renderização das 15 rotas', () => {
       await expect(page).toHaveTitle(`${titulo} | Vinicius Machado`);
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(titulo);
       await expect(arvore(page).locator('[data-tipo=pasta]')).toHaveCount(7);
+      await expect(arvore(page).locator('a[href]')).toHaveCount(15);
       await expect(arquivoDaArvore(page, titulo)).toHaveAttribute('aria-current', 'page');
       await expect(page.getByRole('main').locator('code')).toBeAttached();
     });
