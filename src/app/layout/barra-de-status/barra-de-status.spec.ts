@@ -59,10 +59,10 @@ describe('BarraDeStatus', () => {
     expect(raiz.querySelector('.commit') !== null).toBe(SHA_DO_BUILD !== null);
   });
 
-  it('mostra ViniciusMachado.java no Início', async () => {
+  it('mostra PortfolioApplication.java no Início', async () => {
     const { raiz } = await abrir('/');
 
-    expect(raiz.querySelector('.arquivo')?.textContent).toBe('ViniciusMachado.java');
+    expect(raiz.querySelector('.arquivo')?.textContent).toBe('PortfolioApplication.java');
   });
 
   it('troca o arquivo quando a seção muda', async () => {

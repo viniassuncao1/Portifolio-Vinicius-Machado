@@ -173,4 +173,4 @@ export interface DadosDePagina {
 export const totalDePaginas = (secao: Secao): number => secao.paginas ?? 1;
 
 /** Arquivo da página inicial (rota `/`), que não é uma das seções da árvore. */
-export const ARQUIVO_INICIO = 'ViniciusMachado.java';
+export const ARQUIVO_INICIO = 'PortfolioApplication.java';

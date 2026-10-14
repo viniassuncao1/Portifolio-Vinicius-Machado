@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test';
 import type { Result } from 'axe-core';
 
 import { SECOES, totalDePaginas } from '../src/app/core/secoes';
+import { esperarLogDoRun } from './apoio';
 
 /** Início e todas as páginas de todas as seções, geradas de SECOES (uma seção nova entra sozinha). */
 const ROTAS = [
@@ -66,6 +67,7 @@ for (const { nome, viewport } of TELAS) {
       test(`${rota} não tem violações`, async ({ page }) => {
         await page.goto(rota);
         await expect(page.getByRole('heading', { level: 1 })).toBeAttached();
+        await esperarLogDoRun(page);
 
         const { violations } = await new AxeBuilder({ page }).withTags(TAGS).analyze();
 

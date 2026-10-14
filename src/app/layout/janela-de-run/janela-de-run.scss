@@ -1,0 +1,179 @@
+@use '../../../styles/janela-de-baixo' as *;
+
+// A janela de Run e o painel do Git dividem a mesma área de baixo e a mesma animação.
+@include janela-de-baixo(var(--altura-janela-de-run));
+
+.janela {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.cabecalho {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--espaco-3);
+  height: var(--altura-faixa-abas);
+  padding-inline: var(--espaco-3) var(--espaco-1);
+  background: linear-gradient(to bottom, var(--cor-faixa-abas), var(--cor-aba-inativa) 35%);
+  color: var(--cor-texto-aba-inativa);
+}
+
+.titulo {
+  margin: 0;
+  font-size: inherit;
+  font-weight: var(--peso-medio);
+}
+
+.aba {
+  padding: var(--espaco-1) var(--espaco-3);
+  border-start-start-radius: var(--raio-aba);
+  border-start-end-radius: var(--raio-aba);
+  background: var(--cor-aba-ativa);
+  color: var(--cor-texto);
+}
+
+.pular,
+.fechar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tamanho-alvo-toque);
+  min-height: var(--tamanho-alvo-toque);
+  padding: 0 var(--espaco-2);
+  border: 0;
+  border-radius: var(--raio-controle);
+  background: transparent;
+  color: var(--cor-texto-aba-inativa);
+  font: inherit;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--cor-aba-passando);
+  }
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+}
+
+.pular {
+  margin-inline-start: auto;
+  border: var(--borda-divisoria);
+}
+
+.fechar {
+  padding: 0;
+}
+
+.pular + .fechar {
+  margin-inline-start: 0;
+}
+
+.cabecalho > :last-child:not(.pular) {
+  margin-inline-start: auto;
+}
+
+// O log é um console: fundo do editor, texto em fonte mono, rolagem própria e alcançável por teclado.
+.log {
+  flex: 1 1 0;
+  min-height: 0;
+  margin: 0;
+  padding: var(--espaco-2) var(--espaco-4);
+  overflow: auto;
+  background: var(--cor-editor);
+  color: var(--cor-texto);
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-comentario);
+  line-height: var(--altura-linha-codigo);
+  scrollbar-color: var(--cor-scrollbar-polegar) var(--cor-scrollbar-trilho);
+  scrollbar-width: thin;
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+
+  code {
+    display: block;
+    font: inherit;
+  }
+}
+
+.linha {
+  display: block;
+  min-height: var(--altura-linha-codigo);
+  white-space: pre;
+}
+
+// Cores por tokens, nos dois temas: nível em verde, PID no acento, logger em ciano, resto esmaecido.
+.papel-banner,
+.papel-versao,
+.papel-nivel {
+  color: var(--cor-sintaxe-literal);
+}
+
+.papel-data,
+.papel-thread {
+  color: var(--cor-texto-esmaecido);
+}
+
+.papel-pid {
+  color: var(--cor-acento);
+}
+
+.papel-logger {
+  color: var(--cor-sintaxe-valor);
+}
+
+.papel-mensagem {
+  color: var(--cor-texto);
+}
+
+// Só para leitores de tela: anuncia a linha final quando o log termina.
+.somente-leitores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+// Celular: nunca passa de 40% da altura, para não cobrir a barra de status nem o editor.
+@media (max-width: 767.98px) {
+  :host {
+    flex-basis: min(var(--altura-janela-de-run), 20rem);
+  }
+}
+
+// Revelação do log: linhas ainda não reveladas ficam escondidas (o texto segue no DOM) e cada uma
+// que aparece faz um fade curto de `opacity`. Com movimento reduzido o log já nasce completo.
+.linha.oculta {
+  visibility: hidden;
+}
+
+.janela[data-terminado='false'] .linha:not(.oculta) {
+  animation: linha-aparecer var(--duracao-rapida) var(--curva-saida);
+}
+
+@keyframes linha-aparecer {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .janela[data-terminado='false'] .linha:not(.oculta) {
+    animation: none;
+  }
+}

@@ -116,6 +116,22 @@ O SHA mostrado na barra vem de `scripts/gerar-informacoes-do-build.mjs`, que rod
 **merge**, que não existe na branch e daria um link quebrado. O deploy de preview do
 `ci.yml` define `SHA_DO_COMMIT` com `github.event.pull_request.head.sha`, o commit real da branch.
 
+### Área de baixo: Git e Run
+
+O painel do Git e a **janela de Run** dividem a mesma área, na parte de baixo da coluna do editor,
+como as janelas de ferramenta do IntelliJ. O serviço `AreaDeBaixo` (`core/area-de-baixo.ts`) guarda
+qual está aberta (`'run'` ou `'git'`): abrir uma fecha a outra, e as duas usam a mesma animação
+(`data-aberto`, com `prefers-reduced-motion` respeitado). O editor continua rolável acima dela.
+
+A **janela de Run** simula rodar o projeto: mostra o log de inicialização do `PortfolioApplication`
+(banner do Spring, `Starting PortfolioApplication using Java 21`, `Tomcat started on port 8080`,
+`Started PortfolioApplication in 1.8 seconds`). O texto é fixo (`layout/janela-de-run/log.ts`), com
+data e hora geradas no navegador, e **nunca entra no HTML pré-renderizado**. Abre sozinha uma vez
+por sessão (`sessionStorage['run-exibido']`), sem roubar o foco e sem bloquear o conteúdo; revela o
+log em até 2,5 s, e "Pular", Esc e o fechar sempre estão à mão. Com movimento reduzido, não abre
+sozinha. O Executar da barra a reabre e reinicia o log fora dos projetos com site; nos projetos com
+site continua abrindo o preview.
+
 ### Painel do Git
 
 O indicador `master` da barra de ferramentas e o ícone Commit da faixa abrem o **painel do Git**,

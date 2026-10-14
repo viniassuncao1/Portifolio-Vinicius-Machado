@@ -25,25 +25,23 @@ function contraste(a: string, b: string): number {
 }
 
 test.describe('Sobre Mim (/sobre-mim)', () => {
-  test('exibe a interface, a implementação, o Javadoc e o método em Java moderno', async ({
+  test('exibe a interface, a implementação, o Javadoc e o método em Java moderno, sem constantes em caixa alta', async ({
     page,
   }) => {
     await page.goto('/sobre-mim');
 
     expect(await linhasDoCodigo(page)).toEqual([
+      'package dev.vinicius.portfolio.sobre;',
       expect.stringMatching(/^\/\/ .+/),
-      'public interface Developer {',
-      'String aboutMe();',
+      'interface Desenvolvedor {',
+      'String sobreMim();',
       '}',
       expect.stringMatching(/^\/\/ .+/),
-      'public final class ViniciusMachado implements Developer {',
-      expect.stringMatching(
-        /^private static final String [A-Z_]+ = "Full Stack: Java, Spring Boot, Angular e SQL";$/,
-      ),
+      'class ViniciusMachado implements Desenvolvedor {',
       expect.stringContaining('Sou desenvolvedor Full Stack'),
       '@Override',
-      'public String aboutMe() {',
-      expect.stringMatching(/^return [A-Z_]+;$/),
+      'public String sobreMim() {',
+      'return "Full Stack: Java, Spring Boot, Angular e SQL";',
       '}',
       '}',
     ]);
@@ -130,17 +128,19 @@ test.describe('Diferenciais (/diferenciais)', () => {
     await page.goto('/diferenciais');
 
     expect(await linhasDoCodigo(page)).toEqual([
+      'package dev.vinicius.portfolio.sobre;',
       expect.stringContaining('Moro em Brasília há 20 anos.'),
-      'public record PersonalData(',
-      'String hometown,',
-      'String city,',
-      'int yearsInCity,',
-      'boolean extrovert,',
-      'boolean curious,',
-      'boolean loveToLearn',
-      ') {',
+      'public class Diferenciais {',
       expect.stringMatching(/^\/\/ .+/),
-      expect.stringMatching(/^public static final PersonalData [A-Z_]+ = new PersonalData\($/),
+      'record DadosPessoais(',
+      'String origem,',
+      'String cidade,',
+      'int anosNaCidade,',
+      'boolean extrovertido,',
+      'boolean curioso,',
+      'boolean gostaDeAprender) {}',
+      expect.stringMatching(/^\/\/ .+/),
+      'DadosPessoais vinicius = new DadosPessoais(',
       '"Mineiro",',
       '"Brasília",',
       '20, // anos em Brasília',
@@ -172,13 +172,13 @@ test.describe('Diferenciais (/diferenciais)', () => {
     expect(await cor(page.locator('main .papel-declaracao').first())).toBe(COR_DECLARACAO);
   });
 
-  test('o campo city fica como declaração e "Brasília" como texto entre aspas', async ({
+  test('o campo cidade fica como declaração e "Brasília" como texto entre aspas', async ({
     page,
   }) => {
     await page.goto('/diferenciais');
-    const linha = page.locator('main code > span', { hasText: 'String city' });
+    const linha = page.locator('main code > span', { hasText: 'String cidade' });
 
-    await expect(linha.locator('.papel-declaracao')).toHaveText('String city');
+    await expect(linha.locator('.papel-declaracao')).toHaveText('String cidade');
     await expect(page.locator('main .papel-literal', { hasText: '"Brasília"' })).toHaveCount(1);
   });
 
@@ -189,6 +189,7 @@ test.describe('Diferenciais (/diferenciais)', () => {
     const comentarios = page.locator('main .papel-comentario');
 
     await expect(comentarios).toHaveText([
+      '// Os dados que me definem',
       '// Quem sou eu, em dados',
       '// anos em Brasília',
       '// extrovertido',
@@ -230,7 +231,7 @@ test.describe('Seções sem JavaScript', () => {
   test('/sobre-mim entrega o código, o Javadoc e o item atual no HTML', async ({ page }) => {
     await page.goto('/sobre-mim');
 
-    await expect(page.locator('main code')).toContainText('public interface Developer');
+    await expect(page.locator('main code')).toContainText('interface Desenvolvedor');
     await expect(page.locator('main .javadoc')).toContainText('Sou desenvolvedor Full Stack');
     await expect(arquivoDaArvore(page, 'Sobre Mim')).toHaveAttribute('aria-current', 'page');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Sobre Mim');
@@ -239,7 +240,7 @@ test.describe('Seções sem JavaScript', () => {
   test('/diferenciais entrega o código, os valores e o Javadoc no HTML', async ({ page }) => {
     await page.goto('/diferenciais');
 
-    await expect(page.locator('main code')).toContainText('public record PersonalData(');
+    await expect(page.locator('main code')).toContainText('record DadosPessoais(');
     await expect(page.locator('main .papel-valor')).toHaveCount(4);
     await expect(page.locator('main .javadoc')).toContainText('Moro em Brasília há 20 anos.');
     await expect(arquivoDaArvore(page, 'Diferenciais')).toHaveAttribute('aria-current', 'page');

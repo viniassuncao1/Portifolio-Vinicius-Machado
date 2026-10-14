@@ -1,5 +1,11 @@
 import type { ConteudoDoEditor } from './shared/editor-de-codigo/conteudo';
-import { DOCUMENTOS, codigoDe, comentariosDe, textoDe } from './conteudo-das-secoes.apoio';
+import {
+  DOCUMENTOS,
+  codigoDe,
+  comentariosDe,
+  estaNoNovoEstilo,
+  textoDe,
+} from './conteudo-das-secoes.apoio';
 
 /** Palavras em português que não podem aparecer em identificadores (tipos, campos, constantes). */
 const PALAVRAS_EM_PORTUGUES = new Set([
@@ -161,14 +167,20 @@ describe('legibilidade do código exibido', () => {
       expect(codigoDe(conteudo)).not.toMatch(/[^\p{ASCII}]/u);
     });
 
-    it.each(DOCUMENTOS)('%s: nenhum identificador usa palavra em português', (_nome, conteudo) => {
-      const identificadores = new Set(codigoDe(conteudo).match(/\b[A-Za-z_]\w*\b/g));
-      const emPortugues = [...identificadores].filter((identificador) =>
-        palavrasDe(identificador).some((palavra) => PALAVRAS_EM_PORTUGUES.has(palavra)),
-      );
+    // As seções no estilo da change java-para-leitura usam domínio em português sem acento.
+    const NO_ESTILO_ANTIGO = DOCUMENTOS.filter(([nome]) => !estaNoNovoEstilo(nome));
 
-      expect(emPortugues).toEqual([]);
-    });
+    it.each(NO_ESTILO_ANTIGO)(
+      '%s: nenhum identificador usa palavra em português',
+      (_nome, conteudo) => {
+        const identificadores = new Set(codigoDe(conteudo).match(/\b[A-Za-z_]\w*\b/g));
+        const emPortugues = [...identificadores].filter((identificador) =>
+          palavrasDe(identificador).some((palavra) => PALAVRAS_EM_PORTUGUES.has(palavra)),
+        );
+
+        expect(emPortugues).toEqual([]);
+      },
+    );
 
     it('o verificador separa as palavras de um identificador', () => {
       expect(palavrasDe('completedOn')).toEqual(['completed', 'on']);

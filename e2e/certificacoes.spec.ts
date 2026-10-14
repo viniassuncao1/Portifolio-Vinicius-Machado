@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
-import { linhasDoCodigo, textoDoCodigo } from './apoio';
+import { esperarLogDoRun, linhasDoCodigo, textoDoCodigo } from './apoio';
 
 const controle = (page: Page) => page.getByRole('navigation', { name: 'Páginas da seção' });
 const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
@@ -83,11 +83,11 @@ test.describe('Certificações (/certificacoes)', () => {
     await expect(page.locator('main .papel-comentario').first()).toContainText(
       'Cada curso tem o nome, as horas e a data de conclusão',
     );
-    await expect(codigo(page)).toContainText('record Certification(');
+    await expect(codigo(page)).toContainText('record Certificacao(');
 
     await page.goto('/certificacoes/2');
 
-    await expect(codigo(page)).not.toContainText('record Certification(');
+    await expect(codigo(page)).not.toContainText('record Certificacao(');
   });
 
   test('tem título, h1 e árvore com a seção atual, e a página aparece no título', async ({
@@ -138,6 +138,7 @@ test.describe('Certificações (/certificacoes)', () => {
     test(`${rota} não tem violações de acessibilidade (axe, WCAG 2 A e AA)`, async ({ page }) => {
       await page.goto(rota);
       await expect(page.getByRole('heading', { level: 1 })).toBeAttached();
+      await esperarLogDoRun(page);
 
       const { violations } = await new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa'])

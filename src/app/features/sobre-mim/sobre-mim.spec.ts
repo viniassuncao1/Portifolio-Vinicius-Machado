@@ -29,17 +29,17 @@ describe('SobreMim', () => {
     const raiz = await renderizar();
 
     expect(linhas(raiz).filter((texto) => texto !== '' && texto !== undefined)).toEqual([
+      'package dev.vinicius.portfolio.sobre;',
       '// Todo desenvolvedor sabe se apresentar',
-      'public interface Developer {',
-      'String aboutMe();',
+      'interface Desenvolvedor {',
+      'String sobreMim();',
       '}',
       '// Eu: Vinicius Machado',
-      'public final class ViniciusMachado implements Developer {',
-      'private static final String ABOUT_ME = "Full Stack: Java, Spring Boot, Angular e SQL";',
+      'class ViniciusMachado implements Desenvolvedor {',
       expect.stringContaining(INICIO_DO_PARAGRAFO),
       '@Override',
-      'public String aboutMe() {',
-      'return ABOUT_ME;',
+      'public String sobreMim() {',
+      'return "Full Stack: Java, Spring Boot, Angular e SQL";',
       '}',
       '}',
     ]);
@@ -50,15 +50,7 @@ describe('SobreMim', () => {
 
     expect(
       Array.from(raiz.querySelectorAll('.papel-palavra-chave')).map((t) => t.textContent),
-    ).toEqual([
-      'public interface',
-      'String',
-      'public final class',
-      'implements',
-      'private static final',
-      'public',
-      'return',
-    ]);
+    ).toEqual(['package', 'interface', 'String', 'class', 'implements', 'public', 'return']);
     expect(raiz.querySelector('.papel-anotacao')?.textContent).toBe('@Override');
     expect(raiz.querySelector('.papel-literal')?.textContent).toContain('Full Stack');
     expect(raiz.querySelectorAll('.javadoc')).toHaveLength(1);
@@ -71,10 +63,10 @@ describe('SobreMim', () => {
         .find((l) => l.textContent?.trim() === texto)
         ?.style.getPropertyValue('--recuo');
 
-    expect(recuo('public interface Developer {')).toBe('0');
-    expect(recuo('String aboutMe();')).toBe('1');
+    expect(recuo('interface Desenvolvedor {')).toBe('0');
+    expect(recuo('String sobreMim();')).toBe('1');
     expect(recuo('@Override')).toBe('1');
-    expect(recuo('return ABOUT_ME;')).toBe('2');
+    expect(recuo('return "Full Stack: Java, Spring Boot, Angular e SQL";')).toBe('2');
   });
 
   it('exibe o parágrafo como um bloco de comentário único', async () => {

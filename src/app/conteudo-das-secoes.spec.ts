@@ -10,7 +10,15 @@ import { CONTEUDO_INICIO } from './features/inicio/inicio.conteudo';
 import { CONTEUDOS_SKILLS } from './features/skills/skills.conteudo';
 import { CONTEUDO_SOBRE_MIM } from './features/sobre-mim/sobre-mim.conteudo';
 import type { ConteudoDoEditor } from './shared/editor-de-codigo/conteudo';
-import { DOCUMENTOS, aspasRetas, codigoDe, literaisDe, textoDe } from './conteudo-das-secoes.apoio';
+import {
+  DOCUMENTOS,
+  aspasRetas,
+  codigoDe,
+  ehContinuacao,
+  estaNoNovoEstilo,
+  literaisDe,
+  textoDe,
+} from './conteudo-das-secoes.apoio';
 
 const PARES: Readonly<Record<string, string>> = { ')': '(', '}': '{', ']': '[' };
 
@@ -71,14 +79,24 @@ describe('conteúdo das seções em Java moderno', () => {
       expect(textoDe(c)).not.toContain('String[]');
     });
 
-    it('só o Início declara o pacote portfolio.viniciusmachado', () => {
-      const comPacote = DOCUMENTOS.filter(([, c]) => /^package /m.test(codigoDe(c))).map(
-        ([n]) => n,
-      );
+    it('o package dev.vinicius.portfolio.<pasta> fica só na primeira página de cada arquivo', () => {
+      const comPacote = DOCUMENTOS.filter(([, c]) => /^package /m.test(codigoDe(c)));
 
-      expect(comPacote).toEqual(['Início']);
-      expect(codigoDe(CONTEUDO_INICIO)).toContain('package portfolio.viniciusmachado;');
+      comPacote.forEach(([nome, c]) => {
+        expect(ehContinuacao(nome), nome).toBe(false);
+        expect(codigoDe(c), nome).toMatch(/^package dev\.vinicius\.portfolio(\.\w+)?;$/m);
+      });
+      expect(codigoDe(CONTEUDO_INICIO)).toContain('package dev.vinicius.portfolio;');
+      expect(codigoDe(CONTEUDO_EVENTOS)).toContain('package dev.vinicius.portfolio.formacao;');
     });
+
+    it.each(DOCUMENTOS.filter(([n]) => estaNoNovoEstilo(n)))(
+      '%s: no novo estilo, sem static final nem constante em caixa alta',
+      (_n, c) => {
+        expect(codigoDe(c)).not.toContain('static final');
+        expect(codigoDe(c)).not.toMatch(/\b[A-Z][A-Z0-9]*_[A-Z0-9_]+\b/);
+      },
+    );
   });
 
   describe('convenções de mercado', () => {
@@ -98,15 +116,15 @@ describe('conteúdo das seções em Java moderno', () => {
       constantes.forEach((nome) => expect(nome).toMatch(/^[A-Z][A-Z0-9_]*$/));
     });
 
-    it('os campos do Diferenciais estão em inglês: city, extrovert, curious', () => {
+    it('os campos do Diferenciais estão em português: cidade, extrovertido, curioso', () => {
       const texto = textoDe(CONTEUDO_DIFERENCIAIS);
 
-      for (const campo of ['String city', 'boolean extrovert', 'boolean curious']) {
+      for (const campo of ['String cidade', 'boolean extrovertido', 'boolean curioso']) {
         expect(texto).toContain(campo);
       }
     });
 
-    it('a cidade é "Brasília" no campo city, e o texto do leitor fica em pt-BR', () => {
+    it('a cidade é "Brasília" no campo cidade, e o texto do leitor fica em pt-BR', () => {
       expect(literaisDe(CONTEUDO_DIFERENCIAIS)).toContain('"Brasília"');
       expect(textoDe(CONTEUDO_DIFERENCIAIS)).toContain('Moro em Brasília há 20 anos.');
     });
@@ -144,12 +162,12 @@ describe('conteúdo das seções em Java moderno', () => {
       }
     });
 
-    it('os Idiomas usam constantes simples, sem Map.of nem enum', () => {
+    it('os Idiomas usam campos simples, sem Map.of nem enum', () => {
       const codigo = codigoDe(CONTEUDO_IDIOMAS);
 
       expect(codigo).not.toContain('Map.of');
       expect(codigo).not.toMatch(/\benum\b/);
-      expect(codigo).toMatch(/static final\s+String\s+\w+\s*=/);
+      expect(codigo).toMatch(/^\s*String\s+\w+\s*=/m);
     });
 
     it('textos longos vão em Javadoc (Sobre Mim, Diferenciais, IA, Experiências)', () => {
@@ -165,7 +183,7 @@ describe('conteúdo das seções em Java moderno', () => {
   });
 
   describe('informações preservadas', () => {
-    it('Início: pacote, cargo e a stack Java, Spring Boot, Angular e SQL', () => {
+    it('Início: cargo e a stack Java, Spring Boot, Angular e SQL', () => {
       expect(literaisDe(CONTEUDO_INICIO).map(aspasRetas)).toEqual([
         'Full Stack Júnior',
         'Java',
@@ -348,9 +366,9 @@ describe('conteúdo das seções em Java moderno', () => {
         'Campus Party Brasília',
         'BB Digital Week',
       ]);
-      expect(texto).toContain('new Event("Campus Party Brasília", 2),  // 2x');
-      expect(texto).toContain('new Event("Brasília IT", 1),');
-      expect(texto).toContain('new Event("BB Digital Week", 1)');
+      expect(texto).toContain('new Evento("Campus Party Brasília", 2),  // 2x');
+      expect(texto).toContain('new Evento("Brasília IT", 1),');
+      expect(texto).toContain('new Evento("BB Digital Week", 1)');
       expect(texto).not.toContain('// 1x');
     });
 
@@ -365,8 +383,8 @@ describe('conteúdo das seções em Java moderno', () => {
     it('Idiomas: inglês e espanhol, ambos em nível básico', () => {
       const codigo = codigoDe(CONTEUDO_IDIOMAS);
 
-      expect(codigo).toMatch(/english/i);
-      expect(codigo).toMatch(/spanish/i);
+      expect(codigo).toMatch(/\bingles\b/i);
+      expect(codigo).toMatch(/\bespanhol\b/i);
       expect(literaisDe(CONTEUDO_IDIOMAS).map(aspasRetas)).toEqual(['Básico', 'Básico']);
     });
 

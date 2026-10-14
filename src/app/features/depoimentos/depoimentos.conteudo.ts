@@ -23,28 +23,30 @@ const TEXTO_LUANA_PORTO: readonly string[] = [
 
 /**
  * Conteúdo da seção Depoimentos/Recomendações (referência visual: design/telas/tela-29.png).
- * Para acrescentar uma recomendação: declare a constante com o Javadoc do texto e inclua o nome
- * dela em `ALL`.
+ * Para acrescentar uma recomendação: declare o campo com o Javadoc do texto e inclua o nome dele
+ * em `todas`.
  */
 export const CONTEUDO_DEPOIMENTOS: ConteudoDoEditor = [
+  vazia(),
+  linha(0, palavraChave('package'), comum(' dev.vinicius.portfolio.recomendacoes;')),
   vazia(),
   linha(0, palavraChave('import'), comum(' java.time.LocalDate;')),
   linha(0, palavraChave('import'), comum(' java.util.List;')),
   vazia(),
-  linha(0, palavraChave('public class'), comum('  Recommendations {')),
+  linha(0, palavraChave('public class'), comum(' Recomendacoes {')),
   vazia(),
   linha(1, comentario('// Cada recomendação tem quem escreveu, o cargo, a relação e a data')),
   linha(
     1,
     palavraChave('record'),
-    comum(' Recommendation('),
-    declaracao('String author'),
+    comum(' Recomendacao('),
+    declaracao('String autora'),
     comum(', '),
-    declaracao('String role'),
+    declaracao('String cargo'),
     comum(', '),
-    declaracao('String relationship'),
+    declaracao('String relacao'),
     comum(', '),
-    declaracao('LocalDate date'),
+    declaracao('LocalDate data'),
     comum(') {}'),
   ),
   vazia(),
@@ -52,11 +54,10 @@ export const CONTEUDO_DEPOIMENTOS: ConteudoDoEditor = [
   javadoc(1, TEXTO_LUANA_PORTO.join('\n\n')),
   linha(
     1,
-    palavraChave('static final'),
-    declaracao(' Recommendation'),
-    comum(' LUANA_PORTO = '),
+    declaracao('Recomendacao'),
+    comum(' luana = '),
     palavraChave('new'),
-    comum(' Recommendation('),
+    comum(' Recomendacao('),
   ),
   linha(2, literal('"Luana Porto"'), comum(',')),
   linha(2, literal('"Desenvolvedor Backend Java"'), comum(',')),
@@ -74,14 +75,7 @@ export const CONTEUDO_DEPOIMENTOS: ConteudoDoEditor = [
   linha(1, comum(');')),
   vazia(),
   linha(1, comentario('// Todas as recomendações, na ordem em que aparecem')),
-  linha(
-    1,
-    palavraChave('static final'),
-    declaracao(' List<Recommendation>'),
-    comum(' ALL = List.of('),
-  ),
-  linha(2, comum('LUANA_PORTO')),
-  linha(1, comum(');')),
+  linha(1, declaracao('List<Recomendacao>'), comum(' todas = List.of(luana);')),
   vazia(),
   linha(0, comum('}')),
 ];

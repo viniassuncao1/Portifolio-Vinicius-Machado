@@ -12,13 +12,14 @@ import type { ConteudoDoEditor, Linha, Trecho } from '../../shared/editor-de-cod
 
 /** Dados de uma página: as telas 07 a 09 (design/telas), uma experiência por página. */
 interface Experiencia {
-  readonly constante: string;
+  /** Nome da variável Java da experiência. */
+  readonly variavel: string;
   readonly empresa: string;
   readonly cargo: string;
   /** Texto do período, como "08/2026 - Presente". */
   readonly periodo: string;
   readonly destaques: readonly string[];
-  /** Texto original da tela, no Javadoc da constante. */
+  /** Texto original da tela, no Javadoc da variável. */
   readonly descricao: string;
 }
 
@@ -32,22 +33,25 @@ const destaques = (itens: readonly string[]): readonly Linha[] => [
 
 const importacoes: readonly Linha[] = [linha(0, palavraChave('import'), comum(' java.util.List;'))];
 
-/** O record vem só na página 1; as outras duas páginas o usam como a mesma classe `Experiences`. */
+/** O record vem só na página 1; as outras duas páginas o usam na mesma classe `Experiencias`. */
 const registro: readonly Linha[] = [
   linha(1, comentario('// Cada experiência tem empresa, cargo, período e destaques')),
-  linha(1, palavraChave('record'), comum(' Experience(')),
-  linha(2, declaracao('String company'), comum(',')),
-  linha(2, declaracao('String role'), comum(',')),
-  linha(2, declaracao('String period'), comum(',')),
-  linha(2, declaracao('List<String> highlights'), comum(') {}')),
+  linha(1, palavraChave('record'), comum(' Experiencia(')),
+  linha(2, declaracao('String empresa'), comum(',')),
+  linha(2, declaracao('String cargo'), comum(',')),
+  linha(2, declaracao('String periodo'), comum(',')),
+  linha(2, declaracao('List<String> destaques'), comum(') {}')),
   vazia(),
 ];
 
 const pagina = (experiencia: Experiencia, comRegistro: boolean): ConteudoDoEditor => [
   vazia(),
+  ...(comRegistro
+    ? [linha(0, palavraChave('package'), comum(' dev.vinicius.portfolio.experiencias;')), vazia()]
+    : []),
   ...importacoes,
   vazia(),
-  linha(0, palavraChave('public class'), comum('  Experiences {')),
+  linha(0, palavraChave('public class'), comum(' Experiencias {')),
   vazia(),
   ...(comRegistro
     ? registro
@@ -55,11 +59,10 @@ const pagina = (experiencia: Experiencia, comRegistro: boolean): ConteudoDoEdito
   javadoc(1, experiencia.descricao),
   linha(
     1,
-    palavraChave('static final'),
-    declaracao(' Experience'),
-    comum(` ${experiencia.constante} = `),
+    declaracao('Experiencia'),
+    comum(` ${experiencia.variavel} = `),
     palavraChave('new'),
-    comum(' Experience('),
+    comum(' Experiencia('),
   ),
   linha(2, aspas(experiencia.empresa), comum(',')),
   linha(2, aspas(experiencia.cargo), comum(',')),
@@ -71,7 +74,7 @@ const pagina = (experiencia: Experiencia, comRegistro: boolean): ConteudoDoEdito
 ];
 
 const MEMORA: Experiencia = {
-  constante: 'MEMORA',
+  variavel: 'memora',
   empresa: 'Memora',
   cargo: 'Desenvolvedor Full Stack Júnior',
   periodo: '08/2026 - Presente',
@@ -85,7 +88,7 @@ const MEMORA: Experiencia = {
 };
 
 const MEMORA_ESTAGIO: Experiencia = {
-  constante: 'MEMORA_INTERNSHIP',
+  variavel: 'estagioNaMemora',
   empresa: 'Memora',
   cargo: 'Estagiário de Desenvolvimento',
   periodo: '08/2025 - 07/2026',
@@ -100,7 +103,7 @@ const MEMORA_ESTAGIO: Experiencia = {
 };
 
 const WATTS_COMPANY: Experiencia = {
-  constante: 'WATTS_COMPANY',
+  variavel: 'wattsCompany',
   empresa: 'Watts Company',
   cargo: 'Co-fundador & Desenvolvedor Full Stack',
   periodo: '02/2025 - Presente',

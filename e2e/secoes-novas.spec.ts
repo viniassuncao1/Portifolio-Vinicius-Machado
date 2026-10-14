@@ -19,11 +19,11 @@ test.describe('Experiências (/experiencias)', () => {
     expect(linhas).toEqual(
       expect.arrayContaining([
         'import java.util.List;',
-        'public class Experiences {',
-        'record Experience(',
-        'String company,',
-        'String period,',
-        expect.stringMatching(/^static final Experience [A-Z_]+ = new Experience\($/),
+        'public class Experiencias {',
+        'record Experiencia(',
+        'String empresa,',
+        'String periodo,',
+        'Experiencia memora = new Experiencia(',
         '"Memora",',
         '"Desenvolvedor Full Stack Júnior",',
         '"08/2026 - Presente",',
@@ -53,13 +53,13 @@ test.describe('Experiências (/experiencias)', () => {
 
     expect(linhas).toEqual(
       expect.arrayContaining([
-        expect.stringMatching(/^static final Experience [A-Z_]+ = new Experience\($/),
+        'Experiencia estagioNaMemora = new Experiencia(',
         '"Memora",',
         '"Estagiário de Desenvolvimento",',
         '"08/2025 - 07/2026",',
       ]),
     );
-    expect(linhas).not.toContain('record Experience(');
+    expect(linhas).not.toContain('record Experiencia(');
     await expect(controle(page)).toContainText('2/3');
   });
 
@@ -89,7 +89,7 @@ test.describe('Experiências (/experiencias)', () => {
 
     expect(linhas).toEqual(
       expect.arrayContaining([
-        expect.stringMatching(/^static final Experience [A-Z_]+ = new Experience\($/),
+        'Experiencia wattsCompany = new Experiencia(',
         '"Watts Company",',
         '"Co-fundador & Desenvolvedor Full Stack",',
         '"02/2025 - Presente",',
@@ -145,15 +145,16 @@ test.describe('Eventos (/eventos)', () => {
     await page.goto('/eventos');
 
     expect(await linhasDoCodigo(page)).toEqual([
+      'package dev.vinicius.portfolio.formacao;',
       'import java.util.List;',
-      'public class Events {',
+      'public class Eventos {',
       expect.stringMatching(/^\/\/ .+/),
-      'record Event(String name, int times) {}',
+      'record Evento(String nome, int vezes) {}',
       expect.stringMatching(/^\/\/ .+/),
-      'static final List<Event> ATTENDED = List.of(',
-      'new Event("Brasília IT", 1),',
-      'new Event("Campus Party Brasília", 2), // 2x',
-      'new Event("BB Digital Week", 1)',
+      'List<Evento> participei = List.of(',
+      'new Evento("Brasília IT", 1),',
+      'new Evento("Campus Party Brasília", 2), // 2x',
+      'new Evento("BB Digital Week", 1)',
       ');',
       '}',
     ]);
@@ -194,13 +195,15 @@ test.describe('Formação (/formacao)', () => {
     await page.goto('/formacao');
 
     expect(await linhasDoCodigo(page)).toEqual([
-      'public class Education {',
+      'package dev.vinicius.portfolio.formacao;',
+      'public class Formacao {',
       expect.stringMatching(/^\/\/ .+/),
-      'record Degree(',
-      'String institution,',
-      'String course,',
-      'int expectedGraduation) {}',
-      expect.stringMatching(/^static final Degree [A-Z_]+ = new Degree\($/),
+      'record Graduacao(',
+      'String instituicao,',
+      'String curso,',
+      'int anoPrevistoDeFormatura) {}',
+      expect.stringMatching(/^\/\/ .+/),
+      'Graduacao graduacao = new Graduacao(',
       '"UniCEUB",',
       '"Bacharelado em Ciência da Computação",',
       '2027',
@@ -225,16 +228,13 @@ test.describe('Idiomas (/idiomas)', () => {
 
     expect(linhas).toEqual(
       expect.arrayContaining([
-        'public class Languages {',
+        'public class Idiomas {',
         expect.stringMatching(/^\/\/ .+/),
-        expect.stringMatching(/^static final String \w+ = "Básico";( \/\/ Inglês)?$/),
-        expect.stringMatching(/^static final String \w+ = "Básico";( \/\/ Espanhol)?$/),
+        'String ingles = "Básico";',
+        'String espanhol = "Básico";',
       ]),
     );
-    await expect(codigo(page)).toContainText('Inglês');
-    await expect(codigo(page)).toContainText('Espanhol');
-    await expect(codigo(page)).toContainText(/english/i);
-    await expect(codigo(page)).toContainText(/spanish/i);
+    await expect(codigo(page)).not.toContainText('static final');
     await expect(codigo(page)).not.toContainText('Map.of');
     await expect(codigo(page)).not.toContainText('enum');
   });
@@ -247,17 +247,20 @@ test.describe('Idiomas (/idiomas)', () => {
 });
 
 test.describe('Contato (/contato)', () => {
-  test('mostra e-mail, telefone, LinkedIn e GitHub no record Contact', async ({ page }) => {
+  test('mostra e-mail, telefone, LinkedIn e GitHub no record Contatos', async ({ page }) => {
     await page.goto('/contato');
 
     expect(await linhasDoCodigo(page)).toEqual([
-      'public record Contact(',
-      'String email,',
-      'String phone,',
-      'String linkedin,',
-      'String github) {',
+      'package dev.vinicius.portfolio.contato;',
+      'public class Contato {',
       expect.stringMatching(/^\/\/ .+/),
-      expect.stringMatching(/^public static final Contact [A-Z_]+ = new Contact\($/),
+      'record Contatos(',
+      'String email,',
+      'String telefone,',
+      'String linkedin,',
+      'String github) {}',
+      expect.stringMatching(/^\/\/ .+/),
+      'Contatos vinicius = new Contatos(',
       '"viniciusmassuncao@gmail.com",',
       '"+55 61 98283-7805",',
       '"linkedin.com/in/viniassuncao",',

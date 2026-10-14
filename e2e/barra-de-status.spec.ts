@@ -24,10 +24,10 @@ test.describe('Barra de status', () => {
     await expect(barra).not.toContainText('Java 21');
   });
 
-  test('mostra ViniciusMachado.java no Início', async ({ page }) => {
+  test('mostra PortfolioApplication.java no Início', async ({ page }) => {
     await page.goto('/');
 
-    await expect(status(page)).toContainText('ViniciusMachado.java');
+    await expect(status(page)).toContainText('PortfolioApplication.java');
   });
 
   test('troca o arquivo ao trocar de seção', async ({ page }) => {

@@ -26,27 +26,28 @@ describe('Skills', () => {
     expect(CONTEUDOS_SKILLS).toHaveLength(3);
   });
 
-  it('página 1 mostra linguagens, frameworks e databases e o controle 1/3', async () => {
+  it('página 1 mostra linguagens, frameworks e bancos de dados e o controle 1/3', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelector('code')?.textContent).toContain('List<String> languages,');
-    expect(raiz.querySelector('code')?.textContent).toContain('List<String> databases');
+    expect(raiz.querySelector('code')?.textContent).toContain('List<String> linguagens,');
+    expect(raiz.querySelector('code')?.textContent).toContain('List<String> bancosDeDados) {}');
     expect(literais(raiz)).toHaveLength(11);
     expect(raiz.querySelector('[aria-current="page"]')?.textContent?.trim()).toBe('1/3');
   });
 
-  it('página 1 declara o record TechSkills e lista cada coleção numa linha', async () => {
+  it('página 1 declara o record Tecnologias e lista cada coleção numa linha', async () => {
     const raiz = await renderizar();
 
     expect(linhas(raiz)).toEqual([
+      'package dev.vinicius.portfolio.skills;',
       'import java.util.List;',
       '// Linguagens, frameworks e bancos de dados que uso',
-      'public record TechSkills(',
-      'List<String> languages,',
+      'public class Skills {',
+      'record Tecnologias(',
+      'List<String> linguagens,',
       'List<String> frameworks,',
-      'List<String> databases',
-      ') {',
-      'public static final TechSkills MY_SKILLS = new TechSkills(',
+      'List<String> bancosDeDados) {}',
+      'Tecnologias minhas = new Tecnologias(',
       'List.of("Java", "TypeScript", "JavaScript", "PHP", "SQL"),',
       'List.of("Spring Boot", "Spring Data JPA", "Angular"),',
       'List.of("Oracle", "PostgreSQL", "MySQL")',
@@ -55,10 +56,10 @@ describe('Skills', () => {
     ]);
   });
 
-  it('página 2 mostra cloudAndInfra e ferramentas e o controle 2/3', async () => {
+  it('página 2 mostra nuvemEInfra e ferramentas e o controle 2/3', async () => {
     const raiz = await renderizar(2);
 
-    expect(raiz.querySelector('code')?.textContent).toContain('List<String> cloudAndInfra,');
+    expect(raiz.querySelector('code')?.textContent).toContain('List<String> nuvemEInfra,');
     expect(literais(raiz)).toEqual([
       '"Docker"',
       '"Kubernetes"',
@@ -73,24 +74,24 @@ describe('Skills', () => {
     expect(raiz.querySelector('[aria-current="page"]')?.textContent?.trim()).toBe('2/3');
   });
 
-  it('página 2 declara o record InfraSkills e não repete os da página 1', async () => {
+  it('página 2 declara o record Ferramentas e não repete os da página 1', async () => {
     const raiz = await renderizar(2);
     const texto = raiz.querySelector('code')?.textContent ?? '';
 
     expect(linhas(raiz).filter((l) => l?.startsWith('List<String>'))).toEqual([
-      'List<String> cloudAndInfra,',
-      'List<String> tools',
+      'List<String> nuvemEInfra,',
+      'List<String> ferramentas) {}',
     ]);
-    expect(linhas(raiz)).toContain('public record InfraSkills(');
-    expect(texto).not.toContain('languages');
-    expect(texto).not.toContain('databases');
+    expect(linhas(raiz)).toContain('record Ferramentas(');
+    expect(texto).not.toContain('linguagens');
+    expect(texto).not.toContain('bancosDeDados');
   });
 
-  it('páginas 1 e 2 importam java.util.List e declaram um record', async () => {
-    expect(linhas(await renderizar())[0]).toBe('import java.util.List;');
+  it('páginas 1 e 2 importam java.util.List e declaram um record; só a 1ª tem o package', async () => {
+    expect(linhas(await renderizar())[1]).toBe('import java.util.List;');
     expect(linhas(await renderizar(2))[0]).toBe('import java.util.List;');
-    expect(linhas(await renderizar())[2]).toBe('public record TechSkills(');
-    expect(linhas(await renderizar(2))[2]).toBe('public record InfraSkills(');
+    expect(linhas(await renderizar())).toContain('record Tecnologias(');
+    expect(linhas(await renderizar(2))).toContain('record Ferramentas(');
   });
 
   it('cada bloco começa com um comentário curto em pt-BR', async () => {
@@ -99,7 +100,7 @@ describe('Skills', () => {
     }
   });
 
-  it('indenta as listas três níveis e os componentes dois', async () => {
+  it('indenta as listas e os componentes três níveis', async () => {
     const raiz = await renderizar();
     const linha = (texto: string) =>
       Array.from(raiz.querySelectorAll<HTMLElement>('code > span')).find(
@@ -109,20 +110,20 @@ describe('Skills', () => {
     expect(
       linha('List.of("Oracle", "PostgreSQL", "MySQL")')?.style.getPropertyValue('--recuo'),
     ).toBe('3');
-    expect(linha('List<String> languages,')?.style.getPropertyValue('--recuo')).toBe('2');
-    expect(linha('public record TechSkills(')?.style.getPropertyValue('--recuo')).toBe('0');
+    expect(linha('List<String> linguagens,')?.style.getPropertyValue('--recuo')).toBe('3');
+    expect(linha('public class Skills {')?.style.getPropertyValue('--recuo')).toBe('0');
   });
 
   it('não usa o papel valor: só textos entre aspas', async () => {
     expect((await renderizar()).querySelector('.papel-valor')).toBeNull();
   });
 
-  it('página 3 declara o enum KnowledgeLevel com os quatro níveis explicados', async () => {
+  it('página 3 declara o enum NivelDeConhecimento com os quatro níveis explicados', async () => {
     const raiz = await renderizar(3);
     const texto = raiz.querySelector('code')?.textContent ?? '';
 
-    expect(linhas(raiz)).toContain('public enum KnowledgeLevel {');
-    for (const nivel of ['DAILY_MASTERY', 'FULL_PROJECT', 'OCCASIONAL_USE', 'THEORETICAL']) {
+    expect(linhas(raiz)).toContain('enum NivelDeConhecimento {');
+    for (const nivel of ['DominioDiario', 'ProjetoCompleto', 'UsoPontual', 'ConhecimentoTeorico']) {
       expect(texto).toContain(`${nivel}(`);
     }
     expect(texto).toContain('Domínio diário: uso todo dia no trabalho');
@@ -134,12 +135,12 @@ describe('Skills', () => {
     const texto = linhas(await renderizar(3)).join(' ');
 
     expect(texto).toContain(
-      'KnowledgeLevel.DAILY_MASTERY, List.of("Java", "Spring Boot", "Angular", "PostgreSQL", "Oracle", "TypeScript", "Git")),',
+      'NivelDeConhecimento.DominioDiario, List.of("Java", "Spring Boot", "Angular", "PostgreSQL", "Oracle", "TypeScript", "Git")),',
     );
-    expect(texto).toContain('KnowledgeLevel.FULL_PROJECT, List.of("PHP")),');
-    expect(texto).toContain('KnowledgeLevel.OCCASIONAL_USE, List.of("React Native", "CI/CD")),');
+    expect(texto).toContain('NivelDeConhecimento.ProjetoCompleto, List.of("PHP")),');
+    expect(texto).toContain('NivelDeConhecimento.UsoPontual, List.of("React Native", "CI/CD")),');
     expect(texto).toContain(
-      'KnowledgeLevel.THEORETICAL, List.of("Python", "AWS", "Azure", "Docker", "Kubernetes")));',
+      'NivelDeConhecimento.ConhecimentoTeorico, List.of("Python", "AWS", "Azure", "Docker", "Kubernetes")));',
     );
   });
 
@@ -163,7 +164,7 @@ describe('Skills', () => {
     await fixture.whenStable();
 
     expect((fixture.nativeElement as HTMLElement).querySelector('code')?.textContent).toContain(
-      'cloudAndInfra',
+      'nuvemEInfra',
     );
   });
 

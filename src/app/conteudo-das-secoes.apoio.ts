@@ -82,3 +82,22 @@ export const comentariosDe = (conteudo: ConteudoDoEditor): readonly string[] =>
   );
 
 export const aspasRetas = (texto: string): string => texto.replace(/^"|"$/g, '');
+
+/** Nome da seção de um documento: `Skills 2/3` → `Skills`. */
+export const secaoDe = (nome: string): string => nome.replace(/ \d+\/\d+$/, '');
+
+/** Páginas que continuam o arquivo da seção (`2/3`, `3/3`) e por isso não repetem o `package`. */
+export const ehContinuacao = (nome: string): boolean => /\s([2-9]|\d{2,})\/\d+$/.test(nome);
+
+/**
+ * Seções no estilo da change java-para-leitura (domínio em português sem acento, `package`
+ * `dev.vinicius.portfolio.<pasta>` e sem `static final`): são as que declaram esse `package` na
+ * primeira página. A migração é detectada pelo próprio conteúdo, sem lista para manter.
+ */
+export const estaNoNovoEstilo = (nome: string): boolean =>
+  DOCUMENTOS.some(
+    ([n, c]) =>
+      secaoDe(n) === secaoDe(nome) &&
+      !ehContinuacao(n) &&
+      /^package dev\.vinicius\.portfolio(\.\w+)?;$/m.test(codigoDe(c)),
+  );

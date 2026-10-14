@@ -13,6 +13,7 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 | Barra de ferramentas do design (ícones, branch, Buscar)        | todas            | `BarraDeFerramentas`        | `layout/barra-de-ferramentas/` |
 | Faixa de ferramentas à esquerda (Projeto, Commit, Estrutura)   | desktop (nossa)  | `FaixaDeFerramentas`        | `layout/faixa-de-ferramentas/` |
 | Painel do Git (grafo, commits e detalhes)                      | (nosso)          | `PainelDoGitComponente`     | `layout/painel-do-git/`        |
+| Janela de Run (log de inicialização do Spring)                 | (nosso)          | `JanelaDeRunComponente`     | `layout/janela-de-run/`        |
 | Painel do projeto (cabeçalho "Projeto", árvore, rodapé)        | todas            | `PainelLateral`             | `layout/painel-lateral/`       |
 | Árvore de seções com ícones                                    | todas            | `ArvoreDeSecoes`            | `layout/arvore-de-secoes/`     |
 | Faixa de abas dos arquivos abertos                             | todas (nossa)    | `FaixaDeAbas`               | `layout/faixa-de-abas/`        |
@@ -108,8 +109,9 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   (`public/icones/*.svg`) e os controles de janela do design. Dos ícones da IntelliJ Platform ficam
   só a **busca** e a **branch** `master`. Quase tudo só imita a IDE e fica fora da leitura e do
   foco. É botão de verdade o **Buscar** (emite `buscar`, que abre a busca de seções) e, no celular,
-  o **Projeto**, que abre e fecha a gaveta. O ícone de play da barra vira o botão "Executar o
-  projeto" só nas rotas com preview (`JanelaDePreview.previewDaRota()`); o foco é um anel rosa.
+  o **Projeto**, que abre e fecha a gaveta. O **Executar** (play) sempre tem função: nas rotas com preview
+  (`JanelaDePreview.previewDaRota()`) abre o site do projeto ("Executar o projeto"); nas demais
+  abre a janela de Run e reinicia o log ("Executar PortfolioApplication"). O foco é um anel rosa.
 - **Entrada e saídas:** `gavetaAberta = input(false)`; `alternarGaveta` e `buscar`. Método
   público: `focarProjeto()`, usado para devolver o foco quando a gaveta fecha.
 - **Botão de tema:** à direita do Buscar, troca entre o tema claro e o escuro (ícone de sol no
@@ -284,6 +286,26 @@ reduce` não há animação e a janela fecha direto.
   ocupa 70% da largura e 88% da altura.
 - **Entradas e saídas:** nenhuma; o estado vem do serviço `JanelaDePreview`.
 
+### `JanelaDeRunComponente`
+
+- **Onde:** `layout/janela-de-run/janela-de-run.ts`, seletor `app-janela-de-run`, montado na `Casca`
+  com `id="janela-de-run"`.
+- **O que faz:** a janela de Run na parte de baixo da IDE, dividindo a área com o painel do Git (um
+  de cada vez). Mostra o **log de inicialização** do `PortfolioApplication`: o banner do Spring
+  Boot, `Starting PortfolioApplication using Java 21`, `Tomcat started on port 8080` e `Started
+PortfolioApplication in 1.8 seconds`. O texto vem de `log.ts` (`montarLog`); a data e a hora vêm
+  do relógio do navegador, na abertura, e nunca entram no pré-render. O log é texto, nunca imagem.
+- **Revelação do log.** O banner aparece de uma vez e as demais linhas uma a cada ~200 ms, com teto
+  de **2,5 s** para o log completo. O texto completo fica sempre no DOM; as linhas ainda não
+  reveladas só ficam escondidas. **Pular** completa na hora. Uma região `aria-live="polite"` anuncia
+  a linha final uma vez, quando o log termina.
+- **Quando abre.** Sozinha, **uma vez por sessão** (`sessionStorage['run-exibido']`), na primeira
+  página, sem roubar o foco e sem bloquear o conteúdo. Com `prefers-reduced-motion: reduce` não abre
+  sozinha e o log nasce completo. Pelo **Executar** da barra abre (ou reexecuta) e leva o foco para
+  a janela.
+- **Teclado.** Esc, o "×" e o foco devolvido ao botão que abriu fecham a janela.
+- **Entradas e saídas:** nenhuma; o estado vem dos serviços `JanelaDeRun` e `AreaDeBaixo`.
+
 ### `BotaoExecutar`
 
 - **Onde:** `shared/botao-executar/botao-executar.ts`, seletor `app-botao-executar`. O
@@ -318,7 +340,14 @@ O estado da IDE mora em serviços (`@Service`), e não nos componentes da casca.
   `EditorDeCodigo` escreve (`posicionar`, `reiniciar`) e a `BarraDeStatus` lê.
 - **`Secao.arquivo`** (`core/secoes.ts`): o nome do arquivo `.java` de cada seção
   (`SobreMim.java`), usado pela aba, pela barra de status e pela busca. O Início tem
-  `ARQUIVO_INICIO` (`ViniciusMachado.java`).
+  `ARQUIVO_INICIO` (`PortfolioApplication.java`).
+- **`AreaDeBaixo`** (`core/area-de-baixo.ts`): qual janela de ferramenta ocupa a área de baixo da
+  IDE, `'run'` ou `'git'`. Só uma de cada vez: `abrir(janela)` troca, `fechar(janela)` só fecha se
+  ela ainda for a aberta.
+- **`JanelaDeRun`** (`core/janela-de-run.ts`): o estado da janela de Run (`aberto`, `execucao`,
+  `inicio`, `terminado`, `focarAoAbrir`). `abrirNaPrimeiraVisita()` abre sozinha uma vez por sessão
+  (nunca no servidor nem com movimento reduzido), `executar(origem)` abre ou reinicia o log,
+  `concluir()` marca o fim da revelação (ou o "Pular") e `fechar()` devolve o foco à origem.
 - **`JanelaDePreview`** (`core/janela-de-preview.ts`): guarda o preview aberto (`preview`, signal
   somente leitura), o elemento que abriu a janela e o preview da rota atual (`previewDaRota`, calculado
   a partir da URL). `abrir(preview, origem)` abre; `fechar()` fecha e devolve o foco à origem.
@@ -443,115 +472,62 @@ texto documenta uma declaração.
 seção Contato usa isso com links reais: `link(literal('"viniciusmassuncao@gmail.com"'),
 'mailto:viniciusmassuncao@gmail.com')`.
 
-## Regra de conteúdo: Java moderno
+## Regra de conteúdo: Java para leitura
 
-Por decisão do [ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md), o código exibido é
-**Java 21 sintaticamente válido**, com padrões de mercado, e **preserva todas as informações** das
-telas. O design é referência de identidade visual, não de sintaxe: o "pseudo-Java" das telas não é
-copiado.
+O código exibido é **Java 21 sintaticamente válido**, com padrões de mercado, e **preserva todas as
+informações** das telas ([ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md)). O
+[ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md) acrescentou que ele precisa **ler-se como
+frase** para quem recruta, e por isso os identificadores de domínio são **em português** (a change
+`java-para-leitura`). O inglês fica só nas palavras da linguagem e do Spring (`record`, `List.of`,
+`@SpringBootApplication`).
 
-| Informação                 | Em Java moderno                                          |
-| -------------------------- | -------------------------------------------------------- |
-| Dados de uma entidade      | `record` (`record Experience(String company, ...)`)      |
-| Listas de textos           | `List.of("Java", "Spring Boot", ...)`, não `String[]`    |
-| Datas e períodos           | `YearMonth.of(2026, 8)`                                  |
-| Valor que pode não existir | um texto que já diz o resultado (`"08/2026 - Presente"`) |
-| Texto longo                | Javadoc (`javadoc()`) acima da declaração                |
-| Contatos                   | texto literal com `link()` (sem `URI.create`)            |
+### Guia de estilo
 
-Identificadores seguem as convenções do Java (classes em PascalCase, campos e métodos em
-camelCase, constantes em UPPER_SNAKE_CASE) e ficam **em inglês**; os textos para o leitor (cargos,
-descrições) ficam em pt-BR.
+- **Pacote por pasta.** Cada seção abre com `package dev.vinicius.portfolio.<pasta>;` (`sobre`,
+  `skills`, `experiencias`, `projetos`, `formacao`, `recomendacoes` ou `contato`), o mesmo pacote
+  que a árvore e os breadcrumbs mostram. A página inicial fica no pacote raiz,
+  `dev.vinicius.portfolio`.
+- **Domínio em português, sem acento nos identificadores.** `record Experiencia(String empresa,
+String cargo, String periodo, ...)`, `record Recomendacao(String autora, ...)`. Os textos que o
+  leitor vê (cargos, descrições, strings) continuam em pt-BR, com acento.
+- **Sem cerimônia.** Nada de `static final` nem de constantes em caixa alta (`MY_SKILLS`,
+  `LUANA_PORTO`) para dados: o dado é um campo ou uma variável com nome que diz o que é
+  (`List<Evento> participei = List.of(...)`, `var luana = new Recomendacao(...)`).
+- **Nomes que dizem o que fazem.** Métodos e variáveis como `participei` ou `sobreMim()` valem mais
+  que um comentário.
+- **Um comentário `//` curto em pt-BR por bloco**, no início (`// Eventos de tecnologia dos quais
+participei`). Texto longo vai em Javadoc (`javadoc()`) ou em text block.
+- **Listas de até 5 itens numa linha;** maiores, quebradas por grupos. `List.of(...)` direto, sem
+  `String[]`.
+- **Sem ruído técnico.** Nada de `Optional`, `URI.create` ou genéricos aninhados quando um texto
+  resolve (`"08/2026 - Presente"` no lugar de `Optional<YearMonth>`). Links continuam clicáveis
+  via `link()`.
+- **`PortfolioApplication.java`** é a página inicial: `@SpringBootApplication` e um `main` que
+  apresenta o Vinicius com `var vinicius = new Desenvolvedor(...)` e `SpringApplication.run(...)`.
 
-Exemplo real, de `features/experiencias/experiencias.conteudo.ts`: o `record` e uma constante com
-o período já escrito como texto e os destaques.
+Exemplo real, de `features/eventos/eventos.conteudo.ts` (a seção de referência do estilo):
 
 ```java
-public class Experiences {
+package dev.vinicius.portfolio.formacao;
 
-  record Experience(
-      String company,
-      String role,
-      String period,
-      List<String> highlights) {}
+import java.util.List;
 
-  // Experiência atual
-  static final Experience MEMORA = new Experience(
-      "Memora",
-      "Desenvolvedor Full Stack Júnior",
-      "08/2026 - Presente",
-      List.of("Liderança de squad", ...)
-  );
+public class Eventos {
+
+  // Cada evento tem o nome e quantas vezes eu participei
+  record Evento(String nome, int vezes) {}
+
+  // Eventos de tecnologia dos quais participei
+  List<Evento> participei = List.of(
+      new Evento("Brasília IT", 1),
+      new Evento("Campus Party Brasília", 2),   // 2x
+      new Evento("BB Digital Week", 1));
 }
 ```
 
 Em TypeScript, o arquivo de conteúdo monta as linhas com as construtoras, por exemplo
-`linha(2, comentario('// Experiência atual'))`.
-
-### Guia de legibilidade
-
-O site é lido por recrutadores, não só por quem programa em Java. Por isso o código precisa ser
-**Java que qualquer pessoa entende** (decisão 2 do design da change
-`certificacoes-niveis-e-legibilidade`):
-
-- **Nomes que se explicam.** `Certification(String course, int hours, LocalDate completedOn)` dispensa
-  explicação.
-- **Um comentário `//` em pt-BR por bloco**, no início, dizendo o que o bloco é (por exemplo,
-  `// Inglês` em Idiomas). Os identificadores continuam em inglês.
-- **Listas de até 5 tecnologias numa linha.** Listas maiores são quebradas por grupos.
-- **Sem ruído técnico.** Evite `Optional`, `URI.create`, genéricos aninhados e imports que não
-  ajudam: quando um texto resolve, use o texto (`"08/2026 - Presente"` no lugar de
-  `Optional<YearMonth>`). Os links continuam clicáveis via `link()`.
-- **Javadoc só para parágrafos** de texto.
-
-Manter `record`, `List.of` e `java.time` onde ajudam: simplificar não é abrir mão do Java moderno.
-`legibilidade-das-secoes.spec.ts` cobre parte destas regras.
-
-### Identidade visual e tokens
-
-O **design original** (`design/telas/`) é a referência visual e predomina; do IntelliJ ficam só
-os elementos de IDE de verdade: ícones, pacotes, referências ao Git, a faixa de ferramentas, a
-barra de status com o caminho do arquivo e a tipografia compacta
-([ADR-0012](adr/0012-design-original-com-elementos-do-intellij.md), que substitui em parte o
-[ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md)). Todos os valores vêm de
-`src/styles/_tokens.scss`; os componentes só usam tokens.
-
-**Paleta e formas do design.** Fundos `#2B2B2B` e `#1C1C1C`,
-foco rosa `#DE60D2`, controles de janela, editor com cantos arredondados, abas e cabeçalho do
-painel `Portfolio_Vinicius`. A barra de ferramentas é um desvio do design: escura, nos cinzas do
-design e sem o degradê claro das telas. Os ajustes de contraste AA
-(por exemplo, o comentário clareado) seguem registrados na note "Design Tokens". Para os valores
-exatos de cada token, o arquivo `_tokens.scss` é a fonte.
-
-**Duas fontes, as duas servidas pelo próprio site** (as da change de tokens). A interface (árvore, abas e barras) usa
-**Inter** (`--fonte-interface`, pesos 400 e 500) e o código usa **JetBrains Mono**
-(`--fonte-mono`), ambas por `@fontsource` e importadas em `src/styles.scss`.
-
-**Escala compacta** (a de uma IDE, mantida do ADR-0011; as telas do design só têm a escala grande):
-
-| Elemento                   | Token                                                 | Valor (desktop)     |
-| -------------------------- | ----------------------------------------------------- | ------------------- |
-| Árvore e abas              | `--texto-arvore`, `--texto-aba`                       | 13px (0,8125rem)    |
-| Barra de status            | `--texto-status`                                      | 12px                |
-| Código e comentário        | `--texto-codigo`, `--texto-comentario`                | 14px, linha de 22px |
-| Números de linha           | `--texto-numero-linha`                                | 13px                |
-| Linha da árvore            | `--altura-linha-arvore`                               | 24px                |
-| Painel lateral             | `--largura-painel-lateral`                            | 280px               |
-| Barra superior e de status | `--altura-barra-ferramentas`, `--altura-barra-status` | 40px, 24px          |
-
-A aba tem a largura do nome mais 32px (`width` automática). Abaixo de 768px vale uma **escala própria**, no bloco
-`@media (max-width: 767.98px)` do mesmo arquivo, com o código em no mínimo 13px e alvos de toque
-maiores (`--tamanho-alvo-toque`).
-
-**Tema claro.** Os mesmos tokens são redefinidos em `:root[data-tema='claro']`, com contraste AA
-medido: as cores de sintaxe são as do IntelliJ Light, mas a anotação ficou em `#7D6B00` (o original
-`#9E880D` não passava) e o comentário em `#6A6A6A`. O acento rosa foi escurecido para `#9A2A8C`.
-Veja o [mecanismo na arquitetura](arquitetura.md#tema-claro-e-escuro).
-
-**Ajustes nativos do navegador.** `color-scheme` e `<meta name="theme-color">` acompanham o tema
-(escritos pelo script inline e pelo serviço `Tema`); `font-variant-numeric: tabular-nums` nos números de linha e na posição do
-cursor da barra de status; e `translate="no"` no código do editor, para o tradutor automático do
-navegador não alterar o Java.
+`linha(1, comentario('// Eventos de tecnologia dos quais participei'))`. Os testes
+`legibilidade-das-secoes.spec.ts` e os de cada seção cobrem parte das regras.
 
 ## Como criar uma seção nova só com dados
 
@@ -573,15 +549,21 @@ estilo nem item de árvore.
    ```ts
    export const CONTEUDO_SOBRE_MIM: ConteudoDoEditor = [
      vazia(),
-     linha(0, palavraChave('public interface'), comum(' Developer {')),
-     linha(1, palavraChave('String'), comum(' aboutMe();')),
+     linha(0, palavraChave('interface'), comum(' Desenvolvedor {')),
+     linha(1, palavraChave('String'), comum(' sobreMim();')),
      linha(0, comum('}')),
      vazia(),
-     // ... a classe ViniciusMachado implements Developer, com a constante ABOUT_ME
+     // ... a classe ViniciusMachado implements Desenvolvedor, com o método sobreMim()
      javadoc(1, 'Sou desenvolvedor Full Stack com cerca de 2 anos de experiência...'),
      linha(1, anotacao('@Override')),
-     linha(1, palavraChave('public'), comum(' String aboutMe() {')),
-     linha(2, palavraChave('return'), comum(' ABOUT_ME;')),
+     linha(1, palavraChave('public'), comum(' String sobreMim() {')),
+     linha(
+       2,
+       palavraChave('return'),
+       comum(' '),
+       literal('"Full Stack: Java, Spring Boot, Angular e SQL"'),
+       comum(';'),
+     ),
      linha(1, comum('}')),
      linha(0, comum('}')),
    ];

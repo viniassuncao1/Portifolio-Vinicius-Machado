@@ -1,6 +1,7 @@
 import { PLATFORM_ID, Service, computed, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
+import { AreaDeBaixo } from './area-de-baixo';
 import { lerHistorico } from './git/ler-historico';
 import type { HistoricoDoGit } from './git/historico';
 
@@ -9,7 +10,7 @@ export type EstadoDoHistorico = 'ocioso' | 'carregando' | 'pronto' | 'erro';
 const ENDERECO_DO_HISTORICO = 'git/historico.json';
 
 /**
- * Estado do painel do Git: aberto ou fechado e o histórico. O JSON só é baixado na primeira
+ * Estado do painel do Git: aberto ou fechado (na `AreaDeBaixo`) e o histórico. O JSON só é baixado na primeira
  * abertura (nunca no servidor nem no carregamento inicial) e fica guardado aqui. Guarda o elemento
  * que abriu o painel para devolver o foco quando ele fecha.
  */
@@ -19,9 +20,10 @@ export class PainelDoGit {
   private readonly origem = signal<HTMLElement | null>(null);
   private readonly estadoAtual = signal<EstadoDoHistorico>('ocioso');
   private readonly historicoCarregado = signal<HistoricoDoGit | null>(null);
-  private readonly estaAberto = signal(false);
+  private readonly area = inject(AreaDeBaixo);
 
-  readonly aberto = this.estaAberto.asReadonly();
+  /** O painel do Git é a janela aberta na área de baixo (a de Run fecha quando ele abre). */
+  readonly aberto = computed(() => this.area.janela() === 'git');
   readonly estado = this.estadoAtual.asReadonly();
   readonly historico = this.historicoCarregado.asReadonly();
   /** O histórico chegou, mas sem commits (build sem histórico do Git). */
@@ -30,22 +32,22 @@ export class PainelDoGit {
   );
 
   abrir(origem: HTMLElement | null): void {
-    if (this.estaAberto()) return;
+    if (this.aberto()) return;
     this.origem.set(origem);
-    this.estaAberto.set(true);
+    this.area.abrir('git');
     if (this.estadoAtual() === 'ocioso') void this.carregar();
   }
 
   /** Fecha o painel e devolve o foco a quem o abriu. */
   fechar(): void {
-    if (!this.estaAberto()) return;
-    this.estaAberto.set(false);
+    if (!this.aberto()) return;
+    this.area.fechar('git');
     this.origem()?.focus();
     this.origem.set(null);
   }
 
   alternar(origem: HTMLElement | null): void {
-    if (this.estaAberto()) this.fechar();
+    if (this.aberto()) this.fechar();
     else this.abrir(origem);
   }
 

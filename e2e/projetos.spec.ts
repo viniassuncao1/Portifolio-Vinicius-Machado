@@ -220,7 +220,9 @@ test.describe('Projeto 4: cases da Memora (/projeto-4)', () => {
       await expect(page.locator('main .papel-comentario').first()).toContainText(
         'Um case que entreguei na Memora',
       );
-      await expect(codigo(page)).toContainText('record Case(String title, List<String> stack)');
+      await expect(codigo(page)).toContainText(
+        'record Caso(String titulo, List<String> tecnologias)',
+      );
     }
   });
 

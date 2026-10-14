@@ -93,7 +93,7 @@ test.describe('Digitação do código', () => {
 
     const regiao = page.getByRole('region', { name: 'Código da seção' });
     await expect(regiao).toBeVisible();
-    await expect(regiao).toContainText('PersonalData');
+    await expect(regiao).toContainText('DadosPessoais');
     await expect(regiao).not.toHaveAttribute('aria-hidden', 'true');
     const texto = await regiao.evaluate((el) => el.textContent ?? '');
     expect(texto.length).toBeGreaterThan(200);
@@ -226,7 +226,7 @@ test.describe('Movimento reduzido', () => {
   test('mantém o código completo e a linha atual no fim', async ({ page }) => {
     await page.goto('/diferenciais');
 
-    await expect(page.locator(`${EDITOR} code`)).toContainText('PersonalData');
+    await expect(page.locator(`${EDITOR} code`)).toContainText('DadosPessoais');
     await expect(page.locator(`${EDITOR} .atual`)).toHaveCount(1);
   });
 
@@ -257,7 +257,7 @@ test.describe('Sem JavaScript', () => {
     expect(html).toContain('app-editor-de-codigo');
     expect(html).not.toMatch(/class="[^"]*digitando/);
     await page.goto('/sobre-mim');
-    await expect(page.locator(`${EDITOR} code`)).toContainText('aboutMe');
+    await expect(page.locator(`${EDITOR} code`)).toContainText('sobreMim');
     await expect(page.locator(EDITOR)).not.toHaveClass(/digitando/);
   });
 });

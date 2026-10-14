@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
 import { JanelaDePreview } from '../../core/janela-de-preview';
+import { JanelaDeRun } from '../../core/janela-de-run';
 import { PREVIEWS } from '../../core/previews';
 import { BarraDeFerramentas } from './barra-de-ferramentas';
 
@@ -37,16 +38,20 @@ describe('BarraDeFerramentas: play', () => {
     expect(TestBed.inject(JanelaDePreview).preview()).toBe(PREVIEWS['projeto-3']);
   });
 
-  it('segue decorativo e sem foco nas demais rotas', async () => {
+  it('fora dos projetos com site, vira o botão que abre a janela de Run', async () => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/contato');
     const barra = (harness.routeNativeElement as HTMLElement).querySelector(
       'app-barra-de-ferramentas',
     )!;
+    const executar = barra.querySelector<HTMLButtonElement>('button.executar')!;
 
-    const executar = barra.querySelector('.executar')!;
+    expect(executar.getAttribute('aria-label')).toBe('Executar PortfolioApplication');
+    expect(executar.hasAttribute('aria-hidden')).toBe(false);
 
-    expect(executar.getAttribute('aria-hidden')).toBe('true');
-    expect(executar.matches('button, a, [tabindex]')).toBe(false);
+    executar.click();
+
+    expect(TestBed.inject(JanelaDeRun).aberto()).toBe(true);
+    expect(TestBed.inject(JanelaDePreview).preview()).toBeNull();
   });
 });

@@ -22,25 +22,20 @@ async function focarComTab(page: Page, alvo: Locator) {
 }
 
 test.describe('Como uso a IA (/como-uso-ia)', () => {
-  test('exibe a classe ArtificialIntelligence com as constantes em Java moderno', async ({
-    page,
-  }) => {
+  test('exibe a classe InteligenciaArtificial com os campos em Java moderno', async ({ page }) => {
     await page.goto('/como-uso-ia');
 
     expect(await linhasDoCodigo(page)).toEqual([
+      'package dev.vinicius.portfolio.sobre;',
       'import java.util.List;',
       expect.stringContaining('Não vejo IA como modismo'),
-      'public final class ArtificialIntelligence {',
+      'public class InteligenciaArtificial {',
       expect.stringMatching(/^\/\/ .+/),
-      expect.stringMatching(/^public static final boolean [A-Z_]+ = false;$/),
-      expect.stringMatching(/^public static final boolean [A-Z_]+ = true;$/),
+      'boolean modismo = false;',
+      'boolean parteDoTrabalho = true;',
       expect.stringMatching(/^\/\/ .+/),
-      expect.stringMatching(
-        /^public static final List<String> [A-Z_]+ = List\.of\("Claude Code", "Codex"\);$/,
-      ),
-      expect.stringMatching(
-        /^public static final String [A-Z_]+ = "SDD \(Spec-Driven Development\)";$/,
-      ),
+      'List<String> ferramentas = List.of("Claude Code", "Codex");',
+      'String metodologia = "SDD (Spec-Driven Development)";',
       '}',
     ]);
   });
@@ -67,7 +62,7 @@ test.describe('Como uso a IA (/como-uso-ia)', () => {
     }
   });
 
-  test('colore false e true com a cor de valor e as constantes booleanas como declaração', async ({
+  test('colore false e true com a cor de valor e os campos booleanos como declaração', async ({
     page,
   }) => {
     await page.goto('/como-uso-ia');
@@ -77,8 +72,8 @@ test.describe('Como uso a IA (/como-uso-ia)', () => {
     expect(await cor(valores.nth(0))).toBe(COR_VALOR);
     expect(await cor(valores.nth(1))).toBe(COR_VALOR);
     await expect(page.locator('main .papel-declaracao')).toHaveText([
-      /^boolean [A-Z_]+$/,
-      /^boolean [A-Z_]+$/,
+      'boolean modismo',
+      'boolean parteDoTrabalho',
     ]);
     expect(await cor(page.locator('main .papel-declaracao').first())).toBe(COR_DECLARACAO);
   });
@@ -111,18 +106,19 @@ test.describe('Como uso a IA (/como-uso-ia)', () => {
 });
 
 test.describe('Skills / STACK (/skills)', () => {
-  test('exibe as três listas imutáveis do record TechSkills (tela 05)', async ({ page }) => {
+  test('exibe as três listas imutáveis do record Tecnologias (tela 05)', async ({ page }) => {
     await page.goto('/skills');
 
     expect(await linhasDoCodigo(page)).toEqual([
+      'package dev.vinicius.portfolio.skills;',
       'import java.util.List;',
       '// Linguagens, frameworks e bancos de dados que uso',
-      'public record TechSkills(',
-      'List<String> languages,',
+      'public class Skills {',
+      'record Tecnologias(',
+      'List<String> linguagens,',
       'List<String> frameworks,',
-      'List<String> databases',
-      ') {',
-      expect.stringMatching(/^public static final TechSkills [A-Z_]+ = new TechSkills\($/),
+      'List<String> bancosDeDados) {}',
+      'Tecnologias minhas = new Tecnologias(',
       'List.of("Java", "TypeScript", "JavaScript", "PHP", "SQL"),',
       'List.of("Spring Boot", "Spring Data JPA", "Angular"),',
       'List.of("Oracle", "PostgreSQL", "MySQL")',
@@ -161,7 +157,7 @@ test.describe('Skills / STACK (/skills)', () => {
 
     await expect(page).toHaveURL(/\/skills\/2$/);
     await expect(controle(page)).toContainText('2/3');
-    await expect(page.locator('main code')).toContainText('cloudAndInfra');
+    await expect(page.locator('main code')).toContainText('nuvemEInfra');
   });
 
   test('uma seção de uma página só não tem controle', async ({ page }) => {
@@ -182,7 +178,7 @@ test.describe('Skills / STACK (/skills)', () => {
 });
 
 test.describe('Skills / STACK, página 2 (/skills/2)', () => {
-  test('abre direto pelo endereço com as duas listas do record InfraSkills (tela 06)', async ({
+  test('abre direto pelo endereço com as duas listas do record Ferramentas (tela 06)', async ({
     page,
   }) => {
     await page.goto('/skills/2');
@@ -190,11 +186,11 @@ test.describe('Skills / STACK, página 2 (/skills/2)', () => {
     expect(await linhasDoCodigo(page)).toEqual([
       'import java.util.List;',
       '// Nuvem, infraestrutura e ferramentas do dia a dia',
-      'public record InfraSkills(',
-      'List<String> cloudAndInfra,',
-      'List<String> tools',
-      ') {',
-      expect.stringMatching(/^public static final InfraSkills [A-Z_]+ = new InfraSkills\($/),
+      'class Infraestrutura {',
+      'record Ferramentas(',
+      'List<String> nuvemEInfra,',
+      'List<String> ferramentas) {}',
+      'Ferramentas minhas = new Ferramentas(',
       'List.of("Docker", "Kubernetes", "Nginx", "AWS", "Azure"),',
       'List.of("Git", "GitLab CI/CD", "Grafana", "Scrum")',
       ');',
@@ -380,7 +376,7 @@ test.describe('Sem JavaScript', () => {
   test('/como-uso-ia entrega o código, os valores e o Javadoc no HTML', async ({ page }) => {
     await page.goto('/como-uso-ia');
 
-    await expect(page.locator('main code')).toContainText('ArtificialIntelligence');
+    await expect(page.locator('main code')).toContainText('InteligenciaArtificial');
     await expect(page.locator('main .papel-valor')).toHaveText(['false', 'true']);
     await expect(page.locator('main .javadoc')).toContainText('Não vejo IA como modismo');
     await expect(arquivoDaArvore(page, 'Como uso a IA')).toHaveAttribute('aria-current', 'page');
@@ -389,7 +385,7 @@ test.describe('Sem JavaScript', () => {
   test('/skills entrega o código e o controle 1/3 no HTML', async ({ page }) => {
     await page.goto('/skills');
 
-    await expect(page.locator('main code')).toContainText('record TechSkills(');
+    await expect(page.locator('main code')).toContainText('record Tecnologias(');
     await expect(controle(page)).toContainText('1/3');
     await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveAttribute(
       'href',
@@ -404,7 +400,7 @@ test.describe('Sem JavaScript', () => {
 
     await expect(page).toHaveTitle('Skills / STACK (2/3) | Vinicius Machado');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK (2/3)');
-    await expect(page.locator('main code')).toContainText('record InfraSkills(');
+    await expect(page.locator('main code')).toContainText('record Ferramentas(');
     await expect(controle(page)).toContainText('2/3');
     await expect(arquivoDaArvore(page, 'Skills / STACK')).toHaveAttribute('aria-current', 'page');
   });

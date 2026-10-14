@@ -30,11 +30,13 @@ describe('Projeto4', () => {
     expect(raiz.querySelector('[aria-current="page"]')?.textContent?.trim()).toBe(controle);
   });
 
-  it('declara o record Case e a stack numa linha em cada página', async () => {
+  it('declara o record Caso e as tecnologias numa linha em cada página', async () => {
     for (const pagina of [1, 2, 3]) {
       const codigo = (await renderizar(pagina)).querySelector('code')?.textContent ?? '';
 
-      expect(codigo).toContain('record Case(String title, List<String> stack) {}');
+      expect(codigo).toContain('package dev.vinicius.portfolio.projetos;');
+      expect(codigo).toContain('record Caso(String titulo, List<String> tecnologias) {}');
+      expect(codigo).not.toContain('static final');
       expect(codigo).toMatch(/List\.of\("[^\n]*"\)/);
     }
   });

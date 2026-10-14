@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import type { Page, Route } from '@playwright/test';
 
 import { SECOES, totalDePaginas } from '../src/app/core/secoes';
-import { abrirHidratada, abrirPastas, arquivoDaArvore, contraste } from './apoio';
+import { abrirHidratada, abrirPastas, arquivoDaArvore, contraste, esperarLogDoRun } from './apoio';
 
 const DESKTOP = { width: 1920, height: 1080 };
 const CELULAR = { width: 390, height: 844 };
@@ -46,6 +46,7 @@ const esquemaDeCores = (page: Page) =>
 const armazenado = (page: Page) => page.evaluate(() => localStorage.getItem('tema'));
 
 async function violacoes(page: Page): Promise<string[]> {
+  await esperarLogDoRun(page);
   const { violations } = await new AxeBuilder({ page }).withTags(TAGS).analyze();
   return violations.flatMap((v) => v.nodes.map((n) => `${v.id}: ${n.target.join(' ')}`));
 }

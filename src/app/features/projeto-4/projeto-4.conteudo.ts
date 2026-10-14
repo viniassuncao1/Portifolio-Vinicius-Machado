@@ -20,26 +20,30 @@ function listaDeTextos(itens: readonly string[], fim: string): readonly Trecho[]
   ];
 }
 
-/** Uma página: o record `Case`, o texto do case em Javadoc e a constante com o título e a stack. */
+/** Uma página: o texto do case em Javadoc, o record `Caso` e o case com o título e as tecnologias. */
 function paginaDoCase(
   texto: string,
   variavel: string,
   titulo: string,
-  stack: readonly string[],
+  tecnologias: readonly string[],
 ): ConteudoDoEditor {
   return [
     vazia(),
+    linha(0, palavraChave('package'), comum(' dev.vinicius.portfolio.projetos;')),
+    vazia(),
     linha(0, palavraChave('import'), comum(' java.util.List;')),
     vazia(),
-    linha(0, comentario('// Um case que entreguei na Memora')),
-    linha(0, palavraChave('record'), comum(' Case(String title, List<String> stack) {}')),
-    vazia(),
     javadoc(0, texto),
-    linha(0, palavraChave('public class'), comum(' MemoraCases {')),
-    linha(1, comum(`Case ${variavel} = `), palavraChave('new'), comum(' Case(')),
-    linha(3, literal(`"${titulo}"`), comum(',')),
-    linha(3, ...listaDeTextos(stack, '')),
+    linha(0, palavraChave('public class'), comum(' CasosDaMemora {')),
+    vazia(),
+    linha(1, comentario('// Um case que entreguei na Memora')),
+    linha(1, palavraChave('record'), comum(' Caso(String titulo, List<String> tecnologias) {}')),
+    vazia(),
+    linha(1, comum(`Caso ${variavel} = `), palavraChave('new'), comum(' Caso(')),
+    linha(2, literal(`"${titulo}"`), comum(',')),
+    linha(2, ...listaDeTextos(tecnologias, '')),
     linha(1, comum(');')),
+    vazia(),
     linha(0, comum('}')),
   ];
 }
@@ -48,7 +52,7 @@ function paginaDoCase(
 export const CONTEUDOS_PROJETO_4: readonly ConteudoDoEditor[] = [
   paginaDoCase(
     'Atuei na migração de APIs e microsserviços em produção (login, financeiro), adaptando entidades, DTOs e scripts SQL nativos um a um pra manter compatibilidade sem quebrar regras de negócio.',
-    'migration',
+    'migracao',
     'Oracle → PostgreSQL',
     ['Java', 'Oracle', 'PostgreSQL', 'SQL'],
   ),

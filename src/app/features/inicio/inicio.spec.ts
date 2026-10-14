@@ -25,26 +25,44 @@ describe('Inicio', () => {
       .map((linha) => linha.textContent?.replace(/\s+/g, ' ').trim())
       .filter((texto) => texto);
 
-  it('declara o pacote, o import e o record ViniciusMachado, na ordem', async () => {
+  it('declara o pacote raiz, os imports e a aplicação Spring Boot, na ordem', async () => {
     const raiz = await renderizar();
 
-    expect(linhas(raiz).slice(0, 7)).toEqual([
-      'package portfolio.viniciusmachado;',
+    expect(linhas(raiz).slice(0, 10)).toEqual([
+      'package dev.vinicius.portfolio;',
       'import java.util.List;',
+      'import org.springframework.boot.SpringApplication;',
+      'import org.springframework.boot.autoconfigure.SpringBootApplication;',
       'Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL.',
-      'public record ViniciusMachado(',
-      'String role,',
-      'List<String> stack',
-      ') implements FullStackDeveloper {',
+      '@SpringBootApplication',
+      'public class PortfolioApplication {',
+      '// Meu perfil: cargo e tecnologias principais',
+      'record Desenvolvedor(String cargo,',
+      'List<String> stack) {}',
     ]);
   });
 
-  it('declara o pacote portfolio.viniciusmachado como palavra-chave e texto comum', async () => {
+  it('declara o pacote dev.vinicius.portfolio como palavra-chave e texto comum', async () => {
     const raiz = await renderizar();
     const linha = raiz.querySelectorAll('code > span')[1];
 
     expect(linha.querySelector('.papel-palavra-chave')?.textContent).toBe('package');
-    expect(linha.textContent).toContain('portfolio.viniciusmachado;');
+    expect(linha.textContent).toContain('dev.vinicius.portfolio;');
+  });
+
+  it('anota a classe com @SpringBootApplication', async () => {
+    const raiz = await renderizar();
+
+    expect(raiz.querySelector('.papel-anotacao')?.textContent).toBe('@SpringBootApplication');
+  });
+
+  it('apresenta o Vinicius no main e sobe a aplicação', async () => {
+    const raiz = await renderizar();
+    const codigo = raiz.querySelector('code')?.textContent ?? '';
+
+    expect(codigo).toContain('public static void main(String... args) {');
+    expect(codigo).toContain('var vinicius = new Desenvolvedor(');
+    expect(codigo).toContain('SpringApplication.run(PortfolioApplication.class, args);');
   });
 
   it('exibe o Javadoc do perfil antes do record', async () => {
@@ -53,12 +71,12 @@ describe('Inicio', () => {
     expect(raiz.querySelector('.javadoc')?.textContent).toContain('Full Stack Júnior');
   });
 
-  it('mostra os componentes do record na cor de declaração', async () => {
+  it('mostra os componentes do record e os argumentos do main na cor de declaração', async () => {
     const raiz = await renderizar();
 
     expect(
       Array.from(raiz.querySelectorAll('.papel-declaracao')).map((d) => d.textContent),
-    ).toEqual(['String role', 'List<String> stack']);
+    ).toEqual(['String cargo', 'List<String> stack', 'String... args']);
   });
 
   it('mostra o cargo e as quatro tecnologias da stack, em ordem, com aspas retas', async () => {
@@ -82,17 +100,17 @@ describe('Inicio', () => {
     expect(raiz.querySelector('code')?.textContent).not.toContain('String[]');
   });
 
-  it('indenta o record com zero, os componentes com dois e a stack com três níveis', async () => {
+  it('indenta a classe com zero, o main com um e a stack com quatro níveis', async () => {
     const raiz = await renderizar();
     const todas = Array.from(raiz.querySelectorAll<HTMLElement>('code > span'));
     const recuo = (texto: string) =>
       todas.find((l) => l.textContent?.trim() === texto)?.style.getPropertyValue('--recuo');
 
     expect([
-      recuo('public record ViniciusMachado('),
-      recuo('String role,'),
+      recuo('public class PortfolioApplication {'),
+      recuo('public static void main(String... args) {'),
       recuo('List.of("Java", "Spring Boot", "Angular", "SQL")'),
-    ]).toEqual(['0', '2', '3']);
+    ]).toEqual(['0', '1', '4']);
   });
 
   it('não tem h1 próprio: o título vem da casca', async () => {
@@ -150,7 +168,7 @@ describe('Início dentro da casca', () => {
   it('mostra o código do Início no editor da casca', async () => {
     const raiz = await abrirInicio();
 
-    expect(raiz.querySelector('main code')?.textContent).toContain('portfolio.viniciusmachado;');
+    expect(raiz.querySelector('main code')?.textContent).toContain('dev.vinicius.portfolio;');
   });
 
   it('volta a marcar a página atual ao sair do Início para "Sobre Mim"', async () => {

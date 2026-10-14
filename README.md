@@ -22,6 +22,12 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
   **histórico real do repositório** (grafo das branches, commits e PRs), como o Git Log do
   IntelliJ. O histórico é gerado no build, sem token e sem e-mails
   ([ADR-0013](docs/adr/0013-historico-do-git-gerado-no-build.md)).
+- **Janela de Run:** ao abrir o site, a IDE "roda" o `PortfolioApplication` e mostra o log de
+  inicialização do Spring Boot (uma vez por sessão, com "Pular" e sem bloquear a leitura). O ▶
+  Executar da barra reabre o log.
+- **Java para leitura:** o código de cada seção é Java 21 válido, com domínio em português e sem
+  cerimônia (`record Evento(String nome, int vezes)`), para quem recruta ler como frase
+  ([guia de estilo](docs/componentes.md#guia-de-estilo)).
 - **Tema claro e escuro:** o site segue o tema do sistema na primeira visita, e um botão na barra
   de ferramentas troca e guarda a escolha. O tema é aplicado antes da primeira pintura, então a
   página não pisca ([ADR-0014](docs/adr/0014-tema-claro.md)).

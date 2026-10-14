@@ -21,9 +21,9 @@ o nome `master`, que é um botão real e abre o painel do Git.
 - **THEN** o painel do Git abre com o commit mais recente em foco
 
 ### Requirement: Ações da barra superior
-Buscar MUST abrir a busca de seções; Executar MUST abrir o preview nos projetos com site e ficar
-decorativo nas demais páginas; o botão de tema MUST alternar entre claro e escuro; os demais
-ícones e os controles de janela são decorativos.
+Buscar MUST abrir a busca de seções; Executar MUST abrir o preview nos projetos com site e, nas
+demais páginas, reabrir a janela de Run com o log; o botão de tema MUST alternar entre claro e
+escuro; os demais ícones e os controles de janela são decorativos.
 
 #### Scenario: Buscar pela barra
 - **WHEN** o visitante ativa o botão Buscar
@@ -36,3 +36,7 @@ decorativo nas demais páginas; o botão de tema MUST alternar entre claro e esc
 #### Scenario: Tema pela barra
 - **WHEN** o visitante ativa o botão de tema
 - **THEN** o tema alterna e o nome acessível do botão passa a indicar o outro tema
+
+#### Scenario: Executar fora dos projetos com site
+- **WHEN** o visitante está em "Sobre Mim" e ativa Executar
+- **THEN** a janela de Run abre e mostra o log de inicialização
