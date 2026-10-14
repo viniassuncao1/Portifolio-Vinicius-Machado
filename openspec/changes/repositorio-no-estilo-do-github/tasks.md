@@ -2,7 +2,7 @@
 
 ## 1. Dados [Nanquim]
 
-- [ ] 1.1 Título do PR no histórico gerado no build e funções puras de resumo (tipos, últimos PRs, últimos commits de código) com testes — verificar com `npm run test:ci`
+- [x] 1.1 Título do PR no histórico gerado no build e funções puras de resumo (tipos, últimos PRs, últimos commits de código) com testes — verificar com `npm run test:ci`
 
 ## 2. Página [Grafite]
 
