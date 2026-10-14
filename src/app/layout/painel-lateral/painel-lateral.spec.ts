@@ -6,11 +6,13 @@ import { PainelLateral } from './painel-lateral';
 describe('PainelLateral', () => {
   beforeEach(() => TestBed.configureTestingModule({ providers: [provideRouter([])] }));
 
-  it('mostra a árvore com as 15 seções', async () => {
+  it('mostra a árvore em 7 pastas, com a primeira expandida', async () => {
     const fixture = TestBed.createComponent(PainelLateral);
     await fixture.whenStable();
+    const elemento = fixture.nativeElement as HTMLElement;
 
-    expect((fixture.nativeElement as HTMLElement).querySelectorAll('nav a')).toHaveLength(15);
+    expect(elemento.querySelectorAll('nav [data-tipo=pasta]')).toHaveLength(7);
+    expect(elemento.querySelectorAll('nav a')).toHaveLength(3);
   });
 
   it('mantém o cabeçalho e a scrollbar decorativos fora da leitura', async () => {
@@ -55,7 +57,7 @@ describe('PainelLateral', () => {
 
     fixture.componentInstance.focarPrimeiroItem();
 
-    expect(document.activeElement).toBe(elemento.querySelector('nav a'));
+    expect(document.activeElement).toBe(elemento.querySelector('nav [role=treeitem]'));
     elemento.remove();
   });
 });

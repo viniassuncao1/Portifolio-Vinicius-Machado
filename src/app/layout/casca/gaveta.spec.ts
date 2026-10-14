@@ -63,7 +63,7 @@ describe('Gaveta de seções (telas pequenas)', () => {
 
     expect(botao().getAttribute('aria-expanded')).toBe('true');
     expect(painel().getAttribute('data-aberta')).toBe('true');
-    expect(document.activeElement).toBe(painel().querySelector('a'));
+    expect(document.activeElement).toBe(painel().querySelector('[role=treeitem]'));
   });
 
   it('fecha com Escape e devolve o foco ao botão', async () => {

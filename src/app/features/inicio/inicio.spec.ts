@@ -133,12 +133,12 @@ describe('Início dentro da casca', () => {
     expect(TestBed.inject(Title).getTitle()).toContain('Vinicius Machado');
   });
 
-  it('destaca "Sobre Mim" e expande a seta, como na tela 01', async () => {
+  it('destaca "Sobre Mim" e expande a pasta, como na tela 01', async () => {
     const raiz = await abrirInicio();
     const destacados = raiz.querySelectorAll('nav .destacado');
 
     expect(destacados).toHaveLength(1);
-    expect(destacados[0].textContent).toContain('Sobre Mim');
+    expect(destacados[0].textContent).toContain('SobreMim.java');
   });
 
   it('não marca nenhum item da árvore como página atual', async () => {
@@ -160,6 +160,6 @@ describe('Início dentro da casca', () => {
     const raiz = harness.routeNativeElement as HTMLElement;
 
     expect(raiz.querySelectorAll('nav [aria-current="page"]')).toHaveLength(1);
-    expect(raiz.querySelector('nav [aria-current="page"]')?.textContent).toContain('Sobre Mim');
+    expect(raiz.querySelector('nav [aria-current="page"]')?.textContent).toContain('SobreMim.java');
   });
 });
