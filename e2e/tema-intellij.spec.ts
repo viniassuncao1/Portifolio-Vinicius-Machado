@@ -166,11 +166,8 @@ test.describe('Anel de foco azul de 2px', () => {
   test('os botões focados mostram o anel azul de 2px', async ({ page }) => {
     await abrirHidratada(page, '/projeto-2');
 
-    for (const nome of ['Executar o projeto', 'Buscar seção (Ctrl+P)', 'Executar']) {
-      await page
-        .getByRole('button', { name: nome, exact: nome === 'Executar' })
-        .first()
-        .focus();
+    for (const nome of ['Executar o projeto', 'Buscar seção (Ctrl+P)', 'Executar Projeto 2']) {
+      await page.getByRole('button', { name: nome }).first().focus();
 
       expect(await anel(page), nome).toMatchObject({
         estilo: 'solid',
@@ -208,7 +205,7 @@ test.describe('Anel de foco azul de 2px', () => {
 
   test('nenhum elemento da página usa o rosa antigo', async ({ page }) => {
     await abrirHidratada(page, '/projeto-2');
-    await page.getByRole('button', { name: 'Executar', exact: true }).focus();
+    await page.getByRole('button', { name: 'Executar Projeto 2' }).focus();
 
     const comRosa = await page.evaluate((rosa) => {
       const propriedades = [
