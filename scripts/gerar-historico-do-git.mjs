@@ -8,7 +8,8 @@ import { mkdir, writeFile } from 'node:fs/promises';
 const PASTA = new URL('../public/git/', import.meta.url);
 const ARQUIVO = new URL('historico.json', PASTA);
 const SEPARADOR = '\x1f';
-const FORMATO = ['%H', '%P', '%an', '%aI', '%s'].join(SEPARADOR);
+// %aN é o nome do autor já passado pelo .mailmap.
+const FORMATO = ['%H', '%P', '%aN', '%aI', '%s'].join(SEPARADOR);
 const LIMITE_DA_SAIDA_EM_BYTES = 64 * 1024 * 1024;
 const REPOSITORIO_PADRAO = 'viniassuncao1/Portifolio-Vinicius-Machado';
 const MERGE_DE_PR = /^Merge pull request #(\d+) from [^/\s]+\/(\S+)/;
