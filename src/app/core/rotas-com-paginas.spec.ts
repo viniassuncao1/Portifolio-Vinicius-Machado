@@ -27,7 +27,7 @@ describe('rotas com várias páginas', () => {
       ),
     );
 
-    expect(caminhos).toEqual(['', ...esperados]);
+    expect(caminhos).toEqual(['', ...esperados, 'repositorio']);
     expect(caminhos).toEqual(expect.arrayContaining(['skills/2', 'skills/3']));
     expect(caminhos).toEqual(
       expect.arrayContaining(['certificacoes', 'certificacoes/2', 'certificacoes/3']),

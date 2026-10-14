@@ -1,0 +1,159 @@
+<article class="pagina" aria-labelledby="titulo-do-repositorio">
+  <header class="cabecalho">
+    <svg class="marca" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+      <path
+        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
+      />
+    </svg>
+    <div class="identidade">
+      <h2 id="titulo-do-repositorio" class="nome">
+        @if (nome()) {
+          {{ nome() }}
+        } @else {
+          Portfolio-Vinicius-Machado
+        }
+        <span class="selo">Público</span>
+      </h2>
+      <p class="descricao">
+        Este portfólio é feito com Angular, specs no OpenSpec e uma equipe de agentes de IA; cada
+        mudança vira um pull request.
+      </p>
+    </div>
+    @if (nome()) {
+      <a class="botao" [href]="endereco()" target="_blank" rel="noopener noreferrer">
+        Ver no GitHub<span class="aviso-nova-aba"> (abre em nova aba)</span>
+      </a>
+    }
+  </header>
+
+  @switch (repositorio.estado()) {
+    @case ('erro') {
+      <div class="mensagem" role="alert">
+        <p>Não foi possível carregar o histórico do repositório.</p>
+        <button type="button" class="botao" (click)="repositorio.tentarDeNovo()">
+          Tentar de novo
+        </button>
+      </div>
+    }
+    @case ('pronto') {
+      @if (repositorio.vazio()) {
+        <p class="mensagem">O histórico do repositório não está disponível nesta versão do site.</p>
+      } @else {
+        <dl class="numeros">
+          <div class="numero">
+            <dt>Commits</dt>
+            <dd>{{ inteiro(commits().length) }}</dd>
+          </div>
+          <div class="numero">
+            <dt>Pull requests mesclados</dt>
+            <dd>{{ inteiro(totalDePrs()) }}</dd>
+          </div>
+          <div class="numero">
+            <dt>Desde</dt>
+            <dd>
+              <time [attr.datetime]="desde()">{{ dataCurta(desde()) }}</time>
+            </dd>
+          </div>
+          <div class="numero">
+            <dt>Último deploy</dt>
+            <dd>
+              <time [attr.datetime]="repositorio.historico()?.geradoEm">{{
+                relativa(repositorio.historico()?.geradoEm ?? '')
+              }}</time>
+            </dd>
+          </div>
+        </dl>
+
+        <section class="bloco" aria-labelledby="titulo-dos-tipos">
+          <h3 id="titulo-dos-tipos" class="subtitulo">Como o trabalho se divide</h3>
+          <p class="explicacao">
+            Cada commit começa com um tipo que diz o que mudou. A barra mostra a proporção de cada
+            tipo.
+          </p>
+          <div class="barra" aria-hidden="true">
+            @for (tipo of tipos(); track tipo.tipo) {
+              <span
+                class="trecho"
+                [attr.data-tipo]="tipo.tipo"
+                [style.flex-grow]="tipo.porcentagem"
+              ></span>
+            }
+          </div>
+          <ul class="legenda">
+            @for (tipo of tipos(); track tipo.tipo) {
+              <li class="item-da-legenda">
+                <span class="amostra" [attr.data-tipo]="tipo.tipo" aria-hidden="true"></span>
+                <code class="tipo">{{ tipo.tipo }}</code>
+                <span class="significado">{{ tipo.significado }}</span>
+                <span class="quantidade"
+                  >{{ inteiro(tipo.quantidade) }} ({{ inteiro(tipo.porcentagem) }}%)</span
+                >
+              </li>
+            }
+          </ul>
+        </section>
+
+        <section class="bloco" aria-labelledby="titulo-dos-prs">
+          <h3 id="titulo-dos-prs" class="subtitulo">Últimos pull requests</h3>
+          <ul class="lista">
+            @for (pr of prs(); track pr.sha) {
+              <li class="linha-da-lista">
+                <svg class="icone-de-pr" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                  <path
+                    d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354Z"
+                  />
+                </svg>
+                <div class="texto">
+                  <a
+                    class="titulo-do-item"
+                    [href]="enderecoDoPr(pr.numero)"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ pr.titulo }}<span class="aviso-nova-aba"> (abre em nova aba)</span></a
+                  >
+                  <span class="detalhe">
+                    #{{ pr.numero }} · <code>{{ pr.branch }}</code> ·
+                    <time [attr.datetime]="pr.data">{{ relativa(pr.data) }}</time>
+                  </span>
+                </div>
+              </li>
+            }
+          </ul>
+        </section>
+
+        <section class="bloco" aria-labelledby="titulo-dos-commits">
+          <h3 id="titulo-dos-commits" class="subtitulo">Últimos commits</h3>
+          <ul class="lista">
+            @for (commit of recentes(); track commit.sha) {
+              <li class="linha-da-lista">
+                <div class="texto">
+                  <a
+                    class="titulo-do-item"
+                    [href]="enderecoDoCommit(commit.sha)"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ commit.assunto }}<span class="aviso-nova-aba"> (abre em nova aba)</span></a
+                  >
+                  <span class="detalhe">
+                    <code>{{ shaCurto(commit.sha) }}</code> ·
+                    <time [attr.datetime]="commit.data">{{ relativa(commit.data) }}</time>
+                  </span>
+                </div>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+      @if (nome()) {
+        <a class="tudo" [href]="enderecoDoHistorico()" target="_blank" rel="noopener noreferrer"
+          >Ver todo o histórico no GitHub →<span class="aviso-nova-aba">
+            (abre em nova aba)</span
+          ></a
+        >
+      }
+    }
+    @default {
+      <p class="mensagem" role="status">Carregando o histórico do repositório…</p>
+    }
+  }
+</article>
