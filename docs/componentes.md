@@ -141,8 +141,9 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   disponível nesta versão do site") e pronto.
 - **Estado do serviço:** o serviço `PainelDoGit` (`core/painel-do-git.ts`) tem `aberto`, `estado`,
   `historico` e `vazio`, e os métodos `abrir(origem)`, `fechar()`, `alternar(origem)` e
-  `tentarDeNovo()`. O histórico só é baixado na primeira abertura. O host recebe `data-aberto`, que o
-  CSS usa para animar.
+  `tentarDeNovo()`. O histórico só é baixado na primeira abertura. O host recebe `data-aberto`: o CSS
+  anima `opacity` e `transform` com `@starting-style` (entrada a partir de 0,6, nunca de 0) e
+  `transition-behavior: allow-discrete` no `display`, sem animação com movimento reduzido.
 - **Entradas e saídas:** nenhuma.
 
 ### `FaixaDeAbas`
