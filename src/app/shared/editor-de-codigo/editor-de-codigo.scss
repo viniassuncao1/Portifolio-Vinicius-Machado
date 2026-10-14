@@ -422,3 +422,8 @@ a[class^='papel-'] {
     animation: none;
   }
 }
+
+// "Próximo arquivo →" depois do último item, na coluna do código (a dos números fica só com o texto).
+app-proximo-arquivo {
+  grid-column: 2;
+}

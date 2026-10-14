@@ -16,6 +16,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { EstadoDoEditor } from '../../core/estado-do-editor';
+import { ProximoArquivo } from '../proximo-arquivo/proximo-arquivo';
 import { VisaoDeCodigo } from '../visao-de-codigo/visao-de-codigo';
 import { BotaoExecutar } from '../botao-executar/botao-executar';
 import { Icone } from '../icone/icone';
@@ -38,7 +39,7 @@ const MOVIMENTO_REDUZIDO = '(prefers-reduced-motion: reduce)';
  */
 @Component({
   selector: 'app-editor-de-codigo',
-  imports: [BotaoExecutar, VisaoDeCodigo, Icone, NgOptimizedImage],
+  imports: [BotaoExecutar, ProximoArquivo, VisaoDeCodigo, Icone, NgOptimizedImage],
   templateUrl: './editor-de-codigo.html',
   styleUrl: './editor-de-codigo.scss',
   host: {
