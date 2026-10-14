@@ -5,14 +5,15 @@ Instruções para agentes de IA que trabalham neste repositório.
 ## Projeto
 
 Portfólio pessoal de Vinicius Machado em Angular 22, pré-renderizado (SSG) e publicado na Vercel
-pelo GitHub Actions. O visual simula o **IntelliJ IDEA New UI, tema escuro**
-([ADR-0011](docs/adr/0011-identidade-visual-intellij-new-ui.md)). O design original fica em
-`design/` (não versionado): `portfolio.pdf` é o original, `telas/tela-01.png` a `tela-30.png` são
-as telas exportadas (use estas, porque o PDF não é legível pelas ferramentas) e
-`telas/textos.md` tem os textos de cada tela. As telas valem como fonte das **informações**
-([ADR-0010](docs/adr/0010-design-como-referencia-e-java-moderno.md)); a referência visual é o
-IntelliJ New UI (paleta Dark, Inter 13px na interface, JetBrains Mono 14px no código, densidade
-compacta). O briefing do redesign fica em `design/briefing-redesign-intellij.md`.
+pelo GitHub Actions. O visual segue o **design original** feito sob encomenda, com elementos do
+IntelliJ IDEA ([ADR-0012](docs/adr/0012-design-original-com-elementos-do-intellij.md)). O design
+fica em `design/` (não versionado): `portfolio.pdf` é o original, `telas/tela-01.png` a
+`tela-30.png` são as telas exportadas (use estas, porque o PDF não é legível pelas ferramentas) e
+`telas/textos.md` tem os textos de cada tela. As telas são a referência das **informações** e da
+**identidade visual** (paleta, degradê da barra, editor arredondado, abas e cabeçalho do painel).
+Do IntelliJ ficam os ícones da IntelliJ Platform, o projeto em pacotes, as referências ao Git, a
+faixa de ferramentas, a barra de status com o caminho do arquivo e a tipografia (Inter 13px na
+interface, JetBrains Mono 14px no código, densidade compacta).
 
 O código exibido nas seções é **Java moderno (21)** com padrões de mercado: `record`, `List.of`,
 `var`, `Optional`, `java.time`, text blocks e Javadoc, sintaticamente válido, com identificadores de

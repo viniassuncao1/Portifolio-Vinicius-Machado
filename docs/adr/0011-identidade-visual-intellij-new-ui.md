@@ -1,6 +1,6 @@
 # ADR-0011: Identidade visual do IntelliJ IDEA New UI
 
-- **Status:** Aceito
+- **Status:** Aceito; substituído em parte pelo [ADR-0012](0012-design-original-com-elementos-do-intellij.md)
 - **Data:** 2026-10-13
 - **Substitui em parte:** [ADR-0010](0010-design-como-referencia-e-java-moderno.md) (a referência
   de identidade visual e a regra de identificadores em inglês)
