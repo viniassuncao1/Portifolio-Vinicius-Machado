@@ -102,8 +102,8 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 
 - **Onde:** `layout/barra-de-ferramentas/barra-de-ferramentas.ts`, seletor
   `app-barra-de-ferramentas`.
-- **O que faz:** a barra de ferramentas do design, mas **escura**, nos cinzas do design e sem
-  degradê. Foi um desvio pedido pelo Vinicius: a faixa clara destoava do resto da interface
+- **O que faz:** a barra de ferramentas do design, mas **sem o degradê**: usa a cor do painel,
+  escura no tema escuro e clara no tema claro. Foi um desvio pedido pelo Vinicius: a faixa clara destoava do resto da interface
   ([ADR-0012](adr/0012-design-original-com-elementos-do-intellij.md)). Usa os **ícones do design**
   (`public/icones/*.svg`) e os controles de janela do design. Dos ícones da IntelliJ Platform ficam
   só a **busca** e a **branch** `master`. Quase tudo só imita a IDE e fica fora da leitura e do
@@ -112,6 +112,10 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   projeto" só nas rotas com preview (`JanelaDePreview.previewDaRota()`); o foco é um anel rosa.
 - **Entrada e saídas:** `gavetaAberta = input(false)`; `alternarGaveta` e `buscar`. Método
   público: `focarProjeto()`, usado para devolver o foco quando a gaveta fecha.
+- **Botão de tema:** à direita do Buscar, troca entre o tema claro e o escuro (ícone de sol no
+  escuro e de lua no claro, desenhados no padrão dos ícones do design). Tem `aria-label` "Usar tema
+  claro" ou "Usar tema escuro" e `aria-pressed` no claro; chama `Tema.alternar()`. Não existe no
+  design nem no IntelliJ (desvio do [ADR-0014](adr/0014-tema-claro.md)).
 - **Branch `master`:** é um botão de verdade que abre e fecha o painel do Git
   (`aria-controls="painel-do-git"`, `aria-expanded`).
 - **Celular:** a barra fica compacta e escura, com Projeto (ícone) e Buscar.
@@ -216,13 +220,17 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 - **O que faz:** mostra um SVG decorativo com `NgOptimizedImage` e `alt=""` (o nome ao lado já é o
   rótulo). Há dois conjuntos, e o prefixo do nome diz de qual:
   - **Ícones do design** (`design-pasta`, `design-arquivo`, `design-projeto`, `design-executar`,
-    `design-ferramenta`, `design-ia`, `design-globo`, `design-relogio`, `design-monitor`), de
+    `design-ferramenta`, `design-ia`, `design-globo`, `design-relogio`, `design-monitor`,
+    `design-sol`, `design-lua`), de
     `public/icones/*.svg`, usados na árvore, nas abas e na barra de ferramentas.
   - **Ícones da IntelliJ Platform** (`projeto`, `commit`, `estrutura`, `ramo`, `executar`,
     `buscar`), de `public/icones/new-ui/`, só onde o design não tem equivalente: o ▶ da calha, a
     branch, a busca e a faixa de ferramentas. Têm licença Apache 2.0, com créditos em
     [`CREDITOS.md`](../public/icones/new-ui/CREDITOS.md); nenhum logotipo de produto da JetBrains
     é usado.
+- **Tema:** os ícones do design servem nos dois temas. Os da IntelliJ Platform têm duas variantes,
+  a escura (`_dark`) e a clara (`claro/`), e o componente renderiza as duas `<img>`: os tokens
+  `--exibir-icone-escuro` e `--exibir-icone-claro` mostram a do tema ativo, sem JavaScript.
 - **Entrada:** `nome = input.required<NomeDoIcone>()`; `NOMES_DE_ICONE` lista os nomes válidos. O
   tamanho vem do token `--tamanho-icone`.
 
@@ -535,9 +543,13 @@ A aba tem a largura do nome mais 32px (`width` automática). Abaixo de 768px val
 `@media (max-width: 767.98px)` do mesmo arquivo, com o código em no mínimo 13px e alvos de toque
 maiores (`--tamanho-alvo-toque`).
 
-**Ajustes nativos do navegador.** `color-scheme: dark` no `:root` (`src/styles.scss`), para
-controles e barras de rolagem nativos escuros; `<meta name="theme-color">` em
-`src/index.html`; `font-variant-numeric: tabular-nums` nos números de linha e na posição do
+**Tema claro.** Os mesmos tokens são redefinidos em `:root[data-tema='claro']`, com contraste AA
+medido: as cores de sintaxe são as do IntelliJ Light, mas a anotação ficou em `#7D6B00` (o original
+`#9E880D` não passava) e o comentário em `#6A6A6A`. O acento rosa foi escurecido para `#9A2A8C`.
+Veja o [mecanismo na arquitetura](arquitetura.md#tema-claro-e-escuro).
+
+**Ajustes nativos do navegador.** `color-scheme` e `<meta name="theme-color">` acompanham o tema
+(escritos pelo script inline e pelo serviço `Tema`); `font-variant-numeric: tabular-nums` nos números de linha e na posição do
 cursor da barra de status; e `translate="no"` no código do editor, para o tradutor automático do
 navegador não alterar o Java.
 
