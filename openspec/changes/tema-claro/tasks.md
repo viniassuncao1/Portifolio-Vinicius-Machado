@@ -6,8 +6,8 @@
 
 ## 2. Visual [Pincel]
 
-- [ ] 2.1 Tokens do tema claro (interface, sintaxe IntelliJ Light, grafo do Git) com fallback sem JS e contrastes na note "Design Tokens" — verificar com capturas `claro-desktop.png` e `claro-mobile.png`
-- [ ] 2.2 Botão de tema na barra (desktop e celular) e ícones claros da IntelliJ Platform com créditos — verificar com captura `claro-barra.png`
+- [x] 2.1 Tokens do tema claro (interface, sintaxe IntelliJ Light, grafo do Git) com fallback sem JS e contrastes na note "Design Tokens" — verificar com capturas `claro-desktop.png` e `claro-mobile.png`
+- [x] 2.2 Botão de tema na barra (desktop e celular) e ícones claros da IntelliJ Platform com créditos — verificar com captura `claro-barra.png`
 
 ## 3. Movimento [Compasso]
 
