@@ -124,6 +124,8 @@
   --altura-linha-git: 1.5rem;
   --largura-faixa-grafo: 0.875rem;
   --largura-faixa-ferramentas: 2.5rem;
+  // Fundo do Javadoc no modo de leitura (levemente destacado do editor)
+  --cor-javadoc-renderizado: #323232;
   --lado-retrato-grande: 6rem;
   --lado-retrato-pequeno: 4rem;
   --largura-calha: 1.5rem;
@@ -179,6 +181,7 @@
   --cor-texto-forte: #111111;
   --cor-linha-atual: #f0f0f0;
   --cor-botao: #d0d0d0;
+  --cor-javadoc-renderizado: #ececec;
   --cor-acento: #9a2a8c;
   --cor-fundo-modal: rgb(0 0 0 / 35%);
   --exibir-icone-escuro: none;

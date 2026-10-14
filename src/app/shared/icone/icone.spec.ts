@@ -28,8 +28,8 @@ describe('Icone', () => {
     expect(imagem?.getAttribute('alt')).toBe('');
   });
 
-  it('expõe os onze ícones do design e os seis da IntelliJ Platform', () => {
-    expect(NOMES_DE_ICONE).toHaveLength(17);
+  it('expõe os onze ícones do design e os sete da IntelliJ Platform', () => {
+    expect(NOMES_DE_ICONE).toHaveLength(18);
   });
 
   it.each(NOMES_DE_ICONE)('aponta o ícone %s para o seu arquivo SVG', async (nome) => {

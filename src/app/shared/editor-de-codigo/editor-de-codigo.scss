@@ -117,6 +117,40 @@ $quantidade-de-marcadores: 60;
   }
 }
 
+// Botão da calha que alterna o modo de leitura, na primeira linha do bloco de Javadoc.
+.alternar-leitura {
+  position: absolute;
+  inset-inline-start: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--largura-calha);
+  height: var(--largura-calha);
+  margin-block-start: calc((var(--altura-linha-comentario) - var(--largura-calha)) / 2);
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-controle);
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.7;
+
+  &[aria-pressed='true'] {
+    opacity: 1;
+    background: var(--cor-aba-passando);
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    opacity: 1;
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+}
+
 // Javadoc: `/**`, a coluna de `*` e `*/` são pseudo-elementos (fora do texto copiado e lido). O `*`
 // fica uma coluna à direita do `/`, como numa IDE; o texto começa três colunas depois do recuo.
 .javadoc {
@@ -256,6 +290,43 @@ a[class^='papel-'] {
   }
 }
 
+// Modo de leitura (Rendered View do IntelliJ): o mesmo texto, sem `/**`, `*` e `*/`, em Inter, na cor
+// de texto, com ~65 caracteres por linha e fundo próprio. O DOM é o mesmo do modo cru, então o texto
+// copiado e lido é igual.
+.javadoc[data-modo='leitura'] {
+  box-sizing: border-box;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  margin-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo));
+  padding: var(--espaco-2) var(--espaco-4);
+  padding-inline-start: var(--espaco-4);
+  border-radius: var(--raio-controle);
+  background: var(--cor-javadoc-renderizado);
+  color: var(--cor-texto);
+  font-family: var(--fonte-interface);
+  font-size: var(--texto-arvore);
+  letter-spacing: normal;
+  line-height: 1.6;
+
+  &::before,
+  &::after,
+  .javadoc-texto::before {
+    content: none;
+  }
+
+  .javadoc-texto {
+    padding-inline-start: 0;
+  }
+
+  .javadoc-corpo {
+    max-inline-size: 65ch;
+  }
+
+  .javadoc-paragrafo + .javadoc-paragrafo {
+    margin-block-start: var(--espaco-2);
+  }
+}
+
 // Linha atual: destaque de fundo (a cor é a mesma da linha selecionada da árvore).
 .linha.atual,
 .paragrafo.atual,
@@ -295,6 +366,23 @@ a[class^='papel-'] {
 
   .atual {
     background: none;
+  }
+}
+
+// Em modo de leitura a digitação revela o bloco renderizado inteiro de uma vez, quando chega a vez dele.
+:host(.digitando) .javadoc[data-modo='leitura'] {
+  clip-path: none;
+  opacity: clamp(0, (var(--digitado, 0) - var(--indice, 0)) * 100, 1);
+}
+
+// Celular: as linhas de código quebram em vez de rolar na horizontal, com recuo pendurado (a linha
+// seguinte entra 2 colunas à frente da primeira).
+@media (max-width: 767.98px) {
+  .linha {
+    padding-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo) + 2ch);
+    text-indent: -2ch;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
 }
 

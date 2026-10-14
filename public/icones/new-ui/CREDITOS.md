@@ -17,25 +17,27 @@ O aviso de copyright também permanece no comentário inicial de cada SVG.
 Este projeto não é afiliado à JetBrains. Nenhum logotipo de produto ou marca da JetBrains é usado:
 só ícones genéricos de interface.
 
-| Arquivo         | Original (`platform/icons/src/expui/…`) |
-| --------------- | --------------------------------------- |
-| `projeto.svg`   | `toolwindows/project_dark.svg`          |
-| `commit.svg`    | `toolwindows/commit_dark.svg`           |
-| `estrutura.svg` | `toolwindows/structure_dark.svg`        |
-| `ramo.svg`      | `toolwindows/vcs_dark.svg`              |
-| `executar.svg`  | `run/run_dark.svg`                      |
-| `buscar.svg`    | `general/search_dark.svg`               |
+| Arquivo            | Original (`platform/icons/src/expui/…`) |
+| ------------------ | --------------------------------------- |
+| `projeto.svg`      | `toolwindows/project_dark.svg`          |
+| `commit.svg`       | `toolwindows/commit_dark.svg`           |
+| `estrutura.svg`    | `toolwindows/structure_dark.svg`        |
+| `ramo.svg`         | `toolwindows/vcs_dark.svg`              |
+| `executar.svg`     | `run/run_dark.svg`                      |
+| `documentacao.svg` | `toolwindows/documentation_dark.svg`    |
+| `buscar.svg`       | `general/search_dark.svg`               |
 
 Variante clara (`claro/`), usada no tema claro:
 
-| Arquivo               | Original (`platform/icons/src/expui/…`) |
-| --------------------- | --------------------------------------- |
-| `claro/projeto.svg`   | `toolwindows/project.svg`               |
-| `claro/commit.svg`    | `toolwindows/commit.svg`                |
-| `claro/estrutura.svg` | `toolwindows/structure.svg`             |
-| `claro/ramo.svg`      | `toolwindows/vcs.svg`                   |
-| `claro/executar.svg`  | `run/run.svg`                           |
-| `claro/buscar.svg`    | `general/search.svg`                    |
+| Arquivo                  | Original (`platform/icons/src/expui/…`) |
+| ------------------------ | --------------------------------------- |
+| `claro/projeto.svg`      | `toolwindows/project.svg`               |
+| `claro/commit.svg`       | `toolwindows/commit.svg`                |
+| `claro/estrutura.svg`    | `toolwindows/structure.svg`             |
+| `claro/ramo.svg`         | `toolwindows/vcs.svg`                   |
+| `claro/executar.svg`     | `run/run.svg`                           |
+| `claro/documentacao.svg` | `toolwindows/documentation.svg`         |
+| `claro/buscar.svg`       | `general/search.svg`                    |
 
 Os ícones de sol e lua do botão de tema (`public/icones/sol.svg` e `lua.svg`) são desenhos próprios
 no estilo dos ícones do design, não vêm da JetBrains.

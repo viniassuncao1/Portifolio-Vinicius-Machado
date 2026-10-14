@@ -15,8 +15,10 @@ import { Router } from '@angular/router';
 
 import { EstadoDoEditor } from '../../core/estado-do-editor';
 import { BotaoExecutar } from '../botao-executar/botao-executar';
+import { Icone } from '../icone/icone';
+import { ModoDeLeitura } from './modo-de-leitura';
 import { LADO_DO_RETRATO, paragrafosDoJavadoc } from './conteudo';
-import type { ConteudoDoEditor } from './conteudo';
+import type { ConteudoDoEditor, Linha } from './conteudo';
 import { HistoricoDeDigitacao } from './historico-de-digitacao';
 
 const QUANTIDADE_DE_NUMEROS = 99;
@@ -33,7 +35,7 @@ const MOVIMENTO_REDUZIDO = '(prefers-reduced-motion: reduce)';
  */
 @Component({
   selector: 'app-editor-de-codigo',
-  imports: [BotaoExecutar, NgOptimizedImage],
+  imports: [BotaoExecutar, Icone, NgOptimizedImage],
   templateUrl: './editor-de-codigo.html',
   styleUrl: './editor-de-codigo.scss',
   host: {
@@ -50,6 +52,7 @@ export class EditorDeCodigo {
   private readonly router = inject(Router);
   private readonly historico = inject(HistoricoDeDigitacao);
   private readonly estado = inject(EstadoDoEditor);
+  protected readonly leitura = inject(ModoDeLeitura);
   private quadro = 0;
   private temporizador: ReturnType<typeof setTimeout> | undefined;
 
@@ -58,7 +61,9 @@ export class EditorDeCodigo {
   protected readonly numeros = Array.from({ length: QUANTIDADE_DE_NUMEROS }, (_, i) => i + 1);
   /** Reserva a calha à esquerda dos números só quando alguma linha tem o ▶ de executar. */
   protected readonly temCalha = computed(() =>
-    this.conteudo().some((item) => item.tipo === 'codigo' && item.executavel),
+    this.conteudo().some(
+      (item) => item.tipo === 'javadoc' || (item.tipo === 'codigo' && item.executavel),
+    ),
   );
   protected readonly digitando = signal(false);
   protected readonly pronto = signal(false);
@@ -79,6 +84,7 @@ export class EditorDeCodigo {
     inject(DestroyRef).onDestroy(() => this.cancelarAgendamentos());
   }
 
+  protected readonly ehJavadoc = (item: Linha | undefined): boolean => item?.tipo === 'javadoc';
   protected readonly paragrafosDoJavadoc = paragrafosDoJavadoc;
   protected readonly ladoDoRetrato = LADO_DO_RETRATO;
 
@@ -87,6 +93,7 @@ export class EditorDeCodigo {
   }
 
   protected aoClicar(evento: MouseEvent): void {
+    if (this.navegarPorLinkInterno(evento)) return;
     if (this.digitando()) {
       this.completarDigitacao();
       return;
@@ -96,6 +103,21 @@ export class EditorDeCodigo {
     if (!alvo || Number.isNaN(indice)) return;
     this.itemAtual.set(indice);
     this.estado.posicionar(this.linhaVisual(alvo), 1);
+  }
+
+  /**
+   * Links internos (`href` que começa com `/`) navegam pelo roteador, sem recarregar a página. Clique
+   * com Ctrl, Cmd, Shift ou Alt e o botão do meio seguem o comportamento do navegador.
+   */
+  private navegarPorLinkInterno(evento: MouseEvent): boolean {
+    const link = evento.target instanceof Element ? evento.target.closest('a') : null;
+    const href = link?.getAttribute('href');
+    const modificado = evento.ctrlKey || evento.metaKey || evento.shiftKey || evento.altKey;
+    if (!href?.startsWith('/') || href.startsWith('//')) return false;
+    if (evento.button !== 0 || modificado || evento.defaultPrevented) return false;
+    evento.preventDefault();
+    void this.router.navigateByUrl(href);
+    return true;
   }
 
   protected completarDigitacao(): void {
