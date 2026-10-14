@@ -11,7 +11,7 @@
     />
     <meta name="theme-color" content="#2B2B2B" />
     <!-- Aplica o tema antes da primeira pintura, para a página não piscar no outro tema. Só lê o
-         localStorage e o matchMedia; o serviço Tema (core/tema.ts) cuida do resto. -->
+         localStorage e o matchMedia e ajusta a theme-color; o serviço Tema (core/tema.ts) cuida do resto. -->
     <script>
       (function () {
         var tema = null;
@@ -25,6 +25,11 @@
           var raiz = document.documentElement;
           raiz.setAttribute('data-tema', tema);
           raiz.style.colorScheme = tema === 'claro' ? 'light' : 'dark';
+          // Mesma cor de --cor-painel no tema claro (_tokens.scss): a barra do navegador no
+          // celular acompanha sem esperar a hidratação. No escuro, vale o content do HTML.
+          if (tema === 'claro') {
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ececec');
+          }
         } catch (e) {}
       })();
     </script>

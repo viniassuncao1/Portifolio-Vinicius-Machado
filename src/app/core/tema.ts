@@ -6,10 +6,10 @@ export type NomeDoTema = 'claro' | 'escuro';
 export const CHAVE_DO_TEMA = 'tema';
 const ATRIBUTO_DO_TEMA = 'data-tema';
 const TOKEN_DA_COR_DO_TEMA = '--cor-painel';
-/** Usadas só se o token não puder ser lido; o valor de verdade vem de `_tokens.scss`. */
+/** Usadas só se o token não puder ser lido; o valor de verdade vem de `_tokens.scss` e é o mesmo do script do `index.html`. */
 const COR_DO_NAVEGADOR_PADRAO: Readonly<Record<NomeDoTema, string>> = {
   escuro: '#2B2B2B',
-  claro: '#F2F2F2',
+  claro: '#ECECEC',
 };
 
 const ehTema = (valor: unknown): valor is NomeDoTema => valor === 'claro' || valor === 'escuro';

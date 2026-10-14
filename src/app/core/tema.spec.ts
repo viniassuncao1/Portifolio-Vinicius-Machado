@@ -67,8 +67,7 @@ describe('Tema', () => {
 
     tema.alternar();
 
-    expect(corDoNavegador()).not.toBe('#2B2B2B');
-    expect(corDoNavegador()).toBeTruthy();
+    expect(corDoNavegador()?.toUpperCase()).toBe('#ECECEC');
   });
 
   it('aplicar muda a página sem guardar a escolha', () => {
