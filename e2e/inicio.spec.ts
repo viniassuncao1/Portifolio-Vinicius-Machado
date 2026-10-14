@@ -28,23 +28,30 @@ test.describe('Pré-renderização', () => {
 });
 
 const CODIGO_DO_INICIO = [
-  'package portfolio.viniciusmachado;',
+  'package dev.vinicius.portfolio;',
   'import java.util.List;',
+  'import org.springframework.boot.SpringApplication;',
+  'import org.springframework.boot.autoconfigure.SpringBootApplication;',
   expect.stringContaining('Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL.'),
-  'public record ViniciusMachado(',
-  'String role,',
-  'List<String> stack',
-  ') implements FullStackDeveloper {',
+  '@SpringBootApplication',
+  'public class PortfolioApplication {',
   expect.stringMatching(/^\/\/ .+/),
-  expect.stringMatching(/^public static final ViniciusMachado [A-Z_]+ = new ViniciusMachado\($/),
+  'record Desenvolvedor(String cargo,',
+  'List<String> stack) {}',
+  'public static void main(String... args) {',
+  'var vinicius = new Desenvolvedor(',
   '"Full Stack Júnior",',
   'List.of("Java", "Spring Boot", "Angular", "SQL")',
   ');',
+  'SpringApplication.run(PortfolioApplication.class, args);',
+  '}',
   '}',
 ];
 
 test.describe('Código do Início em Java moderno', () => {
-  test('mostra o pacote, o record, o cargo e a stack em List.of', async ({ page }) => {
+  test('mostra o pacote, a anotação do Spring Boot, o record, o cargo e a stack em List.of', async ({
+    page,
+  }) => {
     await page.goto('/');
 
     expect(await linhasDoCodigo(page)).toEqual(CODIGO_DO_INICIO);
@@ -86,6 +93,16 @@ test.describe('Código do Início em Java moderno', () => {
 
     await expect(page.locator('main code')).not.toContainText('String[]');
     await expect(page.locator('main code')).toContainText('List.of(');
+  });
+
+  test('a página inicial é o arquivo PortfolioApplication.java, com a anotação do Spring Boot', async ({
+    page,
+  }) => {
+    await page.goto('/');
+
+    await expect(page.getByRole('tab', { name: /PortfolioApplication\.java/ })).toBeVisible();
+    await expect(page.locator('main code')).toContainText('@SpringBootApplication');
+    await expect(page.locator('main code')).toContainText('"Full Stack Júnior"');
   });
 });
 
@@ -134,7 +151,7 @@ test.describe('Árvore no Início', () => {
     test('entrega o código, o destaque e a árvore sem aria-current no HTML', async ({ page }) => {
       await page.goto('/');
 
-      await expect(page.locator('main code')).toContainText('portfolio.viniciusmachado;');
+      await expect(page.locator('main code')).toContainText('package dev.vinicius.portfolio;');
       await expect(page.locator('main code')).toContainText('"Spring Boot"');
       await expect(page.locator('nav [aria-current]')).toHaveCount(0);
     });
