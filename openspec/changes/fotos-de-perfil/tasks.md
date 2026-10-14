@@ -6,7 +6,7 @@
 
 ## 2. Seções [Grafite]
 
-- [ ] 2.1 Foto do Vinicius no Início e no Sobre Mim; foto e `@author` com LinkedIn da Luana em Depoimentos — verificar com `npm run test:ci`
+- [x] 2.1 Foto do Vinicius no Início e no Sobre Mim; foto e `@author` com LinkedIn da Luana em Depoimentos — verificar com `npm run test:ci`
 
 ## 3. Testes [Sentinela]
 
