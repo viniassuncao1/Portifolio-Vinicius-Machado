@@ -20,7 +20,7 @@
 
 ## 3b. Ajustes pedidos pelo Vinicius (usar as skills ECC de design: design-taste-frontend, web-design-guidelines, redesign-existing-projects, angular-developer)
 
-- [ ] 3.5 [Compasso] Árvore em pastas (`sobre`, `skills`, `experiencias`, `projetos`, `formacao`, `recomendacoes`, `contato`) a partir do campo `pacote`, com pastas que expandem e recolhem (`aria-expanded`, teclado, reduced-motion) e a pasta da seção aberta expandida — verificar com captura `arvore-pastas.png`
+- [x] 3.5 [Compasso] Árvore em pastas (`sobre`, `skills`, `experiencias`, `projetos`, `formacao`, `recomendacoes`, `contato`) a partir do campo `pacote`, com pastas que expandem e recolhem (`aria-expanded`, teclado, reduced-motion) e a pasta da seção aberta expandida — verificar com captura `arvore-pastas.png`
 - [x] 3.6 [Pincel] Cores de sintaxe do Java do IntelliJ de volta no editor, com contraste ≥4,5:1 sobre o fundo do design — verificar com captura `sintaxe-java.png`
 - [x] 3.7 [Pincel] Executar na calha (▶ na linha `public class`) nos projetos com site, no lugar do botão "▶ Executar" sobre o código — verificar com captura `executar-calha.png`
 

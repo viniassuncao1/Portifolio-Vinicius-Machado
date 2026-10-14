@@ -81,13 +81,19 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 ### `ArvoreDeSecoes`
 
 - **Onde:** `layout/arvore-de-secoes/arvore-de-secoes.ts`, seletor `app-arvore-de-secoes`.
-- **O que faz:** gera a navegação (`<nav aria-label="Seções do portfólio">`) a partir de `SECOES`.
-  Cada item é um `routerLink`; o item da rota ativa recebe a classe `atual` e
-  `aria-current="page"`. A navegação por teclado usa **roving tabindex**: só um item fica na
-  ordem de Tab (o atual ou o último focado), e as setas para cima e para baixo, Home e End movem o
-  foco entre os itens.
-- **Entrada:** `noInicio = input(false)`: no Início a primeira seção aparece destacada, sem
-  `aria-current`.
+- **O que faz:** gera a navegação (`<nav aria-label="Seções do portfólio">`) em **pastas** (pacotes
+  Java) a partir de `SECOES` e do campo `pacote`: `sobre`, `skills`, `experiencias`, `projetos`,
+  `formacao`, `recomendacoes` e `contato`, com o ícone de pacote, em minúsculas. Cada seção é um
+  arquivo `.java` (campo `arquivo`, ícone de Java, sem seta) com `routerLink`; o arquivo da rota
+  ativa recebe a classe `atual` e `aria-current="page"`, e a sua pasta abre ao navegar. Segue o
+  padrão ARIA de **tree view** (`role="tree"`, `treeitem`, `aria-expanded`, `aria-level`) com
+  **roving tabindex**: só um item fica na ordem de Tab (o arquivo atual ou o último focado). Setas
+  para cima e para baixo, Home e End movem o foco; Direita expande a pasta (ou vai ao primeiro
+  arquivo), Esquerda recolhe (ou volta à pasta); Enter e Espaço alternam a pasta. Ao expandir, os
+  arquivos entram com `opacity` e `transform` (`--duracao-rapida`); com `prefers-reduced-motion`,
+  sem movimento.
+- **Entrada:** `noInicio = input(false)`: no Início `SobreMim.java` aparece destacado e a pasta `sobre`
+  expandida, sem `aria-current`.
 - **Saídas:** `secaoEscolhida`, emitida a cada clique em um item. Método público:
   `focarPrimeiroItem()`.
 
