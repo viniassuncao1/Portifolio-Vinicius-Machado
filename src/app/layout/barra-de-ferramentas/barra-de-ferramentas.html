@@ -56,10 +56,8 @@
 <button
   type="button"
   class="ramo"
-  aria-controls="painel-do-git"
-  aria-label="Branch master, abrir o painel do Git"
-  [attr.aria-expanded]="git.aberto()"
-  (click)="git.alternar($any($event.currentTarget))"
+  aria-label="Branch master, abrir o repositório"
+  (click)="abrirRepositorio()"
 >
   <app-icone nome="ramo" />
   {{ ramo }}

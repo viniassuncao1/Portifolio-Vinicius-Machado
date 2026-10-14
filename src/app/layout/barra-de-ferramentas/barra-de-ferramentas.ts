@@ -1,8 +1,10 @@
 import { Component, ElementRef, inject, input, output, viewChild } from '@angular/core';
 
+import { Router } from '@angular/router';
+
+import { SLUG_DO_REPOSITORIO } from '../../core/abas-abertas';
 import { JanelaDePreview } from '../../core/janela-de-preview';
 import { JanelaDeRun } from '../../core/janela-de-run';
-import { PainelDoGit } from '../../core/painel-do-git';
 import { Tema } from '../../core/tema';
 import { Icone } from '../../shared/icone/icone';
 
@@ -23,7 +25,7 @@ export class BarraDeFerramentas {
 
   protected readonly janela = inject(JanelaDePreview);
   protected readonly run = inject(JanelaDeRun);
-  protected readonly git = inject(PainelDoGit);
+  private readonly router = inject(Router);
   protected readonly tema = inject(Tema);
   protected readonly ramo = 'master';
 
@@ -31,6 +33,10 @@ export class BarraDeFerramentas {
   readonly gavetaAberta = input(false);
   readonly alternarGaveta = output<void>();
   readonly buscar = output<void>();
+
+  protected abrirRepositorio(): void {
+    void this.router.navigateByUrl(`/${SLUG_DO_REPOSITORIO}`);
+  }
 
   focarProjeto(): void {
     this.botaoProjeto().nativeElement.focus();

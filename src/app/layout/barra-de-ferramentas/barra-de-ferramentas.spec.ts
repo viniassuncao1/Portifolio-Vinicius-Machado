@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { Router, provideRouter } from '@angular/router';
 
-import { PainelDoGit } from '../../core/painel-do-git';
 import { Tema } from '../../core/tema';
 import { BarraDeFerramentas } from './barra-de-ferramentas';
 
@@ -19,26 +19,36 @@ class Hospedeiro {
   busca = 0;
 }
 
+@Component({ template: '' })
+class Vazia {}
+
 describe('BarraDeFerramentas', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideRouter([{ path: '**', component: Vazia }])],
+    });
+  });
+
   async function montar() {
     const fixture = TestBed.createComponent(Hospedeiro);
     await fixture.whenStable();
     return { fixture, raiz: fixture.nativeElement as HTMLElement };
   }
 
-  it('mostra a branch master como botão que abre o painel do Git', async () => {
-    const { fixture, raiz } = await montar();
+  it('mostra a branch master como botão que leva ao repositório', async () => {
+    const { raiz } = await montar();
     const ramo = raiz.querySelector<HTMLButtonElement>('button.ramo')!;
 
     expect(ramo.textContent).toContain('master');
-    expect(ramo.getAttribute('aria-controls')).toBe('painel-do-git');
-    expect(ramo.getAttribute('aria-expanded')).toBe('false');
+    expect(ramo.getAttribute('aria-label')).toBe('Branch master, abrir o repositório');
+    expect(ramo.hasAttribute('aria-expanded')).toBe(false);
 
     ramo.click();
-    fixture.detectChanges();
+    await TestBed.inject(Router)
+      .navigateByUrl('/repositorio')
+      .catch(() => undefined);
 
-    expect(TestBed.inject(PainelDoGit).aberto()).toBe(true);
-    expect(ramo.getAttribute('aria-expanded')).toBe('true');
+    expect(TestBed.inject(Router).url).toBe('/repositorio');
   });
 
   it('não tem mais os widgets PV portfolio-vinicius e PortfolioApplication', async () => {
@@ -120,7 +130,7 @@ describe('BarraDeFerramentas', () => {
       'Executar PortfolioApplication',
       'Buscar seção (Ctrl+P)',
       'Usar tema claro',
-      'Branch master, abrir o painel do Git',
+      'Branch master, abrir o repositório',
     ]);
   });
 
