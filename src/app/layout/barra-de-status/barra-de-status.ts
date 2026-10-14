@@ -1,5 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 
+import { BoasVindas } from '../../core/boas-vindas';
 import { AbasAbertas } from '../../core/abas-abertas';
 import { breadcrumbs } from '../../core/breadcrumbs';
 import { SHA_CURTO_DO_BUILD, SHA_DO_BUILD } from '../../core/build.gerado';
@@ -22,6 +23,8 @@ const REPOSITORIO = 'https://github.com/viniassuncao1/Portifolio-Vinicius-Machad
 export class BarraDeStatus {
   private readonly abas = inject(AbasAbertas);
   private readonly editor = inject(EstadoDoEditor);
+  /** Aviso de inicialização, por 6 s depois das boas-vindas; vazio nas demais horas. */
+  protected readonly aviso = inject(BoasVindas).aviso;
 
   private readonly segmentos = computed(() => {
     const arquivo = this.abas.ativa()?.arquivo ?? ARQUIVO_INICIO;

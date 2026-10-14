@@ -6,7 +6,7 @@
 
 ## 2. Editor [Pincel]
 
-- [ ] 2.1 Modo de leitura do Javadoc (padrão, botão na calha, dois temas) e quebra suave no celular — verificar com capturas `leitura-desktop.png` e `leitura-mobile.png` nos dois temas
+- [x] 2.1 Modo de leitura do Javadoc (padrão, botão na calha, dois temas) e quebra suave no celular — verificar com capturas `leitura-desktop.png` e `leitura-mobile.png` nos dois temas
 
 ## 3. Casca e contato [Nanquim]
 
