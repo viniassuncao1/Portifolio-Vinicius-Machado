@@ -3,7 +3,7 @@ import type { Page } from '@playwright/test';
 
 import { linhasDoCodigo } from './apoio';
 
-const COR_VALOR = 'rgb(79, 175, 172)';
+const COR_VALOR = 'rgb(42, 172, 184)';
 
 const controle = (page: Page) => page.getByRole('navigation', { name: 'Páginas da seção' });
 const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });

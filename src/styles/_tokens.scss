@@ -49,14 +49,15 @@
   --largura-anel-foco: 2px;
   --cor-fundo-modal: rgb(0 0 0 / 55%);
 
-  // Sintaxe
-  --cor-sintaxe-palavra-chave: #de60d2;
-  --cor-sintaxe-campo: #d5963e;
-  --cor-sintaxe-literal: #8fc258;
-  --cor-sintaxe-valor: #4fafac;
-  --cor-sintaxe-anotacao: #7489f8;
-  --cor-sintaxe-comentario-marcador: #939191;
-  --cor-sintaxe-comentario: #9b9999;
+  // Sintaxe: o Java do IntelliJ sobre os fundos do design. O comentário é o #8C9097 do IntelliJ
+  // clareado para #8F939A, que dá 4,59:1 sobre o editor (#2B2B2B); o original dava 4,42:1.
+  --cor-sintaxe-palavra-chave: #cf8e6d;
+  --cor-sintaxe-campo: #c77dba;
+  --cor-sintaxe-literal: #6aab73;
+  --cor-sintaxe-valor: #2aacb8;
+  --cor-sintaxe-anotacao: #b3ae60;
+  --cor-sintaxe-comentario-marcador: #8f939a;
+  --cor-sintaxe-comentario: #8f939a;
   --cor-sintaxe-texto: var(--cor-texto);
 
   // Tipografia: interface em Inter 13px, código em JetBrains Mono 14px com linha de 22px
@@ -123,6 +124,7 @@
   --altura-barra-gaveta: 2.25rem;
   --camada-gaveta: 10;
   --largura-faixa-ferramentas: 2.5rem;
+  --largura-calha: 1.5rem;
   --tamanho-botao-barra: 1.75rem;
 
   // Editor de código
