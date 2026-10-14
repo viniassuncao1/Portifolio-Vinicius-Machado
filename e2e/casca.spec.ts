@@ -72,7 +72,6 @@ test.describe('Estrutura da IDE', () => {
 
     for (const seletor of [
       'app-barra-de-ferramentas .decorativo',
-      'app-barra-de-ferramentas .executar',
       'app-faixa-de-ferramentas span.botao',
     ]) {
       for (const item of await page.locator(seletor).all()) {
@@ -153,8 +152,10 @@ test.describe('Teclado', () => {
     await abrirHidratada(page, '/');
     const eventos = arquivoDaArvore(page, 'Eventos');
 
-    // Antes da árvore ficam só os botões Buscar, tema, master, Projeto e Commit; a árvore tem um só item na ordem de Tab
+    // Antes da árvore ficam só os botões Executar, Buscar, tema, master, Projeto e Commit; a árvore tem um só item na ordem de Tab
     // (roving tabindex) e as setas percorrem o resto.
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('button', { name: 'Executar PortfolioApplication' })).toBeFocused();
     await page.keyboard.press('Tab');
     await expect(page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' })).toBeFocused();
     await page.keyboard.press('Tab');
@@ -194,7 +195,7 @@ test.describe('Teclado', () => {
         await page.evaluate(
           () =>
             document.activeElement?.closest(
-              '.decorativo, .executar:not(button), app-faixa-de-ferramentas span, app-aba-do-editor, .cabecalho',
+              '.decorativo, .executar:not(button), app-faixa-de-ferramentas span, app-aba-do-editor, app-painel-lateral .cabecalho',
             )?.tagName ?? null,
         ),
       );

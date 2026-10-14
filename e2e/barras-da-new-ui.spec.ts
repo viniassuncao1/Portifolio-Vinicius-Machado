@@ -93,19 +93,26 @@ test.describe('Barra superior (desktop)', () => {
     }
   });
 
-  test('Executar fica decorativo, sem botão, fora dos projetos com site', async ({ page }) => {
+  test('Executar fora dos projetos com site é um botão que abre a janela de Run', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     for (const rota of ['/', '/skills', '/projeto-1', '/projeto-4']) {
       await page.goto(rota);
+      const executar = page.getByRole('button', { name: 'Executar PortfolioApplication' });
 
       await expect(page.getByRole('button', { name: 'Executar o projeto' })).toHaveCount(0);
-      await expect(page.locator('app-barra-de-ferramentas span.executar')).toHaveAttribute(
-        'aria-hidden',
-        'true',
+      await expect(executar).toBeVisible();
+      await executar.click();
+
+      await expect(page.locator('app-janela-de-run')).toHaveAttribute('data-aberto', 'true');
+      await expect(page.getByRole('region', { name: /Log de inicialização/ })).toContainText(
+        'Started PortfolioApplication',
       );
     }
   });
 
-  test('o leitor de tela só encontra como botões Buscar, o tema, a branch, Projeto e Commit', async ({
+  test('o leitor de tela só encontra como botões Executar, Buscar, o tema, a branch, Projeto e Commit', async ({
     page,
   }) => {
     await page.goto('/skills');
@@ -117,15 +124,14 @@ test.describe('Barra superior (desktop)', () => {
     const texto = (await page.locator('app-barra-de-ferramentas').ariaSnapshot()) ?? '';
 
     expect(botoes).toEqual([
+      'Executar PortfolioApplication',
       'Buscar seção (Ctrl+P)',
       'Usar tema claro',
       'Branch master, abrir o painel do Git',
       'Projeto',
       'Commit',
     ]);
-    for (const decorativo of ['PortfolioApplication', 'portfolio-vinicius']) {
-      expect(texto).not.toContain(decorativo);
-    }
+    expect(texto).not.toContain('portfolio-vinicius');
   });
 
   test('controles decorativos não têm tabindex, papel nem são links ou botões', async ({
