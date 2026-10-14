@@ -100,16 +100,16 @@ describe('BarraDeFerramentas', () => {
     expect(getComputedStyle(barra).backgroundImage).toBe('none');
   });
 
-  it('deixa Executar e os demais ícones decorativos e sem foco fora dos projetos com site', async () => {
+  it('deixa os demais ícones decorativos e sem foco', async () => {
     const { raiz } = await montar();
 
-    for (const controle of raiz.querySelectorAll('.executar, .decorativo')) {
+    for (const controle of raiz.querySelectorAll('.decorativo')) {
       expect(controle.getAttribute('aria-hidden')).toBe('true');
       expect(controle.matches('button, a, [tabindex]')).toBe(false);
     }
   });
 
-  it('só tem como botões o Projeto do celular, o Buscar, o tema e a branch', async () => {
+  it('só tem como botões o Projeto do celular, o Executar, o Buscar, o tema e a branch', async () => {
     const { raiz } = await montar();
     const nomes = Array.from(raiz.querySelectorAll('button')).map((b) =>
       b.getAttribute('aria-label'),
@@ -117,6 +117,7 @@ describe('BarraDeFerramentas', () => {
 
     expect(nomes).toEqual([
       'Projeto',
+      'Executar PortfolioApplication',
       'Buscar seção (Ctrl+P)',
       'Usar tema claro',
       'Branch master, abrir o painel do Git',

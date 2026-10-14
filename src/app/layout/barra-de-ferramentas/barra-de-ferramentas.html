@@ -22,7 +22,14 @@
     <app-icone nome="design-executar" />
   </button>
 } @else {
-  <span class="botao executar" aria-hidden="true"><app-icone nome="design-executar" /></span>
+  <button
+    type="button"
+    class="botao executar"
+    aria-label="Executar PortfolioApplication"
+    (click)="executarAplicacao($event)"
+  >
+    <app-icone nome="design-executar" />
+  </button>
 }
 <span class="botao decorativo" aria-hidden="true"><app-icone nome="design-ferramenta" /></span>
 <span class="botao decorativo" aria-hidden="true"><app-icone nome="design-ia" /></span>
