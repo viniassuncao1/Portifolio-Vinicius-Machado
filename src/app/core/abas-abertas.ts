@@ -13,7 +13,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
+import type { NomeDoIcone } from '../shared/icone/icone';
 import { ARQUIVO_INICIO, SECOES } from './secoes';
+import { TITULO_REPOSITORIO } from './titulos';
 
 export interface Aba {
   /** Slug da seção; vazio para o Início. */
@@ -21,6 +23,8 @@ export interface Aba {
   readonly arquivo: string;
   /** Endereço aberto ao ativar a aba. */
   readonly rota: string;
+  /** Ícone da aba; sem ele vale o de arquivo. */
+  readonly icone?: NomeDoIcone;
 }
 
 const CHAVE_DA_SESSAO = 'abas-abertas';
@@ -28,9 +32,18 @@ const CHAVE_DA_SESSAO = 'abas-abertas';
 export const LIMITE_DE_ABAS = 5;
 
 const ABA_INICIO: Aba = { slug: '', arquivo: ARQUIVO_INICIO, rota: '/' };
+/** A página do repositório (`/repositorio`) não é uma seção: aba própria, com o ícone do GitHub. */
+export const SLUG_DO_REPOSITORIO = 'repositorio';
+const ABA_REPOSITORIO: Aba = {
+  slug: SLUG_DO_REPOSITORIO,
+  arquivo: TITULO_REPOSITORIO,
+  rota: `/${SLUG_DO_REPOSITORIO}`,
+  icone: 'github',
+};
 const ABAS_POSSIVEIS: readonly Aba[] = [
   ABA_INICIO,
   ...SECOES.map((secao) => ({ slug: secao.slug, arquivo: secao.arquivo, rota: `/${secao.slug}` })),
+  ABA_REPOSITORIO,
 ];
 
 const abaDoSlug = (slug: string): Aba | undefined => ABAS_POSSIVEIS.find((a) => a.slug === slug);

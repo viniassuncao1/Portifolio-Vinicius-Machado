@@ -21,6 +21,7 @@ describe('FaixaDeAbas', () => {
           { path: 'sobre-mim', component: Vazia },
           { path: 'skills', component: Vazia },
           { path: 'contato', component: Vazia },
+          { path: 'repositorio', component: Vazia },
         ]),
       ],
     });
@@ -38,6 +39,16 @@ describe('FaixaDeAbas', () => {
 
   const abas = (raiz: HTMLElement) =>
     Array.from(raiz.querySelectorAll<HTMLElement>('[role="tab"]'));
+
+  it('mostra a aba do repositório com o nome do projeto e o ícone do GitHub', async () => {
+    const { raiz } = await abrir('/repositorio');
+
+    const [aba] = abas(raiz);
+    expect(aba.textContent?.trim()).toBe('Portfolio-Vinicius-Machado');
+    expect(aba.querySelector('img.escuro')?.getAttribute('src')).toContain(
+      'icones/new-ui/github.svg',
+    );
+  });
 
   it('mostra uma aba por seção aberta, com o arquivo, e marca a ativa', async () => {
     const { raiz } = await abrir('/sobre-mim', '/skills');

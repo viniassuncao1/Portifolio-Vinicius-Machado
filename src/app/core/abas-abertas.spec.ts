@@ -23,6 +23,7 @@ describe('AbasAbertas', () => {
           { path: 'skills/2', component: Vazia },
           { path: 'contato', component: Vazia },
           { path: 'eventos', component: Vazia },
+          { path: 'repositorio', component: Vazia },
         ]),
       ],
     });
@@ -56,6 +57,17 @@ describe('AbasAbertas', () => {
 
     expect(slugs(abas)).toEqual(['skills', 'contato']);
     expect(abas.ativa()?.slug).toBe('skills');
+  });
+
+  it('abre a página do repositório numa aba com o nome do projeto e o ícone do GitHub', async () => {
+    const { abas } = await iniciar('/repositorio');
+
+    expect(abas.abas().map((a) => a.arquivo)).toEqual(['Portfolio-Vinicius-Machado']);
+    expect(abas.ativa()).toMatchObject({
+      slug: 'repositorio',
+      rota: '/repositorio',
+      icone: 'github',
+    });
   });
 
   it('abrir a sexta aba fecha a usada há mais tempo, nunca a ativa', async () => {

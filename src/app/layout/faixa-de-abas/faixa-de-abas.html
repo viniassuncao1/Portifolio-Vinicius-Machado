@@ -12,7 +12,7 @@
         (click)="abrir(aba)"
         (keydown)="aoTeclar($event, i)"
       >
-        <app-icone nome="design-arquivo" />
+        <app-icone [nome]="aba.icone ?? 'design-arquivo'" />
         <span class="nome">{{ aba.arquivo }}</span>
       </button>
     }
