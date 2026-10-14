@@ -10,7 +10,7 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 
 | Elemento da tela                                               | Telas            | Componente                  | Pasta                          |
 | -------------------------------------------------------------- | ---------------- | --------------------------- | ------------------------------ |
-| Barra de ferramentas do design (branch, Executar, Buscar)      | todas            | `BarraDeFerramentas`        | `layout/barra-de-ferramentas/` |
+| Barra de ferramentas do design (ícones, branch, Buscar)        | todas            | `BarraDeFerramentas`        | `layout/barra-de-ferramentas/` |
 | Faixa de ferramentas à esquerda (Projeto, Commit, Estrutura)   | desktop (nossa)  | `FaixaDeFerramentas`        | `layout/faixa-de-ferramentas/` |
 | Painel do projeto (cabeçalho "Projeto", árvore, rodapé)        | todas            | `PainelLateral`             | `layout/painel-lateral/`       |
 | Árvore de seções com ícones                                    | todas            | `ArvoreDeSecoes`            | `layout/arvore-de-secoes/`     |
@@ -40,7 +40,7 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 | Contato (links reais)                                          | 30               | `Contato`                   | `features/contato/`            |
 | Seção sem conteúdo ainda                                       | 10-21, 23-27, 29 | `SecaoEmConstrucao`         | `shared/secao-em-construcao/`  |
 | Janela de preview de site                                      | 11-15            | `JanelaDePreviewComponente` | `shared/janela-de-preview/`    |
-| Botão "Executar" (abre o preview)                              | (nosso)          | `BotaoExecutar`             | `shared/botao-executar/`       |
+| ▶ Executar na calha (abre o preview)                           | (nosso)          | `BotaoExecutar`             | `shared/botao-executar/`       |
 
 O design é **referência de identidade visual** ([ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md)).
 Por isso o site tem o que as telas, estáticas, não mostram: a faixa de abas, a barra de status, a
@@ -101,16 +101,17 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 
 - **Onde:** `layout/barra-de-ferramentas/barra-de-ferramentas.ts`, seletor
   `app-barra-de-ferramentas`.
-- **O que faz:** a barra de ferramentas do design (degradê e controles de janela), com os ícones
-  da IntelliJ Platform na **variante clara**, por causa do fundo claro do degradê
-  ([ADR-0012](adr/0012-design-original-com-elementos-do-intellij.md)). Mostra a branch `master`,
-  **Executar** e **Buscar**; o resto só imita a IDE e fica fora da leitura e do foco. São botões de
-  verdade o **Buscar** (emite `buscar`, que abre a busca de seções), o **Executar** (só nas rotas
-  com preview: `JanelaDePreview.previewDaRota()`; abre a janela) e, no celular, o **Projeto**, que
-  abre e fecha a gaveta.
+- **O que faz:** a barra de ferramentas do design, mas **escura**, nos cinzas do design e sem
+  degradê. Foi um desvio pedido pelo Vinicius: a faixa clara destoava do resto da interface
+  ([ADR-0012](adr/0012-design-original-com-elementos-do-intellij.md)). Usa os **ícones do design**
+  (`public/icones/*.svg`) e os controles de janela do design. Dos ícones da IntelliJ Platform ficam
+  só a **busca** e a **branch** `master`. Quase tudo só imita a IDE e fica fora da leitura e do
+  foco. É botão de verdade o **Buscar** (emite `buscar`, que abre a busca de seções) e, no celular,
+  o **Projeto**, que abre e fecha a gaveta. O ícone de play da barra vira o botão "Executar o
+  projeto" só nas rotas com preview (`JanelaDePreview.previewDaRota()`); o foco é um anel rosa.
 - **Entrada e saídas:** `gavetaAberta = input(false)`; `alternarGaveta` e `buscar`. Método
   público: `focarProjeto()`, usado para devolver o foco quando a gaveta fecha.
-- **Celular:** a barra fica compacta, com Projeto (ícone), o nome do projeto e Buscar.
+- **Celular:** a barra fica compacta e escura, com Projeto (ícone) e Buscar.
 
 ### `FaixaDeFerramentas`
 
@@ -187,16 +188,21 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 ### `Icone`
 
 - **Onde:** `shared/icone/icone.ts`, seletor `app-icone`.
-- **O que faz:** mostra um SVG oficial da **IntelliJ Platform** (variante escura na interface e
-  clara na barra de ferramentas) de `public/icones/new-ui/`, com `NgOptimizedImage` e `alt=""` (decorativo: o texto ao lado já é o
-  rótulo). A lista de nomes válidos é `NOMES_DE_ICONE`; o tipo é `NomeDoIcone`. Os ícones têm
-  licença Apache 2.0 e os créditos ficam em
-  [`public/icones/new-ui/CREDITOS.md`](../public/icones/new-ui/CREDITOS.md); nenhum logotipo de
-  produto da JetBrains é usado.
-- **Entrada:** `nome = input.required<NomeDoIcone>()`. O tamanho vem do token `--tamanho-icone`.
+- **O que faz:** mostra um SVG decorativo com `NgOptimizedImage` e `alt=""` (o nome ao lado já é o
+  rótulo). Há dois conjuntos, e o prefixo do nome diz de qual:
+  - **Ícones do design** (`design-pasta`, `design-arquivo`, `design-projeto`, `design-executar`,
+    `design-ferramenta`, `design-ia`, `design-globo`, `design-relogio`, `design-monitor`), de
+    `public/icones/*.svg`, usados na árvore, nas abas e na barra de ferramentas.
+  - **Ícones da IntelliJ Platform** (`projeto`, `commit`, `estrutura`, `ramo`, `executar`,
+    `buscar`), de `public/icones/new-ui/`, só onde o design não tem equivalente: o ▶ da calha, a
+    branch, a busca e a faixa de ferramentas. Têm licença Apache 2.0, com créditos em
+    [`CREDITOS.md`](../public/icones/new-ui/CREDITOS.md); nenhum logotipo de produto da JetBrains
+    é usado.
+- **Entrada:** `nome = input.required<NomeDoIcone>()`; `NOMES_DE_ICONE` lista os nomes válidos. O
+  tamanho vem do token `--tamanho-icone`.
 
 ```html
-<app-icone nome="pasta" />
+<app-icone nome="design-pasta" />
 ```
 
 ### `GlifoFechar`
@@ -247,10 +253,15 @@ reduce` não há animação e a janela fecha direto.
 
 ### `BotaoExecutar`
 
-- **Onde:** `shared/botao-executar/botao-executar.ts`, seletor `app-botao-executar`, na `Casca`,
-  logo abaixo do `<router-outlet>`.
-- **O que faz:** o botão "Executar", como rodar o projeto numa IDE: abre a janela de preview. Só
-  é renderizado nas rotas com preview; nas demais não existe.
+- **Onde:** `shared/botao-executar/botao-executar.ts`, seletor `app-botao-executar`. O
+  `EditorDeCodigo` o renderiza dentro da linha marcada como executável.
+- **O que faz:** o **▶ na calha** do editor, à esquerda dos números e na linha da declaração
+  `public class`, como no IntelliJ: abre o site do projeto na janela de preview. Só aparece nas
+  rotas com preview; é um botão de verdade, com o nome da seção (`Executar Projeto 2`) e foco
+  visível. Ele substituiu o botão "Executar" que ficava sobre o código.
+- **Como marcar a linha:** `linhaExecutavel(recuo, ...trechos)` (em `conteudo.ts`) cria uma
+  `LinhaDeCodigo` com `executavel: true`. O editor reserva a calha (`com-calha`) só quando alguma
+  linha é executável.
 
 ### `SecaoEmConstrucao`
 
@@ -278,7 +289,7 @@ O estado da IDE mora em serviços (`@Service`), e não nos componentes da casca.
 - **`JanelaDePreview`** (`core/janela-de-preview.ts`): guarda o preview aberto (`preview`, signal
   somente leitura), o elemento que abriu a janela e o preview da rota atual (`previewDaRota`, calculado
   a partir da URL). `abrir(preview, origem)` abre; `fechar()` fecha e devolve o foco à origem.
-  O componente da janela, o `BotaoExecutar` e o play da barra de ferramentas usam este serviço.
+  O componente da janela, o ▶ da calha (`BotaoExecutar`) e o play da barra de ferramentas usam este serviço.
 - **`breadcrumbs`** (`core/breadcrumbs.ts`): função pura que devolve os segmentos do caminho de um
   arquivo, do projeto até o `.java` (`portfolio-vinicius › src › main › java › dev › vinicius ›
 portfolio › <pacote> › <Arquivo>`). Usa o campo `pacote` de cada `Secao` (`sobre`, `skills`,
@@ -297,7 +308,7 @@ portfolio › <pacote> › <Arquivo>`). Usa o campo `pacote` de cada `Secao` (`s
 3. Confira nos cabeçalhos do site que ele aceita `iframe` (sem `X-Frame-Options` nem CSP
    `frame-ancestors` restritiva); se não aceitar, o "Ver ao vivo" não funcionará.
 
-O play e o `BotaoExecutar` passam a aparecer na rota, sem mais nenhuma mudança.
+O play da barra e o ▶ da calha passam a aparecer na rota, sem mais nenhuma mudança.
 
 ### Capturas dos sites (`scripts/capturar-previews.mjs`)
 
@@ -341,31 +352,34 @@ tipadas, todas `readonly`.
 | `comentario`    | `--cor-sintaxe-comentario`    | `// em andamento`      |
 | `comum`         | `--cor-sintaxe-texto`         | pontuação e o restante |
 
-O papel `valor` (verde-azulado, `#4fafac`) é o dos valores literais que não são texto, como
-`true`, e aparece na tela 03.
+As cores de sintaxe são as do Java no IntelliJ ([ADR-0012](adr/0012-design-original-com-elementos-do-intellij.md)):
+palavra-chave `#CF8E6D`, campo `#C77DBA`, string `#6AAB73`, número e valor `#2AACB8`, anotação
+`#B3AE60`. O comentário usa `#8F939A`, mais claro que o `#7A7E85` original do IntelliJ, porque este
+reprovava no contraste AA. O papel `valor` é o dos literais que não são texto, como `true`.
 
 ### Construtoras
 
 Funções curtas para o arquivo de conteúdo ficar legível:
 
-| Função                             | Cria                                        |
-| ---------------------------------- | ------------------------------------------- |
-| `palavraChave(texto)`              | `Trecho` rosa (`public class`, `extends`)   |
-| `declaracao(texto)`                | `Trecho` laranja (`String cargo`)           |
-| `literal(texto)`                   | `Trecho` verde (`“Java”`)                   |
-| `valor(texto)`                     | `Trecho` verde-azulado (`true`)             |
-| `anotacao(texto)`                  | `Trecho` azul (`@Anotacao`)                 |
-| `comentario(texto)`                | `Trecho` cinza de comentário (`// 2x`)      |
-| `link(trecho, href)`               | O mesmo trecho com `href` (link)            |
-| `comum(texto)`                     | `Trecho` na cor padrão do texto             |
-| `linha(recuo, ...trechos)`         | `LinhaDeCodigo`                             |
-| `linhaCompacta(recuo, ...trechos)` | `LinhaDeCodigo` com `densidade: 'compacta'` |
-| `linhaApertada(recuo, ...trechos)` | `LinhaDeCodigo` com `densidade: 'apertada'` |
-| `paragrafo(recuo, texto)`          | `LinhaDeParagrafo`                          |
-| `javadoc(recuo, texto)`            | `LinhaDeJavadoc`                            |
-| `vazia()`                          | `LinhaVazia`                                |
-| `vaziaCompacta()`                  | `LinhaVazia` com `densidade: 'compacta'`    |
-| `vaziaApertada()`                  | `LinhaVazia` com `densidade: 'apertada'`    |
+| Função                               | Cria                                         |
+| ------------------------------------ | -------------------------------------------- |
+| `palavraChave(texto)`                | `Trecho` laranja (`public class`, `extends`) |
+| `declaracao(texto)`                  | `Trecho` lilás (`String cargo`)              |
+| `literal(texto)`                     | `Trecho` verde (`“Java”`)                    |
+| `valor(texto)`                       | `Trecho` turquesa (`true`)                   |
+| `anotacao(texto)`                    | `Trecho` amarelo-oliva (`@Anotacao`)         |
+| `comentario(texto)`                  | `Trecho` cinza de comentário (`// 2x`)       |
+| `link(trecho, href)`                 | O mesmo trecho com `href` (link)             |
+| `comum(texto)`                       | `Trecho` na cor padrão do texto              |
+| `linha(recuo, ...trechos)`           | `LinhaDeCodigo`                              |
+| `linhaCompacta(recuo, ...trechos)`   | `LinhaDeCodigo` com `densidade: 'compacta'`  |
+| `linhaApertada(recuo, ...trechos)`   | `LinhaDeCodigo` com `densidade: 'apertada'`  |
+| `linhaExecutavel(recuo, ...trechos)` | `LinhaDeCodigo` com o ▶ de executar na calha |
+| `paragrafo(recuo, texto)`            | `LinhaDeParagrafo`                           |
+| `javadoc(recuo, texto)`              | `LinhaDeJavadoc`                             |
+| `vazia()`                            | `LinhaVazia`                                 |
+| `vaziaCompacta()`                    | `LinhaVazia` com `densidade: 'compacta'`     |
+| `vaziaApertada()`                    | `LinhaVazia` com `densidade: 'apertada'`     |
 
 **Densidade das linhas.** Sem `densidade`, a linha tem a altura normal. As listas das telas
 ocupam menos espaço que o número de linha, e o campo `densidade` reproduz isso:
@@ -469,9 +483,10 @@ barra de status com o caminho do arquivo e a tipografia compacta
 [ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md)). Todos os valores vêm de
 `src/styles/_tokens.scss`; os componentes só usam tokens.
 
-**Paleta e formas do design.** Fundos `#2B2B2B` e `#1C1C1C`, palavras-chave em rosa `#DE60D2` e
-foco rosa, barra de ferramentas com degradê e controles de janela, editor com cantos
-arredondados, abas e cabeçalho do painel `Portfolio_Vinicius`. Os ajustes de contraste AA
+**Paleta e formas do design.** Fundos `#2B2B2B` e `#1C1C1C`,
+foco rosa `#DE60D2`, controles de janela, editor com cantos arredondados, abas e cabeçalho do
+painel `Portfolio_Vinicius`. A barra de ferramentas é um desvio do design: escura, nos cinzas do
+design e sem o degradê claro das telas. Os ajustes de contraste AA
 (por exemplo, o comentário clareado) seguem registrados na note "Design Tokens". Para os valores
 exatos de cada token, o arquivo `_tokens.scss` é a fonte.
 

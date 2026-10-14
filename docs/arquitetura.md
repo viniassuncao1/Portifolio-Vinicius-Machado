@@ -81,19 +81,27 @@ cada componente e o modelo de conteúdo estão em [componentes.md](componentes.m
 O [ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md) trocou a identidade pela do IntelliJ
 New UI, mas o resultado ficou "literalmente o IntelliJ" e apagou o design feito sob encomenda. O
 [ADR-0012](adr/0012-design-original-com-elementos-do-intellij.md) o substituiu em parte: **o design
-original predomina** (paleta, degradê, formas, cabeçalho `Portfolio_Vinicius`) e do IntelliJ ficam:
+original predomina** (paleta dos cinzas, **ícones do design**, controles de janela, formas e
+cabeçalho `Portfolio_Vinicius`) e do IntelliJ ficam:
 
-- **Barra de ferramentas do design** com ícones da IntelliJ Platform (variante clara, por causa do
-  fundo claro), a branch `master`, Executar (nas rotas com preview) e Buscar. O resto é decorativo,
-  fora da leitura e do foco.
+- **Árvore em pastas:** as seções são arquivos `.java` dentro de pacotes (`sobre`, `skills`,
+  `experiencias`, `projetos`, `formacao`, `recomendacoes`, `contato`), a partir do campo `pacote`.
+  Todos os links ficam no HTML pré-renderizado, e só a pasta aberta pelo visitante anima.
+- **Cores de sintaxe do Java do IntelliJ** no código (o comentário em `#8F939A`, que passa no
+  contraste AA).
+- **▶ Executar na calha:** o botão fica à esquerda dos números, na linha `public class` dos
+  projetos com site, e abre a janela de preview. A calha só existe nas páginas com esse botão.
+- **Barra de ferramentas do design, escura:** desvio pedido pelo Vinicius. Sem o degradê claro das
+  telas, nos cinzas do design, com os ícones do design e foco rosa. Dos ícones da IntelliJ
+  Platform ficam só a busca e a branch `master`.
 - **Faixa de ferramentas (40px, só no desktop):** o botão Projeto mostra e esconde o painel do
   projeto (signal `painelVisivel` na casca, com transição que respeita `prefers-reduced-motion`);
   Commit e Estrutura são decorativos.
 - **Barra de status com o caminho do arquivo:** vem de `core/breadcrumbs.ts`, que usa o campo
   `pacote` de cada `Secao` em `core/secoes.ts`. Mostra também `linha:coluna`, `LF`, `UTF-8`,
   `4 spaces`, a branch e o commit do deploy.
-- **Ícones oficiais da IntelliJ Platform** (Apache 2.0), em `public/icones/new-ui/`, com os
-  créditos em `CREDITOS.md`.
+- **Ícones da IntelliJ Platform** (Apache 2.0) só onde o design não tem equivalente (▶, branch,
+  busca e faixa de ferramentas), em `public/icones/new-ui/`, com os créditos em `CREDITOS.md`.
 - **Tipografia e densidade compactas** da change de tokens (Inter na interface, JetBrains Mono no
   código).
 
