@@ -18,5 +18,5 @@
 
 ## 4. Documentação e integração
 
-- [ ] 4.1 [Escriba] README, `docs/arquitetura.md`, `docs/componentes.md` e a entrada `0012-painel-do-git.md` do diário — verificar com `npm run format:check`
+- [x] 4.1 [Escriba] README, `docs/arquitetura.md`, `docs/componentes.md` e a entrada `0012-painel-do-git.md` do diário — verificar com `npm run format:check`
 - [ ] 4.2 [Regente] Revisar, abrir o PR, arquivar a change e fazer o merge — verificar pelo PR mesclado e pelo deploy
