@@ -1,7 +1,5 @@
-import { DOCUMENT, PLATFORM_ID, Service, computed, inject, signal } from '@angular/core';
+import { DOCUMENT, PLATFORM_ID, Service, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-
-import { AreaDeBaixo } from './area-de-baixo';
 
 const MOVIMENTO_REDUZIDO = '(prefers-reduced-motion: reduce)';
 
@@ -17,14 +15,14 @@ const MOVIMENTO_REDUZIDO = '(prefers-reduced-motion: reduce)';
 export class JanelaDeRun {
   private readonly documento = inject(DOCUMENT);
   private readonly navegador = isPlatformBrowser(inject(PLATFORM_ID));
-  private readonly area = inject(AreaDeBaixo);
+  private readonly estaAberta = signal(false);
   private readonly origem = signal<HTMLElement | null>(null);
   private readonly numeroDaExecucao = signal(0);
   private readonly horaDoInicio = signal<Date | null>(null);
   private readonly logTerminado = signal(true);
   private readonly pedirFoco = signal(false);
 
-  readonly aberto = computed(() => this.area.janela() === 'run');
+  readonly aberto = this.estaAberta.asReadonly();
   /** Muda a cada abertura ou reexecução: o log reinicia. */
   readonly execucao = this.numeroDaExecucao.asReadonly();
   /** Quando a execução começou (relógio do navegador); `null` antes da primeira. */
@@ -48,7 +46,7 @@ export class JanelaDeRun {
   /** Fecha a janela e devolve o foco a quem a abriu. */
   fechar(): void {
     if (!this.aberto()) return;
-    this.area.fechar('run');
+    this.estaAberta.set(false);
     this.origem()?.focus();
     this.origem.set(null);
   }
@@ -60,7 +58,7 @@ export class JanelaDeRun {
     // Com movimento reduzido o log já nasce completo; senão o componente o revela e conclui.
     this.logTerminado.set(this.movimentoReduzido());
     this.numeroDaExecucao.update((n) => n + 1);
-    this.area.abrir('run');
+    this.estaAberta.set(true);
   }
 
   private movimentoReduzido(): boolean {
