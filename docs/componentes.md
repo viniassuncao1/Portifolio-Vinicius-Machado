@@ -146,8 +146,10 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   em uma coluna de até ~960 px. Cabeçalho com o nome, o selo "Público", uma frase que explica o que
   o repositório mostra e o botão "Ver no GitHub" (nova aba); os números (commits, pull requests
   mesclados, desde quando, último deploy); **"Como o trabalho se divide"**, uma barra com a
-  proporção de commits `feat`, `fix`, `test`, `docs`, `refactor` e `chore`, com legenda em texto e
-  porcentagem (nunca só cor); os **últimos pull requests** (título, número, branch, data e link); os
+  proporção de commits por tipo, com legenda em texto e porcentagem (nunca só cor). A barra mostra
+  os tipos com **3% ou mais dos commits, por frequência** (hoje `docs`, `feat`, `test`, `fix`,
+  `refactor` e `chore`) e, no fim, um segmento **listrado "outros"** que reúne os tipos abaixo de 3%
+  e os commits sem tipo; a legenda diz quais entram nele (`agrupar-tipos.ts`); os **últimos pull requests** (título, número, branch, data e link); os
   **últimos commits de código**, sem os de marcar tarefas; e "Ver todo o histórico no GitHub →".
 - **Dados.** O serviço `HistoricoDoRepositorio` (`core/repositorio.ts`) baixa
   `git/historico.json` na primeira vez que a página pede (nunca no servidor nem no carregamento

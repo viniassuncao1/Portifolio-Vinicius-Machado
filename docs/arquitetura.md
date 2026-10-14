@@ -156,7 +156,9 @@ painel do Git da área de baixo.
   e do PR.
 - **Resumo no navegador.** Funções puras calculam a contagem por tipo do Conventional Commits, os
   últimos PRs e os últimos commits de código (sem os de marcar tarefas), e por isso são testadas com
-  o Vitest. Commits de merge não entram na contagem por tipo.
+  o Vitest. Commits de merge não entram na contagem por tipo. Na barra, `agruparTiposPequenos`
+  (`features/repositorio/agrupar-tipos.ts`) mostra os tipos com 3% ou mais dos commits, por
+  frequência, e reúne os menores e os commits sem tipo num segmento "outros", que a legenda detalha.
 - **Carregamento sob demanda.** O serviço `HistoricoDoRepositorio` (`core/repositorio.ts`) guarda o
   estado (`ocioso`, `carregando`, `pronto` ou `erro`) e baixa o JSON só na primeira abertura da
   página, nunca no servidor nem no carregamento inicial. A rota é pré-renderizada com o esqueleto, e
