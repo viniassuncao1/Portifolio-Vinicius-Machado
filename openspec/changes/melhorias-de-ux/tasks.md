@@ -14,7 +14,7 @@
 
 ## 4. Testes [Sentinela]
 
-- [ ] 4.1 Cobrir as specs (modo de leitura, atalhos, próximo arquivo, code vision, alvo de toque, copiar e-mail, celular sem corte horizontal, limite de abas, axe nos dois temas sem exclusões) — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
+- [x] 4.1 Cobrir as specs (modo de leitura, atalhos, próximo arquivo, code vision, alvo de toque, copiar e-mail, celular sem corte horizontal, limite de abas, axe nos dois temas sem exclusões) — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
 
 ## 5. Documentação e integração
 
