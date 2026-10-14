@@ -2,8 +2,8 @@
 
 ## 1. Janela [Pincel]
 
-- [ ] 1.1 Serviço da área de baixo (Run e Git exclusivos) e a janela de Run com o log nos dois temas, abrindo uma vez por sessão — verificar com captura `run-desktop.png`
-- [ ] 1.2 Executar da barra abre a janela de Run fora dos projetos com site; celular — verificar com captura `run-mobile.png`
+- [x] 1.1 Serviço da área de baixo (Run e Git exclusivos) e a janela de Run com o log nos dois temas, abrindo uma vez por sessão — verificar com captura `run-desktop.png`
+- [x] 1.2 Executar da barra abre a janela de Run fora dos projetos com site; celular — verificar com captura `run-mobile.png`
 
 ## 2. Movimento [Compasso]
 
