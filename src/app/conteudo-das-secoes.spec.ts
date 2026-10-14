@@ -162,12 +162,12 @@ describe('conteúdo das seções em Java moderno', () => {
       }
     });
 
-    it('os Idiomas usam constantes simples, sem Map.of nem enum', () => {
+    it('os Idiomas usam campos simples, sem Map.of nem enum', () => {
       const codigo = codigoDe(CONTEUDO_IDIOMAS);
 
       expect(codigo).not.toContain('Map.of');
       expect(codigo).not.toMatch(/\benum\b/);
-      expect(codigo).toMatch(/static final\s+String\s+\w+\s*=/);
+      expect(codigo).toMatch(/^\s*String\s+\w+\s*=/m);
     });
 
     it('textos longos vão em Javadoc (Sobre Mim, Diferenciais, IA, Experiências)', () => {
@@ -383,8 +383,8 @@ describe('conteúdo das seções em Java moderno', () => {
     it('Idiomas: inglês e espanhol, ambos em nível básico', () => {
       const codigo = codigoDe(CONTEUDO_IDIOMAS);
 
-      expect(codigo).toMatch(/english/i);
-      expect(codigo).toMatch(/spanish/i);
+      expect(codigo).toMatch(/\bingles\b/i);
+      expect(codigo).toMatch(/\bespanhol\b/i);
       expect(literaisDe(CONTEUDO_IDIOMAS).map(aspasRetas)).toEqual(['Básico', 'Básico']);
     });
 
