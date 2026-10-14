@@ -27,6 +27,13 @@ superior, faixa e status já implementados na branch) e é ajustada para o novo 
   `master` e o commit do deploy, nas cores e no estilo do design.
 - **Ícones da IntelliJ Platform** (Java, pastas, pacotes) na árvore e nas abas, com créditos.
 - **Celular:** barra compacta com Projeto (abre a gaveta) e Buscar.
+- **Árvore em pastas** (pedido do Vinicius, antecipado da change 3): `sobre`, `skills`,
+  `experiencias`, `projetos`, `formacao`, `recomendacoes` e `contato`, que expandem e recolhem
+  mostrando os arquivos `.java` das seções. A paginação continua por enquanto.
+- **Cores de sintaxe do Java do IntelliJ** no editor (laranja, verde, ciano), sobre os fundos do
+  design.
+- **Executar na calha** (antecipado da change 4): ▶ na linha `public class` dos projetos com
+  site, no lugar do botão "▶ Executar" sobre o código.
 - ADR-0012, `CLAUDE.md` e a entrada 0011 do diário contando a virada de rumo.
 
 Fora do escopo: árvore em pacotes e fim da paginação (change 3), Executar na calha (4), janela de
@@ -43,6 +50,7 @@ Run (5) e a reescrita do Java (6), agora no visual do design original.
 - `casca-da-ide`: estrutura com a barra do design, faixa de ferramentas, painel com o cabeçalho
   do design e editor arredondado; controles decorativos; o botão Projeto no celular.
 - `barra-de-status`: caminho do arquivo e indicadores de IDE; commit do deploy.
+- `janela-de-preview`: o Executar passa para a calha.
 - `sistema-visual`: o design original volta a ser a referência visual; acento e foco rosa;
   `theme-color` do design; ícones com créditos.
 

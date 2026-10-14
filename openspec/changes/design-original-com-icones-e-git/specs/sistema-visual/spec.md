@@ -6,14 +6,17 @@
 As telas em `design/telas/` SHALL ser a referência das informações e da identidade visual
 (paleta, degradê da barra de ferramentas, editor de cantos arredondados, abas e cabeçalho do
 painel). Do IntelliJ IDEA ficam os ícones da IntelliJ Platform, o projeto em pacotes, as
-referências ao Git, a faixa de ferramentas, a barra de status com o caminho do arquivo e a
-tipografia compacta. Desvios MUST ser permitidos quando melhoram a experiência de IDE ou a
+referências ao Git, a faixa de ferramentas, a barra de status com o caminho do arquivo, a
+tipografia compacta e as cores de sintaxe do Java (palavras-chave laranja `#CF8E6D`, textos
+verdes `#6AAB73`, números `#2AACB8`, anotações `#B3AE60`, campos `#C77DBA`, comentários
+`#8C9097`). Desvios MUST ser permitidos quando melhoram a experiência de IDE ou a
 acessibilidade, e MUST ser registrados no design da change.
 
 #### Scenario: Comparação com a tela 01
 - **WHEN** a página inicial é aberta numa janela de 1920x1080
-- **THEN** as informações e as cores batem com a `tela-01.png`: barra com degradê, painel e
-  editor nos cinzas do design, editor com cantos arredondados e palavras-chave em rosa
+- **THEN** as informações e as cores da interface batem com a `tela-01.png`: barra com degradê,
+  painel e editor nos cinzas do design e editor com cantos arredondados; o código usa as cores
+  de sintaxe do Java do IntelliJ
 
 #### Scenario: Desvio intencional
 - **WHEN** uma change acrescenta algo que não existe no design

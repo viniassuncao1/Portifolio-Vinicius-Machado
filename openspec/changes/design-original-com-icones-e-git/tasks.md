@@ -18,6 +18,12 @@
 - [x] 3.3 Barra de ferramentas do design com os ícones claros, `master`, Executar e Buscar; cabeçalho `Portfolio_Vinicius` de volta — verificar com captura `design-barra.png`
 - [x] 3.4 Faixa, status e celular nas cores do design — verificar com capturas `design-status.png` e `design-mobile.png`
 
+## 3b. Ajustes pedidos pelo Vinicius (usar as skills ECC de design: design-taste-frontend, web-design-guidelines, redesign-existing-projects, angular-developer)
+
+- [ ] 3.5 [Compasso] Árvore em pastas (`sobre`, `skills`, `experiencias`, `projetos`, `formacao`, `recomendacoes`, `contato`) a partir do campo `pacote`, com pastas que expandem e recolhem (`aria-expanded`, teclado, reduced-motion) e a pasta da seção aberta expandida — verificar com captura `arvore-pastas.png`
+- [ ] 3.6 [Pincel] Cores de sintaxe do Java do IntelliJ de volta no editor, com contraste ≥4,5:1 sobre o fundo do design — verificar com captura `sintaxe-java.png`
+- [ ] 3.7 [Pincel] Executar na calha (▶ na linha `public class`) nos projetos com site, no lugar do botão "▶ Executar" sobre o código — verificar com captura `executar-calha.png`
+
 ## 4. Testes [Sentinela]
 
 - [x] 4.1 Cobrir as specs da primeira versão com axe

@@ -37,6 +37,32 @@ ocupar a largura disponível sem rolagem horizontal da página.
 - **WHEN** o visitante abre a árvore pelo botão e escolhe "Formação"
 - **THEN** a seção "Formação" é aberta e a árvore volta a ficar recolhida
 
+### Requirement: Árvore com as seções do portfólio
+O painel lateral SHALL mostrar o projeto em pastas (pacotes), como numa IDE, nesta ordem:
+`sobre` (Sobre Mim, Diferenciais, Como uso a IA), `skills` (Skills / STACK), `experiencias`
+(Experiências), `projetos` (Projeto 1 a 4), `formacao` (Certificações, Eventos, Formação,
+Idiomas), `recomendacoes` (Depoimentos/Recomendações) e `contato` (Contato). Cada seção é um
+arquivo `.java` dentro da sua pasta, com o ícone de Java; clicar numa pasta SHALL expandir ou
+recolher os arquivos dela.
+
+#### Scenario: Lista completa
+- **WHEN** a página inicial é aberta
+- **THEN** a árvore mostra as 7 pastas na ordem definida e, ao expandi-las, os 15 arquivos das
+  seções, cada um com o seu ícone
+
+#### Scenario: Abrir a pasta de projetos
+- **WHEN** o visitante clica na pasta `projetos` recolhida
+- **THEN** a pasta expande e mostra `Projeto1.java` a `Projeto4.java`, com `aria-expanded="true"`
+
+### Requirement: Seção atual em destaque
+O arquivo da seção aberta SHALL aparecer destacado na árvore, com a sua pasta expandida, e MUST
+ser anunciado como a página atual para tecnologias assistivas.
+
+#### Scenario: Seção selecionada
+- **WHEN** a seção "Sobre Mim" está aberta
+- **THEN** a pasta `sobre` está expandida e o arquivo de "Sobre Mim" aparece destacado e marcado
+  como página atual
+
 ## ADDED Requirements
 
 ### Requirement: Mostrar e esconder o painel do projeto
