@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { PainelDoGit } from '../../core/painel-do-git';
+import { Tema } from '../../core/tema';
 import { BarraDeFerramentas } from './barra-de-ferramentas';
 
 @Component({
@@ -52,13 +53,44 @@ describe('BarraDeFerramentas', () => {
     const origens = Array.from(raiz.querySelectorAll('app-icone img')).map(
       (img) => img.getAttribute('src') ?? '',
     );
-    const daIntellij = origens.filter((origem) => origem.includes('icones/new-ui/'));
+    const daIntellij = origens.filter(
+      (origem) => origem.includes('icones/new-ui/') && !origem.includes('/claro/'),
+    );
 
     expect(origens.length).toBeGreaterThan(5);
     expect(daIntellij.map((origem) => /([^/]+)\.svg/.exec(origem)?.[1]).sort()).toEqual([
       'buscar',
       'ramo',
     ]);
+  });
+
+  it('tem o botão de tema, com o nome do tema de destino e aria-pressed no claro', async () => {
+    const { fixture, raiz } = await montar();
+    const tema = TestBed.inject(Tema);
+    const botao = raiz.querySelector<HTMLButtonElement>('.botao-tema')!;
+
+    expect(botao.getAttribute('aria-label')).toBe('Usar tema claro');
+    expect(botao.getAttribute('aria-pressed')).toBe('false');
+    expect(botao.querySelector('img')?.getAttribute('src')).toContain('icones/sol.svg');
+
+    tema.aplicar('claro');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(botao.getAttribute('aria-label')).toBe('Usar tema escuro');
+    expect(botao.getAttribute('aria-pressed')).toBe('true');
+    expect(botao.querySelector('img')?.getAttribute('src')).toContain('icones/lua.svg');
+    tema.aplicar('escuro');
+  });
+
+  it('alterna o tema ao ativar o botão', async () => {
+    const { raiz } = await montar();
+    const tema = TestBed.inject(Tema);
+
+    raiz.querySelector<HTMLButtonElement>('.botao-tema')!.click();
+
+    expect(tema.claro()).toBe(true);
+    tema.aplicar('escuro');
   });
 
   it('tem o fundo escuro do design, sem o degradê claro', async () => {
@@ -77,7 +109,7 @@ describe('BarraDeFerramentas', () => {
     }
   });
 
-  it('só tem como botões o Projeto do celular, o Buscar e a branch', async () => {
+  it('só tem como botões o Projeto do celular, o Buscar, o tema e a branch', async () => {
     const { raiz } = await montar();
     const nomes = Array.from(raiz.querySelectorAll('button')).map((b) =>
       b.getAttribute('aria-label'),
@@ -86,6 +118,7 @@ describe('BarraDeFerramentas', () => {
     expect(nomes).toEqual([
       'Projeto',
       'Buscar seção (Ctrl+P)',
+      'Usar tema claro',
       'Branch master, abrir o painel do Git',
     ]);
   });

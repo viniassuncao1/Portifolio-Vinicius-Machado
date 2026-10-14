@@ -95,9 +95,13 @@ button.botao {
     height: var(--tamanho-alvo-toque);
   }
 
-  .botao-busca {
+  .botao-busca,
+  .botao-tema {
     width: var(--tamanho-alvo-toque);
     height: var(--tamanho-alvo-toque);
+  }
+
+  .botao-busca {
     margin-inline-start: auto;
   }
 
