@@ -83,11 +83,11 @@ test.describe('Certificações (/certificacoes)', () => {
     await expect(page.locator('main .papel-comentario').first()).toContainText(
       'Cada curso tem o nome, as horas e a data de conclusão',
     );
-    await expect(codigo(page)).toContainText('record Certification(');
+    await expect(codigo(page)).toContainText('record Certificacao(');
 
     await page.goto('/certificacoes/2');
 
-    await expect(codigo(page)).not.toContainText('record Certification(');
+    await expect(codigo(page)).not.toContainText('record Certificacao(');
   });
 
   test('tem título, h1 e árvore com a seção atual, e a página aparece no título', async ({
