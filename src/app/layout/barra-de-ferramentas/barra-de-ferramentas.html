@@ -7,23 +7,8 @@
   [attr.aria-expanded]="gavetaAberta()"
   (click)="alternarGaveta.emit()"
 >
-  <app-icone nome="projeto" />
+  <app-icone nome="projeto" variante="clara" />
 </button>
-<span class="widget projeto" aria-hidden="true">
-  <span class="selo">PV</span>
-  {{ projeto }}
-  <app-icone nome="seta-para-baixo" />
-</span>
-<span class="widget ramo" aria-hidden="true">
-  <app-icone nome="ramo" />
-  {{ ramo }}
-  <app-icone nome="seta-para-baixo" />
-</span>
-<span class="espaco"></span>
-<span class="widget configuracao" aria-hidden="true">
-  {{ configuracao }}
-  <app-icone nome="seta-para-baixo" />
-</span>
 @if (janela.previewDaRota()) {
   <button
     type="button"
@@ -31,12 +16,14 @@
     aria-label="Executar o projeto"
     (click)="executar($event)"
   >
-    <app-icone nome="executar" />
+    <app-icone nome="executar" variante="clara" />
   </button>
 } @else {
-  <span class="botao executar" aria-hidden="true"><app-icone nome="executar" /></span>
+  <span class="botao executar" aria-hidden="true">
+    <app-icone nome="executar" variante="clara" />
+  </span>
 }
-<span class="botao depurar" aria-hidden="true"><app-icone nome="depurar" /></span>
+<span class="botao depurar" aria-hidden="true"><app-icone nome="depurar" variante="clara" /></span>
 <button
   type="button"
   class="botao botao-busca"
@@ -44,6 +31,17 @@
   aria-label="Buscar seção (Ctrl+P)"
   (click)="buscar.emit()"
 >
-  <app-icone nome="buscar" />
+  <app-icone nome="buscar" variante="clara" />
 </button>
-<span class="botao configuracoes" aria-hidden="true"><app-icone nome="configuracoes" /></span>
+<span class="botao configuracoes" aria-hidden="true">
+  <app-icone nome="configuracoes" variante="clara" />
+</span>
+<span class="ramo" aria-hidden="true">
+  <app-icone nome="ramo" variante="clara" />
+  {{ ramo }}
+</span>
+<svg class="controles-janela" viewBox="0 0 120 24" focusable="false" aria-hidden="true">
+  <path d="M8 13h14" />
+  <path d="M52 5h11v11H52z M63 5l2-2v11l-2 2" />
+  <path d="M96 4l12 14M108 4L96 18" />
+</svg>

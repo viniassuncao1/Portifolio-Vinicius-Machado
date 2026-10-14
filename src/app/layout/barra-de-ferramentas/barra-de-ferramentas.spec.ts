@@ -24,24 +24,29 @@ describe('BarraDeFerramentas', () => {
     return { fixture, raiz: fixture.nativeElement as HTMLElement };
   }
 
-  it('mostra o projeto e a branch à esquerda, ambos decorativos', async () => {
+  it('mostra o indicador da branch master, decorativo', async () => {
     const { raiz } = await montar();
-    const projeto = raiz.querySelector('.widget.projeto');
-    const ramo = raiz.querySelector('.widget.ramo');
+    const ramo = raiz.querySelector('.ramo');
 
-    expect(projeto?.textContent).toContain('PV');
-    expect(projeto?.textContent).toContain('portfolio-vinicius');
     expect(ramo?.textContent).toContain('master');
-    expect(projeto?.getAttribute('aria-hidden')).toBe('true');
     expect(ramo?.getAttribute('aria-hidden')).toBe('true');
   });
 
-  it('mostra a configuração de execução à direita, decorativa', async () => {
+  it('não tem mais os widgets PV portfolio-vinicius e PortfolioApplication', async () => {
     const { raiz } = await montar();
-    const configuracao = raiz.querySelector('.widget.configuracao');
 
-    expect(configuracao?.textContent).toContain('PortfolioApplication');
-    expect(configuracao?.getAttribute('aria-hidden')).toBe('true');
+    expect(raiz.textContent).not.toContain('portfolio-vinicius');
+    expect(raiz.textContent).not.toContain('PortfolioApplication');
+  });
+
+  it('usa os ícones claros da IntelliJ Platform, sobre o degradê', async () => {
+    const { raiz } = await montar();
+    const origens = Array.from(raiz.querySelectorAll('app-icone img')).map((img) =>
+      img.getAttribute('src'),
+    );
+
+    expect(origens.length).toBeGreaterThan(0);
+    origens.forEach((origem) => expect(origem).toContain('icones/new-ui/claro/'));
   });
 
   it('deixa Executar, Depurar e Configurações decorativos e sem foco fora dos projetos com site', async () => {
@@ -82,15 +87,5 @@ describe('BarraDeFerramentas', () => {
 
     expect(fixture.componentInstance.gaveta).toBe(1);
     expect(botao.getAttribute('aria-expanded')).toBe('true');
-  });
-
-  it('usa só ícones da New UI', async () => {
-    const { raiz } = await montar();
-    const origens = Array.from(raiz.querySelectorAll('app-icone img')).map((img) =>
-      img.getAttribute('src'),
-    );
-
-    expect(origens.length).toBeGreaterThan(0);
-    origens.forEach((origem) => expect(origem).toContain('icones/new-ui/'));
   });
 });

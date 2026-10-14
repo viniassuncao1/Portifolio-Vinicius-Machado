@@ -4,9 +4,9 @@ import { JanelaDePreview } from '../../core/janela-de-preview';
 import { Icone } from '../../shared/icone/icone';
 
 /**
- * Barra superior da New UI. Os widgets de projeto e branch, a configuração de execução, Depurar e
- * Configurações só imitam a IDE e ficam fora da leitura e do foco. São botões de verdade: Buscar,
- * Executar (nos projetos com site) e, no celular, Projeto, que abre a gaveta.
+ * Barra de ferramentas do design, com ícones da IntelliJ Platform (variante clara, sobre o degradê).
+ * A branch, Depurar e Configurações só imitam a IDE e ficam fora da leitura e do foco. São botões de
+ * verdade: Buscar, Executar (nos projetos com site) e, no celular, Projeto, que abre a gaveta.
  */
 @Component({
   selector: 'app-barra-de-ferramentas',
@@ -18,9 +18,7 @@ export class BarraDeFerramentas {
   private readonly botaoProjeto = viewChild.required<ElementRef<HTMLButtonElement>>('botaoProjeto');
 
   protected readonly janela = inject(JanelaDePreview);
-  protected readonly projeto = 'portfolio-vinicius';
   protected readonly ramo = 'master';
-  protected readonly configuracao = 'PortfolioApplication';
 
   /** Só o celular mostra o botão Projeto: ele abre e fecha a gaveta de seções. */
   readonly gavetaAberta = input(false);

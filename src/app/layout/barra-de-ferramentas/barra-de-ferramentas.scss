@@ -1,44 +1,17 @@
 :host {
+  position: relative;
   display: flex;
   align-items: center;
   box-sizing: border-box;
   gap: var(--espaco-1);
   height: var(--altura-barra-ferramentas);
-  padding-inline: var(--espaco-2);
+  padding-inline: var(--espaco-3);
   border-block-end: var(--borda-painel);
-  background: var(--cor-barra-ferramentas);
-  color: var(--cor-texto);
+  background: var(--degrade-barra-ferramentas);
+  color: var(--cor-texto-barra-ferramentas);
   font-family: var(--fonte-interface);
   font-size: var(--texto-arvore);
   user-select: none;
-}
-
-.espaco {
-  flex: 1 1 auto;
-}
-
-.widget {
-  display: flex;
-  flex: none;
-  align-items: center;
-  gap: var(--espaco-2);
-  height: var(--tamanho-botao-barra);
-  padding-inline: var(--espaco-2);
-  border-radius: var(--raio-controle);
-  white-space: nowrap;
-}
-
-.selo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--tamanho-selo-projeto);
-  height: var(--tamanho-selo-projeto);
-  border-radius: var(--raio-controle);
-  background: var(--cor-linha-selecionada);
-  color: var(--cor-texto-forte);
-  font-size: var(--texto-status);
-  font-weight: var(--peso-medio);
 }
 
 .botao {
@@ -58,13 +31,23 @@ button.botao {
   cursor: pointer;
 
   &:hover {
-    background: var(--cor-aba-passando);
+    background: var(--cor-passando-barra-ferramentas);
   }
 
   &:focus-visible {
-    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline: var(--largura-anel-foco) solid var(--cor-texto-barra-ferramentas);
     outline-offset: -2px;
   }
+}
+
+// Indicador de branch do Git, ao lado dos ícones.
+.ramo {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--espaco-1);
+  margin-inline-start: var(--espaco-3);
+  white-space: nowrap;
 }
 
 // O botão Projeto só existe no celular, onde a faixa de ferramentas some.
@@ -72,13 +55,20 @@ button.botao {
   display: none;
 }
 
-@media (max-width: 767.98px) {
-  :host {
-    gap: var(--espaco-2);
-    padding-inline: var(--espaco-3);
-  }
+.controles-janela {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: 0;
+  width: 7.5rem;
+  height: 1.5rem;
+  translate: 0 -50%;
+  fill: none;
+  stroke: var(--cor-controle-janela);
+  stroke-width: 1.2;
+}
 
-  // Barra compacta: Projeto, o nome do projeto e Buscar.
+// Barra compacta: Projeto e Buscar, no mesmo degradê.
+@media (max-width: 767.98px) {
   .projeto-celular {
     display: flex;
     width: var(--tamanho-alvo-toque);
@@ -88,14 +78,14 @@ button.botao {
   .botao-busca {
     width: var(--tamanho-alvo-toque);
     height: var(--tamanho-alvo-toque);
+    margin-inline-start: auto;
   }
 
-  .projeto .selo,
   .ramo,
-  .configuracao,
   .executar,
   .depurar,
-  .configuracoes {
+  .configuracoes,
+  .controles-janela {
     display: none;
   }
 }
