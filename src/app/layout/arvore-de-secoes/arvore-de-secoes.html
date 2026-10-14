@@ -1,27 +1,62 @@
 <nav aria-label="Seções do portfólio">
-  <ul>
-    @for (secao of secoes; track secao.slug; let primeiro = $first; let i = $index) {
-      <li>
-        <a
+  <ul role="tree" aria-label="Pacotes e arquivos do projeto">
+    @for (pasta of pastas; track pasta.pacote) {
+      <li role="none">
+        <div
           #item
-          class="item"
-          [class.inicial]="primeiro"
-          [class.destacado]="primeiro && noInicio()"
-          [routerLink]="['/', secao.slug]"
-          routerLinkActive="atual"
-          ariaCurrentWhenActive="page"
-          [attr.tabindex]="i === indiceFocavel() ? 0 : -1"
-          (isActiveChange)="aoAtivar(i, $event)"
-          (focus)="indiceFocavel.set(i)"
+          class="item pasta"
+          role="treeitem"
+          data-tipo="pasta"
+          [attr.data-pacote]="pasta.pacote"
+          aria-level="1"
+          aria-selected="false"
           (keydown)="aoTeclar($event)"
-          (click)="secaoEscolhida.emit()"
+          [attr.aria-expanded]="estaAberta(pasta.pacote)"
+          [attr.aria-owns]="'grupo-' + pasta.pacote"
+          [attr.tabindex]="chaveFocavel() === chaveDaPasta(pasta.pacote) ? 0 : -1"
+          (focus)="focar(chaveDaPasta(pasta.pacote))"
+          (click)="alternar(pasta.pacote)"
         >
           <svg class="seta" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
             <path d="M3 1.5v17L17 10z" />
           </svg>
-          <app-icone [nome]="secao.icone" />
-          <span class="titulo">{{ secao.titulo }}</span>
-        </a>
+          <app-icone nome="design-pasta" />
+          <span class="titulo">{{ pasta.pacote }}</span>
+        </div>
+        <ul
+          class="grupo"
+          role="group"
+          [id]="'grupo-' + pasta.pacote"
+          [hidden]="!estaAberta(pasta.pacote)"
+          [class.entrando]="entrando() === pasta.pacote"
+        >
+          @for (secao of pasta.secoes; track secao.slug) {
+            <li role="none">
+              <a
+                #item
+                #ativo="routerLinkActive"
+                class="item arquivo"
+                role="treeitem"
+                data-tipo="arquivo"
+                [attr.data-pacote]="pasta.pacote"
+                aria-level="2"
+                [attr.aria-selected]="ativo.isActive"
+                (keydown)="aoTeclar($event)"
+                [attr.aria-label]="secao.titulo + ' (' + secao.arquivo + ')'"
+                [class.destacado]="secao === pastas[0].secoes[0] && noInicio()"
+                [routerLink]="['/', secao.slug]"
+                routerLinkActive="atual"
+                ariaCurrentWhenActive="page"
+                [attr.tabindex]="chaveFocavel() === chaveDoArquivo(secao.slug) ? 0 : -1"
+                (focus)="focar(chaveDoArquivo(secao.slug))"
+                (click)="secaoEscolhida.emit()"
+              >
+                <app-icone [nome]="secao.icone" />
+                <span class="titulo">{{ secao.arquivo }}</span>
+              </a>
+            </li>
+          }
+        </ul>
       </li>
     }
   </ul>

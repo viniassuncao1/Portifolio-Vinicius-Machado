@@ -74,12 +74,12 @@ test.describe('Projeto 1: a Ana (/projeto-1)', () => {
 
     await expect(page).toHaveTitle('Projeto 1 | Vinicius Machado');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 1');
-    await expect(arvore(page).getByRole('link', { name: 'Projeto 1' })).toHaveAttribute(
+    await expect(arvore(page).getByRole('treeitem', { name: 'Projeto 1' })).toHaveAttribute(
       'aria-current',
       'page',
     );
     await expect(controle(page)).toHaveCount(0);
-    await expect(page.getByRole('button', { name: 'Executar', exact: true })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /^Executar Projeto \d$/ })).toHaveCount(0);
   });
 });
 
@@ -116,10 +116,10 @@ test.describe('Projeto 2: Dra. Juliana (/projeto-2)', () => {
     }
   });
 
-  test('mostra o botão "▶ Executar" abaixo do código', async ({ page }) => {
+  test('mostra o ▶ de executar na calha, na linha public class', async ({ page }) => {
     await page.goto('/projeto-2');
 
-    await expect(page.getByRole('button', { name: 'Executar', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: /^Executar Projeto \d$/ })).toBeVisible();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 2');
     await expect(controle(page)).toHaveCount(0);
   });
@@ -152,10 +152,10 @@ test.describe('Projeto 3: Watts Company (/projeto-3)', () => {
     }
   });
 
-  test('mostra o botão "▶ Executar" abaixo do código', async ({ page }) => {
+  test('mostra o ▶ de executar na calha, na linha public class', async ({ page }) => {
     await page.goto('/projeto-3');
 
-    await expect(page.getByRole('button', { name: 'Executar', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: /^Executar Projeto \d$/ })).toBeVisible();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 3');
   });
 });
@@ -209,7 +209,7 @@ test.describe('Projeto 4: cases da Memora (/projeto-4)', () => {
         expect(await textoDoJavadoc(page), trecho).toContain(trecho);
       }
       await expect(controle(page)).toContainText(`${pagina}/3`);
-      await expect(page.getByRole('button', { name: 'Executar', exact: true })).toHaveCount(0);
+      await expect(page.getByRole('button', { name: /^Executar Projeto \d$/ })).toHaveCount(0);
     });
   }
 
@@ -240,7 +240,7 @@ test.describe('Projeto 4: cases da Memora (/projeto-4)', () => {
       'href',
       '/projeto-4/2',
     );
-    await expect(arvore(page).getByRole('link', { name: 'Projeto 4' })).toHaveAttribute(
+    await expect(arvore(page).getByRole('treeitem', { name: 'Projeto 4' })).toHaveAttribute(
       'aria-current',
       'page',
     );
@@ -286,4 +286,56 @@ test.describe('Projetos sem JavaScript', () => {
       await expect(page.locator('main')).not.toContainText('em construção');
     });
   }
+});
+
+test.describe('Executar na calha', () => {
+  test.use({ viewport: { width: 1920, height: 1080 } });
+
+  for (const [rota, nome] of [
+    ['/projeto-2', 'Executar Projeto 2'],
+    ['/projeto-3', 'Executar Projeto 3'],
+  ] as const) {
+    test(`${rota}: o ▶ fica na calha, na linha public class, sem cobrir o número`, async ({
+      page,
+    }) => {
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto(rota);
+      const botao = page.getByRole('button', { name: nome });
+      const linha = page.locator('main code > span', { hasText: 'public class' }).first();
+
+      await expect(botao).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Executar', exact: true })).toHaveCount(0);
+      const b = (await botao.boundingBox())!;
+      const l = (await linha.boundingBox())!;
+      const numeros = (await page.locator('app-editor-de-codigo .numeros').boundingBox())!;
+
+      expect(b.x + b.width).toBeLessThanOrEqual(numeros.x + 1);
+      expect(b.y).toBeLessThanOrEqual(l.y + l.height);
+      expect(b.y + b.height).toBeGreaterThanOrEqual(l.y);
+      expect(b.width).toBeGreaterThanOrEqual(24);
+      expect(b.height).toBeGreaterThanOrEqual(24);
+      expect(await botao.locator('img').getAttribute('src')).toContain('icones/new-ui/executar');
+    });
+
+    test(`${rota}: o ▶ tem foco visível e abre o preview`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto(rota);
+      const botao = page.getByRole('button', { name: nome });
+
+      await botao.focus();
+      await expect(botao).toHaveCSS('outline-style', 'solid');
+      await expect(botao).not.toHaveCSS('outline-width', '0px');
+      await botao.click();
+
+      await expect(page.getByRole('dialog')).toBeVisible();
+    });
+  }
+
+  test('seções sem site não têm ▶ na calha', async ({ page }) => {
+    for (const rota of ['/', '/sobre-mim', '/projeto-1', '/projeto-4']) {
+      await page.goto(rota);
+
+      await expect(page.getByRole('button', { name: /^Executar Projeto/ })).toHaveCount(0);
+    }
+  });
 });

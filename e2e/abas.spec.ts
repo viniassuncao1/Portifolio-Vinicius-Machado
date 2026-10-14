@@ -1,15 +1,16 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
-import { abrirHidratada } from './apoio';
+import { abrirHidratada, abrirPastas, arquivoDaArvore } from './apoio';
 
 const faixa = (page: Page) => page.getByRole('tablist', { name: 'Arquivos abertos' });
 const aba = (page: Page, arquivo: string) => faixa(page).getByRole('tab', { name: arquivo });
 const fechar = (page: Page, arquivo: string) =>
   page.getByRole('button', { name: `Fechar ${arquivo}` });
-const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
-const abrirPelaArvore = (page: Page, secao: string) =>
-  arvore(page).getByRole('link', { name: secao, exact: true }).click();
+const abrirPelaArvore = async (page: Page, secao: string) => {
+  await abrirPastas(page);
+  await arquivoDaArvore(page, secao).click();
+};
 
 // Movimento reduzido: o código aparece pronto, sem a digitação interferir.
 test.use({ contextOptions: { reducedMotion: 'reduce' } });

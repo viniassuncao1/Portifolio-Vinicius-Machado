@@ -1,40 +1,34 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, input, output, viewChild } from '@angular/core';
 
 import { JanelaDePreview } from '../../core/janela-de-preview';
 import { Icone } from '../../shared/icone/icone';
-import type { NomeDoIcone } from '../../shared/icone/icone';
-
-interface BotaoDaBarra {
-  readonly icone: NomeDoIcone;
-  /** Distância do centro do ícone à borda esquerda, em rem, medida na tela 02. */
-  readonly x: number;
-}
-
-const BOTOES: readonly BotaoDaBarra[] = [
-  { icone: 'arquivo', x: 2.75 },
-  { icone: 'pasta', x: 6 },
-  { icone: 'projeto', x: 9.15 },
-  { icone: 'executar', x: 11.95 },
-  { icone: 'ferramenta', x: 14.55 },
-  { icone: 'ia', x: 17.55 },
-  { icone: 'relogio', x: 22.85 },
-  { icone: 'monitor', x: 25.1 },
-];
 
 /**
- * Barra de ferramentas da IDE: só imita o Eclipse, por isso fica fora da leitura e do foco.
- * A exceção é o play, que vira o botão "Executar o projeto" nas rotas com site para ver.
+ * Barra de ferramentas escura nos cinzas do design, com os ícones do design (Buscar e a branch são
+ * da IntelliJ Platform, que o design não tem). Os ícones só decorativos e a branch ficam fora da
+ * leitura e do foco. São botões de verdade: Buscar, Executar (nos projetos com site) e, no celular,
+ * Projeto, que abre a gaveta.
  */
 @Component({
   selector: 'app-barra-de-ferramentas',
   imports: [Icone],
-  host: { '[attr.aria-hidden]': "janela.previewDaRota() ? null : 'true'" },
   templateUrl: './barra-de-ferramentas.html',
   styleUrl: './barra-de-ferramentas.scss',
 })
 export class BarraDeFerramentas {
-  protected readonly botoes = BOTOES;
+  private readonly botaoProjeto = viewChild.required<ElementRef<HTMLButtonElement>>('botaoProjeto');
+
   protected readonly janela = inject(JanelaDePreview);
+  protected readonly ramo = 'master';
+
+  /** Só o celular mostra o botão Projeto: ele abre e fecha a gaveta de seções. */
+  readonly gavetaAberta = input(false);
+  readonly alternarGaveta = output<void>();
+  readonly buscar = output<void>();
+
+  focarProjeto(): void {
+    this.botaoProjeto().nativeElement.focus();
+  }
 
   protected executar(evento: Event): void {
     const preview = this.janela.previewDaRota();

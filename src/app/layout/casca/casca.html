@@ -1,17 +1,10 @@
-<app-barra-de-ferramentas />
-<div class="barra-gaveta">
-  <button
-    #botaoSecoes
-    type="button"
-    class="botao-secoes"
-    aria-controls="painel-lateral"
-    [attr.aria-expanded]="gavetaAberta()"
-    (click)="alternarGaveta()"
-  >
-    Seções
-  </button>
-</div>
-<div class="area">
+<app-barra-de-ferramentas
+  [gavetaAberta]="gavetaAberta()"
+  (alternarGaveta)="alternarGaveta()"
+  (buscar)="abrirBusca()"
+/>
+<div class="area" [attr.data-painel]="painelVisivel()">
+  <app-faixa-de-ferramentas [painelVisivel]="painelVisivel()" (alternarPainel)="alternarPainel()" />
   <app-painel-lateral
     id="painel-lateral"
     [attr.data-aberta]="gavetaAberta()"
@@ -22,24 +15,11 @@
   <div class="coluna-editor">
     <div class="faixa">
       <app-faixa-de-abas />
-      <button
-        type="button"
-        class="botao-busca"
-        aria-haspopup="dialog"
-        aria-label="Buscar seção (Ctrl+P)"
-        (click)="abrirBusca()"
-      >
-        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
-          <circle cx="8" cy="8" r="5.5" />
-          <path d="M12 12l6 6" />
-        </svg>
-      </button>
     </div>
     <main class="editor">
       <h1 class="somente-leitores">{{ titulo() }}</h1>
       <div #conteudo class="conteudo">
         <router-outlet />
-        <app-botao-executar />
       </div>
       <div class="scrollbar" aria-hidden="true">
         <span class="polegar"></span>

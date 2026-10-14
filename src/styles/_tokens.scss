@@ -1,45 +1,48 @@
-// Design tokens do IntelliJ IDEA New UI, tema escuro (ADR-0011): paleta Dark, Inter 13px na interface,
-// JetBrains Mono 14px no código e densidade compacta. Contrastes medidos na note "Design Tokens".
+// Design tokens: cores, degradê, raios e formas do design original (design/telas, ADR-0012), com a
+// tipografia (Inter 13px na interface, JetBrains Mono 14px no código) e a densidade compacta da
+// change de tokens do IntelliJ (ADR-0011). Contrastes medidos na note "Design Tokens".
 // A escala --espaco-* e a borda de 1px não vêm de medição e ficam como estão.
 // Os tokens de movimento ficam com o Compasso (src/styles/_movimento.scss).
 
 :root {
   // Interface
-  --cor-fundo-pagina: #1e1f22;
-  --cor-controle-janela: #9da0a8;
-  --cor-painel: #2b2d30;
-  --cor-linha-atual: #26282e;
-  --cor-linha-selecionada: #2e436e;
-  --cor-aba-ativa: #1e1f22;
-  --cor-aba-inativa: #2b2d30;
-  --cor-aba-passando: #393b40;
-  --cor-botao: #393b40;
-  --cor-texto-aba-inativa: #bcbec4;
-  --cor-faixa-abas: #2b2d30;
-  --cor-barra-ferramentas: #2b2d30;
-  --cor-editor: #1e1f22;
-  --cor-borda: #1e1f22;
-  --cor-separador: #393b40;
-  --cor-scrollbar-trilho: #1e1f22;
-  --cor-scrollbar-polegar: #4e5157;
-  --cor-texto: #bcbec4;
-  --cor-texto-forte: #dfe1e5;
-  --cor-numero-linha: #8b8f96;
-  --cor-icone: #8c9097;
-  --cor-texto-esmaecido: #9a9da3;
-  --cor-acento: #3574f0;
+  --cor-fundo-pagina: #1c1c1c;
+  --cor-controle-janela: #adadad;
+  --cor-painel: #2b2b2b;
+  // Barra de ferramentas escura (ADR-0012, seção 5): o cinza do painel, sem o degradê claro do design
+  --cor-barra-ferramentas: var(--cor-painel);
+  --cor-linha-selecionada: #1b1b1b;
+  --cor-aba-ativa: #2b2b2b;
+  --cor-aba-inativa: #5e5e5e;
+  --cor-aba-passando: #686868;
+  --cor-texto-aba-inativa: #f0f0f0;
+  --cor-faixa-abas: #575757;
+  --cor-editor: #2b2b2b;
+  --cor-borda: #1b1b1b;
+  --cor-separador: #6f6d6d;
+  --cor-scrollbar-trilho: #2b2b2b;
+  --cor-scrollbar-polegar: #8b8989;
+  --cor-texto: #d6d6d6;
+  --cor-numero-linha: #d6d6d6;
+  --cor-icone: #aaaaaa;
+  --cor-texto-esmaecido: #aaaaaa;
   --cor-foco: var(--cor-acento);
+  --cor-texto-forte: #f0f0f0;
+  --cor-linha-atual: var(--cor-linha-selecionada);
+  --cor-botao: var(--cor-aba-inativa);
+  --cor-acento: #de60d2;
   --largura-anel-foco: 2px;
   --cor-fundo-modal: rgb(0 0 0 / 55%);
 
-  // Sintaxe
+  // Sintaxe: o Java do IntelliJ sobre os fundos do design. O comentário é o #8C9097 do IntelliJ
+  // clareado para #8F939A, que dá 4,59:1 sobre o editor (#2B2B2B); o original dava 4,42:1.
   --cor-sintaxe-palavra-chave: #cf8e6d;
   --cor-sintaxe-campo: #c77dba;
   --cor-sintaxe-literal: #6aab73;
   --cor-sintaxe-valor: #2aacb8;
   --cor-sintaxe-anotacao: #b3ae60;
-  --cor-sintaxe-comentario-marcador: #8c9097;
-  --cor-sintaxe-comentario: #8c9097;
+  --cor-sintaxe-comentario-marcador: #8f939a;
+  --cor-sintaxe-comentario: #8f939a;
   --cor-sintaxe-texto: var(--cor-texto);
 
   // Tipografia: interface em Inter 13px, código em JetBrains Mono 14px com linha de 22px
@@ -83,7 +86,7 @@
   --largura-painel-lateral: 17.5rem;
   --altura-linha-selecionada: 1.5rem;
   --tamanho-scrollbar: 0.5rem;
-  --altura-cabecalho-painel: 2.25rem;
+  --altura-cabecalho-painel: 3rem;
   --largura-titulo-painel: 10rem;
   --largura-fechar-aba: 1.5rem;
   --altura-rodape-painel: 1.5rem;
@@ -105,6 +108,9 @@
   --altura-janela-preview: min(88dvh, 90rem);
   --altura-barra-gaveta: 2.25rem;
   --camada-gaveta: 10;
+  --largura-faixa-ferramentas: 2.5rem;
+  --largura-calha: 1.5rem;
+  --tamanho-botao-barra: 1.75rem;
 
   // Editor de código
   --linhas-minimas-editor: 15;
@@ -116,11 +122,11 @@
   --tamanho-seta-pagina: 0.75rem;
   --recuo-codigo: 2.1rem;
 
-  // Raio: editor e abas retos; só controles pequenos têm cantos de 4px
-  --raio-scrollbar: 0.25rem;
-  --raio-editor: 0;
-  --raio-aba: 0;
-  --raio-controle: 0.25rem;
+  // Raio: editor e abas arredondados como no design; controles pequenos têm cantos de 8px
+  --raio-scrollbar: 0.44rem;
+  --raio-editor: 1.11rem;
+  --raio-aba: 0.74rem;
+  --raio-controle: 0.5rem;
 
   // Borda
   --borda-largura: 1px;

@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { AbasAbertas } from '../../core/abas-abertas';
 import type { Aba } from '../../core/abas-abertas';
 import { GlifoFechar } from '../../shared/glifo-fechar/glifo-fechar';
+import { Icone } from '../../shared/icone/icone';
 
 /**
  * Faixa de abas sobre o editor, no padrão `tablist` do WAI-ARIA: uma aba por arquivo aberto
@@ -20,7 +21,7 @@ import { GlifoFechar } from '../../shared/glifo-fechar/glifo-fechar';
  */
 @Component({
   selector: 'app-faixa-de-abas',
-  imports: [GlifoFechar],
+  imports: [GlifoFechar, Icone],
   templateUrl: './faixa-de-abas.html',
   styleUrl: './faixa-de-abas.scss',
 })

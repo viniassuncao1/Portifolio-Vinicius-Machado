@@ -59,6 +59,11 @@
   &.ativa {
     border-inline-start-color: var(--cor-foco);
     background: var(--cor-linha-selecionada);
+
+    // Na linha selecionada o texto fica claro, como na New UI (7,4:1 sobre --cor-linha-selecionada).
+    .titulo {
+      color: var(--cor-texto-forte);
+    }
   }
 }
 

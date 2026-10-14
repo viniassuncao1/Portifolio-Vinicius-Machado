@@ -107,7 +107,7 @@ describe('Casca', () => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/');
     const elemento = harness.routeNativeElement as HTMLElement;
-    expect(elemento.querySelector('nav .destacado')?.textContent).toContain('Sobre Mim');
+    expect(elemento.querySelector('nav .destacado')?.textContent).toContain('SobreMim.java');
 
     await harness.navigateByUrl('/contato');
     expect(elemento.querySelector('nav .destacado')).toBeNull();

@@ -27,7 +27,11 @@ describe('BotaoExecutar', () => {
     await harness.navigateByUrl('/projeto-2');
     const botao = (harness.routeNativeElement as HTMLElement).querySelector('button')!;
 
-    expect(botao.textContent).toContain('Executar');
+    expect(botao.getAttribute('aria-label')).toBe('Executar Projeto 2');
+    expect(botao.textContent?.trim()).toBe('');
+    expect(botao.querySelector('app-icone img')?.getAttribute('src')).toContain(
+      'icones/new-ui/executar.svg',
+    );
     botao.click();
 
     expect(TestBed.inject(JanelaDePreview).preview()).toBe(PREVIEWS['projeto-2']);

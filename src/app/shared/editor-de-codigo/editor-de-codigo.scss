@@ -16,10 +16,16 @@ $quantidade-de-marcadores: 60;
   grid-template-columns: var(--largura-numeros-linha) minmax(0, 1fr);
   column-gap: calc(var(--afastamento-codigo) - var(--afastamento-marcador));
   min-height: calc(var(--linhas-minimas-editor) * var(--altura-linha-codigo));
+  // A calha (ícones de ação da linha, como o ▶ de executar) fica à esquerda dos números.
+  position: relative;
   background: var(--cor-editor);
   font-family: var(--fonte-mono);
   font-weight: var(--peso-regular);
   color: var(--cor-sintaxe-texto);
+}
+
+:host(.com-calha) {
+  padding-inline-start: var(--largura-calha);
 }
 
 .numeros {

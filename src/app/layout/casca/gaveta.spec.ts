@@ -34,7 +34,7 @@ describe('Gaveta de seções (telas pequenas)', () => {
     document.body.append(raiz);
     // O navegador de teste é largo: força o botão a aparecer, como abaixo de 768px.
     estilo = document.createElement('style');
-    estilo.textContent = '.barra-gaveta { display: flex !important; }';
+    estilo.textContent = '.projeto-celular { display: flex !important; }';
     document.head.append(estilo);
   });
 
@@ -43,7 +43,7 @@ describe('Gaveta de seções (telas pequenas)', () => {
     estilo.remove();
   });
 
-  const botao = () => raiz.querySelector<HTMLButtonElement>('.botao-secoes')!;
+  const botao = () => raiz.querySelector<HTMLButtonElement>('.projeto-celular')!;
   const painel = () => raiz.querySelector<HTMLElement>('app-painel-lateral')!;
 
   async function estabilizar(): Promise<void> {
@@ -63,7 +63,7 @@ describe('Gaveta de seções (telas pequenas)', () => {
 
     expect(botao().getAttribute('aria-expanded')).toBe('true');
     expect(painel().getAttribute('data-aberta')).toBe('true');
-    expect(document.activeElement).toBe(painel().querySelector('a'));
+    expect(document.activeElement).toBe(painel().querySelector('[role=treeitem]'));
   });
 
   it('fecha com Escape e devolve o foco ao botão', async () => {

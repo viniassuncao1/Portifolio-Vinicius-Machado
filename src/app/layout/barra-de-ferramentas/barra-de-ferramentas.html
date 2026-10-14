@@ -1,20 +1,46 @@
-<div class="botoes">
-  @for (botao of botoes; track botao.icone) {
-    @if (botao.icone === 'executar' && janela.previewDaRota()) {
-      <button
-        type="button"
-        class="botao executar"
-        aria-label="Executar o projeto"
-        [style.--x]="botao.x"
-        (click)="executar($event)"
-      >
-        <app-icone [nome]="botao.icone" />
-      </button>
-    } @else {
-      <app-icone class="botao" [nome]="botao.icone" [style.--x]="botao.x" />
-    }
-  }
-</div>
+<button
+  #botaoProjeto
+  type="button"
+  class="botao projeto-celular"
+  aria-label="Projeto"
+  aria-controls="painel-lateral"
+  [attr.aria-expanded]="gavetaAberta()"
+  (click)="alternarGaveta.emit()"
+>
+  <app-icone nome="design-projeto" />
+</button>
+<span class="botao decorativo" aria-hidden="true"><app-icone nome="design-arquivo" /></span>
+<span class="botao decorativo" aria-hidden="true"><app-icone nome="design-pasta" /></span>
+<span class="botao decorativo" aria-hidden="true"><app-icone nome="design-projeto" /></span>
+@if (janela.previewDaRota()) {
+  <button
+    type="button"
+    class="botao executar"
+    aria-label="Executar o projeto"
+    (click)="executar($event)"
+  >
+    <app-icone nome="design-executar" />
+  </button>
+} @else {
+  <span class="botao executar" aria-hidden="true"><app-icone nome="design-executar" /></span>
+}
+<span class="botao decorativo" aria-hidden="true"><app-icone nome="design-ferramenta" /></span>
+<span class="botao decorativo" aria-hidden="true"><app-icone nome="design-ia" /></span>
+<span class="botao decorativo" aria-hidden="true"><app-icone nome="design-relogio" /></span>
+<span class="botao decorativo" aria-hidden="true"><app-icone nome="design-monitor" /></span>
+<button
+  type="button"
+  class="botao botao-busca"
+  aria-haspopup="dialog"
+  aria-label="Buscar seção (Ctrl+P)"
+  (click)="buscar.emit()"
+>
+  <app-icone nome="buscar" />
+</button>
+<span class="ramo" aria-hidden="true">
+  <app-icone nome="ramo" />
+  {{ ramo }}
+</span>
 <svg class="controles-janela" viewBox="0 0 120 24" focusable="false" aria-hidden="true">
   <path d="M8 13h14" />
   <path d="M52 5h11v11H52z M63 5l2-2v11l-2 2" />

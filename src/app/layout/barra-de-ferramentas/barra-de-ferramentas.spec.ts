@@ -1,57 +1,101 @@
+import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { BarraDeFerramentas } from './barra-de-ferramentas';
 
+@Component({
+  imports: [BarraDeFerramentas],
+  template: `<app-barra-de-ferramentas
+    [gavetaAberta]="aberta"
+    (alternarGaveta)="gaveta = gaveta + 1"
+    (buscar)="busca = busca + 1"
+  />`,
+})
+class Hospedeiro {
+  aberta = false;
+  gaveta = 0;
+  busca = 0;
+}
+
 describe('BarraDeFerramentas', () => {
-  it('é decorativa: fica fora da leitura e não tem controles focáveis', async () => {
-    const fixture = TestBed.createComponent(BarraDeFerramentas);
+  async function montar() {
+    const fixture = TestBed.createComponent(Hospedeiro);
     await fixture.whenStable();
-    const elemento = fixture.nativeElement as HTMLElement;
+    return { fixture, raiz: fixture.nativeElement as HTMLElement };
+  }
 
-    expect(elemento.getAttribute('aria-hidden')).toBe('true');
-    expect(elemento.querySelectorAll('button, a, [tabindex]')).toHaveLength(0);
+  it('mostra o indicador da branch master, decorativo', async () => {
+    const { raiz } = await montar();
+    const ramo = raiz.querySelector('.ramo');
+
+    expect(ramo?.textContent).toContain('master');
+    expect(ramo?.getAttribute('aria-hidden')).toBe('true');
   });
 
-  it('exibe os oito ícones da barra', async () => {
-    const fixture = TestBed.createComponent(BarraDeFerramentas);
-    await fixture.whenStable();
+  it('não tem mais os widgets PV portfolio-vinicius e PortfolioApplication', async () => {
+    const { raiz } = await montar();
 
-    expect((fixture.nativeElement as HTMLElement).querySelectorAll('app-icone')).toHaveLength(8);
+    expect(raiz.textContent).not.toContain('portfolio-vinicius');
+    expect(raiz.textContent).not.toContain('PortfolioApplication');
   });
 
-  it('exibe os ícones na ordem do design', async () => {
-    const fixture = TestBed.createComponent(BarraDeFerramentas);
-    await fixture.whenStable();
-    const origens = Array.from(
-      (fixture.nativeElement as HTMLElement).querySelectorAll('app-icone img'),
-    ).map((img) => /icones\/(.+)\.svg/.exec(img.getAttribute('src') ?? '')?.[1]);
+  it('usa os ícones do design e só a busca e a branch são da IntelliJ Platform', async () => {
+    const { raiz } = await montar();
+    const origens = Array.from(raiz.querySelectorAll('app-icone img')).map(
+      (img) => img.getAttribute('src') ?? '',
+    );
+    const daIntellij = origens.filter((origem) => origem.includes('icones/new-ui/'));
 
-    expect(origens).toEqual([
-      'arquivo',
-      'pasta',
-      'projeto',
-      'executar',
-      'ferramenta',
-      'ia',
-      'relogio',
-      'monitor',
+    expect(origens.length).toBeGreaterThan(5);
+    expect(daIntellij.map((origem) => /([^/]+)\.svg/.exec(origem)?.[1]).sort()).toEqual([
+      'buscar',
+      'ramo',
     ]);
   });
 
-  it('posiciona cada ícone pela variável --x', async () => {
-    const fixture = TestBed.createComponent(BarraDeFerramentas);
-    await fixture.whenStable();
-    const botoes = (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLElement>('.botao');
+  it('tem o fundo escuro do design, sem o degradê claro', async () => {
+    const { raiz } = await montar();
+    const barra = raiz.querySelector('app-barra-de-ferramentas')!;
 
-    expect(botoes[0].style.getPropertyValue('--x')).toBe('2.75');
-    expect(botoes[7].style.getPropertyValue('--x')).toBe('25.1');
+    expect(getComputedStyle(barra).backgroundImage).toBe('none');
   });
 
-  it('inclui os controles de janela sem foco', async () => {
-    const fixture = TestBed.createComponent(BarraDeFerramentas);
-    await fixture.whenStable();
-    const controles = (fixture.nativeElement as HTMLElement).querySelector('.controles-janela');
+  it('deixa Executar e os demais ícones decorativos e sem foco fora dos projetos com site', async () => {
+    const { raiz } = await montar();
 
-    expect(controles?.getAttribute('focusable')).toBe('false');
+    for (const controle of raiz.querySelectorAll('.executar, .decorativo')) {
+      expect(controle.getAttribute('aria-hidden')).toBe('true');
+      expect(controle.matches('button, a, [tabindex]')).toBe(false);
+    }
+  });
+
+  it('só tem como botões o Projeto do celular e o Buscar', async () => {
+    const { raiz } = await montar();
+    const nomes = Array.from(raiz.querySelectorAll('button')).map((b) =>
+      b.getAttribute('aria-label'),
+    );
+
+    expect(nomes).toEqual(['Projeto', 'Buscar seção (Ctrl+P)']);
+  });
+
+  it('pede a busca ao ativar Buscar', async () => {
+    const { fixture, raiz } = await montar();
+
+    raiz.querySelector<HTMLButtonElement>('.botao-busca')!.click();
+
+    expect(fixture.componentInstance.busca).toBe(1);
+  });
+
+  it('pede a gaveta pelo botão Projeto e reflete o estado em aria-expanded', async () => {
+    const { fixture, raiz } = await montar();
+    const botao = raiz.querySelector<HTMLButtonElement>('.projeto-celular')!;
+
+    botao.click();
+    fixture.componentInstance.aberta = true;
+    fixture.changeDetectorRef.markForCheck();
+    await fixture.whenStable();
+
+    expect(fixture.componentInstance.gaveta).toBe(1);
+    expect(botao.getAttribute('aria-expanded')).toBe('true');
   });
 });

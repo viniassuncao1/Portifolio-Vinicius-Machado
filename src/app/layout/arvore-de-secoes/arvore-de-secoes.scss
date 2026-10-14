@@ -1,11 +1,11 @@
 ul {
   margin: 0;
-  padding: var(--afastamento-topo-arvore) 0 0;
+  padding: 0;
   list-style: none;
 }
 
-li:first-child {
-  margin-block-end: var(--afastamento-primeiro-item);
+nav > ul {
+  padding-block-start: var(--afastamento-topo-arvore);
 }
 
 .item {
@@ -14,24 +14,20 @@ li:first-child {
   display: flex;
   align-items: center;
   min-height: var(--altura-linha-arvore);
-  padding-inline-start: var(--recuo-item-arvore);
+  padding-inline-start: var(--recuo-item-atual);
   color: var(--cor-texto);
   font-size: var(--texto-arvore);
   line-height: 1.2;
   text-decoration: none;
   white-space: nowrap;
+  cursor: pointer;
 
   &:focus-visible {
     outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: -2px;
   }
 
-  // Primeiro item (Sobre Mim): o design o mostra sempre em cinza.
-  &.inicial:not(.atual, .destacado) .titulo {
-    color: var(--cor-texto-esmaecido);
-  }
-
-  // Destaque do item atual: camada própria que aparece com `opacity`.
+  // Destaque do arquivo da seção atual: camada própria que aparece com `opacity`.
   &::before {
     content: '';
     position: absolute;
@@ -42,25 +38,22 @@ li:first-child {
     transition: opacity var(--duracao-rapida) var(--curva-padrao);
   }
 
-  // Item da seção aberta (ou, no Início, o destaque do design): destacado e expandido.
   &.atual,
   &.destacado {
     min-height: var(--altura-linha-selecionada);
     color: var(--cor-texto-forte);
-    padding-inline-start: var(--recuo-item-atual);
 
     &::before {
       opacity: 1;
     }
-
-    .seta {
-      rotate: 90deg;
-    }
-
-    &.inicial {
-      padding-inline-start: calc(var(--recuo-item-atual) + var(--espaco-2));
-    }
   }
+}
+
+// Arquivos não têm seta: o ícone fica sob o da pasta, deslocado pela largura da seta.
+.arquivo {
+  padding-inline-start: calc(
+    var(--recuo-item-atual) + var(--tamanho-seta-arvore) + var(--afastamento-icone-arvore)
+  );
 }
 
 .seta {
@@ -72,10 +65,32 @@ li:first-child {
   transition: rotate var(--duracao-rapida) var(--curva-padrao);
 }
 
+.pasta[aria-expanded='true'] .seta {
+  rotate: 90deg;
+}
+
+// Expandir pelo visitante: os arquivos entram com `opacity` e `transform`, curto como numa IDE.
+// Só a pasta recém-aberta anima, e a entrada nunca parte do invisível: se a animação não rodar
+// (aba em segundo plano), os arquivos continuam legíveis.
+.grupo.entrando {
+  animation: grupo-entrar var(--duracao-rapida) var(--curva-saida);
+}
+
+@keyframes grupo-entrar {
+  from {
+    opacity: 0.4;
+    transform: translateY(-0.25rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .item::before,
   .seta {
     transition: none;
+  }
+
+  .grupo.entrando {
+    animation: none;
   }
 }
 

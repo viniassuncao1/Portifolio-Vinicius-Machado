@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import type { Locator, Page } from '@playwright/test';
 
-import { abrirHidratada } from './apoio';
+import { abrirHidratada, abrirPastas, arquivoDaArvore } from './apoio';
 
 interface Projeto {
   rota: string;
@@ -33,7 +33,7 @@ const SEM_PLAY = ['/', '/sobre-mim', '/skills', '/projeto-1', '/projeto-4', '/pr
 
 const DOMINIOS_DOS_PROJETOS = /drajulianamaluhy\.com|wattscompany\.com\.br/;
 
-const botaoDoCodigo = (page: Page) => page.getByRole('button', { name: 'Executar', exact: true });
+const botaoDoCodigo = (page: Page) => page.getByRole('button', { name: /^Executar Projeto \d$/ });
 const botaoDaBarra = (page: Page) => page.getByRole('button', { name: 'Executar o projeto' });
 const janela = (page: Page, nome?: string) => page.getByRole('dialog', nome ? { name: nome } : {});
 
@@ -79,7 +79,7 @@ test.describe('Janela de preview', () => {
 
   for (const projeto of PROJETOS) {
     test.describe(projeto.nome, () => {
-      test(`abre pelo "▶ Executar" do código em ${projeto.rota}`, async ({ page }) => {
+      test(`abre pelo ▶ da calha em ${projeto.rota}`, async ({ page }) => {
         await abrir(page, projeto, botaoDoCodigo);
 
         await expect(janela(page, projeto.nome)).toHaveAttribute('aria-labelledby', /.+/);
@@ -205,7 +205,7 @@ test.describe('Janela de preview', () => {
         await expect(janela(page)).toBeVisible();
       });
 
-      test('Escape fecha a janela e o foco volta ao "▶ Executar" do código', async ({ page }) => {
+      test('Escape fecha a janela e o foco volta ao ▶ da calha', async ({ page }) => {
         const origem = await abrir(page, projeto, botaoDoCodigo);
 
         await page.keyboard.press('Escape');
@@ -354,16 +354,12 @@ test.describe('Play da barra de ferramentas', () => {
     await abrirHidratada(page, '/projeto-2');
     await expect(botaoDaBarra(page)).toBeVisible();
 
-    await page
-      .getByRole('navigation', { name: 'Seções do portfólio' })
-      .getByRole('link', { name: 'Sobre Mim' })
-      .click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Sobre Mim').click();
     await expect(botaoDaBarra(page)).toHaveCount(0);
 
-    await page
-      .getByRole('navigation', { name: 'Seções do portfólio' })
-      .getByRole('link', { name: 'Projeto 3' })
-      .click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Projeto 3').click();
     await expect(botaoDaBarra(page)).toBeVisible();
   });
 });

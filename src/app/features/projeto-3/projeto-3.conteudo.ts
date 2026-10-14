@@ -4,6 +4,7 @@ import {
   declaracao,
   javadoc,
   linha,
+  linhaExecutavel,
   link,
   literal,
   palavraChave,
@@ -14,7 +15,7 @@ import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
 /** Conteúdo da tela 14 (design/telas/tela-14.png): a landing page da Watts Company. */
 export const CONTEUDO_PROJETO_3: ConteudoDoEditor = [
   vazia(),
-  linha(0, palavraChave('public class'), comum('  WattsCompany {')),
+  linhaExecutavel(0, palavraChave('public class'), comum('  WattsCompany {')),
   vazia(),
   linha(1, comentario('// Ficha do projeto')),
   linha(

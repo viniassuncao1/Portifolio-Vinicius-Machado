@@ -83,3 +83,6 @@ Thumbs.db
 /playwright/.cache
 .vercel
 .env*
+
+# Gerado por scripts/gerar-informacoes-do-build.mjs
+/src/app/core/build.gerado.ts

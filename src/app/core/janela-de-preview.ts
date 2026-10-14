@@ -22,7 +22,8 @@ export class JanelaDePreview {
   /** Preview aberto agora, ou `null` com a janela fechada. */
   readonly preview = this.aberto.asReadonly();
 
-  private readonly slugAtual = toSignal(
+  /** Slug da seção aberta (vazio no Início). */
+  readonly slugAtual = toSignal(
     this.router.events.pipe(
       filter((evento) => evento instanceof NavigationEnd),
       startWith(null),

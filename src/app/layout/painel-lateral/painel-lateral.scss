@@ -6,12 +6,13 @@
   overflow: hidden;
 }
 
-// Cabeçalho da vista: título com "×" e os controles — e ▢ (a estrutura da New UI vem nas próximas changes).
+// Cabeçalho da vista, como no design: título com "×" e os controles — e ▢.
 .cabecalho {
   box-sizing: border-box;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   height: var(--altura-cabecalho-painel);
+  padding-block-start: var(--espaco-2);
   color: var(--cor-texto);
   font-size: var(--texto-arvore);
   user-select: none;
@@ -23,8 +24,12 @@
   gap: var(--espaco-3);
   box-sizing: border-box;
   width: var(--largura-titulo-painel);
-  height: 100%;
+  height: calc(var(--altura-cabecalho-painel) - var(--espaco-1));
+  margin-block-start: calc(-1 * var(--espaco-2));
+  padding-block-start: var(--espaco-2);
   padding-inline-start: var(--espaco-3);
+  border-inline-end: var(--borda-largura) solid var(--cor-texto);
+  border-start-end-radius: 1rem;
   line-height: var(--altura-linha-arvore);
   white-space: nowrap;
 }
@@ -36,22 +41,24 @@
 .minimizar,
 .restaurar {
   box-sizing: border-box;
-  border: var(--borda-largura) solid var(--cor-icone);
-  border-radius: 1px;
+  border: 1.5px solid var(--cor-texto);
+  border-radius: 0.2rem;
 }
 
 .minimizar {
-  width: 0.75rem;
-  height: 0.25rem;
-  margin-block-start: 0.5rem;
-  margin-inline-start: var(--espaco-3);
+  width: 1.2rem;
+  height: 0.3rem;
+  margin-block-start: 0.7rem;
+  margin-inline-start: var(--espaco-4);
 }
 
 .restaurar {
-  width: 0.75rem;
-  height: 0.75rem;
-  margin-inline-start: var(--espaco-3);
-  border-block-start-width: 2px;
+  width: 1.3rem;
+  height: 1.1rem;
+  margin-block-start: 0.2rem;
+  margin-inline-start: var(--espaco-4);
+  border-radius: 0.3rem;
+  border-block-start-width: 3px;
 }
 
 app-arvore-de-secoes {

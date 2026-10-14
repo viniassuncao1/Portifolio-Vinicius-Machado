@@ -28,13 +28,12 @@ describe('BarraDeFerramentas: play', () => {
     const barra = (harness.routeNativeElement as HTMLElement).querySelector(
       'app-barra-de-ferramentas',
     )!;
-    const botoes = barra.querySelectorAll('button');
+    const botao = barra.querySelector<HTMLButtonElement>('button.executar')!;
 
-    expect(botoes).toHaveLength(1);
-    expect(botoes[0].getAttribute('aria-label')).toBe('Executar o projeto');
-    expect(barra.hasAttribute('aria-hidden')).toBe(false);
+    expect(botao.getAttribute('aria-label')).toBe('Executar o projeto');
+    expect(botao.hasAttribute('aria-hidden')).toBe(false);
 
-    botoes[0].click();
+    botao.click();
     expect(TestBed.inject(JanelaDePreview).preview()).toBe(PREVIEWS['projeto-3']);
   });
 
@@ -45,7 +44,9 @@ describe('BarraDeFerramentas: play', () => {
       'app-barra-de-ferramentas',
     )!;
 
-    expect(barra.getAttribute('aria-hidden')).toBe('true');
-    expect(barra.querySelectorAll('button, a, [tabindex]')).toHaveLength(0);
+    const executar = barra.querySelector('.executar')!;
+
+    expect(executar.getAttribute('aria-hidden')).toBe('true');
+    expect(executar.matches('button, a, [tabindex]')).toBe(false);
   });
 });

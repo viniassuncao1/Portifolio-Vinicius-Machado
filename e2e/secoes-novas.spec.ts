@@ -110,7 +110,7 @@ test.describe('Experiências (/experiencias)', () => {
     await expect(page).toHaveURL(/\/experiencias\/3$/);
 
     await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveCount(0);
-    await expect(arvore(page).getByRole('link', { name: 'Experiências' })).toHaveAttribute(
+    await expect(arvore(page).getByRole('treeitem', { name: 'Experiências' })).toHaveAttribute(
       'aria-current',
       'page',
     );
@@ -180,7 +180,7 @@ test.describe('Eventos (/eventos)', () => {
       'aria-selected',
       'true',
     );
-    await expect(arvore(page).getByRole('link', { name: 'Eventos' })).toHaveAttribute(
+    await expect(arvore(page).getByRole('treeitem', { name: 'Eventos' })).toHaveAttribute(
       'aria-current',
       'page',
     );

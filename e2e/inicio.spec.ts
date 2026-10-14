@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { linhasDoCodigo } from './apoio';
+import { abrirPastas, arquivoDaArvore, linhasDoCodigo } from './apoio';
 
 test.describe('Página inicial', () => {
   test('exibe o título do portfólio', async ({ page }) => {
@@ -104,10 +104,8 @@ test.describe('Árvore no Início', () => {
     page,
   }) => {
     await page.goto('/');
-    const destacado = page.getByRole('link', { name: 'Sobre Mim' });
-    const outro = page.getByRole('link', { name: 'Diferenciais' });
-
-    await expect(destacado.locator('.seta')).toHaveCSS('rotate', '90deg');
+    const destacado = arquivoDaArvore(page, 'Sobre Mim');
+    const outro = arquivoDaArvore(page, 'Diferenciais');
     // A faixa de destaque é o ::before do item, mostrado com opacity.
     const faixa = (link: typeof destacado) =>
       link.evaluate((el) => {
@@ -123,13 +121,11 @@ test.describe('Árvore no Início', () => {
   test('passa a anunciar "Sobre Mim" como página atual ao abrir a seção', async ({ page }) => {
     await page.goto('/');
 
-    await page.getByRole('link', { name: 'Sobre Mim' }).click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Sobre Mim').click();
 
     await expect(page).toHaveURL(/\/sobre-mim$/);
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+    await expect(arquivoDaArvore(page, 'Sobre Mim')).toHaveAttribute('aria-current', 'page');
   });
 
   test.describe('sem JavaScript', () => {
@@ -140,10 +136,6 @@ test.describe('Árvore no Início', () => {
 
       await expect(page.locator('main code')).toContainText('portfolio.viniciusmachado;');
       await expect(page.locator('main code')).toContainText('"Spring Boot"');
-      await expect(page.getByRole('link', { name: 'Sobre Mim' }).locator('.seta')).toHaveCSS(
-        'rotate',
-        '90deg',
-      );
       await expect(page.locator('nav [aria-current]')).toHaveCount(0);
     });
   });

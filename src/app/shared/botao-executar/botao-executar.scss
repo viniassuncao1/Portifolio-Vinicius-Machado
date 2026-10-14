@@ -1,24 +1,24 @@
-// Fica na faixa de respiro abaixo do código, à esquerda, na linha do controle de páginas.
+// Sem posição própria: o botão fica na calha, à esquerda dos números, saindo do fluxo da linha. A
+// posição vertical é a da própria linha (topo estático) e a horizontal é a borda do editor.
 :host {
-  display: block;
-  width: fit-content;
-  min-height: var(--espaco-editor-base);
-  margin-block-start: calc(var(--espaco-editor-base) * -1);
-  padding-inline-start: var(--afastamento-codigo);
+  display: contents;
 }
 
 .executar {
-  display: inline-flex;
+  position: absolute;
+  inset-inline-start: 0;
+  display: flex;
   align-items: center;
-  gap: var(--espaco-2);
-  min-height: var(--tamanho-alvo-toque);
-  padding-inline: var(--espaco-3);
-  border: var(--borda-divisoria);
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--largura-calha);
+  height: var(--largura-calha);
+  // Centraliza o alvo de 24px na linha de código.
+  margin-block-start: calc((var(--altura-linha-codigo) - var(--largura-calha)) / 2);
+  padding: 0;
+  border: 0;
   border-radius: var(--raio-controle);
-  background: var(--cor-botao);
-  color: var(--cor-texto-aba-inativa);
-  font-family: var(--fonte-interface);
-  font-size: var(--texto-arvore);
+  background: transparent;
   cursor: pointer;
 
   &:hover {
@@ -27,6 +27,6 @@
 
   &:focus-visible {
     outline: var(--largura-anel-foco) solid var(--cor-foco);
-    outline-offset: 2px;
+    outline-offset: -2px;
   }
 }

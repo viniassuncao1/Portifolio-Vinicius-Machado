@@ -19,6 +19,8 @@ export interface LinhaDeCodigo {
   readonly recuo: number;
   /** `compacta`: a lista de strings da tela 01 (4 linhas ocupam 3 linhas de número). */
   readonly densidade?: Densidade;
+  /** A linha da declaração da classe, onde o ▶ de executar aparece na calha. */
+  readonly executavel?: boolean;
   readonly trechos: readonly Trecho[];
 }
 
@@ -102,3 +104,11 @@ export const paragrafosDoJavadoc = (texto: string): readonly string[] =>
 export const vazia = (): LinhaVazia => ({ tipo: 'vazia' });
 export const vaziaCompacta = (): LinhaVazia => ({ tipo: 'vazia', densidade: 'compacta' });
 export const vaziaApertada = (): LinhaVazia => ({ tipo: 'vazia', densidade: 'apertada' });
+
+/** Linha de código com o ▶ de executar na calha, nos projetos com site. */
+export const linhaExecutavel = (recuo: number, ...trechos: readonly Trecho[]): LinhaDeCodigo => ({
+  tipo: 'codigo',
+  recuo,
+  executavel: true,
+  trechos,
+});

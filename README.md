@@ -5,7 +5,7 @@
 Portfólio pessoal de **Vinicius Machado**, desenvolvedor Full Stack (Java, Spring Boot, Angular
 e SQL).
 
-O site imita o **IntelliJ IDEA (New UI, tema escuro)**: as seções do portfólio aparecem como arquivos numa árvore de projeto e o
+O site imita uma IDE escura, com o design autoral do portfólio e elementos do IntelliJ IDEA (pacotes, Git, o ▶ de executar): as seções do portfólio aparecem como arquivos numa árvore de projeto e o
 conteúdo é apresentado como código. Além de portfólio, este repositório é um exemplo de como eu
 desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 
@@ -110,6 +110,14 @@ Tudo roda no workflow [`ci.yml`](.github/workflows/ci.yml):
   `main` atualiza a produção.
 
 Detalhes em [docs/deploy.md](docs/deploy.md).
+
+## Créditos
+
+Os ícones da árvore, das abas e da barra de ferramentas são do design do portfólio. Só o ▶ de
+executar, a branch, a busca e a faixa de ferramentas usam ícones da **IntelliJ Platform** (conjunto
+New UI), da JetBrains, sob a licença Apache 2.0. A origem, o copyright e o mapa de arquivos estão em
+[`public/icones/new-ui/CREDITOS.md`](public/icones/new-ui/CREDITOS.md). Este projeto não é
+afiliado à JetBrains e não usa logotipos de produto.
 
 ## Documentação
 

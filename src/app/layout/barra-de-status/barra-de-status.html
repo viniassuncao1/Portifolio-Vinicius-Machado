@@ -1,7 +1,28 @@
 <footer class="barra" role="status">
-  <span class="arquivo">{{ arquivo() }}</span>
+  <span class="caminho">
+    <span class="prefixo" aria-hidden="true">
+      <span class="projeto">{{ projeto() }}</span>
+      @if (caminho()) {
+        <span class="separador">›</span>
+        <span class="meio">{{ caminho() }}</span>
+      }
+      <span class="separador">›</span>
+    </span>
+    <span class="arquivo">{{ arquivo() }}</span>
+  </span>
   <span class="posicao" aria-hidden="true">{{ posicao() }}</span>
+  <span class="item">{{ quebraDeLinha }}</span>
   <span class="item">{{ codificacao }}</span>
-  <span class="item">{{ versaoDoJava }}</span>
-  <span class="item">{{ ramo }}</span>
+  <span class="item">{{ indentacao }}</span>
+  <span class="item ramo"><app-icone nome="ramo" />{{ ramo }}</span>
+  @if (commit; as commit) {
+    <a
+      class="item commit"
+      target="_blank"
+      rel="noopener noreferrer"
+      [href]="commit.endereco"
+      [attr.aria-label]="'Commit ' + commit.curto + ' no GitHub'"
+      >{{ commit.curto }}</a
+    >
+  }
 </footer>
