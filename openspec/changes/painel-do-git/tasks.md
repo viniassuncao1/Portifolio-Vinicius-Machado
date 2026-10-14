@@ -10,7 +10,7 @@
 
 - [x] 2.1 [Pincel] Serviço do painel (aberto/fechado, carregamento sob demanda, erro e tentar de novo) e o painel com grafo, lista e detalhes no visual do design — verificar com captura `git-desktop.png`
 - [x] 2.2 [Pincel] `master` e Commit como botões reais; Esc e foco de volta; celular em tela cheia — verificar com captura `git-mobile.png`
-- [ ] 2.3 [Compasso] Abrir e fechar o painel com transição curta, sem animação em reduced-motion — verificar no portal
+- [x] 2.3 [Compasso] Abrir e fechar o painel com transição curta, sem animação em reduced-motion — verificar no portal
 
 ## 3. Testes [Sentinela]
 
