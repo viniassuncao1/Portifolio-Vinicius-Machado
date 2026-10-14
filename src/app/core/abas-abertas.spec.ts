@@ -58,6 +58,19 @@ describe('AbasAbertas', () => {
     expect(abas.ativa()?.slug).toBe('skills');
   });
 
+  it('abrir a sexta aba fecha a usada há mais tempo, nunca a ativa', async () => {
+    const { abas } = await iniciar('/');
+    for (const slug of ['skills', 'contato', 'eventos', 'formacao']) abas.abrir(slug);
+    expect(slugs(abas)).toEqual(['', 'skills', 'contato', 'eventos', 'formacao']);
+
+    // Reusa o Início: a menos usada passa a ser "skills".
+    abas.abrir('');
+    abas.abrir('idiomas');
+
+    expect(slugs(abas)).toEqual(['', 'contato', 'eventos', 'formacao', 'idiomas']);
+    expect(abas.ativa()?.slug).toBe('idiomas');
+  });
+
   it('fechar a aba ativa vai para a vizinha da direita, senão da esquerda', async () => {
     const { harness, abas } = await iniciar('/skills');
     await harness.navigateByUrl('/contato');
