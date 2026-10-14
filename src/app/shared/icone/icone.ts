@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 export const NOMES_DE_ICONE = [
   'projeto',
@@ -27,7 +27,7 @@ export type NomeDoIcone = (typeof NOMES_DE_ICONE)[number];
 @Component({
   selector: 'app-icone',
   imports: [NgOptimizedImage],
-  template: `<img [ngSrc]="'icones/new-ui/' + nome() + '.svg'" alt="" fill />`,
+  template: `<img [ngSrc]="'icones/new-ui/' + pasta() + nome() + '.svg'" alt="" fill />`,
   styles: `
     :host {
       position: relative;
@@ -40,4 +40,7 @@ export type NomeDoIcone = (typeof NOMES_DE_ICONE)[number];
 })
 export class Icone {
   readonly nome = input.required<NomeDoIcone>();
+  /** A clara serve sobre fundos claros, como o degradê da barra de ferramentas. */
+  readonly variante = input<'escura' | 'clara'>('escura');
+  protected readonly pasta = computed(() => (this.variante() === 'clara' ? 'claro/' : ''));
 }

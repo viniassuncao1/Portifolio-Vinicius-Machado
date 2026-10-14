@@ -1,7 +1,8 @@
 # Créditos dos ícones
 
-Os ícones desta pasta são da **IntelliJ Platform**, no conjunto da New UI (`expui`), versão do
-tema escuro (`_dark.svg`). Foram copiados sem alteração do repositório
+Os ícones desta pasta são da **IntelliJ Platform**, no conjunto da New UI (`expui`). Os da raiz
+são a versão do tema escuro (`_dark.svg`); os de `claro/` são a versão do tema claro (arquivo sem
+`_dark`), usada sobre o degradê claro da barra de ferramentas. Foram copiados sem alteração do repositório
 [JetBrains/intellij-community](https://github.com/JetBrains/intellij-community/tree/master/platform/icons/src/expui),
 pasta `platform/icons/src/expui`, e só os usados na interface estão aqui. Os nomes dos arquivos
 foram traduzidos; a tabela abaixo aponta o original de cada um.
@@ -34,3 +35,14 @@ só ícones genéricos de interface.
 | `registro.svg`        | `nodes/record_dark.svg`                 |
 | `enumeracao.svg`      | `nodes/enum_dark.svg`                   |
 | `java.svg`            | `fileTypes/java_dark.svg`               |
+
+Variante clara (`claro/`):
+
+| Arquivo                   | Original (`platform/icons/src/expui/…`) |
+| ------------------------- | --------------------------------------- |
+| `claro/projeto.svg`       | `toolwindows/project.svg`               |
+| `claro/ramo.svg`          | `toolwindows/vcs.svg`                   |
+| `claro/executar.svg`      | `run/run.svg`                           |
+| `claro/depurar.svg`       | `run/debug.svg`                         |
+| `claro/buscar.svg`        | `general/search.svg`                    |
+| `claro/configuracoes.svg` | `general/settings.svg`                  |
