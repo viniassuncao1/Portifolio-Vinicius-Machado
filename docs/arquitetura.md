@@ -197,6 +197,21 @@ O site tem dois temas ([ADR-0014](adr/0014-tema-claro.md)), feitos só por token
   `alternar()` ou `escolher()`: atualiza `data-tema`, `color-scheme`, a meta `theme-color` (a cor
   vem do token `--cor-painel`) e grava no `localStorage`. No servidor não toca em
   `localStorage`, `matchMedia` nem no `<html>`.
+- **Troca com transição.** `core/transicao-de-tema.ts` envolve a troca num crossfade curto da View
+  Transitions API (`document.startViewTransition`), com a classe `transicao-de-tema` no `<html>`
+  durante a animação (os estilos ficam em `_movimento.scss`). Ela só anima se o navegador tem
+  `startViewTransition`, se não há movimento reduzido e se não há uma transição de rota ativa, já que duas
+  transições não convivem; nos demais casos a troca é direta. Espera o Angular renderizar o novo
+  tema por no máximo 100 ms, para a transição nunca segurar a página.
+- **Tokens claros no CSS crítico.** O Angular inlina só o CSS crítico no HTML pré-renderizado
+  (beasties), e ele leva apenas as regras que casam com esse HTML, que não tem `data-tema`: sem
+  tratamento, o primeiro quadro no tema claro saía **escuro** até o `styles-*.css` carregar. Os
+  tokens claros ficam entre os marcadores `/*! tokens-claros:inicio */` e
+  `/*! tokens-claros:fim */` em `_tokens.scss`; `removeSpecialComments: false` no `angular.json`
+  mantém os marcadores no CSS final (só comentários com `!` sobrevivem ao Sass e ao esbuild), e
+  `scripts/inlinar-tokens-claros.mjs`, que roda depois do `ng build` no script `build`, injeta um
+  `<style id="tokens-claros">` em cada HTML (cerca de 2 KB por página). Se os marcadores sumirem, o
+  script falha o build.
 - **`theme-color`.** Acompanha o tema: `#2B2B2B` no escuro e `#ECECEC` no claro, a cor da barra do
   navegador no celular.
 - **Ícones.** Os do design servem nos dois temas; os da IntelliJ Platform têm a variante clara em

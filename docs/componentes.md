@@ -114,7 +114,7 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   público: `focarProjeto()`, usado para devolver o foco quando a gaveta fecha.
 - **Botão de tema:** à direita do Buscar, troca entre o tema claro e o escuro (ícone de sol no
   escuro e de lua no claro, desenhados no padrão dos ícones do design). Tem `aria-label` "Usar tema
-  claro" ou "Usar tema escuro" e `aria-pressed` no claro; chama `Tema.alternar()`. Não existe no
+  claro" ou "Usar tema escuro" e `aria-pressed` no claro; chama `Tema.alternar()`, que troca com um crossfade curto (View Transition) quando o navegador e o movimento reduzido permitem. Não existe no
   design nem no IntelliJ (desvio do [ADR-0014](adr/0014-tema-claro.md)).
 - **Branch `master`:** é um botão de verdade que abre e fecha o painel do Git
   (`aria-controls="painel-do-git"`, `aria-expanded`).
