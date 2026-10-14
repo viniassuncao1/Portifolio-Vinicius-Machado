@@ -206,14 +206,19 @@ button:focus-visible {
   background: var(--cor-texto-esmaecido);
 }
 
-// `outros` reúne os tipos pequenos; um tipo raro sozinho nunca convive com ele e usa a mesma cor.
+// `outros` reúne os tipos pequenos: listrado, para não se confundir com nenhuma cor de tipo. Um tipo
+// raro sozinho nunca convive com ele e usa o mesmo desenho.
 [data-tipo='outros'],
 [data-tipo='perf'],
 [data-tipo='ci'],
 [data-tipo='build'],
 [data-tipo='style'],
 [data-tipo='revert'] {
-  background: var(--cor-grafo-5);
+  background: repeating-linear-gradient(
+    135deg,
+    var(--cor-texto-esmaecido) 0 2px,
+    var(--cor-editor) 2px 4px
+  );
 }
 
 .lista {

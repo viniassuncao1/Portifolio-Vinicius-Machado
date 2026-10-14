@@ -3,6 +3,7 @@ import { Component, afterNextRender, computed, inject, signal } from '@angular/c
 import { contarPorTipo, ultimosCommitsDeCodigo, ultimosPrs } from '../../core/git/resumo';
 import { enderecoDoCommit, enderecoDoPr, shaCurto } from '../../core/git/ler-historico';
 import { HistoricoDoRepositorio } from '../../core/repositorio';
+import { agruparTiposPequenos } from './agrupar-tipos';
 import { dataRelativa } from './data-relativa';
 
 /** O que cada tipo do Conventional Commits quer dizer, para quem não conhece a convenção. */
@@ -45,9 +46,9 @@ export class Repositorio {
   protected readonly totalDePrs = computed(() => this.commits().filter((c) => c.pr).length);
   protected readonly recentes = computed(() => ultimosCommitsDeCodigo(this.commits()));
   protected readonly tipos = computed(() =>
-    contarPorTipo(this.commits()).map((tipo) => ({
+    agruparTiposPequenos(contarPorTipo(this.commits())).map((tipo) => ({
       ...tipo,
-      significado: SIGNIFICADO_DOS_TIPOS[tipo.tipo] ?? '',
+      significado: tipo.reunidos ?? SIGNIFICADO_DOS_TIPOS[tipo.tipo] ?? '',
     })),
   );
   /** O histórico vem do mais novo para o mais antigo: o primeiro commit é o último da lista. */
