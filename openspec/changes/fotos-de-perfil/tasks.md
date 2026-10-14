@@ -2,7 +2,7 @@
 
 ## 1. Editor [Pincel]
 
-- [ ] 1.1 Retrato no Javadoc (`javadocComRetrato`), `@author` com link externo e as fotos WebP em `public/fotos/` — verificar com captura `fotos-desktop.png` e `fotos-mobile.png` nos dois temas
+- [x] 1.1 Retrato no Javadoc (`javadocComRetrato`), `@author` com link externo e as fotos WebP em `public/fotos/` — verificar com captura `fotos-desktop.png` e `fotos-mobile.png` nos dois temas
 
 ## 2. Seções [Grafite]
 
