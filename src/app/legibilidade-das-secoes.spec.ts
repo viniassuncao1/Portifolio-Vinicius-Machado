@@ -1,5 +1,11 @@
 import type { ConteudoDoEditor } from './shared/editor-de-codigo/conteudo';
-import { DOCUMENTOS, codigoDe, comentariosDe, textoDe } from './conteudo-das-secoes.apoio';
+import {
+  DOCUMENTOS,
+  codigoDe,
+  comentariosDe,
+  estaNoNovoEstilo,
+  textoDe,
+} from './conteudo-das-secoes.apoio';
 
 /** Palavras em português que não podem aparecer em identificadores (tipos, campos, constantes). */
 const PALAVRAS_EM_PORTUGUES = new Set([
@@ -161,9 +167,8 @@ describe('legibilidade do código exibido', () => {
       expect(codigoDe(conteudo)).not.toMatch(/[^\p{ASCII}]/u);
     });
 
-    // Seções já no estilo da change java-para-leitura (domínio em português sem acento).
-    const NO_NOVO_ESTILO = new Set(['Eventos']);
-    const NO_ESTILO_ANTIGO = DOCUMENTOS.filter(([nome]) => !NO_NOVO_ESTILO.has(nome));
+    // As seções no estilo da change java-para-leitura usam domínio em português sem acento.
+    const NO_ESTILO_ANTIGO = DOCUMENTOS.filter(([nome]) => !estaNoNovoEstilo(nome));
 
     it.each(NO_ESTILO_ANTIGO)(
       '%s: nenhum identificador usa palavra em português',

@@ -17,6 +17,6 @@ describe('arquivo das seções', () => {
       'projeto-1': 'Projeto1.java',
       contato: 'Contato.java',
     });
-    expect(ARQUIVO_INICIO).toBe('ViniciusMachado.java');
+    expect(ARQUIVO_INICIO).toBe('PortfolioApplication.java');
   });
 });

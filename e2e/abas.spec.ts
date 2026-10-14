@@ -29,11 +29,11 @@ test.describe('Abas dos arquivos', () => {
     await expect(aba(page, 'SobreMim.java')).toHaveAttribute('aria-selected', 'false');
   });
 
-  test('o Início abre como ViniciusMachado.java, ativa', async ({ page }) => {
+  test('o Início abre como PortfolioApplication.java, ativa', async ({ page }) => {
     await abrirHidratada(page, '/');
 
-    await expect(faixa(page).getByRole('tab')).toHaveText(['ViniciusMachado.java']);
-    await expect(aba(page, 'ViniciusMachado.java')).toHaveAttribute('aria-selected', 'true');
+    await expect(faixa(page).getByRole('tab')).toHaveText(['PortfolioApplication.java']);
+    await expect(aba(page, 'PortfolioApplication.java')).toHaveAttribute('aria-selected', 'true');
   });
 
   test('abrir de novo uma seção que já tem aba só a ativa, sem duplicar', async ({ page }) => {
@@ -94,7 +94,7 @@ test.describe('Abas dos arquivos', () => {
 
     await expect(page).toHaveURL('/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Portfolio_Vinicius');
-    await expect(faixa(page).getByRole('tab')).toHaveText(['ViniciusMachado.java']);
+    await expect(faixa(page).getByRole('tab')).toHaveText(['PortfolioApplication.java']);
   });
 
   test('o botão de fechar tem nome acessível e fica fora do tablist', async ({ page }) => {
@@ -247,9 +247,9 @@ test.describe('Abas no HTML pré-renderizado', () => {
     await expect(aba(page, 'Skills.java')).toHaveAttribute('aria-selected', 'true');
   });
 
-  test('o Início entrega ViniciusMachado.java ativa', async ({ page }) => {
+  test('o Início entrega PortfolioApplication.java ativa', async ({ page }) => {
     await page.goto('/');
 
-    await expect(faixa(page).getByRole('tab')).toHaveText(['ViniciusMachado.java']);
+    await expect(faixa(page).getByRole('tab')).toHaveText(['PortfolioApplication.java']);
   });
 });

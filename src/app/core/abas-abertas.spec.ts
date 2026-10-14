@@ -42,10 +42,10 @@ describe('AbasAbertas', () => {
     expect(abas.ativa()?.slug).toBe('contato');
   });
 
-  it('abre o Início como ViniciusMachado.java', async () => {
+  it('abre o Início como PortfolioApplication.java', async () => {
     const { abas } = await iniciar('/');
 
-    expect(abas.abas().map((a) => a.arquivo)).toEqual(['ViniciusMachado.java']);
+    expect(abas.abas().map((a) => a.arquivo)).toEqual(['PortfolioApplication.java']);
   });
 
   it('abre uma aba por seção, sem duplicar, e as páginas da seção usam a mesma aba', async () => {

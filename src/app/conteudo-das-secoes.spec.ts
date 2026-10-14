@@ -10,7 +10,15 @@ import { CONTEUDO_INICIO } from './features/inicio/inicio.conteudo';
 import { CONTEUDOS_SKILLS } from './features/skills/skills.conteudo';
 import { CONTEUDO_SOBRE_MIM } from './features/sobre-mim/sobre-mim.conteudo';
 import type { ConteudoDoEditor } from './shared/editor-de-codigo/conteudo';
-import { DOCUMENTOS, aspasRetas, codigoDe, literaisDe, textoDe } from './conteudo-das-secoes.apoio';
+import {
+  DOCUMENTOS,
+  aspasRetas,
+  codigoDe,
+  ehContinuacao,
+  estaNoNovoEstilo,
+  literaisDe,
+  textoDe,
+} from './conteudo-das-secoes.apoio';
 
 const PARES: Readonly<Record<string, string>> = { ')': '(', '}': '{', ']': '[' };
 
@@ -71,15 +79,24 @@ describe('conteúdo das seções em Java moderno', () => {
       expect(textoDe(c)).not.toContain('String[]');
     });
 
-    it('só o Início declara o pacote portfolio.viniciusmachado (e as no novo estilo, o seu)', () => {
-      const comPacote = DOCUMENTOS.filter(([, c]) => /^package /m.test(codigoDe(c))).map(
-        ([n]) => n,
-      );
+    it('o package dev.vinicius.portfolio.<pasta> fica só na primeira página de cada arquivo', () => {
+      const comPacote = DOCUMENTOS.filter(([, c]) => /^package /m.test(codigoDe(c)));
 
-      expect(comPacote).toEqual(['Início', 'Eventos']);
-      expect(codigoDe(CONTEUDO_INICIO)).toContain('package portfolio.viniciusmachado;');
+      comPacote.forEach(([nome, c]) => {
+        expect(ehContinuacao(nome), nome).toBe(false);
+        expect(codigoDe(c), nome).toMatch(/^package dev\.vinicius\.portfolio(\.\w+)?;$/m);
+      });
+      expect(codigoDe(CONTEUDO_INICIO)).toContain('package dev.vinicius.portfolio;');
       expect(codigoDe(CONTEUDO_EVENTOS)).toContain('package dev.vinicius.portfolio.formacao;');
     });
+
+    it.each(DOCUMENTOS.filter(([n]) => estaNoNovoEstilo(n)))(
+      '%s: no novo estilo, sem static final nem constante em caixa alta',
+      (_n, c) => {
+        expect(codigoDe(c)).not.toContain('static final');
+        expect(codigoDe(c)).not.toMatch(/\b[A-Z][A-Z0-9]*_[A-Z0-9_]+\b/);
+      },
+    );
   });
 
   describe('convenções de mercado', () => {
@@ -166,7 +183,7 @@ describe('conteúdo das seções em Java moderno', () => {
   });
 
   describe('informações preservadas', () => {
-    it('Início: pacote, cargo e a stack Java, Spring Boot, Angular e SQL', () => {
+    it('Início: cargo e a stack Java, Spring Boot, Angular e SQL', () => {
       expect(literaisDe(CONTEUDO_INICIO).map(aspasRetas)).toEqual([
         'Full Stack Júnior',
         'Java',
