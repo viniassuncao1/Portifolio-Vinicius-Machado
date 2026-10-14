@@ -111,4 +111,14 @@ describe('SobreMim', () => {
   it('tem o conteúdo tipado com 16 linhas', () => {
     expect(CONTEUDO_SOBRE_MIM).toHaveLength(16);
   });
+
+  it('mostra a foto do Vinicius grande e sem prioridade, com alt', async () => {
+    const foto = (await renderizar()).querySelector<HTMLImageElement>('.javadoc img.retrato');
+
+    expect(foto?.getAttribute('src')).toContain('fotos/vinicius.webp');
+    expect(foto?.getAttribute('alt')).toBe('Foto de Vinicius Machado');
+    expect(foto?.classList.contains('pequeno')).toBe(false);
+    expect(foto?.getAttribute('fetchpriority')).not.toBe('high');
+    expect(foto?.getAttribute('loading')).toBe('lazy');
+  });
 });
