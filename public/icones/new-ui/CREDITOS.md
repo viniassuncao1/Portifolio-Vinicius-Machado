@@ -26,6 +26,7 @@ só ícones genéricos de interface.
 | `executar.svg`     | `run/run_dark.svg`                      |
 | `documentacao.svg` | `toolwindows/documentation_dark.svg`    |
 | `buscar.svg`       | `general/search_dark.svg`               |
+| `github.svg`       | `vcs/vendors/github_dark.svg` (1)       |
 
 Variante clara (`claro/`), usada no tema claro:
 
@@ -38,6 +39,10 @@ Variante clara (`claro/`), usada no tema claro:
 | `claro/executar.svg`     | `run/run.svg`                           |
 | `claro/documentacao.svg` | `toolwindows/documentation.svg`         |
 | `claro/buscar.svg`       | `general/search.svg`                    |
+| `claro/github.svg`       | `vcs/vendors/github.svg` (1)            |
+
+(1) Do conjunto clássico, pasta `platform/icons/src/vcs/vendors` (a New UI não tem equivalente). É o
+ícone do GitHub da IntelliJ Platform, usado na aba da página do repositório.
 
 Os ícones de sol e lua do botão de tema (`public/icones/sol.svg` e `lua.svg`) são desenhos próprios
 no estilo dos ícones do design, não vêm da JetBrains.

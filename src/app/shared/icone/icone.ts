@@ -28,6 +28,7 @@ export const NOMES_DE_ICONE_DA_INTELLIJ = [
   'executar',
   'buscar',
   'documentacao',
+  'github',
 ] as const;
 
 export const NOMES_DE_ICONE = [...NOMES_DE_ICONE_DO_DESIGN, ...NOMES_DE_ICONE_DA_INTELLIJ] as const;
