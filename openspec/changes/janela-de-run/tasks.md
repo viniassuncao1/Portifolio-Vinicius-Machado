@@ -7,7 +7,7 @@
 
 ## 2. Movimento [Compasso]
 
-- [ ] 2.1 Linhas do log em até 2,5 s, Pular, sem animação em reduced-motion — verificar no portal
+- [x] 2.1 Linhas do log em até 2,5 s, Pular, sem animação em reduced-motion — verificar no portal
 
 ## 3. Testes [Sentinela]
 
