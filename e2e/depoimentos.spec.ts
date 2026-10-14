@@ -86,7 +86,7 @@ test.describe('Depoimentos/Recomendações (/depoimentos)', () => {
     await expect(page).toHaveTitle('Depoimentos/Recomendações | Vinicius Machado');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Depoimentos/Recomendações');
     await expect(
-      arvore(page).getByRole('link', { name: 'Depoimentos/Recomendações' }),
+      arvore(page).getByRole('treeitem', { name: 'Depoimentos/Recomendações' }),
     ).toHaveAttribute('aria-current', 'page');
     await expect(page.getByRole('navigation', { name: 'Páginas da seção' })).toHaveCount(0);
     await expect(page.getByRole('tab', { name: 'Depoimentos.java' })).toHaveAttribute(

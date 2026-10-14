@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
 import { SECOES, totalDePaginas } from '../src/app/core/secoes';
-import { abrirHidratada } from './apoio';
+import { abrirHidratada, abrirPastas, arquivoDaArvore } from './apoio';
 
 const ORIGEM = 'https://portfolio-vinicius-machado.vercel.app';
 const SITE = 'Vinicius Machado';
@@ -221,10 +221,8 @@ test.describe('Metadados ao navegar com JavaScript', () => {
     const inicio = await metadados(page);
     expect(inicio.canonico).toBe(`${ORIGEM}/`);
 
-    await page
-      .getByRole('navigation', { name: 'Seções do portfólio' })
-      .getByRole('link', { name: 'Skills / STACK' })
-      .click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Skills / STACK').click();
     await expect(page).toHaveURL(/\/skills$/);
 
     await expect.poll(async () => (await metadados(page)).canonico).toBe(`${ORIGEM}/skills`);
@@ -241,10 +239,8 @@ test.describe('Metadados ao navegar com JavaScript', () => {
 
   test('as metas navegadas são as mesmas do HTML pré-renderizado', async ({ page, browser }) => {
     await abrirHidratada(page, '/');
-    await page
-      .getByRole('navigation', { name: 'Seções do portfólio' })
-      .getByRole('link', { name: 'Certificações' })
-      .click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Certificações').click();
     await expect.poll(async () => (await metadados(page)).canonico).toBe(`${ORIGEM}/certificacoes`);
 
     const semJs = await browser.newContext({ javaScriptEnabled: false });
@@ -275,10 +271,8 @@ test.describe('Metadados ao navegar com JavaScript', () => {
     await abrirHidratada(page, '/');
     await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(1);
 
-    await page
-      .getByRole('navigation', { name: 'Seções do portfólio' })
-      .getByRole('link', { name: 'Skills / STACK' })
-      .click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Skills / STACK').click();
     await expect(page).toHaveURL(/\/skills$/);
 
     await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);

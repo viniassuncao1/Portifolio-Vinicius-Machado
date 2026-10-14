@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
+import { abrirPastas, arquivoDaArvore } from './apoio';
+
 const EDITOR = 'main app-editor-de-codigo';
 
 /**
@@ -44,7 +46,8 @@ const registroDeDigitacao = (page: Page) =>
   );
 
 const abrirPelaArvore = async (page: Page, secao: string, url: RegExp) => {
-  await page.getByRole('link', { name: secao, exact: true }).click();
+  await abrirPastas(page);
+  await arquivoDaArvore(page, secao).click();
   await expect(page).toHaveURL(url);
 };
 
@@ -60,7 +63,7 @@ test.describe('Digitação do código', () => {
       const registro = (window as unknown as { __digitacao: Record<string, unknown> }).__digitacao;
       Object.assign(registro, { inicio: 0, fim: 0, tamanhos: [], viuDigitando: false });
     });
-    const sobreMim = page.getByRole('link', { name: 'Sobre Mim', exact: true });
+    const sobreMim = arquivoDaArvore(page, 'Sobre Mim');
     await sobreMim.click();
     await expect(page).toHaveURL(/\/sobre-mim$/);
 

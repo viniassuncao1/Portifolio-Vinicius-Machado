@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
+import { abrirPastas, arquivoDaArvore } from './apoio';
+
 const status = (page: Page) => page.getByRole('status').filter({ hasText: 'UTF-8' });
 
 test.describe('Barra de status', () => {
@@ -32,10 +34,8 @@ test.describe('Barra de status', () => {
     await page.goto('/sobre-mim');
     await expect(status(page)).toContainText('SobreMim.java');
 
-    await page
-      .getByRole('navigation', { name: 'Seções do portfólio' })
-      .getByRole('link', { name: 'Eventos' })
-      .click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Eventos').click();
 
     await expect(status(page)).toContainText('Eventos.java');
     await expect(status(page)).not.toContainText('SobreMim.java');

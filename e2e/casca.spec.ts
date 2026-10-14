@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
-import { abrirHidratada } from './apoio';
+import { abrirHidratada, abrirPastas, arquivoDaArvore } from './apoio';
+
+import { SECOES as SECOES_DO_SITE } from '../src/app/core/secoes';
 
 /** A árvore de seções (a seção com várias páginas tem outra `nav`, com `aria-current` próprio). */
 const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
@@ -28,8 +30,11 @@ test.describe('Estrutura da IDE', () => {
   test('lista as 15 seções na árvore, na ordem do design', async ({ page }) => {
     await page.goto('/');
 
-    const arvore = page.getByRole('navigation', { name: 'Seções do portfólio' });
-    await expect(arvore.getByRole('link')).toHaveText(SECOES.map((secao) => secao.titulo));
+    await abrirPastas(page);
+
+    await expect(arvore(page).locator('a[role=treeitem]')).toHaveText(
+      SECOES_DO_SITE.map((secao) => secao.arquivo),
+    );
   });
 
   test('mostra a barra, o painel, a faixa de abas, o editor e a barra de status em qualquer seção', async ({
@@ -51,12 +56,12 @@ test.describe('Estrutura da IDE', () => {
   test('destaca "Sobre Mim" no Início, sem marcar página atual', async ({ page }) => {
     await page.goto('/');
 
-    const sobreMim = page.getByRole('link', { name: 'Sobre Mim' });
-    await expect(sobreMim.locator('.seta')).toHaveCSS('rotate', '90deg');
-    await expect(page.getByRole('link', { name: 'Diferenciais' }).locator('.seta')).not.toHaveCSS(
-      'rotate',
-      '90deg',
+    await expect(arvore(page).locator('[data-tipo=pasta][data-pacote=sobre]')).toHaveAttribute(
+      'aria-expanded',
+      'true',
     );
+    await expect(arquivoDaArvore(page, 'Sobre Mim')).toHaveClass(/destacado/);
+    await expect(arquivoDaArvore(page, 'Diferenciais')).not.toHaveClass(/destacado/);
     await expect(arvore(page).locator('[aria-current]')).toHaveCount(0);
   });
 
@@ -85,57 +90,52 @@ test.describe('Navegação pela árvore', () => {
   test('abre a seção clicada, muda o endereço e destaca o item', async ({ page }) => {
     await page.goto('/');
 
-    await page.getByRole('link', { name: 'Experiências' }).click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Experiências').click();
 
     await expect(page).toHaveURL(/\/experiencias$/);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Experiências');
     await expect(page).toHaveTitle('Experiências | Vinicius Machado');
-    await expect(page.getByRole('link', { name: 'Experiências' })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+    await expect(arquivoDaArvore(page, 'Experiências')).toHaveAttribute('aria-current', 'page');
     await expect(arvore(page).locator('[aria-current="page"]')).toHaveCount(1);
   });
 
   test('troca o item atual ao navegar de uma seção para outra', async ({ page }) => {
     await page.goto('/sobre-mim');
 
-    await page.getByRole('link', { name: 'Formação' }).click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Formação').click();
 
-    await expect(page.getByRole('link', { name: 'Formação' })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).not.toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+    await expect(arquivoDaArvore(page, 'Formação')).toHaveAttribute('aria-current', 'page');
+    await expect(arquivoDaArvore(page, 'Sobre Mim')).not.toHaveAttribute('aria-current', 'page');
   });
 
-  test('gira a seta do item atual para baixo', async ({ page }) => {
+  test('a pasta da seção atual vem expandida, com a seta para baixo, e as outras recolhidas', async ({
+    page,
+  }) => {
     await page.goto('/contato');
 
-    const seta = page.getByRole('link', { name: 'Contato' }).locator('.seta');
-    const outra = page.getByRole('link', { name: 'Idiomas' }).locator('.seta');
+    const contato = arvore(page).locator('[data-tipo=pasta][data-pacote=contato]');
+    const formacao = arvore(page).locator('[data-tipo=pasta][data-pacote=formacao]');
 
-    await expect(seta).toHaveCSS('rotate', '90deg');
-    await expect(outra).not.toHaveCSS('rotate', '90deg');
+    await expect(contato).toHaveAttribute('aria-expanded', 'true');
+    await expect(contato.locator('.seta')).toHaveCSS('rotate', '90deg');
+    await expect(formacao).toHaveAttribute('aria-expanded', 'false');
+    await expect(formacao.locator('.seta')).not.toHaveCSS('rotate', '90deg');
   });
 
   test('abre direto pelo endereço já com a seção atual', async ({ page }) => {
     await page.goto('/contato');
 
-    await expect(page.getByRole('link', { name: 'Contato' })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+    await expect(arquivoDaArvore(page, 'Contato')).toHaveAttribute('aria-current', 'page');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Contato');
     await expect(page).toHaveTitle('Contato | Vinicius Machado');
   });
 
   test('volta ao Início pelo botão voltar do navegador', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('link', { name: 'Idiomas' }).click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Idiomas').click();
     await expect(page).toHaveURL(/\/idiomas$/);
 
     await page.goBack();
@@ -145,11 +145,15 @@ test.describe('Navegação pela árvore', () => {
   });
 });
 
+const ITENS_ATE_FORMACAO = 7;
+const POSICAO_DE_EVENTOS_NA_PASTA = 2;
+const pasta = (page: Page, nome: string) =>
+  arvore(page).locator(`[data-tipo=pasta][data-pacote=${nome}]`);
+
 test.describe('Teclado', () => {
   test('chega a "Eventos" com Tab e setas, mostra o foco e abre com Enter', async ({ page }) => {
     await abrirHidratada(page, '/');
-    const eventos = page.getByRole('link', { name: 'Eventos' });
-    const posicao = SECOES.findIndex((secao) => secao.slug === 'eventos');
+    const eventos = arquivoDaArvore(page, 'Eventos');
 
     // Antes da árvore ficam só os botões Buscar e Projeto; a árvore tem um só item na ordem de Tab
     // (roving tabindex) e as setas percorrem o resto.
@@ -158,8 +162,13 @@ test.describe('Teclado', () => {
     await page.keyboard.press('Tab');
     await expect(page.getByRole('button', { name: 'Projeto' })).toBeFocused();
     await page.keyboard.press('Tab');
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeFocused();
-    for (let i = 0; i < posicao; i++) await page.keyboard.press('ArrowDown');
+    await expect(pasta(page, 'sobre')).toBeFocused();
+    // Itens visíveis no Início: sobre e seus 3 arquivos, skills, experiencias, projetos, formacao.
+    for (let i = 0; i < ITENS_ATE_FORMACAO; i++) await page.keyboard.press('ArrowDown');
+    await expect(pasta(page, 'formacao')).toBeFocused();
+    await page.keyboard.press('ArrowRight');
+    await expect(pasta(page, 'formacao')).toHaveAttribute('aria-expanded', 'true');
+    for (let i = 0; i < POSICAO_DE_EVENTOS_NA_PASTA; i++) await page.keyboard.press('ArrowDown');
 
     await expect(eventos).toBeFocused();
     await expect(eventos).toHaveCSS('outline-style', 'solid');
@@ -209,13 +218,8 @@ test.describe('Pré-renderização das 15 rotas', () => {
 
       await expect(page).toHaveTitle(`${titulo} | Vinicius Machado`);
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(titulo);
-      await expect(
-        page.getByRole('navigation', { name: 'Seções do portfólio' }).getByRole('link'),
-      ).toHaveCount(15);
-      await expect(page.getByRole('link', { name: titulo })).toHaveAttribute(
-        'aria-current',
-        'page',
-      );
+      await expect(arvore(page).locator('[data-tipo=pasta]')).toHaveCount(7);
+      await expect(arquivoDaArvore(page, titulo)).toHaveAttribute('aria-current', 'page');
       await expect(page.getByRole('main').locator('code')).toBeAttached();
     });
   }

@@ -18,7 +18,7 @@ export async function abrirComFocoNaCasca(page: Page, url: string): Promise<void
   await abrirHidratada(page, url);
   await page
     .getByRole('navigation', { name: 'Seções do portfólio' })
-    .getByRole('link')
+    .getByRole('treeitem')
     .and(page.locator('[tabindex="0"]'))
     .focus();
 }
@@ -102,3 +102,31 @@ export const CORES_DE_SINTAXE = {
 /** Rosa do acento e do anel de foco (`--cor-acento`). */
 export const COR_DO_FOCO = 'rgb(222, 96, 210)';
 export const COR_ROSA_ANTIGA = 'rgb(222, 96, 210)';
+
+/** A árvore de seções do painel lateral. */
+export const arvoreDeSecoes = (page: Page) =>
+  page.getByRole('navigation', { name: 'Seções do portfólio' });
+
+/** Expande todas as pastas da árvore que estiverem recolhidas. */
+export async function abrirPastas(page: Page): Promise<void> {
+  // No celular a gaveta ainda pode estar abrindo: só então a árvore entra na árvore de acessibilidade.
+  await expect(arvoreDeSecoes(page)).toBeVisible();
+  const pastas = arvoreDeSecoes(page).locator('[data-tipo=pasta]');
+  const recolhidas = arvoreDeSecoes(page).locator('[data-tipo=pasta][aria-expanded=false]');
+  for (let passada = 0; passada < 2 && (await recolhidas.count()) > 0; passada++) {
+    for (let i = 0; i < (await pastas.count()); i++) {
+      const pasta = pastas.nth(i);
+      if ((await pasta.getAttribute('aria-expanded')) !== 'false') continue;
+      await pasta.click();
+      // Espera a pasta abrir antes da próxima: reler o estado cedo demais a fecharia de novo.
+      await expect(pasta).toHaveAttribute('aria-expanded', 'true');
+    }
+  }
+}
+
+/**
+ * Arquivo da árvore pelo título da seção (o nome acessível é "Título (Arquivo.java)"). Só existe
+ * no DOM com a pasta expandida: use `abrirPastas` antes quando a pasta puder estar recolhida.
+ */
+export const arquivoDaArvore = (page: Page, titulo: string) =>
+  arvoreDeSecoes(page).getByRole('treeitem', { name: new RegExp(`^${titulo} \\(`) });

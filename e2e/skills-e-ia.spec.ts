@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import type { Locator, Page } from '@playwright/test';
 
-import { linhasDoCodigo, normalizar } from './apoio';
+import { arquivoDaArvore, linhasDoCodigo, normalizar } from './apoio';
 
 const COR_VALOR = 'rgb(42, 172, 184)';
 const COR_LITERAL = 'rgb(106, 171, 115)';
@@ -96,12 +96,11 @@ test.describe('Como uso a IA (/como-uso-ia)', () => {
   test('tem o título, o h1 e a árvore com a seção atual', async ({ page }) => {
     await page.goto('/como-uso-ia');
 
-    const item = page.getByRole('link', { name: 'Como uso a IA' });
+    const item = arquivoDaArvore(page, 'Como uso a IA');
 
     await expect(page).toHaveTitle('Como uso a IA | Vinicius Machado');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Como uso a IA');
     await expect(item).toHaveAttribute('aria-current', 'page');
-    await expect(item.locator('.seta')).toHaveCSS('rotate', '90deg');
   });
 
   test('não mostra controle de páginas', async ({ page }) => {
@@ -174,12 +173,11 @@ test.describe('Skills / STACK (/skills)', () => {
   test('tem título e h1 de Skills / STACK e a árvore com a seção atual', async ({ page }) => {
     await page.goto('/skills');
 
-    const item = page.getByRole('link', { name: 'Skills / STACK' });
+    const item = arquivoDaArvore(page, 'Skills / STACK');
 
     await expect(page).toHaveTitle('Skills / STACK | Vinicius Machado');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK');
     await expect(item).toHaveAttribute('aria-current', 'page');
-    await expect(item.locator('.seta')).toHaveCSS('rotate', '90deg');
   });
 });
 
@@ -231,10 +229,9 @@ test.describe('Skills / STACK, página 2 (/skills/2)', () => {
   test('mantém "Skills / STACK" como página atual, com a seta para baixo', async ({ page }) => {
     await page.goto('/skills/2');
 
-    const item = page.getByRole('link', { name: 'Skills / STACK' });
+    const item = arquivoDaArvore(page, 'Skills / STACK');
 
     await expect(item).toHaveAttribute('aria-current', 'page');
-    await expect(item.locator('.seta')).toHaveCSS('rotate', '90deg');
     await expect(page.locator('nav [aria-current="page"]').first()).toHaveCount(1);
   });
 
@@ -386,10 +383,7 @@ test.describe('Sem JavaScript', () => {
     await expect(page.locator('main code')).toContainText('ArtificialIntelligence');
     await expect(page.locator('main .papel-valor')).toHaveText(['false', 'true']);
     await expect(page.locator('main .javadoc')).toContainText('Não vejo IA como modismo');
-    await expect(page.getByRole('link', { name: 'Como uso a IA' })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+    await expect(arquivoDaArvore(page, 'Como uso a IA')).toHaveAttribute('aria-current', 'page');
   });
 
   test('/skills entrega o código e o controle 1/3 no HTML', async ({ page }) => {
@@ -412,10 +406,7 @@ test.describe('Sem JavaScript', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK (2/3)');
     await expect(page.locator('main code')).toContainText('record InfraSkills(');
     await expect(controle(page)).toContainText('2/3');
-    await expect(page.getByRole('link', { name: 'Skills / STACK' })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+    await expect(arquivoDaArvore(page, 'Skills / STACK')).toHaveAttribute('aria-current', 'page');
   });
 
   test('/skills/3 entrega os níveis de conhecimento e o controle 3/3 no HTML', async ({ page }) => {

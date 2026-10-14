@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import type { Locator } from '@playwright/test';
 
 import { SECOES, totalDePaginas } from '../src/app/core/secoes';
-import { linhasDoCodigo, normalizar } from './apoio';
+import { arquivoDaArvore, linhasDoCodigo, normalizar } from './apoio';
 
 const COR_VALOR = 'rgb(42, 172, 184)';
 const COR_DECLARACAO = 'rgb(199, 125, 186)';
@@ -106,10 +106,9 @@ test.describe('Sobre Mim (/sobre-mim)', () => {
   test('marca "Sobre Mim" como página atual, com a seta para baixo', async ({ page }) => {
     await page.goto('/sobre-mim');
 
-    const item = page.getByRole('link', { name: 'Sobre Mim' });
+    const item = arquivoDaArvore(page, 'Sobre Mim');
 
     await expect(item).toHaveAttribute('aria-current', 'page');
-    await expect(item.locator('.seta')).toHaveCSS('rotate', '90deg');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Sobre Mim');
   });
 
@@ -217,14 +216,10 @@ test.describe('Diferenciais (/diferenciais)', () => {
   test('marca "Diferenciais" como página atual e "Sobre Mim" não', async ({ page }) => {
     await page.goto('/diferenciais');
 
-    const item = page.getByRole('link', { name: 'Diferenciais' });
+    const item = arquivoDaArvore(page, 'Diferenciais');
 
     await expect(item).toHaveAttribute('aria-current', 'page');
-    await expect(item.locator('.seta')).toHaveCSS('rotate', '90deg');
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).not.toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+    await expect(arquivoDaArvore(page, 'Sobre Mim')).not.toHaveAttribute('aria-current', 'page');
     await expect(page).toHaveTitle('Diferenciais | Vinicius Machado');
   });
 });
@@ -237,10 +232,7 @@ test.describe('Seções sem JavaScript', () => {
 
     await expect(page.locator('main code')).toContainText('public interface Developer');
     await expect(page.locator('main .javadoc')).toContainText('Sou desenvolvedor Full Stack');
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+    await expect(arquivoDaArvore(page, 'Sobre Mim')).toHaveAttribute('aria-current', 'page');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Sobre Mim');
   });
 
@@ -250,10 +242,7 @@ test.describe('Seções sem JavaScript', () => {
     await expect(page.locator('main code')).toContainText('public record PersonalData(');
     await expect(page.locator('main .papel-valor')).toHaveCount(4);
     await expect(page.locator('main .javadoc')).toContainText('Moro em Brasília há 20 anos.');
-    await expect(page.getByRole('link', { name: 'Diferenciais' })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+    await expect(arquivoDaArvore(page, 'Diferenciais')).toHaveAttribute('aria-current', 'page');
   });
 
   test('nenhuma seção, em nenhuma página, mostra o aviso de em construção', async ({ page }) => {

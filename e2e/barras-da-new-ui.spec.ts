@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 import { readFile, readdir } from 'node:fs/promises';
 
-import { abrirHidratada } from './apoio';
+import { abrirHidratada, arquivoDaArvore } from './apoio';
 
 const TAGS = ['wcag2a', 'wcag2aa'];
 const DESKTOP = { width: 1920, height: 1080 };
@@ -433,7 +433,7 @@ test.describe('Acessibilidade das barras: estados do painel', () => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await abrirHidratada(page, '/');
     await page.getByRole('button', { name: 'Projeto' }).click();
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeVisible();
+    await expect(arquivoDaArvore(page, 'Sobre Mim')).toBeVisible();
 
     expect(await violacoes(page)).toEqual([]);
   });

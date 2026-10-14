@@ -1,78 +1,121 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
-import { abrirHidratada } from './apoio';
+import { abrirHidratada, abrirPastas, arquivoDaArvore, arvoreDeSecoes } from './apoio';
 
 import { SECOES } from '../src/app/core/secoes';
 
-const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
-const item = (page: Page, titulo: string) =>
-  arvore(page).getByRole('link', { name: titulo, exact: true });
+const pasta = (page: Page, nome: string) =>
+  arvoreDeSecoes(page).locator(`[data-tipo=pasta][data-pacote=${nome}]`);
 
 // Movimento reduzido: o código aparece pronto, sem a digitação interferir.
 test.use({ contextOptions: { reducedMotion: 'reduce' } });
 
-test.describe('Árvore navegável por setas', () => {
-  test('só um item entra na ordem de Tab: o da seção aberta', async ({ page }) => {
+test.describe('Árvore em pastas navegável por teclado', () => {
+  test('só um item entra na ordem de Tab: o arquivo da seção aberta', async ({ page }) => {
     await abrirHidratada(page, '/diferenciais');
 
-    const focaveis = await arvore(page)
-      .getByRole('link')
-      .evaluateAll((links) =>
-        links.filter((l) => l.getAttribute('tabindex') === '0').map((l) => l.textContent?.trim()),
+    const focaveis = await arvoreDeSecoes(page)
+      .getByRole('treeitem')
+      .evaluateAll((itens) =>
+        itens.filter((i) => i.getAttribute('tabindex') === '0').map((i) => i.textContent?.trim()),
       );
 
-    expect(focaveis).toEqual(['Diferenciais']);
+    expect(focaveis).toEqual(['Diferenciais.java']);
+  });
+
+  test('a pasta da seção aberta vem expandida e as outras recolhidas', async ({ page }) => {
+    await abrirHidratada(page, '/projeto-2');
+
+    await expect(pasta(page, 'projetos')).toHaveAttribute('aria-expanded', 'true');
+    await expect(pasta(page, 'sobre')).toHaveAttribute('aria-expanded', 'false');
+    await expect(arquivoDaArvore(page, 'Projeto 2')).toHaveAttribute('aria-current', 'page');
+  });
+
+  test('clicar na pasta projetos mostra Projeto1.java a Projeto4.java', async ({ page }) => {
+    await abrirHidratada(page, '/');
+
+    await pasta(page, 'projetos').click();
+
+    await expect(pasta(page, 'projetos')).toHaveAttribute('aria-expanded', 'true');
+    await expect(arvoreDeSecoes(page).locator('#grupo-projetos a')).toHaveText([
+      'Projeto1.java',
+      'Projeto2.java',
+      'Projeto3.java',
+      'Projeto4.java',
+    ]);
   });
 
   test('seta para baixo vai de "Diferenciais" a "Como uso a IA"', async ({ page }) => {
     await abrirHidratada(page, '/diferenciais');
-    await item(page, 'Diferenciais').focus();
+    await arquivoDaArvore(page, 'Diferenciais').focus();
 
     await page.keyboard.press('ArrowDown');
 
-    await expect(item(page, 'Como uso a IA')).toBeFocused();
-    await expect(item(page, 'Como uso a IA')).toHaveAttribute('tabindex', '0');
-    await expect(item(page, 'Diferenciais')).toHaveAttribute('tabindex', '-1');
+    await expect(arquivoDaArvore(page, 'Como uso a IA')).toBeFocused();
+    await expect(arquivoDaArvore(page, 'Como uso a IA')).toHaveAttribute('tabindex', '0');
+    await expect(arquivoDaArvore(page, 'Diferenciais')).toHaveAttribute('tabindex', '-1');
   });
 
-  test('seta para cima sobe um item', async ({ page }) => {
-    await abrirHidratada(page, '/diferenciais');
-    await item(page, 'Diferenciais').focus();
+  test('seta para cima sobe um item, até a pasta', async ({ page }) => {
+    await abrirHidratada(page, '/sobre-mim');
+    await arquivoDaArvore(page, 'Sobre Mim').focus();
 
     await page.keyboard.press('ArrowUp');
 
-    await expect(item(page, 'Sobre Mim')).toBeFocused();
+    await expect(pasta(page, 'sobre')).toBeFocused();
   });
 
-  test('as setas param nas pontas, sem dar a volta', async ({ page }) => {
+  test('seta para a direita expande a pasta; para a esquerda, recolhe e volta à pasta', async ({
+    page,
+  }) => {
     await abrirHidratada(page, '/');
-    await item(page, 'Sobre Mim').focus();
+    await pasta(page, 'projetos').focus();
+
+    await page.keyboard.press('ArrowRight');
+    await expect(pasta(page, 'projetos')).toHaveAttribute('aria-expanded', 'true');
+
+    await page.keyboard.press('ArrowRight');
+    await expect(arquivoDaArvore(page, 'Projeto 1')).toBeFocused();
+
+    await page.keyboard.press('ArrowLeft');
+    await expect(pasta(page, 'projetos')).toBeFocused();
+
+    await page.keyboard.press('ArrowLeft');
+    await expect(pasta(page, 'projetos')).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  test('Enter e Espaço alternam a pasta', async ({ page }) => {
+    await abrirHidratada(page, '/');
+    await pasta(page, 'contato').focus();
+
+    await page.keyboard.press('Enter');
+    await expect(pasta(page, 'contato')).toHaveAttribute('aria-expanded', 'true');
+
+    await page.keyboard.press('Space');
+    await expect(pasta(page, 'contato')).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  test('as setas param nas pontas e Home e End vão ao primeiro e ao último item', async ({
+    page,
+  }) => {
+    await abrirHidratada(page, '/');
+    await abrirPastas(page);
+    await pasta(page, 'sobre').focus();
     await page.keyboard.press('ArrowUp');
-    await expect(item(page, 'Sobre Mim')).toBeFocused();
+    await expect(pasta(page, 'sobre')).toBeFocused();
 
     await page.keyboard.press('End');
     await page.keyboard.press('ArrowDown');
-
-    await expect(item(page, 'Contato')).toBeFocused();
-  });
-
-  test('Home e End vão ao primeiro e ao último item', async ({ page }) => {
-    await abrirHidratada(page, '/eventos');
-    await item(page, 'Eventos').focus();
-
-    await page.keyboard.press('End');
-    await expect(item(page, SECOES.at(-1)!.titulo)).toBeFocused();
+    await expect(arquivoDaArvore(page, SECOES.at(-1)!.titulo)).toBeFocused();
 
     await page.keyboard.press('Home');
-    await expect(item(page, SECOES[0].titulo)).toBeFocused();
+    await expect(pasta(page, 'sobre')).toBeFocused();
   });
 
-  test('Enter abre a seção do item focado', async ({ page }) => {
+  test('Enter num arquivo abre a seção', async ({ page }) => {
     await abrirHidratada(page, '/');
-    await item(page, 'Sobre Mim').focus();
-    await page.keyboard.press('ArrowDown');
-    await page.keyboard.press('ArrowDown');
+    await arquivoDaArvore(page, 'Como uso a IA').focus();
 
     await page.keyboard.press('Enter');
 
@@ -82,26 +125,30 @@ test.describe('Árvore navegável por setas', () => {
 
   test('o foco visível acompanha as setas', async ({ page }) => {
     await abrirHidratada(page, '/');
-    await item(page, 'Sobre Mim').focus();
+    await arquivoDaArvore(page, 'Sobre Mim').focus();
 
     await page.keyboard.press('ArrowDown');
 
-    const focado = item(page, 'Diferenciais');
+    const focado = arquivoDaArvore(page, 'Diferenciais');
     await expect(focado).toHaveCSS('outline-style', 'solid');
     await expect(focado).not.toHaveCSS('outline-width', '0px');
   });
 
-  test('percorre as 15 seções de cima a baixo na ordem da árvore', async ({ page }) => {
+  test('percorre as 7 pastas e as 15 seções de cima a baixo', async ({ page }) => {
     await abrirHidratada(page, '/');
-    await item(page, 'Sobre Mim').focus();
+    await abrirPastas(page);
+    await pasta(page, 'sobre').focus();
     const visitados: (string | undefined)[] = [];
 
-    await SECOES.reduce(async (anterior) => {
+    await Array.from({ length: SECOES.length + 7 }).reduce<Promise<void>>(async (anterior) => {
       await anterior;
       visitados.push(await page.evaluate(() => document.activeElement?.textContent?.trim()));
       await page.keyboard.press('ArrowDown');
     }, Promise.resolve());
 
-    expect(visitados).toEqual(SECOES.map((secao) => secao.titulo));
+    expect(visitados.filter((nome) => nome?.endsWith('.java'))).toEqual(
+      SECOES.map((secao) => secao.arquivo),
+    );
+    expect(visitados.filter((nome) => !nome?.endsWith('.java'))).toHaveLength(7);
   });
 });

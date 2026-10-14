@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import type { Locator, Page } from '@playwright/test';
 
-import { abrirHidratada } from './apoio';
+import { abrirHidratada, abrirPastas, arquivoDaArvore } from './apoio';
 
 interface Projeto {
   rota: string;
@@ -354,16 +354,12 @@ test.describe('Play da barra de ferramentas', () => {
     await abrirHidratada(page, '/projeto-2');
     await expect(botaoDaBarra(page)).toBeVisible();
 
-    await page
-      .getByRole('navigation', { name: 'Seções do portfólio' })
-      .getByRole('link', { name: 'Sobre Mim' })
-      .click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Sobre Mim').click();
     await expect(botaoDaBarra(page)).toHaveCount(0);
 
-    await page
-      .getByRole('navigation', { name: 'Seções do portfólio' })
-      .getByRole('link', { name: 'Projeto 3' })
-      .click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Projeto 3').click();
     await expect(botaoDaBarra(page)).toBeVisible();
   });
 });

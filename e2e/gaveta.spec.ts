@@ -1,6 +1,9 @@
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
-import { abrirHidratada } from './apoio';
+import { abrirHidratada, abrirPastas, arquivoDaArvore, arvoreDeSecoes } from './apoio';
+
+const primeiroItem = (page: Page) => arvoreDeSecoes(page).getByRole('treeitem').first();
 
 test.describe('Gaveta de seções no celular (390x844)', () => {
   test.use({ viewport: { width: 390, height: 844 } });
@@ -11,7 +14,7 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
     const botao = page.getByRole('button', { name: 'Projeto', exact: true });
     await expect(botao).toBeVisible();
     await expect(botao).toHaveAttribute('aria-expanded', 'false');
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeHidden();
+    await expect(arquivoDaArvore(page, 'Sobre Mim')).toBeHidden();
   });
 
   test('abre pelo botão, leva o foco ao primeiro item e anuncia aria-expanded', async ({
@@ -23,21 +26,21 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
     await botao.click();
 
     await expect(botao).toHaveAttribute('aria-expanded', 'true');
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeFocused();
-    await expect(page.getByRole('link', { name: 'Contato' })).toBeVisible();
+    await expect(primeiroItem(page)).toBeFocused();
+    await expect(arvoreDeSecoes(page).locator('[data-pacote=contato]')).toBeVisible();
   });
 
   test('fecha com Escape e devolve o foco ao botão', async ({ page }) => {
     await page.goto('/');
     const botao = page.getByRole('button', { name: 'Projeto', exact: true });
     await botao.click();
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeFocused();
+    await expect(primeiroItem(page)).toBeFocused();
 
     await page.keyboard.press('Escape');
 
     await expect(botao).toHaveAttribute('aria-expanded', 'false');
     await expect(botao).toBeFocused();
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeHidden();
+    await expect(arquivoDaArvore(page, 'Sobre Mim')).toBeHidden();
   });
 
   test('fecha pelo botão "Fechar seções" e devolve o foco ao botão Projeto', async ({ page }) => {
@@ -62,25 +65,27 @@ test.describe('Gaveta de seções no celular (390x844)', () => {
   });
 
   test('escolher "Formação" abre a seção e recolhe a gaveta', async ({ page }) => {
-    await page.goto('/');
+    await abrirHidratada(page, '/');
     const botao = page.getByRole('button', { name: 'Projeto', exact: true });
     await botao.click();
 
-    await page.getByRole('link', { name: 'Formação' }).click();
+    await abrirPastas(page);
+    await arquivoDaArvore(page, 'Formação').click();
 
     await expect(page).toHaveURL(/\/formacao$/);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Formação');
     await expect(botao).toHaveAttribute('aria-expanded', 'false');
-    await expect(page.getByRole('link', { name: 'Formação' })).toBeHidden();
+    await expect(arquivoDaArvore(page, 'Formação')).toBeHidden();
   });
 
   test('escolhe uma seção só com o teclado: seta para baixo e Enter', async ({ page }) => {
     await abrirHidratada(page, '/');
     await page.getByRole('button', { name: 'Projeto', exact: true }).click();
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeFocused();
+    await expect(primeiroItem(page)).toBeFocused();
 
     await page.keyboard.press('ArrowDown');
-    await expect(page.getByRole('link', { name: 'Diferenciais' })).toBeFocused();
+    await page.keyboard.press('ArrowDown');
+    await expect(arquivoDaArvore(page, 'Diferenciais')).toBeFocused();
     await page.keyboard.press('Enter');
 
     await expect(page).toHaveURL(/\/diferenciais$/);
@@ -109,7 +114,7 @@ test.describe('Gaveta no desktop', () => {
 
     await expect(page.locator('.projeto-celular')).toBeHidden();
     await expect(page.getByRole('button', { name: 'Fechar seções' })).toBeHidden();
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeVisible();
+    await expect(arquivoDaArvore(page, 'Sobre Mim')).toBeVisible();
   });
 
   test('Projeto da faixa esconde e mostra o painel, e o editor ocupa o espaço', async ({
@@ -126,12 +131,12 @@ test.describe('Gaveta no desktop', () => {
     await botao.click();
 
     await expect(botao).toHaveAttribute('aria-pressed', 'false');
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeHidden();
+    await expect(arquivoDaArvore(page, 'Sobre Mim')).toBeHidden();
     expect(await largura()).toBeGreaterThan(comPainel + 200);
 
     await botao.click();
 
     await expect(botao).toHaveAttribute('aria-pressed', 'true');
-    await expect(page.getByRole('link', { name: 'Sobre Mim' })).toBeVisible();
+    await expect(arquivoDaArvore(page, 'Sobre Mim')).toBeVisible();
   });
 });

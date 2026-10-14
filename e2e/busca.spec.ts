@@ -150,7 +150,7 @@ test.describe('Busca de seções', () => {
 
   test('Escape fecha e devolve o foco a quem o tinha', async ({ page }) => {
     await abrirComFocoNaCasca(page, '/');
-    const item = arvore(page).getByRole('link', { name: 'Diferenciais' });
+    const item = arvore(page).getByRole('treeitem', { name: 'Diferenciais' });
     await item.focus();
     await page.keyboard.press('Control+p');
     await expect(campo(page)).toBeFocused();

@@ -97,7 +97,7 @@ test.describe('Certificações (/certificacoes)', () => {
 
     await expect(page).toHaveTitle('Certificações | Vinicius Machado');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Certificações');
-    await expect(arvore(page).getByRole('link', { name: 'Certificações' })).toHaveAttribute(
+    await expect(arvore(page).getByRole('treeitem', { name: 'Certificações' })).toHaveAttribute(
       'aria-current',
       'page',
     );
@@ -106,7 +106,7 @@ test.describe('Certificações (/certificacoes)', () => {
 
     await expect(page).toHaveTitle('Certificações (3/3) | Vinicius Machado');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Certificações (3/3)');
-    await expect(arvore(page).getByRole('link', { name: 'Certificações' })).toHaveAttribute(
+    await expect(arvore(page).getByRole('treeitem', { name: 'Certificações' })).toHaveAttribute(
       'aria-current',
       'page',
     );

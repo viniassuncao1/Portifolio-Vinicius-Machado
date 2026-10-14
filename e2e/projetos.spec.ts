@@ -74,7 +74,7 @@ test.describe('Projeto 1: a Ana (/projeto-1)', () => {
 
     await expect(page).toHaveTitle('Projeto 1 | Vinicius Machado');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 1');
-    await expect(arvore(page).getByRole('link', { name: 'Projeto 1' })).toHaveAttribute(
+    await expect(arvore(page).getByRole('treeitem', { name: 'Projeto 1' })).toHaveAttribute(
       'aria-current',
       'page',
     );
@@ -240,7 +240,7 @@ test.describe('Projeto 4: cases da Memora (/projeto-4)', () => {
       'href',
       '/projeto-4/2',
     );
-    await expect(arvore(page).getByRole('link', { name: 'Projeto 4' })).toHaveAttribute(
+    await expect(arvore(page).getByRole('treeitem', { name: 'Projeto 4' })).toHaveAttribute(
       'aria-current',
       'page',
     );
