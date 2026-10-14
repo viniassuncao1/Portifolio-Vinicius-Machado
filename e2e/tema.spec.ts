@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import type { Page } from '@playwright/test';
 
 import { COR_DO_FOCO, CORES_DE_SINTAXE, abrirHidratada, contraste } from './apoio';

@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import type { Locator, Page } from '@playwright/test';
 
 import { abrirHidratada, abrirPastas, arquivoDaArvore, esperarLogDoRun } from './apoio';
