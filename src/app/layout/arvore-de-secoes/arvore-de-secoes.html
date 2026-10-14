@@ -12,7 +12,7 @@
           aria-selected="false"
           (keydown)="aoTeclar($event)"
           [attr.aria-expanded]="estaAberta(pasta.pacote)"
-          [attr.aria-owns]="estaAberta(pasta.pacote) ? 'grupo-' + pasta.pacote : null"
+          [attr.aria-owns]="'grupo-' + pasta.pacote"
           [attr.tabindex]="chaveFocavel() === chaveDaPasta(pasta.pacote) ? 0 : -1"
           (focus)="focar(chaveDaPasta(pasta.pacote))"
           (click)="alternar(pasta.pacote)"
@@ -23,36 +23,40 @@
           <app-icone nome="pacote" />
           <span class="titulo">{{ pasta.pacote }}</span>
         </div>
-        @if (estaAberta(pasta.pacote)) {
-          <ul class="grupo" role="group" [id]="'grupo-' + pasta.pacote">
-            @for (secao of pasta.secoes; track secao.slug) {
-              <li role="none">
-                <a
-                  #item
-                  #ativo="routerLinkActive"
-                  class="item arquivo"
-                  role="treeitem"
-                  data-tipo="arquivo"
-                  [attr.data-pacote]="pasta.pacote"
-                  aria-level="2"
-                  [attr.aria-selected]="ativo.isActive"
-                  (keydown)="aoTeclar($event)"
-                  [attr.aria-label]="secao.titulo + ' (' + secao.arquivo + ')'"
-                  [class.destacado]="secao === pastas[0].secoes[0] && noInicio()"
-                  [routerLink]="['/', secao.slug]"
-                  routerLinkActive="atual"
-                  ariaCurrentWhenActive="page"
-                  [attr.tabindex]="chaveFocavel() === chaveDoArquivo(secao.slug) ? 0 : -1"
-                  (focus)="focar(chaveDoArquivo(secao.slug))"
-                  (click)="secaoEscolhida.emit()"
-                >
-                  <app-icone nome="java" />
-                  <span class="titulo">{{ secao.arquivo }}</span>
-                </a>
-              </li>
-            }
-          </ul>
-        }
+        <ul
+          class="grupo"
+          role="group"
+          [id]="'grupo-' + pasta.pacote"
+          [hidden]="!estaAberta(pasta.pacote)"
+          [class.entrando]="entrando() === pasta.pacote"
+        >
+          @for (secao of pasta.secoes; track secao.slug) {
+            <li role="none">
+              <a
+                #item
+                #ativo="routerLinkActive"
+                class="item arquivo"
+                role="treeitem"
+                data-tipo="arquivo"
+                [attr.data-pacote]="pasta.pacote"
+                aria-level="2"
+                [attr.aria-selected]="ativo.isActive"
+                (keydown)="aoTeclar($event)"
+                [attr.aria-label]="secao.titulo + ' (' + secao.arquivo + ')'"
+                [class.destacado]="secao === pastas[0].secoes[0] && noInicio()"
+                [routerLink]="['/', secao.slug]"
+                routerLinkActive="atual"
+                ariaCurrentWhenActive="page"
+                [attr.tabindex]="chaveFocavel() === chaveDoArquivo(secao.slug) ? 0 : -1"
+                (focus)="focar(chaveDoArquivo(secao.slug))"
+                (click)="secaoEscolhida.emit()"
+              >
+                <app-icone nome="java" />
+                <span class="titulo">{{ secao.arquivo }}</span>
+              </a>
+            </li>
+          }
+        </ul>
       </li>
     }
   </ul>

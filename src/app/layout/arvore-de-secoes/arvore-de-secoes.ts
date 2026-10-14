@@ -5,6 +5,7 @@ import {
   inject,
   input,
   linkedSignal,
+  signal,
   output,
   viewChildren,
 } from '@angular/core';
@@ -91,6 +92,9 @@ export class ArvoreDeSecoes {
     return secao && !this.abertas().has(secao.pacote) ? chaveDaPasta(secao.pacote) : chave;
   });
 
+  /** Pasta que o visitante acabou de abrir: só ela anima, para o conteúdo nunca depender da animação. */
+  protected readonly entrando = signal<Pacote | null>(null);
+
   protected readonly chaveDaPasta = chaveDaPasta;
   protected readonly chaveDoArquivo = chaveDoArquivo;
 
@@ -99,6 +103,7 @@ export class ArvoreDeSecoes {
   }
 
   protected alternar(pacote: Pacote): void {
+    this.entrando.set(this.abertas().has(pacote) ? null : pacote);
     this.abertas.update((abertas) => {
       const proximas = new Set(abertas);
       if (!proximas.delete(pacote)) proximas.add(pacote);
@@ -116,7 +121,9 @@ export class ArvoreDeSecoes {
 
   /** Setas, Home e End movem o foco; Direita e Esquerda abrem e fecham pastas; Enter e Espaço alternam a pasta. */
   protected aoTeclar(evento: KeyboardEvent): void {
-    const itens = this.itens().map((item) => item.nativeElement);
+    const itens = this.itens()
+      .map((item) => item.nativeElement)
+      .filter((item) => !item.closest('[hidden]'));
     const alvo =
       evento.target instanceof HTMLElement
         ? evento.target.closest<HTMLElement>('[role=treeitem]')

@@ -71,7 +71,7 @@ describe('ArvoreDeSecoes', () => {
     const abertas = Array.from(raiz.querySelectorAll('[data-tipo=pasta][aria-expanded=true]'));
 
     expect(abertas.map((p) => p.getAttribute('data-pacote'))).toEqual(['projetos']);
-    expect(raiz.querySelectorAll('a')).toHaveLength(4);
+    expect(raiz.querySelectorAll('.grupo:not([hidden]) a')).toHaveLength(4);
   });
 
   it('clicar numa pasta recolhida expande e mostra Projeto1.java a Projeto4.java', async () => {
@@ -87,13 +87,24 @@ describe('ArvoreDeSecoes', () => {
     expect(arquivos).toEqual(['Projeto1.java', 'Projeto2.java', 'Projeto3.java', 'Projeto4.java']);
   });
 
-  it('clicar numa pasta aberta recolhe e esconde os arquivos', async () => {
+  it('clicar numa pasta aberta recolhe e esconde os arquivos, que seguem no DOM', async () => {
     const { fixture, raiz } = await abrir('/projeto-2');
 
     await clicar(fixture, pasta(raiz, 'projetos'));
 
     expect(pasta(raiz, 'projetos').getAttribute('aria-expanded')).toBe('false');
-    expect(raiz.querySelector('#grupo-projetos')).toBeNull();
+    expect(raiz.querySelector('#grupo-projetos')?.hasAttribute('hidden')).toBe(true);
+    expect(raiz.querySelectorAll('#grupo-projetos a')).toHaveLength(4);
+  });
+
+  it('renderiza sempre os 15 links, com os grupos recolhidos escondidos por hidden', async () => {
+    const { raiz } = await abrir('/');
+
+    expect(Array.from(raiz.querySelectorAll('a'), (a) => a.getAttribute('href'))).toEqual(
+      SECOES.map((secao) => `/${secao.slug}`),
+    );
+    expect(raiz.querySelectorAll('.grupo[hidden]')).toHaveLength(6);
+    expect(raiz.querySelector('.grupo:not([hidden])')?.id).toBe('grupo-sobre');
   });
 
   it('os arquivos têm ícone de Java, nome do .java e nenhuma seta', async () => {
@@ -103,22 +114,17 @@ describe('ArvoreDeSecoes', () => {
       expect(arquivo.querySelector('.seta')).toBeNull();
       expect(arquivo.querySelector('app-icone img')?.getAttribute('src')).toContain('java.svg');
     });
-    expect(raiz.querySelector('a .titulo')?.textContent).toBe('Projeto1.java');
+    expect(raiz.querySelector('a .titulo')?.textContent).toBe('SobreMim.java');
   });
 
   it('o nome acessível do arquivo traz o título e o nome do arquivo', async () => {
     const { raiz } = await abrir('/projeto-2');
 
-    expect(raiz.querySelector('a')?.getAttribute('aria-label')).toBe('Projeto 1 (Projeto1.java)');
+    expect(raiz.querySelector('a')?.getAttribute('aria-label')).toBe('Sobre Mim (SobreMim.java)');
   });
 
   it('liga cada arquivo à rota da sua seção, sem mudar os slugs', async () => {
-    const { fixture, raiz } = await abrir('/');
-    for (const nome of PACOTES) {
-      if (pasta(raiz, nome).getAttribute('aria-expanded') === 'false') {
-        await clicar(fixture, pasta(raiz, nome));
-      }
-    }
+    const { raiz } = await abrir('/');
 
     const hrefs = Array.from(raiz.querySelectorAll('a'), (a) => a.getAttribute('href'));
 
@@ -201,7 +207,19 @@ describe('ArvoreDeSecoes', () => {
       await abrir('/projeto-2');
 
       expect(css()).toMatch(/aria-expanded=["']?true["']?\][^{]*\.seta[^{]*\{[^}]*rotate:\s*90deg/);
-      expect(css()).toMatch(/\.grupo[^{]*\{[^}]*animation:\s*\S*grupo-entrar\s+var\(--duracao-/);
+      expect(css()).toMatch(
+        /\.grupo\.entrando[^{]*\{[^}]*animation:\s*\S*grupo-entrar\s+var\(--duracao-/,
+      );
+    });
+
+    it('só anima a pasta que o visitante abre: no carregamento nada depende da animação', async () => {
+      const { fixture, raiz } = await abrir('/projeto-2');
+      expect(raiz.querySelector('.entrando')).toBeNull();
+
+      await clicar(fixture, pasta(raiz, 'contato'));
+
+      expect(raiz.querySelector('#grupo-contato')?.classList).toContain('entrando');
+      expect(raiz.querySelectorAll('.entrando')).toHaveLength(1);
     });
 
     it('desliga transições e animação com prefers-reduced-motion', async () => {

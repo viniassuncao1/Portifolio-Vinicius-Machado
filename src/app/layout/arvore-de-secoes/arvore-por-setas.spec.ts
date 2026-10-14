@@ -28,7 +28,10 @@ describe('ArvoreDeSecoes por teclado (tree view)', () => {
     await fixture.whenStable();
     const raiz = fixture.nativeElement as HTMLElement;
     document.body.append(raiz);
-    const itens = () => Array.from(raiz.querySelectorAll<HTMLElement>('[role=treeitem]'));
+    const itens = () =>
+      Array.from(raiz.querySelectorAll<HTMLElement>('[role=treeitem]')).filter(
+        (item) => !item.closest('[hidden]'),
+      );
     const pasta = (nome: string) =>
       raiz.querySelector<HTMLElement>(`[data-tipo=pasta][data-pacote=${nome}]`)!;
     return { fixture, raiz, itens, pasta };

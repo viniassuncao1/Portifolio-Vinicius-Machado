@@ -69,14 +69,16 @@ nav > ul {
   rotate: 90deg;
 }
 
-// Expandir: os arquivos entram com `opacity` e `transform`, curto como numa IDE.
-.grupo {
+// Expandir pelo visitante: os arquivos entram com `opacity` e `transform`, curto como numa IDE.
+// Só a pasta recém-aberta anima, e a entrada nunca parte do invisível: se a animação não rodar
+// (aba em segundo plano), os arquivos continuam legíveis.
+.grupo.entrando {
   animation: grupo-entrar var(--duracao-rapida) var(--curva-saida);
 }
 
 @keyframes grupo-entrar {
   from {
-    opacity: 0;
+    opacity: 0.4;
     transform: translateY(-0.25rem);
   }
 }
@@ -87,7 +89,7 @@ nav > ul {
     transition: none;
   }
 
-  .grupo {
+  .grupo.entrando {
     animation: none;
   }
 }
