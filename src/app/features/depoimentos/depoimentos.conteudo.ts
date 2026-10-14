@@ -2,7 +2,7 @@ import {
   comentario,
   comum,
   declaracao,
-  javadoc,
+  javadocComRetrato,
   linha,
   literal,
   palavraChave,
@@ -51,7 +51,12 @@ export const CONTEUDO_DEPOIMENTOS: ConteudoDoEditor = [
   ),
   vazia(),
   linha(1, comentario('// Recomendação recebida no LinkedIn')),
-  javadoc(1, TEXTO_LUANA_PORTO.join('\n\n')),
+  javadocComRetrato(
+    1,
+    TEXTO_LUANA_PORTO.join('\n\n'),
+    { src: 'fotos/luana-porto.webp', alt: 'Foto de Luana Porto', tamanho: 'pequeno' },
+    { nome: 'Luana Porto', href: 'https://www.linkedin.com/in/luana-porto-pereira-gomes/' },
+  ),
   linha(
     1,
     declaracao('Recomendacao'),

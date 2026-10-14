@@ -49,7 +49,7 @@ test.describe('Depoimentos/Recomendações (/depoimentos)', () => {
   test('mostra os três parágrafos completos num único Javadoc', async ({ page }) => {
     await page.goto('/depoimentos');
     const javadoc = page.locator('main .javadoc');
-    const paragrafos = javadoc.locator('.javadoc-paragrafo');
+    const paragrafos = javadoc.locator('.javadoc-paragrafo:not(.javadoc-autor)');
 
     await expect(javadoc).toHaveCount(1);
     await expect(paragrafos).toHaveCount(3);
@@ -63,13 +63,13 @@ test.describe('Depoimentos/Recomendações (/depoimentos)', () => {
 
     const texto = normalizar(await page.locator('main .javadoc').textContent());
 
-    expect(texto).toBe(PARAGRAFOS.join(' '));
+    expect(texto).toBe(`${PARAGRAFOS.join(' ')}@author Luana Porto (abre em nova aba)`);
   });
 
   test('cada parágrafo começa numa linha nova, separado do anterior', async ({ page }) => {
     await page.goto('/depoimentos');
     const caixas = await page
-      .locator('main .javadoc .javadoc-paragrafo')
+      .locator('main .javadoc .javadoc-paragrafo:not(.javadoc-autor)')
       .evaluateAll((els) => els.map((el) => el.getBoundingClientRect()));
 
     expect(caixas).toHaveLength(3);
@@ -102,7 +102,7 @@ test.describe('Depoimentos/Recomendações (/depoimentos)', () => {
   test('colore a data com a cor de valor e os dados como textos entre aspas', async ({ page }) => {
     await page.goto('/depoimentos');
 
-    await expect(page.locator('main .papel-valor')).toHaveText(['2026', '9', '22']);
+    await expect(page.locator('main .linha .papel-valor')).toHaveText(['2026', '9', '22']);
     await expect(page.locator('main .papel-literal')).toHaveText([
       '"Luana Porto"',
       '"Desenvolvedor Backend Java"',
@@ -122,7 +122,9 @@ test.describe('Depoimentos no celular (390x844)', () => {
     );
 
     expect(transborda).toBe(false);
-    await expect(page.locator('main .javadoc .javadoc-paragrafo')).toHaveCount(3);
+    await expect(page.locator('main .javadoc .javadoc-paragrafo:not(.javadoc-autor)')).toHaveCount(
+      3,
+    );
   });
 });
 

@@ -10,11 +10,12 @@ import {
   linkedSignal,
   signal,
 } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { EstadoDoEditor } from '../../core/estado-do-editor';
 import { BotaoExecutar } from '../botao-executar/botao-executar';
-import { paragrafosDoJavadoc } from './conteudo';
+import { LADO_DO_RETRATO, paragrafosDoJavadoc } from './conteudo';
 import type { ConteudoDoEditor } from './conteudo';
 import { HistoricoDeDigitacao } from './historico-de-digitacao';
 
@@ -32,7 +33,7 @@ const MOVIMENTO_REDUZIDO = '(prefers-reduced-motion: reduce)';
  */
 @Component({
   selector: 'app-editor-de-codigo',
-  imports: [BotaoExecutar],
+  imports: [BotaoExecutar, NgOptimizedImage],
   templateUrl: './editor-de-codigo.html',
   styleUrl: './editor-de-codigo.scss',
   host: {
@@ -79,6 +80,7 @@ export class EditorDeCodigo {
   }
 
   protected readonly paragrafosDoJavadoc = paragrafosDoJavadoc;
+  protected readonly ladoDoRetrato = LADO_DO_RETRATO;
 
   protected ehExterno(href: string): boolean {
     return href.startsWith('http');

@@ -113,6 +113,16 @@ describe('Inicio', () => {
     ]).toEqual(['0', '1', '4']);
   });
 
+  it('mostra a foto do Vinicius grande e com prioridade, com alt', async () => {
+    const raiz = await renderizar();
+    const foto = raiz.querySelector<HTMLImageElement>('.javadoc img.retrato');
+
+    expect(foto?.getAttribute('src')).toContain('fotos/vinicius.webp');
+    expect(foto?.getAttribute('alt')).toBe('Foto de Vinicius Machado');
+    expect(foto?.classList.contains('pequeno')).toBe(false);
+    expect(foto?.getAttribute('fetchpriority')).toBe('high');
+  });
+
   it('não tem h1 próprio: o título vem da casca', async () => {
     const raiz = await renderizar();
 

@@ -22,6 +22,9 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
   **histórico real do repositório** (grafo das branches, commits e PRs), como o Git Log do
   IntelliJ. O histórico é gerado no build, sem token e sem e-mails
   ([ADR-0013](docs/adr/0013-historico-do-git-gerado-no-build.md)).
+- **Fotos de perfil no Javadoc:** o Início, o Sobre Mim e a recomendação recebida mostram um
+  retrato redondo à esquerda do comentário de documentação, como o IntelliJ faz no modo de leitura,
+  com o `@author` linkando o LinkedIn de quem recomendou.
 - **Janela de Run:** ao abrir o site, a IDE "roda" o `PortfolioApplication` e mostra o log de
   inicialização do Spring Boot (uma vez por sessão, com "Pular" e sem bloquear a leitura). O ▶
   Executar da barra reabre o log.

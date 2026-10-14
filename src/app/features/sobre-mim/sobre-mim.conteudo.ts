@@ -5,7 +5,7 @@ import {
   linha,
   literal,
   palavraChave,
-  javadoc,
+  javadocComRetrato,
   vazia,
 } from '../../shared/editor-de-codigo/conteudo';
 import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
@@ -28,9 +28,10 @@ export const CONTEUDO_SOBRE_MIM: ConteudoDoEditor = [
     palavraChave('implements'),
     comum(' Desenvolvedor {'),
   ),
-  javadoc(
+  javadocComRetrato(
     1,
     'Sou desenvolvedor Full Stack com cerca de 2 anos de experiência, atuando com Java, Spring Boot, Angular e SQL em sistemas críticos de produção. Lidero um squad na Memora Processos Inovadores, atuando à frente de projetos, orientando o time nas demandas, tirando dúvidas técnicas e garantindo que sigamos Scrum, com dailies, previsões de conclusão e reviews. Também sou co-fundador da Watts Company, agência de automação e IA, onde desenvolvo sistemas de CRM e agentes de IA para atendimento. Curso Ciência da Computação no UniCEUB, com foco em Engenharia de Software, Sistemas Distribuídos e Arquitetura de Software.',
+    { src: 'fotos/vinicius.webp', alt: 'Foto de Vinicius Machado', tamanho: 'grande' },
   ),
   linha(1, anotacao('@Override')),
   linha(1, palavraChave('public'), comum(' String sobreMim() {')),

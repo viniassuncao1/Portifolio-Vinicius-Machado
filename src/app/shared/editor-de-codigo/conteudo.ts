@@ -40,7 +40,32 @@ export interface LinhaDeJavadoc {
   readonly tipo: 'javadoc';
   readonly recuo: number;
   readonly texto: string;
+  readonly retrato?: Retrato;
+  /** Última linha do bloco, `@author <nome>`, com o nome como link externo. */
+  readonly autor?: AutorDoJavadoc;
 }
+
+/** Foto redonda à esquerda do texto do Javadoc, como o IntelliJ mostra no modo de leitura. */
+export interface Retrato {
+  /** Caminho relativo ao `base href`, como o dos ícones (`fotos/vinicius.webp`). */
+  readonly src: string;
+  readonly alt: string;
+  /** `grande` (96 px) no Início e no Sobre Mim; `pequeno` (64 px) na recomendação. */
+  readonly tamanho: 'grande' | 'pequeno';
+  /** Carrega com prioridade: só para a foto que aparece acima da dobra. */
+  readonly prioridade?: boolean;
+}
+
+export interface AutorDoJavadoc {
+  readonly nome: string;
+  readonly href: string;
+}
+
+/** Lado, em px, de cada tamanho de retrato (o CSS usa os mesmos valores). */
+export const LADO_DO_RETRATO: Readonly<Record<Retrato['tamanho'], number>> = {
+  grande: 96,
+  pequeno: 64,
+};
 
 export interface LinhaVazia {
   readonly tipo: 'vazia';
@@ -93,6 +118,14 @@ export const javadoc = (recuo: number, texto: string): LinhaDeJavadoc => ({
   recuo,
   texto,
 });
+
+/** Javadoc com retrato e, se houver, `@author` com o nome como link. */
+export const javadocComRetrato = (
+  recuo: number,
+  texto: string,
+  retrato: Retrato,
+  autor?: AutorDoJavadoc,
+): LinhaDeJavadoc => ({ tipo: 'javadoc', recuo, texto, retrato, ...(autor ? { autor } : {}) });
 
 /** Parágrafos de um bloco Javadoc: o texto dividido nas linhas em branco, sem vazios. */
 export const paragrafosDoJavadoc = (texto: string): readonly string[] =>
