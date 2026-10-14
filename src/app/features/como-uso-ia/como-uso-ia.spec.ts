@@ -17,10 +17,10 @@ describe('ComoUsoIa', () => {
       linha.textContent?.includes(texto),
     ) as HTMLElement | undefined;
 
-  it('mostra a classe ArtificialIntelligence e os booleanos no papel de valor', async () => {
+  it('mostra a classe InteligenciaArtificial e os booleanos no papel de valor', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelector('code')?.textContent).toContain('ArtificialIntelligence {');
+    expect(raiz.querySelector('code')?.textContent).toContain('InteligenciaArtificial {');
     expect(Array.from(raiz.querySelectorAll('.papel-valor')).map((v) => v.textContent)).toEqual([
       'false',
       'true',
@@ -31,33 +31,34 @@ describe('ComoUsoIa', () => {
   it('usa a grafia corrigida, sem o erro de digitação do design', async () => {
     const texto = (await renderizar()).querySelector('code')?.textContent ?? '';
 
-    expect(texto).toContain('ArtificialIntelligence');
+    expect(texto).toContain('InteligenciaArtificial');
     expect(texto).not.toContain('ArtificialItenligence');
   });
 
-  it('exibe as linhas de código na ordem, com constantes imutáveis', async () => {
+  it('exibe as linhas de código na ordem, sem static final', async () => {
     const raiz = await renderizar();
     const textos = Array.from(raiz.querySelectorAll('code > span'))
       .map((linha) => linha.textContent?.replace(/\s+/g, ' ').trim())
       .filter((texto) => texto);
 
     expect(textos).toEqual([
+      'package dev.vinicius.portfolio.sobre;',
       'import java.util.List;',
       expect.stringContaining(INICIO_DO_PARAGRAFO),
-      'public final class ArtificialIntelligence {',
+      'public class InteligenciaArtificial {',
       '// Minha visão: IA é parte do trabalho, não modismo',
-      'public static final boolean IS_JUST_A_TREND = false;',
-      'public static final boolean IS_PART_OF_THE_JOB = true;',
+      'boolean modismo = false;',
+      'boolean parteDoTrabalho = true;',
       '// Ferramentas e método que uso no dia a dia',
-      'public static final List<String> TOOLS = List.of("Claude Code", "Codex");',
-      'public static final String METHODOLOGY = "SDD (Spec-Driven Development)";',
+      'List<String> ferramentas = List.of("Claude Code", "Codex");',
+      'String metodologia = "SDD (Spec-Driven Development)";',
       '}',
     ]);
   });
 
   it.each([
-    ['IS_JUST_A_TREND', 'false'],
-    ['IS_PART_OF_THE_JOB', 'true'],
+    ['modismo', 'false'],
+    ['parteDoTrabalho', 'true'],
   ])('colore boolean %s como declaração e %s como valor', async (campo, valor) => {
     const linha = linhaDe(await renderizar(), `boolean ${campo}`);
 
@@ -68,10 +69,10 @@ describe('ComoUsoIa', () => {
   it('recua os campos um nível e a classe zero', async () => {
     const raiz = await renderizar();
 
-    for (const campo of ['boolean IS_JUST_A_TREND', 'boolean IS_PART_OF_THE_JOB', 'TOOLS']) {
+    for (const campo of ['boolean modismo', 'boolean parteDoTrabalho', 'ferramentas']) {
       expect(linhaDe(raiz, campo)?.style.getPropertyValue('--recuo')).toBe('1');
     }
-    expect(linhaDe(raiz, 'final class')?.style.getPropertyValue('--recuo')).toBe('0');
+    expect(linhaDe(raiz, 'public class')?.style.getPropertyValue('--recuo')).toBe('0');
   });
 
   it('lista as ferramentas e a metodologia como literais', async () => {
@@ -87,7 +88,7 @@ describe('ComoUsoIa', () => {
     const bloco = raiz.querySelector('.javadoc');
 
     expect(bloco?.textContent).toContain(INICIO_DO_PARAGRAFO);
-    expect(bloco?.nextElementSibling?.textContent).toContain('public final class');
+    expect(bloco?.nextElementSibling?.textContent).toContain('public class');
   });
 
   it('começa e termina o parágrafo com os textos da spec', async () => {

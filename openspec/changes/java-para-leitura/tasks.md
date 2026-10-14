@@ -7,7 +7,7 @@
 ## 2. Reescrita [Grafite e Nanquim]
 
 - [ ] 2.1 [Grafite] `inicio` (vira `PortfolioApplication.java`, com `ARQUIVO_INICIO`), `sobre-mim`, `diferenciais`, `como-uso-ia`, `skills`, `experiencias`, `certificacoes` — verificar com `npm run test:ci`
-- [ ] 2.2 [Nanquim] `projeto-1` a `projeto-4`, `formacao`, `idiomas`, `depoimentos`, `contato` — verificar com `npm run test:ci`
+- [x] 2.2 [Nanquim] `projeto-1` a `projeto-4`, `formacao`, `idiomas`, `depoimentos`, `contato` — verificar com `npm run test:ci`
 
 ## 3. Testes [Sentinela]
 
