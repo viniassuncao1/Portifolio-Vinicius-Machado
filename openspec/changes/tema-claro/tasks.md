@@ -2,7 +2,7 @@
 
 ## 1. Mecanismo [Nanquim]
 
-- [ ] 1.1 Script inline no `index.html` e serviço `Tema` em `core/` (signal, `alternar()`, `localStorage`, `data-tema`, `color-scheme`, `theme-color`), sem acesso ao navegador no servidor, com testes — verificar com `npm run test:ci` e recarregando no portal
+- [x] 1.1 Script inline no `index.html` e serviço `Tema` em `core/` (signal, `alternar()`, `localStorage`, `data-tema`, `color-scheme`, `theme-color`), sem acesso ao navegador no servidor, com testes — verificar com `npm run test:ci` e recarregando no portal
 
 ## 2. Visual [Pincel]
 
