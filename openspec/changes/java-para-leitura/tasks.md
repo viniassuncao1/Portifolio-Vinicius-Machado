@@ -2,7 +2,7 @@
 
 ## 1. Exemplo [Grafite]
 
-- [ ] 1.1 Reescrever `eventos` no novo estilo como seção de exemplo e pedir revisão ao Regente — verificar no portal
+- [x] 1.1 Reescrever `eventos` no novo estilo como seção de exemplo e pedir revisão ao Regente — verificar no portal
 
 ## 2. Reescrita [Grafite e Nanquim]
 
