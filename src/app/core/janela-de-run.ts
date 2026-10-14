@@ -14,7 +14,7 @@ const MOVIMENTO_REDUZIDO = '(prefers-reduced-motion: reduce)';
  * fechar. A data e a hora do log são geradas no navegador, na abertura.
  *
  * Para o Compasso animar o log: `execucao` muda a cada (re)início, `terminado` diz se o log já
- * está completo (hoje nasce completo) e `concluir()` marca o fim da revelação.
+ * está completo (nasce completo só com movimento reduzido) e `concluir()` marca o fim da revelação.
  */
 @Service()
 export class JanelaDeRun {
@@ -67,6 +67,8 @@ export class JanelaDeRun {
     this.origem.set(origem);
     this.pedirFoco.set(comFoco);
     this.horaDoInicio.set(new Date());
+    // Com movimento reduzido o log já nasce completo; senão o componente o revela e conclui.
+    this.logTerminado.set(this.movimentoReduzido());
     this.numeroDaExecucao.update((n) => n + 1);
     this.area.abrir('run');
   }

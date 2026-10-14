@@ -24,7 +24,7 @@
       tabindex="0"
       role="region"
       aria-label="Log de inicialização do PortfolioApplication"
-    ><code>@for (linha of linhas(); track $index; let i = $index) {<span class="linha" [attr.data-indice]="i" [style.--indice]="i">@for (trecho of linha.trechos; track $index) {<span [class]="'papel-' + trecho.papel">{{ trecho.texto }}</span>}</span>}</code></pre>
+    ><code>@for (linha of linhas(); track $index; let i = $index) {<span class="linha" [class.oculta]="!visivel(i)" [attr.data-indice]="i" [style.--indice]="i">@for (trecho of linha.trechos; track $index) {<span [class]="'papel-' + trecho.papel">{{ trecho.texto }}</span>}</span>}</code></pre>
     <p class="somente-leitores" aria-live="polite">{{ anuncio() }}</p>
   </section>
 }

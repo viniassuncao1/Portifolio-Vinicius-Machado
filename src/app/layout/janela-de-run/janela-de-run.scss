@@ -155,3 +155,25 @@
     flex-basis: min(var(--altura-janela-de-run), 20rem);
   }
 }
+
+// Revelação do log: linhas ainda não reveladas ficam escondidas (o texto segue no DOM) e cada uma
+// que aparece faz um fade curto de `opacity`. Com movimento reduzido o log já nasce completo.
+.linha.oculta {
+  visibility: hidden;
+}
+
+.janela[data-terminado='false'] .linha:not(.oculta) {
+  animation: linha-aparecer var(--duracao-rapida) var(--curva-saida);
+}
+
+@keyframes linha-aparecer {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .janela[data-terminado='false'] .linha:not(.oculta) {
+    animation: none;
+  }
+}

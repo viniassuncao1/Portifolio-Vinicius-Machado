@@ -1,5 +1,6 @@
 import {
   Component,
+  DestroyRef,
   ElementRef,
   Injector,
   afterNextRender,
@@ -7,6 +8,7 @@ import {
   effect,
   inject,
   signal,
+  untracked,
   viewChild,
 } from '@angular/core';
 
@@ -14,10 +16,17 @@ import { JanelaDeRun } from '../../core/janela-de-run';
 import { GlifoFechar } from '../../shared/glifo-fechar/glifo-fechar';
 import { montarLog } from './log';
 
+/** Linhas reveladas de uma vez: o banner do Spring, a versão e a linha em branco. */
+const LINHAS_DO_BANNER = 8;
+const INTERVALO_ENTRE_LINHAS_MS = 200;
+/** Teto da revelação: o log completo aparece em até 2,5 s, mesmo se os intervalos atrasarem. */
+const DURACAO_MAXIMA_MS = 2500;
+
 /**
  * Janela de Run na parte de baixo da IDE, dividindo a área com o painel do Git. Mostra o log de
- * inicialização (texto, nunca imagem); por enquanto o log aparece completo e o Compasso o revela
- * linha a linha: cada `.linha` tem `--indice` e a seção tem `data-execucao` e `data-terminado`. A
+ * inicialização (texto, nunca imagem); o log é revelado em até 2,5 s (banner de uma vez, depois uma linha a cada
+ * ~200 ms) e "Pular" o completa na hora. O texto fica sempre no DOM; as linhas ainda não reveladas
+ * só ficam escondidas, e um teto de tempo garante o log completo mesmo sem os intervalos. A
  * linha final é anunciada uma vez, por uma região `aria-live="polite"`, quando o log termina. Pular
  * e fechar ficam no cabeçalho; Esc fecha com o foco dentro da janela. Abre sem roubar o foco, a
  * não ser que o visitante tenha pedido pelo Executar.
@@ -44,8 +53,18 @@ export class JanelaDeRunComponente {
     return inicio ? montarLog(inicio) : [];
   });
   protected readonly anuncio = signal('');
+  /** Quantas linhas já foram reveladas nesta execução. */
+  protected readonly reveladas = signal(0);
+  private temporizadores: ReturnType<typeof setTimeout>[] = [];
 
   constructor() {
+    inject(DestroyRef).onDestroy(() => this.cancelarRevelacao());
+    // Cada execução recomeça a revelação; terminado (pular, movimento reduzido) mostra tudo.
+    effect(() => {
+      void this.run.execucao();
+      const terminado = this.run.terminado();
+      untracked(() => (terminado ? this.cancelarRevelacao() : this.revelar()));
+    });
     effect(() => {
       if (!this.run.aberto() || !this.run.focarAoAbrir()) return;
       void this.run.execucao();
@@ -67,6 +86,31 @@ export class JanelaDeRunComponente {
         });
       }
     });
+  }
+
+  protected visivel(indice: number): boolean {
+    return this.run.terminado() || indice < this.reveladas();
+  }
+
+  private revelar(): void {
+    this.cancelarRevelacao();
+    const total = this.linhas().length;
+    this.reveladas.set(Math.min(LINHAS_DO_BANNER, total));
+    const restantes = Math.max(total - LINHAS_DO_BANNER, 0);
+    for (let i = 1; i <= restantes; i++) {
+      this.temporizadores.push(
+        setTimeout(() => this.reveladas.set(LINHAS_DO_BANNER + i), i * INTERVALO_ENTRE_LINHAS_MS),
+      );
+    }
+    const fim = Math.min(restantes * INTERVALO_ENTRE_LINHAS_MS, DURACAO_MAXIMA_MS);
+    this.temporizadores.push(setTimeout(() => this.run.concluir(), fim));
+    // Rede de segurança: nada depende de os intervalos acima rodarem em dia.
+    this.temporizadores.push(setTimeout(() => this.run.concluir(), DURACAO_MAXIMA_MS));
+  }
+
+  private cancelarRevelacao(): void {
+    this.temporizadores.forEach(clearTimeout);
+    this.temporizadores = [];
   }
 
   private rolarParaOFim(): void {
