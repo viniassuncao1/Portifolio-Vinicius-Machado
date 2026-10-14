@@ -11,6 +11,8 @@ import { HistoricoDeDigitacao } from './historico-de-digitacao';
 
 const DURACAO_MAXIMA_MS = 1500;
 const MS_POR_ITEM = 40;
+/** Muito acima dos 38 itens em que o limite de 1,5 s passa a valer (38 x 40 ms); mais que isso só pesa a renderização. */
+const CONTEUDO_LONGO = 500;
 
 const conteudoComItens = (quantidade: number): ConteudoDoEditor =>
   Array.from({ length: quantidade }, (_, i) =>
@@ -95,7 +97,7 @@ describe('Digitação do editor: comportamento', () => {
     });
 
     it('nunca passa de 1,5 s, por mais itens que o conteúdo tenha', () => {
-      const editor = abrir(conteudoComItens(5000));
+      const editor = abrir(conteudoComItens(CONTEUDO_LONGO));
 
       avancar(0);
       avancar(DURACAO_MAXIMA_MS);
