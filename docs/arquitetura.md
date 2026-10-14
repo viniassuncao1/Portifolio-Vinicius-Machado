@@ -175,9 +175,36 @@ e são servidas pelo próprio site: não há Google Fonts nem outra requisição
 
 ### Ajustes nativos
 
-`color-scheme: dark` (controles e barras de rolagem nativos escuros), `theme-color` (a barra do navegador no
-celular, na cor da barra do design), números tabulares nos números de linha e na posição do cursor
+`color-scheme` e `theme-color` acompanham o tema (veja abaixo), números tabulares nos números de linha e na posição do cursor
 e `translate="no"` no código, para o tradutor automático não mexer no Java exibido.
+
+### Tema claro e escuro
+
+O site tem dois temas ([ADR-0014](adr/0014-tema-claro.md)), feitos só por tokens.
+
+- **Tokens.** O bloco `:root` de `_tokens.scss` é o tema escuro. O claro redefine os mesmos tokens
+  em `:root[data-tema='claro']`, com a paleta derivada do design (mesma hierarquia de cinzas) e o
+  Java do IntelliJ Light. Um `@mixin tema-claro` evita repetir os valores.
+- **Sem piscar num site SSG.** O HTML chega pré-renderizado e o Angular hidrata depois, então o
+  tema não pode esperar o JavaScript do app. Um **script inline** mínimo no `<head>` do
+  `index.html`, antes dos estilos, lê `localStorage['tema']` (ou, sem valor,
+  `prefers-color-scheme`), aplica `data-tema` no `<html>` e ajusta `color-scheme` e `theme-color`,
+  tudo com `try/catch`. É a única exceção à regra de não ter JavaScript fora do Angular.
+- **Sem JavaScript.** Enquanto o `<html>` não tem `data-tema`, um
+  `@media (prefers-color-scheme: light) { :root:not([data-tema]) { … } }` aplica o claro pelo CSS.
+- **Serviço `Tema`** (`core/tema.ts`, `@Service`): lê o `data-tema` que o script já aplicou (e não o
+  recalcula, para não divergir do pré-render), expõe os signals `tema` e `claro` e troca com
+  `alternar()` ou `escolher()`: atualiza `data-tema`, `color-scheme`, a meta `theme-color` (a cor
+  vem do token `--cor-painel`) e grava no `localStorage`. No servidor não toca em
+  `localStorage`, `matchMedia` nem no `<html>`.
+- **`theme-color`.** Acompanha o tema: `#2B2B2B` no escuro e `#ECECEC` no claro, a cor da barra do
+  navegador no celular.
+- **Ícones.** Os do design servem nos dois temas; os da IntelliJ Platform têm a variante clara em
+  `public/icones/new-ui/claro/`, escolhida pelos tokens `--exibir-icone-escuro` e
+  `--exibir-icone-claro`, sem JavaScript.
+- **Testes.** O `playwright.config.ts` fixa `colorScheme: 'dark'`: a suíte foi escrita para o escuro
+  e, com o script inline respeitando o sistema, o Playwright (que sem isso emula o claro) passaria
+  a rodar tudo no claro. O tema claro é pedido por teste, com `emulateMedia`.
 
 ## Acessibilidade
 
