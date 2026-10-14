@@ -8,13 +8,13 @@ branch do Git e as ações de executar e buscar.
 ## ADDED Requirements
 
 ### Requirement: Barra de ferramentas do design com Git
-A barra superior SHALL seguir o design original (degradê, ícones à esquerda e controles de janela
-à direita), com os ícones da IntelliJ Platform na variante clara e um indicador de branch com o
-ícone de branch e o nome `master`, decorativo.
+A barra superior SHALL ter fundo escuro nos cinzas do design (sem o degradê claro), ícones do
+design à esquerda, controles de janela à direita e um indicador de branch com o ícone de branch e
+o nome `master`, decorativo.
 
 #### Scenario: Abertura do site
 - **WHEN** o visitante abre qualquer página no desktop
-- **THEN** a barra superior mostra o degradê do design, os ícones de IDE e o indicador `master`
+- **THEN** a barra superior é escura, com os ícones do design e o indicador `master`
 
 ### Requirement: Ações da barra superior
 Buscar MUST abrir a busca de seções; Executar MUST abrir o preview nos projetos com site e ficar

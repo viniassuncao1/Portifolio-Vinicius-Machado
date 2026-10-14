@@ -24,6 +24,9 @@
 - [x] 3.6 [Pincel] Cores de sintaxe do Java do IntelliJ de volta no editor, com contraste ≥4,5:1 sobre o fundo do design — verificar com captura `sintaxe-java.png`
 - [x] 3.7 [Pincel] Executar na calha (▶ na linha `public class`) nos projetos com site, no lugar do botão "▶ Executar" sobre o código — verificar com captura `executar-calha.png`
 
+- [ ] 3.8 [Pincel] Ícones do design (`public/icones/*.svg`, estilo das telas) na árvore em pastas, nos arquivos, nas abas e na barra de ferramentas; IntelliJ só no ▶ da calha, na branch e na faixa; créditos ajustados — verificar com captura `icones-design.png` ao lado de `tela-05.png`
+- [ ] 3.9 [Pincel] Barra de ferramentas escura nos cinzas do design (sem o degradê claro), com ícones, `master` e controles de janela legíveis e foco rosa — verificar com captura `barra-escura.png`
+
 ## 4. Testes [Sentinela]
 
 - [x] 4.1 Cobrir as specs da primeira versão com axe

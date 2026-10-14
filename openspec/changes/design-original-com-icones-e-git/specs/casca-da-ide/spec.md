@@ -3,7 +3,7 @@
 ## MODIFIED Requirements
 
 ### Requirement: Estrutura fixa da IDE
-Toda página SHALL exibir a barra de ferramentas do design no topo, a faixa de ferramentas e o
+Toda página SHALL exibir a barra de ferramentas escura no topo, a faixa de ferramentas e o
 painel do projeto (com o cabeçalho `Portfolio_Vinicius` do design) à esquerda e, à direita, a
 faixa de abas sobre o editor de cantos arredondados, com a barra de status no rodapé.
 
@@ -41,8 +41,8 @@ ocupar a largura disponível sem rolagem horizontal da página.
 O painel lateral SHALL mostrar o projeto em pastas (pacotes), como numa IDE, nesta ordem:
 `sobre` (Sobre Mim, Diferenciais, Como uso a IA), `skills` (Skills / STACK), `experiencias`
 (Experiências), `projetos` (Projeto 1 a 4), `formacao` (Certificações, Eventos, Formação,
-Idiomas), `recomendacoes` (Depoimentos/Recomendações) e `contato` (Contato). Cada seção é um
-arquivo `.java` dentro da sua pasta, com o ícone de Java; clicar numa pasta SHALL expandir ou
+Idiomas), `recomendacoes` (Depoimentos/Recomendações) e `contato` (Contato). Pastas e arquivos usam os ícones
+do design; cada seção é um arquivo `.java` dentro da sua pasta; clicar numa pasta SHALL expandir ou
 recolher os arquivos dela.
 
 #### Scenario: Lista completa

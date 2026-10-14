@@ -55,6 +55,18 @@ barra de status ficam, nas cores do design (cinzas do painel e da faixa de abas,
 Barra compacta com Projeto e Buscar, no degradê do design; rodapé com o arquivo e
 `linha:coluna`.
 
+### 5. Revisão do Vinicius (ícones do design e barra escura)
+
+Depois de ver a versão com degradê, o Vinicius pediu: manter a árvore em pastas, usar os **ícones
+do design** (os SVGs de `public/icones/*.svg`, no estilo das telas) e trocar a **barra branca de
+cima**, que destoava. Decisões, que prevalecem sobre as seções 2 e 4:
+
+- Barra de ferramentas e barra do celular com fundo escuro nos cinzas do design (sem degradê),
+  ícones do design, `master`, controles de janela e foco rosa (o anel escuro da exceção sai).
+- Árvore, arquivos e abas com os ícones do design; os da IntelliJ Platform ficam só no ▶ da
+  calha, na branch e na faixa de ferramentas, e a variante clara sai.
+- As cores de sintaxe do Java do IntelliJ, a árvore em pastas e o ▶ da calha continuam.
+
 ## Risks / Trade-offs
 
 - [Ícones escuros sobre o degradê claro] → variante clara na barra, conferida no contraste.

@@ -4,8 +4,8 @@
 
 ### Requirement: Design como referência
 As telas em `design/telas/` SHALL ser a referência das informações e da identidade visual
-(paleta, degradê da barra de ferramentas, editor de cantos arredondados, abas e cabeçalho do
-painel). Do IntelliJ IDEA ficam os ícones da IntelliJ Platform, o projeto em pacotes, as
+(paleta da interface, ícones, editor de cantos arredondados, abas e cabeçalho do painel). Do
+IntelliJ IDEA ficam o projeto em pastas, as
 referências ao Git, a faixa de ferramentas, a barra de status com o caminho do arquivo, a
 tipografia compacta e as cores de sintaxe do Java (palavras-chave laranja `#CF8E6D`, textos
 verdes `#6AAB73`, números `#2AACB8`, anotações `#B3AE60`, campos `#C77DBA`, comentários
@@ -14,9 +14,9 @@ acessibilidade, e MUST ser registrados no design da change.
 
 #### Scenario: Comparação com a tela 01
 - **WHEN** a página inicial é aberta numa janela de 1920x1080
-- **THEN** as informações e as cores da interface batem com a `tela-01.png`: barra com degradê,
-  painel e editor nos cinzas do design e editor com cantos arredondados; o código usa as cores
-  de sintaxe do Java do IntelliJ
+- **THEN** as informações, os ícones e as cores da interface batem com a `tela-01.png`: painel e
+  editor nos cinzas do design e editor com cantos arredondados; a barra de ferramentas é escura
+  (desvio registrado) e o código usa as cores de sintaxe do Java do IntelliJ
 
 #### Scenario: Desvio intencional
 - **WHEN** uma change acrescenta algo que não existe no design
@@ -42,10 +42,11 @@ design (`#2B2B2B`) e números tabulares nos números de linha e na posição do 
 ## ADDED Requirements
 
 ### Requirement: Ícones oficiais com créditos
-Os ícones da interface SHALL vir da IntelliJ Platform (variante clara sobre a barra de
-ferramentas, escura no resto), servidos pelo próprio site, com um arquivo de créditos que cita a
-origem, o aviso de copyright e a licença Apache 2.0. Logotipos de produtos e marcas da JetBrains
-MUST NOT ser usados.
+Os ícones da interface SHALL ser os do design (árvore, pastas, arquivos, abas e barra de
+ferramentas). Onde o design não tem equivalente (▶ da calha, branch, faixa de ferramentas), os
+ícones SHALL vir da IntelliJ Platform, servidos pelo próprio site, com um arquivo de créditos que
+cita a origem, o aviso de copyright e a licença Apache 2.0. Logotipos de produtos e marcas da
+JetBrains MUST NOT ser usados.
 
 #### Scenario: Créditos publicados
 - **WHEN** alguém procura a origem dos ícones no repositório

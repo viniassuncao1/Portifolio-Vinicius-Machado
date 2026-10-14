@@ -34,6 +34,8 @@ superior, faixa e status já implementados na branch) e é ajustada para o novo 
   design.
 - **Executar na calha** (antecipado da change 4): ▶ na linha `public class` dos projetos com
   site, no lugar do botão "▶ Executar" sobre o código.
+- **Revisão final do Vinicius:** ícones do design na árvore, nas abas e na barra, e barra de
+  ferramentas escura no lugar do degradê claro (detalhes na seção 5 do design).
 - ADR-0012, `CLAUDE.md` e a entrada 0011 do diário contando a virada de rumo.
 
 Fora do escopo: árvore em pacotes e fim da paginação (change 3), Executar na calha (4), janela de
