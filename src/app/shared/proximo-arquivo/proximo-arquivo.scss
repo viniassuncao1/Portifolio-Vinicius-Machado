@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+.proximo {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--tamanho-alvo-toque);
+  margin-inline-start: var(--espaco-4);
+  color: var(--cor-sintaxe-comentario, var(--cor-texto-esmaecido));
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-codigo);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+}
