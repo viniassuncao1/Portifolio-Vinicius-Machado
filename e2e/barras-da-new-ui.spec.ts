@@ -164,6 +164,26 @@ test.describe('Barra superior (desktop)', () => {
   });
 });
 
+test.describe('Ícones da barra de ferramentas do design', () => {
+  test.use({ viewport: DESKTOP });
+
+  test('a barra usa a variante clara dos ícones, por causa do degradê, e o resto a escura', async ({
+    page,
+  }) => {
+    await page.goto('/projeto-2');
+    const origens = (seletor: string) =>
+      page.locator(seletor).evaluateAll((els) => els.map((el) => el.getAttribute('src')));
+
+    const daBarra = await origens('app-barra-de-ferramentas app-icone img');
+    const doPainel = await origens('app-painel-lateral app-icone img');
+
+    expect(daBarra.length).toBeGreaterThanOrEqual(5);
+    for (const src of daBarra) expect(src).toContain('icones/new-ui/claro/');
+    expect(doPainel.length).toBeGreaterThan(0);
+    for (const src of doPainel) expect(src).not.toContain('/claro/');
+  });
+});
+
 test.describe('Estrutura fixa da IDE', () => {
   test.use({ viewport: DESKTOP });
 
@@ -193,7 +213,7 @@ test.describe('Estrutura fixa da IDE', () => {
     }
   });
 
-  test('o painel começa com o cabeçalho "Projeto" e o botão da faixa volta a mostrá-lo', async ({
+  test('o painel começa com o cabeçalho Portfolio_Vinicius, decorativo, e o botão da faixa volta a mostrá-lo', async ({
     page,
   }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -201,7 +221,9 @@ test.describe('Estrutura fixa da IDE', () => {
     const painel = page.locator('app-painel-lateral');
     const botao = page.locator('app-faixa-de-ferramentas').getByRole('button', { name: 'Projeto' });
 
-    await expect(painel).toContainText('Projeto');
+    const cabecalho = painel.locator('.cabecalho');
+    await expect(cabecalho).toContainText('Portfolio_Vinicius');
+    await expect(cabecalho).toHaveAttribute('aria-hidden', 'true');
     await botao.click();
     await expect(painel).toBeHidden();
     await expect(botao).toHaveAttribute('aria-pressed', 'false');
