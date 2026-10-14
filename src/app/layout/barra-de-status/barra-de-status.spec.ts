@@ -84,10 +84,11 @@ describe('BarraDeStatus', () => {
     expect(raiz.querySelector('.posicao')?.textContent).toBe('7:1');
   });
 
-  it('é uma região status e só o arquivo fica na leitura, sem a posição do cursor', async () => {
+  it('é o landmark contentinfo e só o arquivo é status, sem a posição do cursor', async () => {
     const { raiz } = await abrir('/skills');
 
-    expect(raiz.querySelector('[role="status"]')).not.toBeNull();
+    expect(raiz.querySelector('footer')?.hasAttribute('role')).toBe(false);
+    expect(raiz.querySelector('.arquivo')?.getAttribute('role')).toBe('status');
     expect(raiz.querySelector('.posicao')?.getAttribute('aria-hidden')).toBe('true');
     expect(raiz.querySelector('.arquivo')?.hasAttribute('aria-hidden')).toBe(false);
   });
@@ -102,6 +103,7 @@ describe('BarraDeStatus: aviso de inicialização', () => {
     const fixture = TestBed.createComponent(BarraDeStatus);
     fixture.detectChanges();
     const aviso = () => (fixture.nativeElement as HTMLElement).querySelector('.aviso')!;
+    expect(aviso().getAttribute('role')).toBe('status');
     expect(aviso().getAttribute('aria-live')).toBe('polite');
     expect(aviso().textContent).toBe('');
 

@@ -11,8 +11,9 @@ import { Icone } from '../../shared/icone/icone';
 const REPOSITORIO = 'https://github.com/viniassuncao1/Portifolio-Vinicius-Machado';
 
 /**
- * Barra de status da New UI no rodapé da casca. É uma região `status`, mas só o nome do arquivo é
- * lido: o caminho e a posição do cursor (que muda a cada clique) ficam fora da leitura.
+ * Barra de status da New UI no rodapé da casca. É o landmark `contentinfo` (`<footer>`; `role=status` não
+ * é permitido nele). Só o nome do arquivo e o aviso de inicialização são regiões `status`, lidas ao
+ * mudar: o caminho e a posição do cursor (que muda a cada clique) ficam fora da leitura.
  */
 @Component({
   selector: 'app-barra-de-status',
