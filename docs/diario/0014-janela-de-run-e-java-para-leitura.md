@@ -1,8 +1,8 @@
 # 0014: Janela de Run e Java para leitura
 
 - **Data:** 2026-10-14
-- **Changes:** [janela-de-run](../../openspec/changes/janela-de-run/) e [java-para-leitura](../../openspec/changes/java-para-leitura/)
-- **PR:** #PR_A_DEFINIR
+- **Changes:** [janela-de-run](../../openspec/changes/archive/2026-10-14-janela-de-run/) e [java-para-leitura](../../openspec/changes/archive/2026-10-14-java-para-leitura/)
+- **PR:** [#30](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/30)
 - **ADRs:** [0011](../adr/0011-identidade-visual-intellij-new-ui.md) (itens 3 e do Run, mantidos pelo [0012](../adr/0012-design-original-com-elementos-do-intellij.md))
 
 ![A janela de Run com o log de inicialização do Spring](imagens/0014-run-desktop.png)
@@ -48,11 +48,11 @@ em tudo, constantes em caixa alta (`MY_SKILLS`, `LUANA_PORTO`) e uma página ini
   nada a quem só quer ler.
 - **Duas changes, um PR.** Mesmo com faixas diferentes, as duas cabem juntas porque tocam áreas
   separadas (a casca e o conteúdo), e a mesma branch evitou conflitos.
-- **Números finais.** Testes unitários: a definir. Testes E2E: a definir.
+- **Números finais.** 771 testes unitários (96,8% de cobertura de instruções) e 732 testes E2E.
 
 ## Links
 
-- Changes: [`janela-de-run`](../../openspec/changes/janela-de-run/) e [`java-para-leitura`](../../openspec/changes/java-para-leitura/)
+- Changes: [`janela-de-run`](../../openspec/changes/archive/2026-10-14-janela-de-run/) e [`java-para-leitura`](../../openspec/changes/archive/2026-10-14-java-para-leitura/)
 - Documentação: [guia de estilo do Java](../componentes.md#guia-de-estilo), [janela de Run](../componentes.md) e [arquitetura](../arquitetura.md#área-de-baixo-git-e-run)
 - Entrada anterior: [0013 tema claro](0013-tema-claro.md)
 

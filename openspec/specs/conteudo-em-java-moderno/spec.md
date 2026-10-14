@@ -28,13 +28,19 @@ que as classes referenciadas não existam no projeto.
 - **THEN** o compilador não acusa erro de sintaxe
 
 ### Requirement: Convenções de mercado
-Identificadores de código SHALL seguir as convenções do Java (classes em PascalCase, campos e
-métodos em camelCase, constantes em UPPER_SNAKE_CASE) e ficar em inglês; textos para o leitor
-(descrições, cargos, parágrafos) ficam em pt-BR.
+Identificadores de código SHALL seguir a forma das convenções do Java (tipos em PascalCase,
+campos, variáveis e métodos em camelCase), com os nomes de domínio em português sem acento; o
+inglês fica só nas palavras da linguagem, da biblioteca padrão e do Spring. Dados MUST NOT ser
+declarados como constantes `static final` em caixa alta. Textos para o leitor ficam em pt-BR.
 
 #### Scenario: Nome de campo
 - **WHEN** uma seção declara a cidade do Vinicius
-- **THEN** o campo se chama `city` e o valor é `"Brasília"`
+- **THEN** o campo se chama `cidade` e o valor é `"Brasília"`
+
+#### Scenario: Recomendação
+- **WHEN** a seção de recomendações mostra a da Luana
+- **THEN** o código usa `record Recomendacao(...)` e uma variável `luana`, sem `static final` e
+  sem nome em caixa alta
 
 ### Requirement: Informações preservadas
 Ao reescrever uma seção em Java moderno, todas as informações do design (nomes, cargos,
