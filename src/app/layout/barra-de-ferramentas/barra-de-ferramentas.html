@@ -2,12 +2,12 @@
   #botaoProjeto
   type="button"
   class="botao projeto-celular"
-  aria-label="Projeto"
   aria-controls="painel-lateral"
   [attr.aria-expanded]="gavetaAberta()"
   (click)="alternarGaveta.emit()"
 >
   <app-icone nome="design-projeto" />
+  <span class="rotulo-celular">Seções</span>
 </button>
 <span class="botao decorativo" aria-hidden="true"><app-icone nome="design-arquivo" /></span>
 <span class="botao decorativo" aria-hidden="true"><app-icone nome="design-pasta" /></span>

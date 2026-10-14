@@ -57,6 +57,9 @@ export class ArvoreDeSecoes {
   /** No Início a primeira seção aparece destacada e expandida, sem `aria-current`. */
   readonly noInicio = input(false);
 
+  /** Abre todas as pastas (a gaveta do celular, onde o visitante procura a seção). */
+  readonly todasAbertas = input(false);
+
   /** Emitido quando o visitante escolhe uma seção (a gaveta usa para se fechar). */
   readonly secaoEscolhida = output<void>();
 
@@ -74,9 +77,10 @@ export class ArvoreDeSecoes {
   );
 
   /** Pastas abertas: a da seção atual abre ao navegar e as que o visitante abriu continuam abertas. */
-  private readonly abertas = linkedSignal<Pacote, ReadonlySet<Pacote>>({
-    source: this.pacoteAtual,
-    computation: (pacote, anterior) => new Set([...(anterior?.value ?? []), pacote]),
+  private readonly abertas = linkedSignal<{ pacote: Pacote; todas: boolean }, ReadonlySet<Pacote>>({
+    source: () => ({ pacote: this.pacoteAtual(), todas: this.todasAbertas() }),
+    computation: ({ pacote, todas }, anterior) =>
+      new Set([...(anterior?.value ?? []), pacote, ...(todas ? PASTAS.map((p) => p.pacote) : [])]),
   });
 
   /** Item que entra na ordem de Tab (roving tabindex): a seção atual ou o último item focado. */

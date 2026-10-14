@@ -73,6 +73,16 @@ button.botao {
 // O botão Projeto só existe no celular, onde a faixa de ferramentas some.
 .projeto-celular {
   display: none;
+  gap: var(--espaco-1);
+  width: auto;
+  padding-inline: var(--espaco-2);
+  color: inherit;
+  font: inherit;
+}
+
+// Ícones decorativos mais apagados que os botões reais, sem hover.
+.decorativo {
+  opacity: 0.55;
 }
 
 .controles-janela {
@@ -91,7 +101,8 @@ button.botao {
 @media (max-width: 767.98px) {
   .projeto-celular {
     display: flex;
-    width: var(--tamanho-alvo-toque);
+    width: auto;
+    min-width: var(--tamanho-alvo-toque);
     height: var(--tamanho-alvo-toque);
   }
 

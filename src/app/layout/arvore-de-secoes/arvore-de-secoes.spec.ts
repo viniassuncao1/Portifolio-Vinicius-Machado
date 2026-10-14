@@ -57,6 +57,20 @@ describe('ArvoreDeSecoes', () => {
     );
   });
 
+  it('abre todas as pastas quando a gaveta do celular está aberta', async () => {
+    const { fixture, raiz } = await abrir('/');
+    expect(raiz.querySelectorAll('[data-tipo=pasta][aria-expanded=true]').length).toBeLessThan(
+      PACOTES.length,
+    );
+
+    fixture.componentRef.setInput('todasAbertas', true);
+    await fixture.whenStable();
+
+    expect(raiz.querySelectorAll('[data-tipo=pasta][aria-expanded=true]')).toHaveLength(
+      PACOTES.length,
+    );
+  });
+
   it('é uma árvore ARIA com itens de dois níveis', async () => {
     const { raiz } = await abrir('/projeto-2');
 

@@ -112,11 +112,11 @@ describe('BarraDeFerramentas', () => {
   it('só tem como botões o Projeto do celular, o Executar, o Buscar, o tema e a branch', async () => {
     const { raiz } = await montar();
     const nomes = Array.from(raiz.querySelectorAll('button')).map((b) =>
-      b.getAttribute('aria-label'),
+      (b.getAttribute('aria-label') ?? b.textContent ?? '').trim(),
     );
 
     expect(nomes).toEqual([
-      'Projeto',
+      'Seções',
       'Executar PortfolioApplication',
       'Buscar seção (Ctrl+P)',
       'Usar tema claro',
