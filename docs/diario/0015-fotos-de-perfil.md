@@ -1,7 +1,7 @@
 # 0015: Fotos de perfil
 
 - **Data:** 2026-10-14
-- **Change:** [fotos-de-perfil](../../openspec/changes/fotos-de-perfil/)
+- **Change:** [fotos-de-perfil](../../openspec/changes/archive/2026-10-14-fotos-de-perfil/)
 - **PR:** [#31](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/31)
 - **ADRs:** nenhum novo. A change segue o [ADR-0012](../adr/0012-design-original-com-elementos-do-intellij.md).
 
@@ -40,13 +40,13 @@ ideia de "código dentro da IDE"**.
   recomendação.
 - **Foto é peso e é layout.** Tamanho fixo e WebP de poucos KB evitam deslocamento de layout e
   mantêm a página leve.
-- **Números finais.** Testes unitários: a definir. Testes E2E: a definir.
+- **Números finais.** 781 testes unitários (96,87% de cobertura de instruções) e 766 testes E2E.
 
 ![O retrato no celular](imagens/0015-fotos-mobile.png)
 
 ## Links
 
-- Change: [`openspec/changes/fotos-de-perfil`](../../openspec/changes/fotos-de-perfil/)
+- Change: [`openspec/changes/fotos-de-perfil`](../../openspec/changes/archive/2026-10-14-fotos-de-perfil/)
 - Documentação: [componentes](../componentes.md#editordecodigo)
 - Entrada anterior: [0014 janela de Run e Java para leitura](0014-janela-de-run-e-java-para-leitura.md)
 
