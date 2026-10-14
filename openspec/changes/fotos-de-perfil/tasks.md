@@ -10,7 +10,7 @@
 
 ## 3. Testes [Sentinela]
 
-- [ ] 3.1 Cobrir as specs (retrato, alt, link em nova aba com rel seguro, sem deslocamento de layout, axe nos dois temas, celular) — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
+- [x] 3.1 Cobrir as specs (retrato, alt, link em nova aba com rel seguro, sem deslocamento de layout, axe nos dois temas, celular) — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
 
 ## 4. Documentação e integração
 
