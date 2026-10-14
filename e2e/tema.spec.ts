@@ -1,11 +1,16 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
-import { COR_DO_FOCO, COR_ROSA_ANTIGA, CORES_DE_SINTAXE, abrirHidratada } from './apoio';
+import { COR_DO_FOCO, CORES_DE_SINTAXE, abrirHidratada } from './apoio';
 
-const FUNDO_DO_EDITOR = 'rgb(30, 31, 34)';
-const FUNDO_DO_PAINEL = 'rgb(43, 45, 48)';
-const FUNDO_DA_LINHA_ATUAL = 'rgb(38, 40, 46)';
+const FUNDO_DA_PAGINA = 'rgb(28, 28, 28)';
+const FUNDO_DO_EDITOR = 'rgb(43, 43, 43)';
+const FUNDO_DO_PAINEL = 'rgb(43, 43, 43)';
+const FUNDO_DA_FAIXA_DE_ABAS = 'rgb(87, 87, 87)';
+const FUNDO_DA_LINHA_ATUAL = 'rgb(27, 27, 27)';
+/** Foco escuro da barra de ferramentas, cujo fundo é o degradê claro (exceção aceita ao rosa). */
+const COR_DO_FOCO_NA_BARRA = 'rgb(27, 27, 27)';
+const COR_AZUL_DO_INTELLIJ = 'rgb(53, 116, 240)';
 const CONTRASTE_AA = 4.5;
 const ARVORE = 'nav[aria-label="Seções do portfólio"]';
 
@@ -30,40 +35,65 @@ const cor = (page: Page, seletor: string, propriedade: 'color' | 'backgroundColo
     .first()
     .evaluate((el, p) => getComputedStyle(el)[p as 'color'], propriedade);
 
-test.describe('Paleta Dark do IntelliJ New UI', () => {
+test.describe('Paleta e formas do design original', () => {
   test.use({ viewport: { width: 1920, height: 1080 } });
 
-  test('o editor, o painel e as barras usam os fundos da New UI, sem degradê', async ({ page }) => {
+  test('a página, o editor, o painel e o degradê da faixa de abas usam as cores do design', async ({
+    page,
+  }) => {
     await page.goto('/skills');
 
-    expect(await cor(page, 'body', 'backgroundColor')).toBe(FUNDO_DO_EDITOR);
+    expect(await cor(page, 'body', 'backgroundColor')).toBe(FUNDO_DA_PAGINA);
     expect(await cor(page, 'app-editor-de-codigo', 'backgroundColor')).toBe(FUNDO_DO_EDITOR);
     expect(await cor(page, 'app-painel-lateral', 'backgroundColor')).toBe(FUNDO_DO_PAINEL);
-    expect(await cor(page, 'app-barra-de-ferramentas', 'backgroundColor')).toBe(FUNDO_DO_PAINEL);
-    for (const seletor of [
-      'body',
-      'app-painel-lateral',
-      'app-barra-de-ferramentas',
-      'app-faixa-de-abas',
-      'app-barra-de-status',
-      'app-editor-de-codigo',
-    ]) {
-      const imagem = await page
+    const faixa = await page
+      .locator('.faixa')
+      .first()
+      .evaluate((el) => getComputedStyle(el).backgroundImage);
+    expect(faixa).toContain(FUNDO_DA_FAIXA_DE_ABAS);
+  });
+
+  test('a barra de ferramentas tem o degradê do design e o resto das superfícies é chapado', async ({
+    page,
+  }) => {
+    await page.goto('/skills');
+
+    const imagem = (seletor: string) =>
+      page
         .locator(seletor)
         .first()
         .evaluate((el) => getComputedStyle(el).backgroundImage);
-      expect(imagem, seletor).toBe('none');
+
+    expect(await imagem('app-barra-de-ferramentas')).toContain('linear-gradient');
+    for (const seletor of [
+      'body',
+      'app-painel-lateral',
+      'app-barra-de-status',
+      'app-editor-de-codigo',
+    ]) {
+      expect(await imagem(seletor), seletor).toBe('none');
     }
   });
 
-  test('o editor não tem cantos arredondados', async ({ page }) => {
+  test('o editor e as abas têm os cantos arredondados do design', async ({ page }) => {
+    await page.goto('/skills');
+    const raio = (seletor: string, canto: 'borderBottomLeftRadius' | 'borderTopLeftRadius') =>
+      page
+        .locator(seletor)
+        .first()
+        .evaluate((el, c) => parseFloat(getComputedStyle(el)[c as 'borderTopLeftRadius']), canto);
+
+    expect(await raio('.editor', 'borderBottomLeftRadius')).toBeGreaterThan(8);
+    expect(await raio('[role="tab"]', 'borderTopLeftRadius')).toBeGreaterThan(8);
+  });
+
+  test('a barra de status tem o fundo do painel e o texto esmaecido do design', async ({
+    page,
+  }) => {
     await page.goto('/skills');
 
-    const raio = await page
-      .locator('app-editor-de-codigo')
-      .evaluate((el) => getComputedStyle(el).borderRadius);
-
-    expect(raio).toBe('0px');
+    expect(await cor(page, '[role="status"]', 'backgroundColor')).toBe(FUNDO_DO_PAINEL);
+    expect(await cor(page, '[role="status"] .item')).toBe('rgb(170, 170, 170)');
   });
 });
 
@@ -132,7 +162,7 @@ test.describe('Fontes servidas pelo próprio site', () => {
   });
 });
 
-test.describe('Anel de foco azul de 2px', () => {
+test.describe('Anel de foco rosa de 2px', () => {
   test.use({ viewport: { width: 1920, height: 1080 } });
 
   const anel = (page: Page) =>
@@ -144,11 +174,12 @@ test.describe('Anel de foco azul de 2px', () => {
         largura: estilo.outlineWidth,
         cor: estilo.outlineColor,
         tag: el.tagName,
+        naBarra: el.closest('app-barra-de-ferramentas') !== null,
         rotulo: el.getAttribute('aria-label') ?? el.textContent?.trim().slice(0, 40) ?? el.tagName,
       };
     });
 
-  test('o item da árvore focado pelo teclado mostra o anel azul de 2px', async ({ page }) => {
+  test('o item da árvore focado pelo teclado mostra o anel rosa de 2px', async ({ page }) => {
     await abrirHidratada(page, '/skills');
     await page.locator(`${ARVORE} a[tabindex="0"]`).focus();
     await page.keyboard.press('ArrowDown');
@@ -156,35 +187,46 @@ test.describe('Anel de foco azul de 2px', () => {
     expect(await anel(page)).toMatchObject({ estilo: 'solid', largura: '2px', cor: COR_DO_FOCO });
   });
 
-  test('a aba focada mostra o anel azul de 2px', async ({ page }) => {
+  test('a aba focada mostra o anel rosa de 2px', async ({ page }) => {
     await abrirHidratada(page, '/skills');
     await page.getByRole('tab', { name: 'Skills.java' }).focus();
 
     expect(await anel(page)).toMatchObject({ estilo: 'solid', largura: '2px', cor: COR_DO_FOCO });
   });
 
-  test('os botões focados mostram o anel azul de 2px', async ({ page }) => {
+  test('os botões focados mostram o anel rosa de 2px, escuro só na barra de ferramentas', async ({
+    page,
+  }) => {
     await abrirHidratada(page, '/projeto-2');
+    const esperado = [
+      { nome: 'Executar o projeto', cor: COR_DO_FOCO_NA_BARRA, naBarra: true },
+      { nome: 'Buscar seção (Ctrl+P)', cor: COR_DO_FOCO_NA_BARRA, naBarra: true },
+      { nome: 'Executar Projeto 2', cor: COR_DO_FOCO, naBarra: false },
+      { nome: 'Projeto', cor: COR_DO_FOCO, naBarra: false },
+    ];
 
-    for (const nome of ['Executar o projeto', 'Buscar seção (Ctrl+P)', 'Executar Projeto 2']) {
-      await page.getByRole('button', { name: nome }).first().focus();
+    for (const { nome, cor: corEsperada, naBarra } of esperado) {
+      await page.getByRole('button', { name: nome, exact: true }).first().focus();
 
       expect(await anel(page), nome).toMatchObject({
         estilo: 'solid',
         largura: '2px',
-        cor: COR_DO_FOCO,
+        cor: corEsperada,
+        naBarra,
       });
     }
   });
 
-  test('os links do controle de páginas focados mostram o anel azul de 2px', async ({ page }) => {
+  test('os links do controle de páginas focados mostram o anel rosa de 2px', async ({ page }) => {
     await abrirHidratada(page, '/skills');
     await page.getByRole('link', { name: 'Próxima página' }).focus();
 
     expect(await anel(page)).toMatchObject({ estilo: 'solid', largura: '2px', cor: COR_DO_FOCO });
   });
 
-  test('todo controle alcançado por Tab tem o anel azul de 2px', async ({ page }) => {
+  test('todo controle alcançado por Tab tem o anel de 2px, rosa fora da barra e escuro nela', async ({
+    page,
+  }) => {
     await abrirHidratada(page, '/projeto-2');
     const vistos = new Set<string>();
 
@@ -196,18 +238,20 @@ test.describe('Anel de foco azul de 2px', () => {
       expect(foco, `Tab ${i + 1} (${foco.rotulo})`).toMatchObject({
         estilo: 'solid',
         largura: '2px',
-        cor: COR_DO_FOCO,
+        cor: foco.naBarra ? COR_DO_FOCO_NA_BARRA : COR_DO_FOCO,
       });
     }
 
     expect(vistos.size).toBeGreaterThanOrEqual(5);
   });
 
-  test('nenhum elemento da página usa o rosa antigo', async ({ page }) => {
+  test('o rosa é o único acento: nenhum elemento usa o azul do IntelliJ (#3574F0)', async ({
+    page,
+  }) => {
     await abrirHidratada(page, '/projeto-2');
     await page.getByRole('button', { name: 'Executar Projeto 2' }).focus();
 
-    const comRosa = await page.evaluate((rosa) => {
+    const comAzul = await page.evaluate((azul) => {
       const propriedades = [
         'color',
         'backgroundColor',
@@ -218,14 +262,17 @@ test.describe('Anel de foco azul de 2px', () => {
         'outlineColor',
       ] as const;
       return Array.from(document.querySelectorAll('*'))
-        .filter((el) => propriedades.some((p) => getComputedStyle(el)[p] === rosa))
+        .filter((el) => propriedades.some((p) => getComputedStyle(el)[p] === azul))
         .map((el) => el.tagName + '.' + el.className);
-    }, COR_ROSA_ANTIGA);
+    }, COR_AZUL_DO_INTELLIJ);
 
-    expect(comRosa).toEqual([]);
+    expect(comAzul).toEqual([]);
   });
 
-  test('os estilos publicados não citam o rosa antigo (#de60d2)', async ({ page, request }) => {
+  test('os estilos publicados citam o rosa do design e não o azul do IntelliJ', async ({
+    page,
+    request,
+  }) => {
     await page.goto('/');
     const folhas = await page
       .locator('link[rel="stylesheet"]')
@@ -235,9 +282,11 @@ test.describe('Anel de foco azul de 2px', () => {
     );
 
     for (const href of folhas) estilos.push(await (await request.get(href)).text());
+    const css = estilos.join('\n');
 
     expect(estilos.length).toBeGreaterThan(0);
-    expect(estilos.join('\n')).not.toMatch(/de60d2|222,\s*96,\s*210/i);
+    expect(css).toMatch(/de60d2|222,\s*96,\s*210/i);
+    expect(css).not.toMatch(/3574f0|53,\s*116,\s*240/i);
   });
 });
 
@@ -256,7 +305,7 @@ test.describe('Ajustes nativos do navegador', () => {
     expect(esquema).not.toContain('light');
   });
 
-  test('o theme-color é o fundo dos painéis (#2B2D30), já no HTML pré-renderizado', async ({
+  test('o theme-color é o fundo dos painéis (#2B2B2B), já no HTML pré-renderizado', async ({
     browser,
   }) => {
     const contexto = await browser.newContext({ javaScriptEnabled: false });
@@ -266,7 +315,7 @@ test.describe('Ajustes nativos do navegador', () => {
       await pagina.goto(rota);
 
       const tema = await pagina.locator('head meta[name="theme-color"]').getAttribute('content');
-      expect(tema?.toLowerCase(), rota).toBe('#2b2d30');
+      expect(tema?.toLowerCase(), rota).toBe('#2b2b2b');
     }
     await contexto.close();
   });
@@ -277,8 +326,8 @@ test.describe('Ajustes nativos do navegador', () => {
     const tema = await page.locator('head meta[name="theme-color"]').getAttribute('content');
     const fundo = await cor(page, 'app-painel-lateral', 'backgroundColor');
 
-    expect(fundo).toBe('rgb(43, 45, 48)');
-    expect(tema?.toLowerCase()).toBe('#2b2d30');
+    expect(fundo).toBe(FUNDO_DO_PAINEL);
+    expect(tema?.toLowerCase()).toBe('#2b2b2b');
   });
 
   test('os números de linha e a posição da barra de status usam números tabulares', async ({
@@ -345,7 +394,7 @@ test.describe('Cores de sintaxe com contraste AA', () => {
     return mapa;
   }
 
-  test('cada papel de sintaxe tem a cor da paleta New UI, e só ela', async ({ page }) => {
+  test('cada papel de sintaxe tem a cor do Java do IntelliJ, e só ela', async ({ page }) => {
     const mapa = await coresPorPapel(page);
 
     expect([...mapa['papel-palavra-chave']]).toEqual([CORES_DE_SINTAXE.palavraChave]);
@@ -396,7 +445,7 @@ test.describe('Cores de sintaxe com contraste AA', () => {
 
   test('o verificador de contraste acerta valores conhecidos', () => {
     expect(contraste('rgb(255, 255, 255)', 'rgb(0, 0, 0)')).toBeCloseTo(21, 0);
-    expect(contraste('rgb(111, 115, 122)', FUNDO_DO_EDITOR)).toBeCloseTo(3.46, 1);
-    expect(contraste('rgb(188, 190, 196)', FUNDO_DO_EDITOR)).toBeCloseTo(8.87, 1);
+    expect(contraste('rgb(143, 147, 154)', FUNDO_DO_EDITOR)).toBeCloseTo(4.59, 1);
+    expect(contraste('rgb(214, 214, 214)', FUNDO_DO_EDITOR)).toBeCloseTo(9.74, 1);
   });
 });
