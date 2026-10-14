@@ -5,6 +5,13 @@
   user-select: none;
 }
 
+// A faixa inteira é um landmark de navegação (axe `region`).
+.faixa {
+  display: block;
+  height: 100%;
+  min-width: 0;
+}
+
 // Uma grade com uma coluna por aba. A lista de abas e a de botões de fechar ocupam as mesmas
 // colunas (subgrade), então cada × fica na ponta da sua aba sem estar dentro do tablist.
 .lista {
