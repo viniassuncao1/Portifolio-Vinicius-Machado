@@ -112,6 +112,100 @@ test.describe('Janela de Run: Executar, fechar e exclusividade', () => {
   });
 });
 
+test.describe('Janela de Run: Pular, Esc e leitura durante o log', () => {
+  test('Pular mostra o log completo na hora e some do cabeçalho', async ({ page }) => {
+    await page.goto('/skills');
+    const pular = page.getByRole('button', { name: 'Pular' });
+
+    await pular.click();
+
+    await expect(page.locator('app-janela-de-run section')).toHaveAttribute(
+      'data-terminado',
+      'true',
+    );
+    await expect(page.locator('app-janela-de-run .linha.oculta')).toHaveCount(0);
+    await expect(log(page)).toContainText('Started PortfolioApplication in 1.8 seconds');
+    await expect(pular).toHaveCount(0);
+    await expect(janela(page)).toHaveAttribute('data-aberto', 'true');
+  });
+
+  test('Esc com o foco no log fecha a janela, mesmo no meio da revelação', async ({ page }) => {
+    await page.goto('/skills');
+    await expect(janela(page)).toHaveAttribute('data-aberto', 'true');
+
+    await log(page).focus();
+    await page.keyboard.press('Escape');
+
+    await expect(janela(page)).toHaveAttribute('data-aberto', 'false');
+  });
+
+  test('o editor segue visível acima da janela e o texto do código não fica coberto', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await page.goto('/skills');
+    await expect(janela(page)).toHaveAttribute('data-aberto', 'true');
+    await expect(page.locator('main code > .linha').first()).toBeVisible();
+
+    const editor = (await page.locator('main app-editor-de-codigo').boundingBox())!;
+    const caixa = (await janela(page).boundingBox())!;
+
+    expect(editor.y + editor.height).toBeLessThanOrEqual(caixa.y + 1);
+    expect(editor.height).toBeGreaterThan(300);
+  });
+
+  test('aberto pelo Executar com movimento reduzido, o log já nasce completo e sem Pular', async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/sobre-mim');
+
+    await page.getByRole('button', { name: 'Executar PortfolioApplication' }).click();
+
+    await expect(page.locator('app-janela-de-run section')).toHaveAttribute(
+      'data-terminado',
+      'true',
+    );
+    await expect(page.locator('app-janela-de-run .linha.oculta')).toHaveCount(0);
+    await expect(log(page)).toContainText('Started PortfolioApplication in 1.8 seconds');
+    await expect(page.getByRole('button', { name: 'Pular' })).toHaveCount(0);
+    expect(
+      await page
+        .locator('app-janela-de-run .linha')
+        .last()
+        .evaluate((el) => getComputedStyle(el).animationName),
+    ).toBe('none');
+  });
+});
+
+test.describe('Janela de Run: Executar fora dos projetos com site', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+  });
+
+  test('em Sobre Mim não há ▶ na calha e o Executar da barra abre a janela de Run', async ({
+    page,
+  }) => {
+    await page.goto('/sobre-mim');
+
+    await expect(page.getByRole('button', { name: /^Executar Projeto \d$/ })).toHaveCount(0);
+    await page.getByRole('button', { name: 'Executar PortfolioApplication' }).click();
+
+    await expect(janela(page)).toHaveAttribute('data-aberto', 'true');
+    await expect(log(page)).toContainText('Started PortfolioApplication');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+  });
+
+  test('em Projeto 1 (sem site) o Executar abre o Run, não o preview', async ({ page }) => {
+    await page.goto('/projeto-1');
+
+    await page.getByRole('button', { name: 'Executar PortfolioApplication' }).click();
+
+    await expect(janela(page)).toHaveAttribute('data-aberto', 'true');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+  });
+});
+
 for (const [nome, viewport] of [
   ['desktop', { width: 1920, height: 1080 }],
   ['celular', { width: 390, height: 844 }],
