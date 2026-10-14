@@ -19,7 +19,7 @@
 
 ## 4. Testes [Sentinela]
 
-- [ ] 4.1 Cobrir as specs (barra superior, faixa, controles decorativos fora do foco, status, commit, celular) com axe — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
+- [x] 4.1 Cobrir as specs (barra superior, faixa, controles decorativos fora do foco, status, commit, celular) com axe — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
 
 ## 5. Documentação e integração
 
