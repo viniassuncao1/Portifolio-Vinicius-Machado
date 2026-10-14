@@ -70,15 +70,15 @@ foco visível, e ativados pela tecla Enter.
 - **THEN** o foco fica visível durante o percurso e a seção "Eventos" é aberta
 
 ### Requirement: Elementos decorativos ocultos
-Os controles que imitam a IDE sem ter função (ícones da barra, controles de janela, Estrutura,
-botões do cabeçalho do painel e Executar fora dos projetos com site) MUST ser ignorados por
-tecnologias assistivas e MUST NOT receber foco. Buscar, Projeto, Commit, o indicador `master` e
-Executar nos projetos com site são botões reais, com nome acessível.
+Os controles que imitam a IDE sem ter função (ícones da barra, controles de janela, Estrutura e
+botões do cabeçalho do painel) MUST ser ignorados por tecnologias assistivas e MUST NOT receber
+foco. Buscar, Projeto, Commit, o indicador `master`, o botão de tema e Executar são botões reais,
+com nome acessível.
 
 #### Scenario: Leitor de tela na barra de ferramentas
 - **WHEN** um leitor de tela percorre a página
-- **THEN** os controles decorativos não são anunciados, e Buscar, Projeto, Commit e `master`
-  são anunciados como botões
+- **THEN** os controles decorativos não são anunciados, e Buscar, Projeto, Commit, `master`, o
+  botão de tema e Executar são anunciados como botões
 
 ### Requirement: Adaptação a telas pequenas
 Em telas com largura menor que 768px, a faixa de ferramentas SHALL ficar oculta, o painel do
