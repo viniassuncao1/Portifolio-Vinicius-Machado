@@ -14,7 +14,7 @@
 
 ## 3. Testes [Sentinela]
 
-- [ ] 3.1 Cobrir as specs (histórico sem e-mail, clone raso, nenhuma requisição até abrir, merge com link do PR, teclado, Esc, celular, axe) — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
+- [x] 3.1 Cobrir as specs (histórico sem e-mail, clone raso, nenhuma requisição até abrir, merge com link do PR, teclado, Esc, celular, axe) — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
 
 ## 4. Documentação e integração
 
