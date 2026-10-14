@@ -117,6 +117,28 @@ $quantidade-de-marcadores: 60;
   }
 }
 
+// Code vision (IntelliJ): uma linha pequena e cinza acima da declaração da classe, sem número. Some
+// quando não há botão (rotas sem preview), e a coluna de números ganha um espaço do mesmo tamanho.
+.visao-de-codigo {
+  display: block;
+  box-sizing: border-box;
+  height: var(--altura-visao-de-codigo);
+  padding-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo));
+  color: var(--cor-texto-esmaecido);
+  font-family: var(--fonte-interface);
+  font-size: var(--texto-status);
+  line-height: var(--altura-visao-de-codigo);
+
+  &:not(:has(button)) {
+    display: none;
+  }
+}
+
+.espaco-da-visao {
+  display: block;
+  height: var(--altura-visao-de-codigo);
+}
+
 // Botão da calha que alterna o modo de leitura, na primeira linha do bloco de Javadoc.
 .alternar-leitura {
   position: absolute;

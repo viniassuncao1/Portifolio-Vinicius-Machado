@@ -4,7 +4,9 @@ import {
   ElementRef,
   afterNextRender,
   computed,
+  effect,
   DestroyRef,
+  Injector,
   inject,
   input,
   linkedSignal,
@@ -14,6 +16,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { EstadoDoEditor } from '../../core/estado-do-editor';
+import { VisaoDeCodigo } from '../visao-de-codigo/visao-de-codigo';
 import { BotaoExecutar } from '../botao-executar/botao-executar';
 import { Icone } from '../icone/icone';
 import { ModoDeLeitura } from './modo-de-leitura';
@@ -35,7 +38,7 @@ const MOVIMENTO_REDUZIDO = '(prefers-reduced-motion: reduce)';
  */
 @Component({
   selector: 'app-editor-de-codigo',
-  imports: [BotaoExecutar, Icone, NgOptimizedImage],
+  imports: [BotaoExecutar, VisaoDeCodigo, Icone, NgOptimizedImage],
   templateUrl: './editor-de-codigo.html',
   styleUrl: './editor-de-codigo.scss',
   host: {
@@ -52,6 +55,7 @@ export class EditorDeCodigo {
   private readonly router = inject(Router);
   private readonly historico = inject(HistoricoDeDigitacao);
   private readonly estado = inject(EstadoDoEditor);
+  private readonly injector = inject(Injector);
   protected readonly leitura = inject(ModoDeLeitura);
   private quadro = 0;
   private temporizador: ReturnType<typeof setTimeout> | undefined;
@@ -66,6 +70,11 @@ export class EditorDeCodigo {
     ),
   );
   protected readonly digitando = signal(false);
+  /**
+   * Número da linha onde a coluna de números ganha um espaço do tamanho da linha de code vision, que
+   * não tem número (como no IntelliJ); `null` sem code vision.
+   */
+  protected readonly linhaDaVisao = signal<number | null>(null);
   protected readonly pronto = signal(false);
 
   /** Índice (base 0) da última linha de código: onde o cursor começa. */
@@ -81,6 +90,12 @@ export class EditorDeCodigo {
 
   constructor() {
     afterNextRender(() => this.iniciar());
+    // O code vision só existe depois que o botão renderiza, então a medida é refeita a cada mudança.
+    effect(() => {
+      void this.conteudo();
+      void this.leitura.ativo();
+      afterNextRender(() => this.medirVisao(), { injector: this.injector });
+    });
     inject(DestroyRef).onDestroy(() => this.cancelarAgendamentos());
   }
 
@@ -170,6 +185,12 @@ export class EditorDeCodigo {
     this.estado.posicionar(this.linhaVisual(this.elementoDoItem(this.itemAtual())), 1);
   }
 
+  private medirVisao(): void {
+    const lente = this.host.querySelector('.visao-de-codigo');
+    const linha = lente?.querySelector('button') ? lente.nextElementSibling : null;
+    this.linhaDaVisao.set(linha ? this.linhaVisual(linha) : null);
+  }
+
   private elementoDoItem(indice: number): Element | null {
     return this.host.querySelector(`[data-indice="${indice}"]`);
   }
@@ -184,7 +205,14 @@ export class EditorDeCodigo {
     const alturaDaLinha = this.host.querySelector('.numeros span')?.getBoundingClientRect().height;
     const topoDoCodigo = this.host.querySelector('.numeros')?.getBoundingClientRect().top;
     if (!item || !alturaDaLinha || topoDoCodigo === undefined) return indice + 1;
-    const distancia = item.getBoundingClientRect().top - topoDoCodigo;
+    const lente = this.host.querySelector<HTMLElement>('.visao-de-codigo');
+    const lenteAntes =
+      lente?.querySelector('button') &&
+      lente.compareDocumentPosition(item) & Node.DOCUMENT_POSITION_FOLLOWING;
+    const distancia =
+      item.getBoundingClientRect().top -
+      topoDoCodigo -
+      (lente && lenteAntes ? lente.offsetHeight : 0);
     return Math.max(1, Math.floor((distancia + alturaDaLinha / 2) / alturaDaLinha) + 1);
   }
 }
