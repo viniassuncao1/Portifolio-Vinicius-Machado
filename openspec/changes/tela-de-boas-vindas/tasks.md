@@ -10,7 +10,7 @@
 
 ## 3. Testes [Sentinela]
 
-- [ ] 3.1 Cobrir as specs (primeira visita, mesma sessão, duração mínima e teto, movimento reduzido, conteúdo no HTML pré-renderizado, foco, axe nos dois temas, celular, Run só pelo Executar) — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
+- [x] 3.1 Cobrir as specs (primeira visita, mesma sessão, duração mínima e teto, movimento reduzido, conteúdo no HTML pré-renderizado, foco, axe nos dois temas, celular, Run só pelo Executar) — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
 
 ## 4. Documentação e integração
 
