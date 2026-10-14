@@ -124,6 +124,8 @@
   --altura-linha-git: 1.5rem;
   --largura-faixa-grafo: 0.875rem;
   --largura-faixa-ferramentas: 2.5rem;
+  --lado-retrato-grande: 6rem;
+  --lado-retrato-pequeno: 4rem;
   --largura-calha: 1.5rem;
   --tamanho-botao-barra: 1.75rem;
 
@@ -222,6 +224,8 @@
 // código em no mínimo 13px e alvos de toque maiores.
 @media (max-width: 767.98px) {
   :root {
+    --lado-retrato-grande: 4rem;
+    --lado-retrato-pequeno: 3rem;
     --texto-arvore: 0.875rem;
     --texto-aba: 0.875rem;
     --texto-status: 0.75rem;

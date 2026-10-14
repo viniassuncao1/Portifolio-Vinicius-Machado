@@ -150,10 +150,12 @@ $quantidade-de-marcadores: 60;
 
 .javadoc-texto {
   position: relative;
-  display: block;
   box-sizing: content-box;
-  // Mesma quebra do parágrafo: 72 colunas de texto depois das três colunas de ` * `.
-  max-inline-size: calc(var(--colunas-paragrafo) * var(--avanco));
+  // O retrato (se houver) fica à esquerda do corpo; o bloco cresce para o maior dos dois e a coluna
+  // de `*` a acompanha.
+  display: flex;
+  gap: var(--espaco-3);
+  align-items: flex-start;
   padding-inline-start: calc(3 * var(--avanco));
   overflow-wrap: anywhere;
 
@@ -167,6 +169,39 @@ $quantidade-de-marcadores: 60;
     white-space: pre;
     user-select: none;
   }
+}
+
+.javadoc-corpo {
+  display: block;
+  min-inline-size: 0;
+  // Mesma quebra do parágrafo: 72 colunas de texto depois das três colunas de ` * `.
+  max-inline-size: calc(var(--colunas-paragrafo) * var(--avanco));
+}
+
+.retrato {
+  flex: none;
+  box-sizing: border-box;
+  width: var(--lado-retrato-grande);
+  height: var(--lado-retrato-grande);
+  margin-block: var(--espaco-1);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: 50%;
+  object-fit: cover;
+
+  &.pequeno {
+    width: var(--lado-retrato-pequeno);
+    height: var(--lado-retrato-pequeno);
+  }
+}
+
+.aviso-nova-aba {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .javadoc-paragrafo {

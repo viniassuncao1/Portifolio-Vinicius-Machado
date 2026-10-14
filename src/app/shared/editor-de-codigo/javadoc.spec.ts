@@ -87,7 +87,7 @@ describe('javadoc', () => {
       const corpo = regra('.javadoc');
 
       expect(corpo).toContain('var(--cor-sintaxe-comentario)');
-      expect(regra('.javadoc-texto')).toMatch(
+      expect(regra('.javadoc-corpo')).toMatch(
         /max-inline-size:\s*calc\(var\(--colunas-paragrafo\) \* var\(--avanco\)\)/,
       );
     });
