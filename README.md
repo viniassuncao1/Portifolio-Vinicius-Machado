@@ -18,6 +18,10 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
   carregamento rápido e SEO.
 - **Casca de IDE como rota-pai:** a barra, o painel e a aba são montados uma vez; as 15 seções
   são rotas filhas pré-renderizadas, com o conteúdo definido como dados tipados.
+- **Painel do Git:** o indicador `master` da barra e o ícone Commit da faixa abrem um painel com o
+  **histórico real do repositório** (grafo das branches, commits e PRs), como o Git Log do
+  IntelliJ. O histórico é gerado no build, sem token e sem e-mails
+  ([ADR-0013](docs/adr/0013-historico-do-git-gerado-no-build.md)).
 - **Design tokens:** cores, tipografia e movimento em variáveis CSS (`src/styles/`); os
   componentes usam só tokens. Fontes Inter (interface) e JetBrains Mono (código) servidas pelo próprio site.
 - **Responsivo e acessível:** no celular o painel vira uma gaveta; `prefers-reduced-motion` é
@@ -108,6 +112,9 @@ Tudo roda no workflow [`ci.yml`](.github/workflows/ci.yml):
   build e E2E em jobs paralelos.
 - **CD:** com tudo verde, publica na Vercel. Cada PR ganha uma URL de preview, e cada push na
   `main` atualiza a produção.
+
+O build precisa do histórico completo do Git para gerar o painel do Git, então os jobs do CI usam
+`fetch-depth: 0`. Em clone raso ou sem `git`, o painel mostra uma mensagem e o build não falha.
 
 Detalhes em [docs/deploy.md](docs/deploy.md).
 
