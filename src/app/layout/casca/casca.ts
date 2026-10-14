@@ -13,6 +13,7 @@ import { filter, map, startWith } from 'rxjs';
 
 import { DADO_ARVORE_NO_INICIO } from '../../core/secoes';
 import { EstrategiaDeTitulo } from '../../core/estrategia-de-titulo';
+import { Tema } from '../../core/tema';
 import { JanelaDePreviewComponente } from '../../shared/janela-de-preview/janela-de-preview';
 import { BuscaDeSecoes } from '../busca-de-secoes/busca-de-secoes';
 import { BarraDeStatus } from '../barra-de-status/barra-de-status';
@@ -77,6 +78,8 @@ export class Casca {
   );
 
   constructor() {
+    // Instancia o serviço de tema no carregamento: ele sincroniza color-scheme e theme-color.
+    inject(Tema);
     // Cada página abre no topo: o editor é a região rolável e a rolagem não se reinicia sozinha.
     this.router.events
       .pipe(

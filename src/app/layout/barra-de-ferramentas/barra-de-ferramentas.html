@@ -39,6 +39,15 @@
 </button>
 <button
   type="button"
+  class="botao botao-tema"
+  [attr.aria-label]="tema.claro() ? 'Usar tema escuro' : 'Usar tema claro'"
+  [attr.aria-pressed]="tema.claro()"
+  (click)="tema.alternar()"
+>
+  <app-icone [nome]="tema.claro() ? 'design-lua' : 'design-sol'" />
+</button>
+<button
+  type="button"
   class="ramo"
   aria-controls="painel-do-git"
   aria-label="Branch master, abrir o painel do Git"

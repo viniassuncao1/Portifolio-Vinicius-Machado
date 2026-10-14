@@ -5,7 +5,7 @@
 Portfólio pessoal de **Vinicius Machado**, desenvolvedor Full Stack (Java, Spring Boot, Angular
 e SQL).
 
-O site imita uma IDE escura, com o design autoral do portfólio e elementos do IntelliJ IDEA (pacotes, Git, o ▶ de executar): as seções do portfólio aparecem como arquivos numa árvore de projeto e o
+O site imita uma IDE, em tema **claro ou escuro**, com o design autoral do portfólio e elementos do IntelliJ IDEA (pacotes, Git, o ▶ de executar): as seções do portfólio aparecem como arquivos numa árvore de projeto e o
 conteúdo é apresentado como código. Além de portfólio, este repositório é um exemplo de como eu
 desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 
@@ -22,6 +22,9 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
   **histórico real do repositório** (grafo das branches, commits e PRs), como o Git Log do
   IntelliJ. O histórico é gerado no build, sem token e sem e-mails
   ([ADR-0013](docs/adr/0013-historico-do-git-gerado-no-build.md)).
+- **Tema claro e escuro:** o site segue o tema do sistema na primeira visita, e um botão na barra
+  de ferramentas troca e guarda a escolha. O tema é aplicado antes da primeira pintura, então a
+  página não pisca ([ADR-0014](docs/adr/0014-tema-claro.md)).
 - **Design tokens:** cores, tipografia e movimento em variáveis CSS (`src/styles/`); os
   componentes usam só tokens. Fontes Inter (interface) e JetBrains Mono (código) servidas pelo próprio site.
 - **Responsivo e acessível:** no celular o painel vira uma gaveta; `prefers-reduced-motion` é

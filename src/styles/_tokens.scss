@@ -33,6 +33,9 @@
   --cor-acento: #de60d2;
   --largura-anel-foco: 2px;
   --cor-fundo-modal: rgb(0 0 0 / 55%);
+  // Qual variante dos ícones da IntelliJ Platform aparece (a do tema escuro ou a do claro)
+  --exibir-icone-escuro: block;
+  --exibir-icone-claro: none;
   // Cores das faixas do grafo do Git (paleta do design, todas acima de 3:1 sobre o painel)
   --cor-grafo-1: #de60d2;
   --cor-grafo-2: #d5963e;
@@ -144,6 +147,75 @@
   --borda-divisoria: var(--borda-largura) solid var(--cor-separador);
   --borda-painel: var(--borda-largura) solid var(--cor-borda);
 }
+
+// Tema claro (ADR-0014): a mesma hierarquia de cinzas do design (página mais escura que o painel,
+// editor mais claro), o rosa escurecido para o contraste e o Java do IntelliJ Light. Contrastes
+// medidos na note "Design Tokens". Aplicado por `data-tema='claro'` e, sem JavaScript, pelo
+// `prefers-color-scheme` enquanto o `<html>` não tem `data-tema`.
+@mixin tema-claro {
+  color-scheme: light;
+
+  --cor-fundo-pagina: #d9d9d9;
+  --cor-controle-janela: #5f5f5f;
+  --cor-painel: #ececec;
+  --cor-linha-selecionada: #d2d2d2;
+  --cor-aba-ativa: #f7f7f7;
+  --cor-aba-inativa: #c4c4c4;
+  --cor-aba-passando: #b8b8b8;
+  --cor-texto-aba-inativa: #262626;
+  --cor-faixa-abas: #cfcfcf;
+  --cor-editor: #f7f7f7;
+  --cor-borda: #c2c2c2;
+  --cor-separador: #a8a8a8;
+  --cor-scrollbar-trilho: #f7f7f7;
+  --cor-scrollbar-polegar: #8a8a8a;
+  --cor-texto: #2b2b2b;
+  --cor-numero-linha: #666666;
+  --cor-icone: #5f5f5f;
+  --cor-texto-esmaecido: #555555;
+  --cor-texto-forte: #111111;
+  --cor-linha-atual: #f0f0f0;
+  --cor-botao: #d0d0d0;
+  --cor-acento: #9a2a8c;
+  --cor-fundo-modal: rgb(0 0 0 / 35%);
+  --exibir-icone-escuro: none;
+  --exibir-icone-claro: block;
+
+  --cor-grafo-1: #9a2a8c;
+  --cor-grafo-2: #9a5708;
+  --cor-grafo-3: #38720f;
+  --cor-grafo-4: #1b7572;
+  --cor-grafo-5: #3f58d0;
+  --cor-grafo-6: #666666;
+
+  // IntelliJ Light: só o amarelo da anotação (#9E880D), o cinza do comentário (#8C8C8C) e o número de
+  // linha ficam mais escuros que no IntelliJ para passar de 4,5:1.
+  --cor-sintaxe-palavra-chave: #0033b3;
+  --cor-sintaxe-campo: #871094;
+  --cor-sintaxe-literal: #067d17;
+  --cor-sintaxe-valor: #1750eb;
+  --cor-sintaxe-anotacao: #7d6b00;
+  --cor-sintaxe-comentario-marcador: #6a6a6a;
+  --cor-sintaxe-comentario: #6a6a6a;
+}
+
+// O build só inlina no HTML o CSS crítico que casa com o HTML pré-renderizado, e o `<html>` sai
+// sem `data-tema`: estes blocos ficariam só na folha carregada depois e o primeiro quadro sairia
+// escuro (o beasties não aceita marcadores `/*!`). Os marcadores abaixo (o `!` os preserva no CSS
+// final, com `removeSpecialComments: false` no angular.json) delimitam o que `scripts/inlinar-tokens-claros.mjs` copia para o `<style>`
+// inline de cada página depois do `ng build`. Não tire os marcadores nem acrescente regras fora
+// deles que o tema claro precise no primeiro quadro.
+/*! tokens-claros:inicio */
+:root[data-tema='claro'] {
+  @include tema-claro;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-tema]) {
+    @include tema-claro;
+  }
+}
+/*! tokens-claros:fim */
 
 // Telas pequenas (< 768px): escala própria para o código e a árvore caberem em 390px, com o
 // código em no mínimo 13px e alvos de toque maiores.

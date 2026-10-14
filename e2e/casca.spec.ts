@@ -153,10 +153,12 @@ test.describe('Teclado', () => {
     await abrirHidratada(page, '/');
     const eventos = arquivoDaArvore(page, 'Eventos');
 
-    // Antes da árvore ficam só os botões Buscar, master, Projeto e Commit; a árvore tem um só item na ordem de Tab
+    // Antes da árvore ficam só os botões Buscar, tema, master, Projeto e Commit; a árvore tem um só item na ordem de Tab
     // (roving tabindex) e as setas percorrem o resto.
     await page.keyboard.press('Tab');
     await expect(page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' })).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('button', { name: /^Usar tema/ })).toBeFocused();
     await page.keyboard.press('Tab');
     await expect(page.getByRole('button', { name: /^Branch master/ })).toBeFocused();
     await page.keyboard.press('Tab');

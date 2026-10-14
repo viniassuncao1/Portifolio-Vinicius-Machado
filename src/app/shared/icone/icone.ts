@@ -12,6 +12,8 @@ export const NOMES_DE_ICONE_DO_DESIGN = [
   'design-globo',
   'design-relogio',
   'design-monitor',
+  'design-sol',
+  'design-lua',
 ] as const;
 
 /**
@@ -39,11 +41,22 @@ export const caminhoDoIcone = (nome: NomeDoIcone): string =>
     ? `icones/${nome.slice(PREFIXO_DO_DESIGN.length)}.svg`
     : `icones/new-ui/${nome}.svg`;
 
+/** Variante da IntelliJ Platform para o tema claro (arquivo sem `_dark`). */
+export const caminhoClaroDoIcone = (nome: NomeDoIcone): string => `icones/new-ui/claro/${nome}.svg`;
+
+/** Os ícones do design servem nos dois temas; só os da IntelliJ Platform têm uma variante por tema. */
+export const temVarianteClara = (nome: NomeDoIcone): boolean => !nome.startsWith(PREFIXO_DO_DESIGN);
+
 /** Ícone decorativo: o nome da seção ou do controle ao lado já é o rótulo. */
 @Component({
   selector: 'app-icone',
   imports: [NgOptimizedImage],
-  template: `<img [ngSrc]="caminho()" alt="" fill />`,
+  template: `
+    <img class="escuro" [ngSrc]="caminho()" alt="" fill />
+    @if (variante()) {
+      <img class="claro" [ngSrc]="caminhoClaro()" alt="" fill />
+    }
+  `,
   styles: `
     :host {
       position: relative;
@@ -52,9 +65,20 @@ export const caminhoDoIcone = (nome: NomeDoIcone): string =>
       width: var(--tamanho-icone);
       height: var(--tamanho-icone);
     }
+
+    // Os ícones da IntelliJ Platform têm uma variante por tema, escolhida pelos tokens (sem JavaScript).
+    .escuro:not(:only-child) {
+      display: var(--exibir-icone-escuro);
+    }
+
+    .claro {
+      display: var(--exibir-icone-claro);
+    }
   `,
 })
 export class Icone {
   readonly nome = input.required<NomeDoIcone>();
   protected readonly caminho = computed(() => caminhoDoIcone(this.nome()));
+  protected readonly caminhoClaro = computed(() => caminhoClaroDoIcone(this.nome()));
+  protected readonly variante = computed(() => temVarianteClara(this.nome()));
 }

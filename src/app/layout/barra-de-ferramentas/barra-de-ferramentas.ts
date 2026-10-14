@@ -2,6 +2,7 @@ import { Component, ElementRef, inject, input, output, viewChild } from '@angula
 
 import { JanelaDePreview } from '../../core/janela-de-preview';
 import { PainelDoGit } from '../../core/painel-do-git';
+import { Tema } from '../../core/tema';
 import { Icone } from '../../shared/icone/icone';
 
 /**
@@ -21,6 +22,7 @@ export class BarraDeFerramentas {
 
   protected readonly janela = inject(JanelaDePreview);
   protected readonly git = inject(PainelDoGit);
+  protected readonly tema = inject(Tema);
   protected readonly ramo = 'master';
 
   /** Só o celular mostra o botão Projeto: ele abre e fecha a gaveta de seções. */

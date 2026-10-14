@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
 
-import { COR_DO_FOCO, CORES_DE_SINTAXE, abrirHidratada } from './apoio';
+import { COR_DO_FOCO, CORES_DE_SINTAXE, abrirHidratada, contraste } from './apoio';
 
 const FUNDO_DA_PAGINA = 'rgb(28, 28, 28)';
 const FUNDO_DO_EDITOR = 'rgb(43, 43, 43)';
@@ -12,21 +12,6 @@ const FUNDO_DA_LINHA_ATUAL = 'rgb(27, 27, 27)';
 const COR_AZUL_DO_INTELLIJ = 'rgb(53, 116, 240)';
 const CONTRASTE_AA = 4.5;
 const ARVORE = 'nav[aria-label="Seções do portfólio"]';
-
-/** Luminância relativa de "rgb(r, g, b)", como na WCAG 2. */
-function luminancia(cor: string): number {
-  const [r, g, b] = (cor.match(/\d+/g) ?? []).slice(0, 3).map((canal) => {
-    const c = Number(canal) / 255;
-    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
-  });
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-}
-
-/** Razão de contraste WCAG entre duas cores "rgb(r, g, b)". */
-function contraste(a: string, b: string): number {
-  const [claro, escuro] = [luminancia(a), luminancia(b)].sort((x, y) => y - x);
-  return (claro + 0.05) / (escuro + 0.05);
-}
 
 const cor = (page: Page, seletor: string, propriedade: 'color' | 'backgroundColor' = 'color') =>
   page
@@ -290,18 +275,20 @@ test.describe('Anel de foco rosa de 2px', () => {
 });
 
 test.describe('Ajustes nativos do navegador', () => {
-  test('o HTML declara color-scheme dark para controles e barras de rolagem nativos', async ({
+  test('o color-scheme dos controles nativos acompanha o tema (o sistema decide na primeira visita)', async ({
     page,
   }) => {
+    const esquema = () =>
+      page.evaluate(() => getComputedStyle(document.documentElement).colorScheme);
+
     await page.emulateMedia({ colorScheme: 'light' });
     await page.goto('/');
+    expect(await esquema()).toBe('light');
 
-    const esquema = await page.evaluate(
-      () => getComputedStyle(document.documentElement).colorScheme,
-    );
-
-    expect(esquema).toContain('dark');
-    expect(esquema).not.toContain('light');
+    await page.evaluate(() => localStorage.clear());
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.goto('/');
+    expect(await esquema()).toBe('dark');
   });
 
   test('o theme-color é o fundo dos painéis (#2B2B2B), já no HTML pré-renderizado', async ({

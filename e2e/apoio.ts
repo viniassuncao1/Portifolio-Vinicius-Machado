@@ -130,3 +130,16 @@ export async function abrirPastas(page: Page): Promise<void> {
  */
 export const arquivoDaArvore = (page: Page, titulo: string) =>
   arvoreDeSecoes(page).getByRole('treeitem', { name: new RegExp(`^${titulo} \\(`) });
+
+/** Razão de contraste WCAG 2 entre duas cores "rgb(r, g, b)". */
+export function contraste(a: string, b: string): number {
+  const luminancia = (cor: string) => {
+    const [r, g, bl] = (cor.match(/\d+/g) ?? []).slice(0, 3).map((canal) => {
+      const c = Number(canal) / 255;
+      return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * bl;
+  };
+  const [claro, escuro] = [luminancia(a), luminancia(b)].sort((x, y) => y - x);
+  return (claro + 0.05) / (escuro + 0.05);
+}
