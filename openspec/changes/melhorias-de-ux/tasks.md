@@ -2,7 +2,7 @@
 
 ## 1. Conteúdo [Grafite]
 
-- [ ] 1.1 Início com nome e cargo em destaque, `h1` e atalhos para projetos e contato; "Próximo arquivo →" no fim de cada seção — verificar com `npm run test:ci`
+- [x] 1.1 Início com nome e cargo em destaque, `h1` e atalhos para projetos e contato; "Próximo arquivo →" no fim de cada seção — verificar com `npm run test:ci`
 
 ## 2. Editor [Pincel]
 
