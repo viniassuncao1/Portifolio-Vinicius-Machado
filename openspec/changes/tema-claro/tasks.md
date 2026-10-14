@@ -15,7 +15,7 @@
 
 ## 4. Testes [Sentinela]
 
-- [ ] 4.1 Cobrir as specs (sistema no claro, sem JS, persistência ao recarregar, sem piscar, botão, axe e contraste em todas as seções nos dois temas, painel do Git e preview no claro) — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
+- [x] 4.1 Cobrir as specs (sistema no claro, sem JS, persistência ao recarregar, sem piscar, botão, axe e contraste em todas as seções nos dois temas, painel do Git e preview no claro) — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
 
 ## 5. Documentação e integração
 
