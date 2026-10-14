@@ -27,7 +27,7 @@
 ## 4. Testes [Sentinela]
 
 - [x] 4.1 Cobrir as specs da primeira versão com axe
-- [ ] 4.2 Trocar os valores esperados pelos do design (cores, foco, degradê, cabeçalho, barra) e cobrir os cenários novos — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
+- [x] 4.2 Trocar os valores esperados pelos do design (cores, foco, degradê, cabeçalho, barra) e cobrir os cenários novos — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
 
 ## 5. Documentação e integração
 
