@@ -138,7 +138,9 @@ test.describe('Navegação pela árvore', () => {
     await page.goBack();
 
     await expect(page).toHaveURL('/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Portfolio_Vinicius');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'Vinicius Machado, Desenvolvedor Full Stack',
+    );
   });
 });
 

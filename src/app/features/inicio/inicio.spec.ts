@@ -33,7 +33,7 @@ describe('Inicio', () => {
       'import java.util.List;',
       'import org.springframework.boot.SpringApplication;',
       'import org.springframework.boot.autoconfigure.SpringBootApplication;',
-      'Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL.',
+      'Vinicius Machado, Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL.@author Vinicius Machado (abre em nova aba)',
       '@SpringBootApplication',
       'public class PortfolioApplication {',
       '// Meu perfil: cargo e tecnologias principais',
@@ -123,6 +123,27 @@ describe('Inicio', () => {
     expect(foto?.getAttribute('fetchpriority')).toBe('high');
   });
 
+  it('mostra o nome e o cargo no Javadoc, com @author como link para o LinkedIn', async () => {
+    const raiz = await renderizar();
+    const autor = raiz.querySelector('.javadoc-autor a');
+
+    expect(raiz.querySelector('.javadoc')?.textContent).toContain(
+      'Vinicius Machado, Desenvolvedor',
+    );
+    expect(autor?.textContent).toContain('Vinicius Machado');
+    expect(autor?.getAttribute('href')).toBe('https://linkedin.com/in/viniassuncao');
+  });
+
+  it('termina com os atalhos para os projetos e para o contato', async () => {
+    const raiz = await renderizar();
+    const atalhos = Array.from(raiz.querySelectorAll<HTMLAnchorElement>('code a.papel-comentario'));
+
+    expect(atalhos.map((a) => [a.textContent, a.getAttribute('href')])).toEqual([
+      ['// Próximo: ver os projetos →', '/projeto-1'],
+      ['// Fale comigo →', '/contato'],
+    ]);
+  });
+
   it('não tem h1 próprio: o título vem da casca', async () => {
     const raiz = await renderizar();
 
@@ -147,12 +168,12 @@ describe('Início dentro da casca', () => {
     return harness.routeNativeElement as HTMLElement;
   }
 
-  it('tem um único h1 com o texto Portfolio_Vinicius', async () => {
+  it('tem um único h1 com o nome e o cargo', async () => {
     const raiz = await abrirInicio();
     const titulos = raiz.querySelectorAll('h1');
 
     expect(titulos).toHaveLength(1);
-    expect(titulos[0].textContent).toBe('Portfolio_Vinicius');
+    expect(titulos[0].textContent).toBe('Vinicius Machado, Desenvolvedor Full Stack');
   });
 
   it('põe o nome do Vinicius no título da janela', async () => {

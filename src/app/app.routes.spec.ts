@@ -39,7 +39,7 @@ describe('rotas', () => {
     expect(filhas.map((rota) => rota.path)).toEqual(['', ...SECOES.flatMap(caminhosDe)]);
   });
 
-  it('dão a cada página de cada seção o título da árvore e ao Início o Portfolio_Vinicius', () => {
+  it('dão a cada página de cada seção o título da árvore e ao Início o título do Início', () => {
     expect(rotaDe('')?.title).toBe(TITULO_INICIO);
     SECOES.flatMap((secao) => caminhosDe(secao).map((caminho) => ({ caminho, secao }))).forEach(
       ({ caminho, secao }) => expect(rotaDe(caminho)?.title).toBe(secao.titulo),

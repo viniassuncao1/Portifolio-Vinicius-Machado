@@ -28,7 +28,7 @@ describe('EstrategiaDeTitulo', () => {
     await harness.navigateByUrl('/');
 
     expect(TestBed.inject(Title).getTitle()).toBe('Vinicius Machado | Desenvolvedor Full Stack');
-    expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Portfolio_Vinicius');
+    expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe(TITULO_INICIO);
   });
 
   it('usa "<seção> | Vinicius Machado" nas demais rotas', async () => {
@@ -45,11 +45,11 @@ describe('EstrategiaDeTitulo', () => {
     await harness.navigateByUrl('/');
 
     expect(TestBed.inject(Title).getTitle()).toBe('Vinicius Machado | Desenvolvedor Full Stack');
-    expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Portfolio_Vinicius');
+    expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe(TITULO_INICIO);
   });
 
   it('começa com o título do Início antes de qualquer navegação', () => {
-    expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Portfolio_Vinicius');
+    expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe(TITULO_INICIO);
   });
 
   it('usa o título do Início quando a rota não define título', async () => {
@@ -63,7 +63,7 @@ describe('EstrategiaDeTitulo', () => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/sem-titulo');
 
-    expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Portfolio_Vinicius');
+    expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe(TITULO_INICIO);
   });
 
   describe('seção com várias páginas', () => {
@@ -128,7 +128,7 @@ describe('EstrategiaDeTitulo', () => {
       await harness.navigateByUrl('/skills/2');
       await harness.navigateByUrl('/');
 
-      expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe('Portfolio_Vinicius');
+      expect(TestBed.inject(EstrategiaDeTitulo).titulo()).toBe(TITULO_INICIO);
     });
   });
 });

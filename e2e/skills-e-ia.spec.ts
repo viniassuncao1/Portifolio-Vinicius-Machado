@@ -235,7 +235,9 @@ test.describe('Skills / STACK, página 2 (/skills/2)', () => {
     await page.goto('/skills/9');
 
     await expect(page).toHaveURL('/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Portfolio_Vinicius');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'Vinicius Machado, Desenvolvedor Full Stack',
+    );
   });
 
   test('/skills/4 não existe e leva ao Início', async ({ page }) => {

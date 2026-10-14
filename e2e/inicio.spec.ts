@@ -7,7 +7,9 @@ test.describe('Página inicial', () => {
     await page.goto('/');
 
     await expect(page).toHaveTitle(/Vinicius Machado/);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Portfolio_Vinicius');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'Vinicius Machado, Desenvolvedor Full Stack',
+    );
   });
 
   test('redireciona rotas inexistentes para a página inicial', async ({ page }) => {
@@ -23,7 +25,9 @@ test.describe('Pré-renderização', () => {
   test('entrega o conteúdo no HTML sem depender de JavaScript', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Portfolio_Vinicius');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'Vinicius Machado, Desenvolvedor Full Stack',
+    );
   });
 });
 
@@ -111,7 +115,9 @@ test.describe('Título do Início', () => {
     await page.goto('/');
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Portfolio_Vinicius');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'Vinicius Machado, Desenvolvedor Full Stack',
+    );
     await expect(page).toHaveTitle('Vinicius Machado | Desenvolvedor Full Stack');
   });
 });

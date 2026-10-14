@@ -1,5 +1,5 @@
 /** Título da rota do Início: vira o h1 da casca. */
-export const TITULO_INICIO = 'Portfolio_Vinicius';
+export const TITULO_INICIO = 'Vinicius Machado, Desenvolvedor Full Stack';
 
 export const TITULO_DO_SITE = 'Vinicius Machado';
 

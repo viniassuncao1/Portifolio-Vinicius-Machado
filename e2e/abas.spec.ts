@@ -93,7 +93,9 @@ test.describe('Abas dos arquivos', () => {
     await fechar(page, 'SobreMim.java').click();
 
     await expect(page).toHaveURL('/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Portfolio_Vinicius');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'Vinicius Machado, Desenvolvedor Full Stack',
+    );
     await expect(faixa(page).getByRole('tab')).toHaveText(['PortfolioApplication.java']);
   });
 
