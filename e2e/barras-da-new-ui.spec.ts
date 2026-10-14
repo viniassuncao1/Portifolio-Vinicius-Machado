@@ -10,7 +10,6 @@ const DESKTOP = { width: 1920, height: 1080 };
 const CELULAR = { width: 390, height: 844 };
 
 const DECORATIVOS = [
-  'app-barra-de-ferramentas .ramo',
   'app-barra-de-ferramentas .decorativo',
   'app-barra-de-ferramentas span.executar',
   'app-faixa-de-ferramentas span.botao',
@@ -106,7 +105,9 @@ test.describe('Barra superior (desktop)', () => {
     }
   });
 
-  test('o leitor de tela só encontra Projeto e Buscar na barra e na faixa', async ({ page }) => {
+  test('o leitor de tela só encontra como botões Buscar, a branch, Projeto e Commit', async ({
+    page,
+  }) => {
     await page.goto('/skills');
 
     const botoes = await page
@@ -115,8 +116,13 @@ test.describe('Barra superior (desktop)', () => {
       .evaluateAll((els) => els.map((el) => el.getAttribute('aria-label')));
     const texto = (await page.locator('app-barra-de-ferramentas').ariaSnapshot()) ?? '';
 
-    expect(botoes).toEqual(['Buscar seção (Ctrl+P)', 'Projeto']);
-    for (const decorativo of ['PortfolioApplication', 'portfolio-vinicius', 'master']) {
+    expect(botoes).toEqual([
+      'Buscar seção (Ctrl+P)',
+      'Branch master, abrir o painel do Git',
+      'Projeto',
+      'Commit',
+    ]);
+    for (const decorativo of ['PortfolioApplication', 'portfolio-vinicius']) {
       expect(texto).not.toContain(decorativo);
     }
   });
@@ -152,7 +158,7 @@ test.describe('Barra superior (desktop)', () => {
         .every((n) => n > 0),
     ).toBe(true);
     for (const foco of focados) {
-      expect(foco).not.toMatch(/ramo|decorativo|span\|/);
+      expect(foco).not.toMatch(/decorativo|span\|/);
     }
     expect(focados.some((f) => f.includes('Buscar seção'))).toBe(true);
     expect(focados.some((f) => f.endsWith('|Executar o projeto'))).toBe(true);
@@ -317,12 +323,9 @@ test.describe('Celular (390x844)', () => {
     ).toBeHidden();
     await expect(page.getByRole('button', { name: 'Projeto' })).toBeVisible();
     await expect(buscar(page)).toBeVisible();
-    for (const escondido of [
-      'app-barra-de-ferramentas .ramo',
-      'app-barra-de-ferramentas .depurar',
-    ]) {
-      await expect(page.locator(escondido)).toBeHidden();
-    }
+    // A branch fica na barra compacta: é por ela que o painel do Git abre no celular.
+    await expect(page.locator('app-barra-de-ferramentas .ramo')).toBeVisible();
+    await expect(page.locator('app-barra-de-ferramentas .decorativo').first()).toBeHidden();
   });
 
   test('o editor usa a largura da tela e a página não rola na horizontal', async ({ page }) => {
@@ -352,7 +355,7 @@ test.describe('Celular (390x844)', () => {
 
     const focados = await focosPorTab(page, 40);
 
-    for (const foco of focados) expect(foco).not.toMatch(/ramo|decorativo|span\|/);
+    for (const foco of focados) expect(foco).not.toMatch(/decorativo|span\|/);
   });
 });
 

@@ -71,9 +71,7 @@ test.describe('Estrutura da IDE', () => {
     await page.goto('/');
 
     for (const seletor of [
-      'app-barra-de-ferramentas .ramo',
-      'app-barra-de-ferramentas .depurar',
-      'app-barra-de-ferramentas .configuracoes',
+      'app-barra-de-ferramentas .decorativo',
       'app-barra-de-ferramentas .executar',
       'app-faixa-de-ferramentas span.botao',
     ]) {
@@ -155,12 +153,16 @@ test.describe('Teclado', () => {
     await abrirHidratada(page, '/');
     const eventos = arquivoDaArvore(page, 'Eventos');
 
-    // Antes da árvore ficam só os botões Buscar e Projeto; a árvore tem um só item na ordem de Tab
+    // Antes da árvore ficam só os botões Buscar, master, Projeto e Commit; a árvore tem um só item na ordem de Tab
     // (roving tabindex) e as setas percorrem o resto.
     await page.keyboard.press('Tab');
     await expect(page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' })).toBeFocused();
     await page.keyboard.press('Tab');
+    await expect(page.getByRole('button', { name: /^Branch master/ })).toBeFocused();
+    await page.keyboard.press('Tab');
     await expect(page.getByRole('button', { name: 'Projeto' })).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('button', { name: 'Commit' })).toBeFocused();
     await page.keyboard.press('Tab');
     await expect(pasta(page, 'sobre')).toBeFocused();
     // Itens visíveis no Início: sobre e seus 3 arquivos, skills, experiencias, projetos, formacao.
@@ -190,7 +192,7 @@ test.describe('Teclado', () => {
         await page.evaluate(
           () =>
             document.activeElement?.closest(
-              '.ramo, .depurar, .configuracoes, .executar:not(button), app-faixa-de-ferramentas span, app-aba-do-editor, .cabecalho',
+              '.decorativo, .executar:not(button), app-faixa-de-ferramentas span, app-aba-do-editor, .cabecalho',
             )?.tagName ?? null,
         ),
       );
