@@ -80,6 +80,15 @@ button.botao {
   font: inherit;
 }
 
+// Com texto, o Seções precisa do fundo escuro do hover (o texto no cinza do hover dos ícones daria
+// menos de 4,5:1), como o indicador de branch.
+button.projeto-celular {
+  &:hover,
+  &[aria-expanded='true'] {
+    background: var(--cor-linha-selecionada);
+  }
+}
+
 // Ícones decorativos mais apagados que os botões reais, sem hover.
 .decorativo {
   opacity: 0.55;
@@ -106,6 +115,8 @@ button.botao {
     height: var(--tamanho-alvo-toque);
   }
 
+  // O Executar fica no celular: a janela de Run não abre mais sozinha.
+  .executar,
   .botao-busca,
   .botao-tema {
     width: var(--tamanho-alvo-toque);
@@ -116,7 +127,6 @@ button.botao {
     margin-inline-start: auto;
   }
 
-  .executar,
   .decorativo,
   .controles-janela {
     display: none;
