@@ -10,24 +10,22 @@ import {
 } from '../../shared/editor-de-codigo/conteudo';
 import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
 
-/** Conteúdo da tela 30 (design/telas/tela-30.png); os quatro contatos são links reais. */
+/** Conteúdo da tela 30 (design/telas/tela-30.png), no estilo de leitura (ADR-0011); os quatro contatos são links reais. */
 export const CONTEUDO_CONTATO: ConteudoDoEditor = [
   vazia(),
-  linha(0, palavraChave('public record'), comum('  Contact(')),
+  linha(0, palavraChave('package'), comum(' dev.vinicius.portfolio.contato;')),
+  vazia(),
+  linha(0, palavraChave('public class'), comum(' Contato {')),
+  vazia(),
+  linha(1, comentario('// Como falar comigo: e-mail, telefone, LinkedIn e GitHub')),
+  linha(1, palavraChave('record'), comum(' Contatos(')),
   linha(2, declaracao('String email'), comum(',')),
-  linha(2, declaracao('String phone'), comum(',')),
+  linha(2, declaracao('String telefone'), comum(',')),
   linha(2, declaracao('String linkedin'), comum(',')),
-  linha(2, declaracao('String github'), comum(') {')),
+  linha(2, declaracao('String github'), comum(') {}')),
   vazia(),
   linha(1, comentario('// Fale comigo: clique em qualquer contato abaixo')),
-  linha(
-    1,
-    palavraChave('public static final'),
-    declaracao(' Contact'),
-    comum(' VINICIUS = '),
-    palavraChave('new'),
-    comum(' Contact('),
-  ),
+  linha(1, declaracao('Contatos'), comum(' vinicius = '), palavraChave('new'), comum(' Contatos(')),
   linha(
     2,
     link(literal('"viniciusmassuncao@gmail.com"'), 'mailto:viniciusmassuncao@gmail.com'),

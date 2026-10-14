@@ -12,6 +12,10 @@ describe('Contato', () => {
   it('mostra o conteúdo da seção em Java', async () => {
     const texto = await codigo();
 
+    expect(texto).toContain('package dev.vinicius.portfolio.contato;');
+    expect(texto).toContain('record Contatos(');
+    expect(texto).toContain('Contatos vinicius = new Contatos(');
+    expect(texto).not.toContain('static final');
     expect(texto).toContain('viniciusmassuncao@gmail.com');
     expect(texto).toContain('+55 61 98283-7805');
     expect(texto).toContain('linkedin.com/in/viniassuncao');
