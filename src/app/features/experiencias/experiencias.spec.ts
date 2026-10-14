@@ -23,7 +23,7 @@ describe('Experiencias', () => {
   it('página 1 mostra a Memora em andamento e o controle 1/3', async () => {
     const raiz = await renderizar();
 
-    expect(codigo(raiz)).toContain('record Experience(');
+    expect(codigo(raiz)).toContain('record Experiencia(');
     expect(codigo(raiz)).toContain('"Desenvolvedor Full Stack Júnior"');
     expect(codigo(raiz)).toContain('"08/2026 - Presente"');
     expect(codigo(raiz)).not.toContain('Optional');
@@ -48,8 +48,21 @@ describe('Experiencias', () => {
     expect(texto).toContain('"02/2025 - Presente"');
   });
 
+  it('declara o package e as variáveis em português, sem static final', async () => {
+    const memora = codigo(await renderizar());
+
+    expect(memora).toContain('package dev.vinicius.portfolio.experiencias;');
+    expect(memora).toContain('Experiencia memora = new Experiencia(');
+    expect(codigo(await renderizar(2))).toContain('Experiencia estagioNaMemora = new Experiencia(');
+    expect(codigo(await renderizar(3))).toContain('Experiencia wattsCompany = new Experiencia(');
+    for (const pagina of [1, 2, 3]) {
+      expect(codigo(await renderizar(pagina))).not.toContain('static final');
+    }
+    expect(codigo(await renderizar(2))).not.toContain('package');
+  });
+
   it('declara o record só na página 1', async () => {
-    expect(codigo(await renderizar(2))).not.toContain('record Experience(');
+    expect(codigo(await renderizar(2))).not.toContain('record Experiencia(');
   });
 
   it('não tem h1 próprio', async () => {
