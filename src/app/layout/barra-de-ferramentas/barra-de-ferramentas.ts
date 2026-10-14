@@ -1,6 +1,7 @@
 import { Component, ElementRef, inject, input, output, viewChild } from '@angular/core';
 
 import { JanelaDePreview } from '../../core/janela-de-preview';
+import { PainelDoGit } from '../../core/painel-do-git';
 import { Icone } from '../../shared/icone/icone';
 
 /**
@@ -19,6 +20,7 @@ export class BarraDeFerramentas {
   private readonly botaoProjeto = viewChild.required<ElementRef<HTMLButtonElement>>('botaoProjeto');
 
   protected readonly janela = inject(JanelaDePreview);
+  protected readonly git = inject(PainelDoGit);
   protected readonly ramo = 'master';
 
   /** Só o celular mostra o botão Projeto: ele abre e fecha a gaveta de seções. */

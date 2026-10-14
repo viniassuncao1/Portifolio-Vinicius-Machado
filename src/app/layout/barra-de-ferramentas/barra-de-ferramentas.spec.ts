@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
+import { PainelDoGit } from '../../core/painel-do-git';
 import { BarraDeFerramentas } from './barra-de-ferramentas';
 
 @Component({
@@ -24,12 +25,19 @@ describe('BarraDeFerramentas', () => {
     return { fixture, raiz: fixture.nativeElement as HTMLElement };
   }
 
-  it('mostra o indicador da branch master, decorativo', async () => {
-    const { raiz } = await montar();
-    const ramo = raiz.querySelector('.ramo');
+  it('mostra a branch master como botão que abre o painel do Git', async () => {
+    const { fixture, raiz } = await montar();
+    const ramo = raiz.querySelector<HTMLButtonElement>('button.ramo')!;
 
-    expect(ramo?.textContent).toContain('master');
-    expect(ramo?.getAttribute('aria-hidden')).toBe('true');
+    expect(ramo.textContent).toContain('master');
+    expect(ramo.getAttribute('aria-controls')).toBe('painel-do-git');
+    expect(ramo.getAttribute('aria-expanded')).toBe('false');
+
+    ramo.click();
+    fixture.detectChanges();
+
+    expect(TestBed.inject(PainelDoGit).aberto()).toBe(true);
+    expect(ramo.getAttribute('aria-expanded')).toBe('true');
   });
 
   it('não tem mais os widgets PV portfolio-vinicius e PortfolioApplication', async () => {
@@ -69,13 +77,17 @@ describe('BarraDeFerramentas', () => {
     }
   });
 
-  it('só tem como botões o Projeto do celular e o Buscar', async () => {
+  it('só tem como botões o Projeto do celular, o Buscar e a branch', async () => {
     const { raiz } = await montar();
     const nomes = Array.from(raiz.querySelectorAll('button')).map((b) =>
       b.getAttribute('aria-label'),
     );
 
-    expect(nomes).toEqual(['Projeto', 'Buscar seção (Ctrl+P)']);
+    expect(nomes).toEqual([
+      'Projeto',
+      'Buscar seção (Ctrl+P)',
+      'Branch master, abrir o painel do Git',
+    ]);
   });
 
   it('pede a busca ao ativar Buscar', async () => {
