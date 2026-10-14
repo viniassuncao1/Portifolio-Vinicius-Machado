@@ -46,7 +46,10 @@ describe('Depoimentos', () => {
 
   it('mostra a data 22/09/2026 como LocalDate.of(2026, 9, 22), com os números em cor de valor', async () => {
     const raiz = await renderizar();
-    const valores = Array.from(raiz.querySelectorAll('.papel-valor'), (v) => v.textContent);
+    const valores = Array.from(
+      raiz.querySelectorAll('code > span:not(.javadoc) .papel-valor'),
+      (v) => v.textContent,
+    );
 
     expect(valores).toEqual(['2026', '9', '22']);
   });
@@ -62,8 +65,9 @@ describe('Depoimentos', () => {
   it('mostra os três parágrafos completos num único Javadoc', async () => {
     const raiz = await renderizar();
     const blocos = raiz.querySelectorAll('.javadoc');
-    const paragrafos = Array.from(blocos[0].querySelectorAll('.javadoc-paragrafo'), (p) =>
-      normalizar(p.textContent),
+    const paragrafos = Array.from(
+      blocos[0].querySelectorAll('.javadoc-paragrafo:not(.javadoc-autor)'),
+      (p) => normalizar(p.textContent),
     );
 
     expect(blocos).toHaveLength(1);
@@ -103,5 +107,25 @@ describe('Depoimentos', () => {
 
   it('não tem h1 próprio (vem da casca)', async () => {
     expect((await renderizar()).querySelector('h1')).toBeNull();
+  });
+
+  it('mostra a foto pequena da Luana com alt', async () => {
+    const foto = (await renderizar()).querySelector<HTMLImageElement>('.javadoc img.retrato');
+
+    expect(foto?.getAttribute('src')).toContain('fotos/luana-porto.webp');
+    expect(foto?.getAttribute('alt')).toBe('Foto de Luana Porto');
+    expect(foto?.classList.contains('pequeno')).toBe(true);
+  });
+
+  it('termina o Javadoc com @author e o LinkedIn da Luana em nova aba segura', async () => {
+    const autor = (await renderizar()).querySelector('.javadoc-autor');
+    const link = autor?.querySelector('a');
+
+    expect(autor?.textContent).toContain('@author Luana Porto');
+    expect(link?.getAttribute('href')).toBe(
+      'https://www.linkedin.com/in/luana-porto-pereira-gomes/',
+    );
+    expect(link?.getAttribute('target')).toBe('_blank');
+    expect(link?.getAttribute('rel')).toBe('noopener noreferrer');
   });
 });
