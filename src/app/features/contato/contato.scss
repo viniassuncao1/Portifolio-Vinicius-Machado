@@ -7,7 +7,7 @@
 // Contatos com cara de link: sublinhado pontilhado e ↗ nos externos (abrem em nova aba). O padding
 // com margem negativa aumenta a área de toque sem mudar a altura da linha, que a coluna de
 // números acompanha.
-:host ::ng-deep .linha a {
+:host ::ng-deep .linha a[class^='papel-'] {
   display: inline-block;
   padding-block: var(--folga-alvo-de-toque);
   margin-block: calc(-1 * var(--folga-alvo-de-toque));
