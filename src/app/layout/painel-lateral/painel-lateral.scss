@@ -6,23 +6,59 @@
   overflow: hidden;
 }
 
-// Cabeçalho do painel na New UI: o nome da vista e o chevron, sem os controles de janela do Eclipse.
+// Cabeçalho da vista, como no design: título com "×" e os controles — e ▢.
 .cabecalho {
   box-sizing: border-box;
   display: flex;
-  align-items: center;
-  gap: var(--espaco-2);
+  align-items: flex-start;
   height: var(--altura-cabecalho-painel);
-  padding-inline: var(--espaco-3);
-  color: var(--cor-texto-forte);
+  padding-block-start: var(--espaco-2);
+  color: var(--cor-texto);
   font-size: var(--texto-arvore);
-  font-weight: var(--peso-medio);
   user-select: none;
 }
 
 .titulo {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  box-sizing: border-box;
+  width: var(--largura-titulo-painel);
+  height: calc(var(--altura-cabecalho-painel) - var(--espaco-1));
+  margin-block-start: calc(-1 * var(--espaco-2));
+  padding-block-start: var(--espaco-2);
+  padding-inline-start: var(--espaco-3);
+  border-inline-end: var(--borda-largura) solid var(--cor-texto);
+  border-start-end-radius: 1rem;
   line-height: var(--altura-linha-arvore);
   white-space: nowrap;
+}
+
+.fechar {
+  color: var(--cor-icone);
+}
+
+.minimizar,
+.restaurar {
+  box-sizing: border-box;
+  border: 1.5px solid var(--cor-texto);
+  border-radius: 0.2rem;
+}
+
+.minimizar {
+  width: 1.2rem;
+  height: 0.3rem;
+  margin-block-start: 0.7rem;
+  margin-inline-start: var(--espaco-4);
+}
+
+.restaurar {
+  width: 1.3rem;
+  height: 1.1rem;
+  margin-block-start: 0.2rem;
+  margin-inline-start: var(--espaco-4);
+  border-radius: 0.3rem;
+  border-block-start-width: 3px;
 }
 
 app-arvore-de-secoes {

@@ -12,6 +12,7 @@
     var(--largura-faixa-ferramentas) var(--largura-painel-lateral)
     minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
+  column-gap: 0;
   flex: 1 1 0;
   min-height: 0;
   transition: grid-template-columns var(--duracao-media) var(--curva-saida);
@@ -34,6 +35,13 @@
   }
 }
 
+// Entre o painel e o editor arredondado fica o fundo da página, como no design.
+@media (min-width: 768px) {
+  .coluna-editor {
+    margin-inline-start: var(--espaco-2);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .area,
   .area[data-painel='false'] app-painel-lateral {
@@ -48,11 +56,11 @@
   min-height: 0;
 }
 
-// Faixa de abas: cor sólida; a aba ativa se funde com o editor.
+// Faixa de abas: o degradê fica aqui e a aba ativa se funde com o editor.
 .faixa {
   display: flex;
   height: var(--altura-faixa-abas);
-  background: var(--cor-faixa-abas);
+  background: linear-gradient(to bottom, var(--cor-faixa-abas), var(--cor-aba-inativa) 35%);
 
   app-faixa-de-abas {
     flex: 1 1 auto;
