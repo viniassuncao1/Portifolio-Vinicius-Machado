@@ -395,9 +395,7 @@ for (const [nome, viewport] of [
   test.describe(`Acessibilidade (axe, WCAG 2 A e AA) das barras no ${nome}`, () => {
     test.use({ viewport });
 
-    // Bug aberto: o título da opção ativa (#9A9DA3 sobre #2E436E) tem 3,6:1, abaixo de 4,5:1.
-    // Reativar (trocar por `test`) quando o Pincel corrigir o contraste de `.opcao.ativa .titulo`.
-    test.fixme('com a busca aberta não tem violações', async ({ page }) => {
+    test('com a busca aberta não tem violações', async ({ page }) => {
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await abrirHidratada(page, '/skills');
       await buscar(page).click();
