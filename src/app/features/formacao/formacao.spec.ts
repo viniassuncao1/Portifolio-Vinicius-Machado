@@ -14,7 +14,10 @@ describe('Formacao', () => {
 
     expect(texto).toContain('UniCEUB');
     expect(texto).toContain('Bacharelado em Ciência da Computação');
-    expect(texto).toContain('int expectedGraduation');
+    expect(texto).toContain('package dev.vinicius.portfolio.formacao;');
+    expect(texto).toContain('record Graduacao(');
+    expect(texto).toContain('int anoPrevistoDeFormatura');
+    expect(texto).not.toContain('static final');
     expect(texto).toContain('2027');
     expect(texto).not.toContain('Year.of');
   });
