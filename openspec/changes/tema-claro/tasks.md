@@ -11,7 +11,7 @@
 
 ## 3. Movimento [Compasso]
 
-- [ ] 3.1 Troca de tema com View Transition curta, imediata em reduced-motion — verificar no portal
+- [x] 3.1 Troca de tema com View Transition curta, imediata em reduced-motion — verificar no portal
 
 ## 4. Testes [Sentinela]
 
