@@ -1,5 +1,17 @@
-import { DOCUMENT, PLATFORM_ID, Service, computed, inject, signal } from '@angular/core';
+import {
+  DOCUMENT,
+  Injector,
+  PLATFORM_ID,
+  Service,
+  afterNextRender,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
+
+import { trocarComTransicao } from './transicao-de-tema';
 
 export type NomeDoTema = 'claro' | 'escuro';
 
@@ -24,6 +36,8 @@ const ehTema = (valor: unknown): valor is NomeDoTema => valor === 'claro' || val
 export class Tema {
   private readonly documento = inject(DOCUMENT);
   private readonly navegador = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly router = inject(Router);
+  private readonly injector = inject(Injector);
   private readonly atual = signal<NomeDoTema>(this.lerDoDocumento());
 
   readonly tema = this.atual.asReadonly();
@@ -39,16 +53,25 @@ export class Tema {
     this.escolher(this.atual() === 'claro' ? 'escuro' : 'claro');
   }
 
-  /** Guarda a escolha do visitante e aplica o tema. */
+  /** Guarda a escolha do visitante e aplica o tema, com um crossfade curto quando dá. */
   escolher(tema: NomeDoTema): void {
     this.guardar(tema);
-    this.aplicar(tema);
+    if (!this.navegador) {
+      this.aplicar(tema);
+      return;
+    }
+    trocarComTransicao(this.documento, () => this.aplicar(tema), {
+      navegando: this.router.currentNavigation() !== null,
+      aposRenderizar: () =>
+        new Promise<void>((resolver) =>
+          afterNextRender(() => resolver(), { injector: this.injector }),
+        ),
+    });
   }
 
   /**
    * Muda o tema na página (`data-tema`, `color-scheme`, `theme-color` e o signal), sem guardar.
-   * É a mudança visual que dá para envolver numa View Transition:
-   * `document.startViewTransition(() => tema.aplicar(...))`.
+   * É a mudança visual que `escolher` envolve numa View Transition (ver `transicao-de-tema.ts`).
    */
   aplicar(tema: NomeDoTema): void {
     this.atual.set(tema);

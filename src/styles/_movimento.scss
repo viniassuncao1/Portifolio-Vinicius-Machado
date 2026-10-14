@@ -61,3 +61,32 @@
     animation: none;
   }
 }
+
+// Troca de tema (View Transition): crossfade curto da página inteira. As regras só valem com a
+// classe no `<html>` (posta por `core/transicao-de-tema.ts`), então não afetam a troca de rota.
+// Com movimento reduzido a troca é direta e nenhuma transição é criada.
+html.transicao-de-tema {
+  &::view-transition-old(root),
+  &::view-transition-new(root),
+  &::view-transition-old(conteudo-editor),
+  &::view-transition-new(conteudo-editor) {
+    mix-blend-mode: normal;
+  }
+
+  &::view-transition-old(root),
+  &::view-transition-old(conteudo-editor) {
+    animation: none;
+  }
+
+  &::view-transition-new(root),
+  &::view-transition-new(conteudo-editor) {
+    animation: movimento-aparecer var(--duracao-media) var(--curva-padrao) both;
+  }
+}
+
+// O novo tema entra por cima do antigo, que fica parado por baixo: o conteúdo nunca some.
+@keyframes movimento-aparecer {
+  from {
+    opacity: 0;
+  }
+}

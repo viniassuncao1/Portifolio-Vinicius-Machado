@@ -1,5 +1,7 @@
 import { DOCUMENT, PLATFORM_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import type { Navigation } from '@angular/router';
 
 import { CHAVE_DO_TEMA, Tema } from './tema';
 
@@ -108,6 +110,79 @@ describe('Tema', () => {
       expect(documento.documentElement.hasAttribute('data-tema')).toBe(false);
       expect(guardar).not.toHaveBeenCalled();
       vi.restoreAllMocks();
+    });
+  });
+
+  describe('transição', () => {
+    const comTransicao = () => {
+      const callbacks: (() => Promise<void>)[] = [];
+      Object.assign(documento, {
+        startViewTransition: (atualizar: () => Promise<void>) => {
+          callbacks.push(atualizar);
+          return { ready: Promise.resolve(), finished: new Promise<void>(() => undefined) };
+        },
+      });
+      return callbacks;
+    };
+    const semTransicao = () => Reflect.deleteProperty(documento, 'startViewTransition');
+
+    afterEach(semTransicao);
+
+    it('escolher guarda já e só troca o tema dentro da transição', () => {
+      raiz().setAttribute('data-tema', 'escuro');
+      const callbacks = comTransicao();
+      const tema = TestBed.inject(Tema);
+
+      tema.escolher('claro');
+
+      expect(localStorage.getItem(CHAVE_DO_TEMA)).toBe('claro');
+      expect(callbacks).toHaveLength(1);
+      expect(tema.tema()).toBe('escuro');
+
+      void callbacks[0]();
+
+      expect(tema.tema()).toBe('claro');
+      expect(raiz().getAttribute('data-tema')).toBe('claro');
+    });
+
+    it('aplicar continua direto, sem transição', () => {
+      raiz().setAttribute('data-tema', 'escuro');
+      const callbacks = comTransicao();
+      const tema = TestBed.inject(Tema);
+
+      tema.aplicar('claro');
+
+      expect(callbacks).toHaveLength(0);
+      expect(tema.tema()).toBe('claro');
+    });
+
+    it('com movimento reduzido troca direto', () => {
+      raiz().setAttribute('data-tema', 'escuro');
+      const callbacks = comTransicao();
+      const original = documento.defaultView!.matchMedia;
+      documento.defaultView!.matchMedia = ((consulta: string) => ({
+        matches: consulta.includes('reduce'),
+      })) as typeof matchMedia;
+      const tema = TestBed.inject(Tema);
+
+      tema.escolher('claro');
+      documento.defaultView!.matchMedia = original;
+
+      expect(callbacks).toHaveLength(0);
+      expect(tema.tema()).toBe('claro');
+    });
+
+    it('com uma navegação em andamento troca direto', async () => {
+      raiz().setAttribute('data-tema', 'escuro');
+      const callbacks = comTransicao();
+      const roteador = TestBed.inject(Router);
+      vi.spyOn(roteador, 'currentNavigation').mockReturnValue({} as Navigation);
+      const tema = TestBed.inject(Tema);
+
+      tema.escolher('claro');
+
+      expect(callbacks).toHaveLength(0);
+      expect(tema.tema()).toBe('claro');
     });
   });
 });
