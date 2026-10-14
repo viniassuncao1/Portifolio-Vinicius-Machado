@@ -89,16 +89,16 @@ export function listasDe(texto: string): string[] {
   return listas;
 }
 
-/** Cores de sintaxe da paleta Dark do IntelliJ New UI (tokens `--cor-sintaxe-*`). */
+/** Cores de sintaxe do design original (tokens `--cor-sintaxe-*`). */
 export const CORES_DE_SINTAXE = {
-  palavraChave: 'rgb(207, 142, 109)',
-  campo: 'rgb(199, 125, 186)',
-  literal: 'rgb(106, 171, 115)',
-  valor: 'rgb(42, 172, 184)',
-  anotacao: 'rgb(179, 174, 96)',
-  comentario: 'rgb(140, 144, 151)',
+  palavraChave: 'rgb(222, 96, 210)',
+  campo: 'rgb(213, 150, 62)',
+  literal: 'rgb(143, 194, 88)',
+  valor: 'rgb(79, 175, 172)',
+  anotacao: 'rgb(116, 137, 248)',
+  comentario: 'rgb(155, 153, 153)',
 } as const;
 
-/** Azul do acento e do anel de foco (`--cor-acento`) e o rosa que saiu da identidade. */
-export const COR_DO_FOCO = 'rgb(53, 116, 240)';
+/** Rosa do acento e do anel de foco (`--cor-acento`). */
+export const COR_DO_FOCO = 'rgb(222, 96, 210)';
 export const COR_ROSA_ANTIGA = 'rgb(222, 96, 210)';

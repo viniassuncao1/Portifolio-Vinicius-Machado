@@ -64,9 +64,9 @@ test.describe('Código do Início em Java moderno', () => {
       cor('main .papel-literal'),
     ]);
 
-    expect(palavraChave).toBe('rgb(207, 142, 109)');
-    expect(campo).toBe('rgb(199, 125, 186)');
-    expect(literal).toBe('rgb(106, 171, 115)');
+    expect(palavraChave).toBe('rgb(222, 96, 210)');
+    expect(campo).toBe('rgb(213, 150, 62)');
+    expect(literal).toBe('rgb(143, 194, 88)');
   });
 
   test('exibe o cargo e a pilha com as quatro tecnologias na ordem', async ({ page }) => {

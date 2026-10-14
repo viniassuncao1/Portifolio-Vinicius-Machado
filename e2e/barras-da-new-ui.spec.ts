@@ -10,9 +10,7 @@ const DESKTOP = { width: 1920, height: 1080 };
 const CELULAR = { width: 390, height: 844 };
 
 const DECORATIVOS = [
-  '.widget.projeto',
-  '.widget.ramo',
-  '.widget.configuracao',
+  'app-barra-de-ferramentas .ramo',
   'app-barra-de-ferramentas .depurar',
   'app-barra-de-ferramentas .configuracoes',
   'app-barra-de-ferramentas span.executar',
@@ -47,39 +45,36 @@ async function focosPorTab(page: Page, passos: number): Promise<string[]> {
 test.describe('Barra superior (desktop)', () => {
   test.use({ viewport: DESKTOP });
 
-  test('mostra o selo PV, portfolio-vinicius e master à esquerda em qualquer página', async ({
+  test('mostra o indicador da branch master e não tem mais os widgets do projeto', async ({
     page,
   }) => {
     for (const rota of ['/', '/skills', '/projeto-2']) {
       await page.goto(rota);
       const barra = page.locator('app-barra-de-ferramentas');
 
-      await expect(barra.locator('.widget.projeto')).toContainText('PV');
-      await expect(barra.locator('.widget.projeto')).toContainText('portfolio-vinicius');
-      await expect(barra.locator('.widget.ramo')).toContainText('master');
+      await expect(barra.locator('.ramo')).toContainText('master');
+      await expect(barra).not.toContainText('portfolio-vinicius');
+      await expect(barra).not.toContainText('PortfolioApplication');
     }
   });
 
-  test('põe os widgets à esquerda e as ações à direita, com Buscar depois de Executar e Depurar', async ({
+  test('põe os ícones à esquerda, com Buscar depois de Executar e Depurar, e a branch ao lado', async ({
     page,
   }) => {
     await page.goto('/');
     const x = async (seletor: string) => (await page.locator(seletor).first().boundingBox())!.x;
 
-    const projeto = await x('.widget.projeto');
-    const ramo = await x('.widget.ramo');
-    const configuracao = await x('.widget.configuracao');
+    const executar = await x('app-barra-de-ferramentas .executar');
     const depurar = await x('app-barra-de-ferramentas .depurar');
     const busca = (await buscar(page).boundingBox())!.x;
     const configuracoes = await x('app-barra-de-ferramentas .configuracoes');
+    const ramo = await x('app-barra-de-ferramentas .ramo');
 
-    expect(projeto).toBeLessThan(ramo);
-    expect(ramo).toBeLessThan(960);
-    expect(configuracao).toBeGreaterThan(960);
-    expect(configuracao).toBeLessThan(depurar);
+    expect(executar).toBeLessThan(depurar);
     expect(depurar).toBeLessThan(busca);
     expect(busca).toBeLessThan(configuracoes);
-    await expect(page.locator('.widget.configuracao')).toContainText('PortfolioApplication');
+    expect(configuracoes).toBeLessThan(ramo);
+    expect(ramo).toBeLessThan(960);
   });
 
   test('Buscar abre a busca de seções com o foco no campo', async ({ page }) => {
@@ -126,7 +121,7 @@ test.describe('Barra superior (desktop)', () => {
     const texto = (await page.locator('app-barra-de-ferramentas').ariaSnapshot()) ?? '';
 
     expect(botoes).toEqual(['Buscar seção (Ctrl+P)', 'Projeto']);
-    for (const decorativo of ['PortfolioApplication', 'portfolio-vinicius', 'PV', 'master']) {
+    for (const decorativo of ['PortfolioApplication', 'portfolio-vinicius', 'master']) {
       expect(texto).not.toContain(decorativo);
     }
   });
@@ -162,7 +157,7 @@ test.describe('Barra superior (desktop)', () => {
         .every((n) => n > 0),
     ).toBe(true);
     for (const foco of focados) {
-      expect(foco).not.toMatch(/widget|depurar|configuracoes|span\|/);
+      expect(foco).not.toMatch(/ramo|depurar|configuracoes|span\|/);
     }
     expect(focados.some((f) => f.includes('Buscar seção'))).toBe(true);
     expect(focados.some((f) => f.endsWith('|Executar o projeto'))).toBe(true);
@@ -305,7 +300,10 @@ test.describe('Celular (390x844)', () => {
     ).toBeHidden();
     await expect(page.getByRole('button', { name: 'Projeto' })).toBeVisible();
     await expect(buscar(page)).toBeVisible();
-    for (const escondido of ['.widget.projeto .selo', '.widget.ramo', '.widget.configuracao']) {
+    for (const escondido of [
+      'app-barra-de-ferramentas .ramo',
+      'app-barra-de-ferramentas .depurar',
+    ]) {
       await expect(page.locator(escondido)).toBeHidden();
     }
   });
@@ -337,7 +335,7 @@ test.describe('Celular (390x844)', () => {
 
     const focados = await focosPorTab(page, 40);
 
-    for (const foco of focados) expect(foco).not.toMatch(/widget|depurar|configuracoes|span\|/);
+    for (const foco of focados) expect(foco).not.toMatch(/ramo|depurar|configuracoes|span\|/);
   });
 });
 
@@ -354,11 +352,14 @@ test.describe('Ícones da New UI e créditos', () => {
     await page.goto('/');
     await expect(page.locator('app-barra-de-ferramentas .botao-busca img')).toBeVisible();
 
+    // Ícones de controles escondidos neste tamanho (o Projeto do celular) nem chegam a carregar.
     const imagens = await page.locator('app-icone img').evaluateAll((els) =>
-      els.map((el) => ({
-        src: (el as HTMLImageElement).getAttribute('src'),
-        ok: (el as HTMLImageElement).complete && (el as HTMLImageElement).naturalWidth > 0,
-      })),
+      els
+        .filter((el) => el.checkVisibility())
+        .map((el) => ({
+          src: (el as HTMLImageElement).getAttribute('src'),
+          ok: (el as HTMLImageElement).complete && (el as HTMLImageElement).naturalWidth > 0,
+        })),
     );
 
     expect(imagens.length).toBeGreaterThan(8);

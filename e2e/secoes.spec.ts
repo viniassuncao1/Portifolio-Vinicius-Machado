@@ -4,10 +4,10 @@ import type { Locator } from '@playwright/test';
 import { SECOES, totalDePaginas } from '../src/app/core/secoes';
 import { linhasDoCodigo, normalizar } from './apoio';
 
-const COR_VALOR = 'rgb(42, 172, 184)';
-const COR_DECLARACAO = 'rgb(199, 125, 186)';
-const COR_PALAVRA_CHAVE = 'rgb(207, 142, 109)';
-const COR_ANOTACAO = 'rgb(179, 174, 96)';
+const COR_VALOR = 'rgb(79, 175, 172)';
+const COR_DECLARACAO = 'rgb(213, 150, 62)';
+const COR_PALAVRA_CHAVE = 'rgb(222, 96, 210)';
+const COR_ANOTACAO = 'rgb(116, 137, 248)';
 
 const cor = (alvo: Locator) => alvo.evaluate((el) => getComputedStyle(el).color);
 

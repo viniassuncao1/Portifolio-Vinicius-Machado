@@ -3,9 +3,9 @@ import type { Locator, Page } from '@playwright/test';
 
 import { linhasDoCodigo, normalizar } from './apoio';
 
-const COR_VALOR = 'rgb(42, 172, 184)';
-const COR_LITERAL = 'rgb(106, 171, 115)';
-const COR_DECLARACAO = 'rgb(199, 125, 186)';
+const COR_VALOR = 'rgb(79, 175, 172)';
+const COR_LITERAL = 'rgb(143, 194, 88)';
+const COR_DECLARACAO = 'rgb(213, 150, 62)';
 
 const cor = (alvo: Locator) => alvo.evaluate((el) => getComputedStyle(el).color);
 

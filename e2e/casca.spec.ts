@@ -66,9 +66,7 @@ test.describe('Estrutura da IDE', () => {
     await page.goto('/');
 
     for (const seletor of [
-      '.widget.projeto',
-      '.widget.ramo',
-      '.widget.configuracao',
+      'app-barra-de-ferramentas .ramo',
       'app-barra-de-ferramentas .depurar',
       'app-barra-de-ferramentas .configuracoes',
       'app-barra-de-ferramentas .executar',
@@ -183,7 +181,7 @@ test.describe('Teclado', () => {
         await page.evaluate(
           () =>
             document.activeElement?.closest(
-              '.widget, .depurar, .configuracoes, .executar:not(button), app-faixa-de-ferramentas span, app-aba-do-editor, .cabecalho',
+              '.ramo, .depurar, .configuracoes, .executar:not(button), app-faixa-de-ferramentas span, app-aba-do-editor, .cabecalho',
             )?.tagName ?? null,
         ),
       );
