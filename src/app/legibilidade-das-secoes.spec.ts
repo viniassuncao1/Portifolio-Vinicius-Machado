@@ -161,14 +161,21 @@ describe('legibilidade do código exibido', () => {
       expect(codigoDe(conteudo)).not.toMatch(/[^\p{ASCII}]/u);
     });
 
-    it.each(DOCUMENTOS)('%s: nenhum identificador usa palavra em português', (_nome, conteudo) => {
-      const identificadores = new Set(codigoDe(conteudo).match(/\b[A-Za-z_]\w*\b/g));
-      const emPortugues = [...identificadores].filter((identificador) =>
-        palavrasDe(identificador).some((palavra) => PALAVRAS_EM_PORTUGUES.has(palavra)),
-      );
+    // Seções já no estilo da change java-para-leitura (domínio em português sem acento).
+    const NO_NOVO_ESTILO = new Set(['Eventos']);
+    const NO_ESTILO_ANTIGO = DOCUMENTOS.filter(([nome]) => !NO_NOVO_ESTILO.has(nome));
 
-      expect(emPortugues).toEqual([]);
-    });
+    it.each(NO_ESTILO_ANTIGO)(
+      '%s: nenhum identificador usa palavra em português',
+      (_nome, conteudo) => {
+        const identificadores = new Set(codigoDe(conteudo).match(/\b[A-Za-z_]\w*\b/g));
+        const emPortugues = [...identificadores].filter((identificador) =>
+          palavrasDe(identificador).some((palavra) => PALAVRAS_EM_PORTUGUES.has(palavra)),
+        );
+
+        expect(emPortugues).toEqual([]);
+      },
+    );
 
     it('o verificador separa as palavras de um identificador', () => {
       expect(palavrasDe('completedOn')).toEqual(['completed', 'on']);

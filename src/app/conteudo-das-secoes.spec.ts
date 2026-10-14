@@ -71,13 +71,14 @@ describe('conteúdo das seções em Java moderno', () => {
       expect(textoDe(c)).not.toContain('String[]');
     });
 
-    it('só o Início declara o pacote portfolio.viniciusmachado', () => {
+    it('só o Início declara o pacote portfolio.viniciusmachado (e as no novo estilo, o seu)', () => {
       const comPacote = DOCUMENTOS.filter(([, c]) => /^package /m.test(codigoDe(c))).map(
         ([n]) => n,
       );
 
-      expect(comPacote).toEqual(['Início']);
+      expect(comPacote).toEqual(['Início', 'Eventos']);
       expect(codigoDe(CONTEUDO_INICIO)).toContain('package portfolio.viniciusmachado;');
+      expect(codigoDe(CONTEUDO_EVENTOS)).toContain('package dev.vinicius.portfolio.formacao;');
     });
   });
 
@@ -348,9 +349,9 @@ describe('conteúdo das seções em Java moderno', () => {
         'Campus Party Brasília',
         'BB Digital Week',
       ]);
-      expect(texto).toContain('new Event("Campus Party Brasília", 2),  // 2x');
-      expect(texto).toContain('new Event("Brasília IT", 1),');
-      expect(texto).toContain('new Event("BB Digital Week", 1)');
+      expect(texto).toContain('new Evento("Campus Party Brasília", 2),  // 2x');
+      expect(texto).toContain('new Evento("Brasília IT", 1),');
+      expect(texto).toContain('new Evento("BB Digital Week", 1)');
       expect(texto).not.toContain('// 1x');
     });
 
