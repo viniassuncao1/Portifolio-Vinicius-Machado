@@ -10,7 +10,7 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 
 | Elemento da tela                                               | Telas            | Componente                  | Pasta                          |
 | -------------------------------------------------------------- | ---------------- | --------------------------- | ------------------------------ |
-| Barra superior da New UI (projeto, branch, Executar, Buscar)   | todas            | `BarraDeFerramentas`        | `layout/barra-de-ferramentas/` |
+| Barra de ferramentas do design (branch, Executar, Buscar)      | todas            | `BarraDeFerramentas`        | `layout/barra-de-ferramentas/` |
 | Faixa de ferramentas à esquerda (Projeto, Commit, Estrutura)   | desktop (nossa)  | `FaixaDeFerramentas`        | `layout/faixa-de-ferramentas/` |
 | Painel do projeto (cabeçalho "Projeto", árvore, rodapé)        | todas            | `PainelLateral`             | `layout/painel-lateral/`       |
 | Árvore de seções com ícones                                    | todas            | `ArvoreDeSecoes`            | `layout/arvore-de-secoes/`     |
@@ -68,8 +68,8 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 ### `PainelLateral`
 
 - **Onde:** `layout/painel-lateral/painel-lateral.ts`, seletor `app-painel-lateral`.
-- **O que faz:** moldura da árvore: cabeçalho "Projeto" com o chevron, no estilo da New UI
-  (decorativo, `aria-hidden`; os botões de janela do Eclipse saíram), a `ArvoreDeSecoes` e o
+- **O que faz:** moldura da árvore: cabeçalho `Portfolio_Vinicius` do design, com os controles de janela
+  (decorativo, `aria-hidden`), a `ArvoreDeSecoes` e o
   rodapé com a barra de rolagem decorativa. No celular mostra o botão "Fechar seções".
 - **Saídas:** `secaoEscolhida` (repassa a escolha da árvore) e `fecharGaveta` (botão "Fechar
   seções"). Método público: `focarPrimeiroItem()`.
@@ -95,13 +95,13 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 
 - **Onde:** `layout/barra-de-ferramentas/barra-de-ferramentas.ts`, seletor
   `app-barra-de-ferramentas`.
-- **O que faz:** a barra superior da New UI (40px, cor sólida). À esquerda, os widgets do projeto
-  (`PV portfolio-vinicius`) e da branch (`master`); à direita, a configuração de execução
-  (`PortfolioApplication`), **Executar**, **Depurar**, **Buscar** e **Configurações**. O widget do
-  projeto, o da branch, a configuração, Depurar e Configurações só imitam a IDE: ficam fora da
-  leitura e do foco. São botões de verdade o **Buscar** (emite `buscar`, que abre a busca de seções),
-  o **Executar** (só nas rotas com preview: `JanelaDePreview.previewDaRota()`; abre a janela) e,
-  no celular, o **Projeto**, que abre e fecha a gaveta.
+- **O que faz:** a barra de ferramentas do design (degradê e controles de janela), com os ícones
+  da IntelliJ Platform na **variante clara**, por causa do fundo claro do degradê
+  ([ADR-0012](adr/0012-design-original-com-elementos-do-intellij.md)). Mostra a branch `master`,
+  **Executar** e **Buscar**; o resto só imita a IDE e fica fora da leitura e do foco. São botões de
+  verdade o **Buscar** (emite `buscar`, que abre a busca de seções), o **Executar** (só nas rotas
+  com preview: `JanelaDePreview.previewDaRota()`; abre a janela) e, no celular, o **Projeto**, que
+  abre e fecha a gaveta.
 - **Entrada e saídas:** `gavetaAberta = input(false)`; `alternarGaveta` e `buscar`. Método
   público: `focarProjeto()`, usado para devolver o foco quando a gaveta fecha.
 - **Celular:** a barra fica compacta, com Projeto (ícone), o nome do projeto e Buscar.
@@ -128,7 +128,7 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 ### `BarraDeStatus`
 
 - **Onde:** `layout/barra-de-status/barra-de-status.ts`, seletor `app-barra-de-status`.
-- **O que faz:** a barra de status da New UI (24px). À esquerda, os **breadcrumbs** do arquivo
+- **O que faz:** a barra de status (24px), nas cores do design. À esquerda, os **breadcrumbs** do arquivo
   aberto (`portfolio-vinicius › src › main › java › … › Skills.java`, calculados por
   `core/breadcrumbs.ts`; o trecho do meio encolhe com reticências quando falta espaço). À direita,
   `linha:coluna` (do `EstadoDoEditor`, que conta a **linha visual**, já que o Javadoc ocupa várias
@@ -181,8 +181,8 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 ### `Icone`
 
 - **Onde:** `shared/icone/icone.ts`, seletor `app-icone`.
-- **O que faz:** mostra um SVG oficial da **IntelliJ Platform (New UI, tema escuro)** de
-  `public/icones/new-ui/`, com `NgOptimizedImage` e `alt=""` (decorativo: o texto ao lado já é o
+- **O que faz:** mostra um SVG oficial da **IntelliJ Platform** (variante escura na interface e
+  clara na barra de ferramentas) de `public/icones/new-ui/`, com `NgOptimizedImage` e `alt=""` (decorativo: o texto ao lado já é o
   rótulo). A lista de nomes válidos é `NOMES_DE_ICONE`; o tipo é `NomeDoIcone`. Os ícones têm
   licença Apache 2.0 e os créditos ficam em
   [`public/icones/new-ui/CREDITOS.md`](../public/icones/new-ui/CREDITOS.md); nenhum logotipo de
@@ -276,7 +276,7 @@ O estado da IDE mora em serviços (`@Service`), e não nos componentes da casca.
 - **`breadcrumbs`** (`core/breadcrumbs.ts`): função pura que devolve os segmentos do caminho de um
   arquivo, do projeto até o `.java` (`portfolio-vinicius › src › main › java › dev › vinicius ›
 portfolio › <pacote> › <Arquivo>`). Usa o campo `pacote` de cada `Secao` (`sobre`, `skills`,
-  `experiencias`, `projetos`, `formacao`, `recomendacoes` ou `contato`, conforme o ADR-0011); o
+  `experiencias`, `projetos`, `formacao`, `recomendacoes` ou `contato`, conforme o ADR-0011, mantido pelo ADR-0012); o
   Início não tem pacote e fica na raiz. Truncar os segmentos do meio é com quem desenha a barra.
 - **`PREVIEWS`** (`core/previews.ts`): o registro `slug -> PreviewDeProjeto` (`titulo`, `url` e
   `captura` com `src`, `largura`, `altura` e `alt`). Só os projetos que estão aqui mostram o
@@ -456,32 +456,24 @@ Manter `record`, `List.of` e `java.time` onde ajudam: simplificar não é abrir 
 
 ### Identidade visual e tokens
 
-A identidade visual é a do **IntelliJ IDEA New UI, tema escuro**
-([ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md)). Todos os valores vêm de
+O **design original** (`design/telas/`) é a referência visual e predomina; do IntelliJ ficam só
+os elementos de IDE de verdade: ícones, pacotes, referências ao Git, a faixa de ferramentas, a
+barra de status com o caminho do arquivo e a tipografia compacta
+([ADR-0012](adr/0012-design-original-com-elementos-do-intellij.md), que substitui em parte o
+[ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md)). Todos os valores vêm de
 `src/styles/_tokens.scss`; os componentes só usam tokens.
 
-**Paleta Dark, com um único acento.**
+**Paleta e formas do design.** Fundos `#2B2B2B` e `#1C1C1C`, palavras-chave em rosa `#DE60D2` e
+foco rosa, barra de ferramentas com degradê e controles de janela, editor com cantos
+arredondados, abas e cabeçalho do painel `Portfolio_Vinicius`. Os ajustes de contraste AA
+(por exemplo, o comentário clareado) seguem registrados na note "Design Tokens". Para os valores
+exatos de cada token, o arquivo `_tokens.scss` é a fonte.
 
-| Uso                             | Token                                                                      | Valor                                                 |
-| ------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------- |
-| Editor, abas ativas             | `--cor-editor`, `--cor-aba-ativa`                                          | `#1E1F22`                                             |
-| Painéis, barras e faixa de abas | `--cor-painel`, `--cor-barra-ferramentas`, `--cor-faixa-abas`              | `#2B2D30`                                             |
-| Linha atual                     | `--cor-linha-atual`                                                        | `#26282E`                                             |
-| Seleção na árvore               | `--cor-linha-selecionada`                                                  | `#2E436E`                                             |
-| Texto e texto forte             | `--cor-texto`, `--cor-texto-forte`                                         | `#BCBEC4`, `#DFE1E5`                                  |
-| Acento e anel de foco           | `--cor-acento`, `--cor-foco`                                               | `#3574F0` (anel de 2px)                               |
-| Sintaxe                         | `--cor-sintaxe-palavra-chave`, `-literal`, `-valor`, `-anotacao`, `-campo` | `#CF8E6D`, `#6AAB73`, `#2AACB8`, `#B3AE60`, `#C77DBA` |
-| Comentário                      | `--cor-sintaxe-comentario`                                                 | `#8C9097`                                             |
-
-O azul é o **único acento**; o rosa do design antigo saiu. O comentário do IntelliJ original
-(`#7A7E85`) reprovava no contraste AA (4,04:1) e foi clareado para `#8C9097` (5,14:1). O foco
-visível é um anel azul de 2px (`--largura-anel-foco`) em todos os controles.
-
-**Duas fontes, as duas servidas pelo próprio site.** A interface (árvore, abas e barras) usa
+**Duas fontes, as duas servidas pelo próprio site** (as da change de tokens). A interface (árvore, abas e barras) usa
 **Inter** (`--fonte-interface`, pesos 400 e 500) e o código usa **JetBrains Mono**
 (`--fonte-mono`), ambas por `@fontsource` e importadas em `src/styles.scss`.
 
-**Escala compacta** (a de uma IDE, e não a das telas do design):
+**Escala compacta** (a de uma IDE, mantida do ADR-0011; as telas do design só têm a escala grande):
 
 | Elemento                   | Token                                                 | Valor (desktop)     |
 | -------------------------- | ----------------------------------------------------- | ------------------- |
@@ -493,13 +485,12 @@ visível é um anel azul de 2px (`--largura-anel-foco`) em todos os controles.
 | Painel lateral             | `--largura-painel-lateral`                            | 280px               |
 | Barra superior e de status | `--altura-barra-ferramentas`, `--altura-barra-status` | 40px, 24px          |
 
-A aba tem a largura do nome mais 32px (`width` automática), e o editor e as abas não têm raio
-(`--raio-editor: 0`). Abaixo de 768px vale uma **escala própria**, no bloco
+A aba tem a largura do nome mais 32px (`width` automática). Abaixo de 768px vale uma **escala própria**, no bloco
 `@media (max-width: 767.98px)` do mesmo arquivo, com o código em no mínimo 13px e alvos de toque
 maiores (`--tamanho-alvo-toque`).
 
 **Ajustes nativos do navegador.** `color-scheme: dark` no `:root` (`src/styles.scss`), para
-controles e barras de rolagem nativos escuros; `<meta name="theme-color" content="#2B2D30">` em
+controles e barras de rolagem nativos escuros; `<meta name="theme-color">` em
 `src/index.html`; `font-variant-numeric: tabular-nums` nos números de linha e na posição do
 cursor da barra de status; e `translate="no"` no código do editor, para o tradutor automático do
 navegador não alterar o Java.

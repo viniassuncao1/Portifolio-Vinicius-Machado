@@ -76,21 +76,26 @@ Além da estrutura do design, a casca tem comportamento de IDE ([ADR-0010](adr/0
 O código exibido é Java 21 válido, e as informações do design são preservadas. Os detalhes de
 cada componente e o modelo de conteúdo estão em [componentes.md](componentes.md).
 
-### Moldura da New UI
+### Moldura: design original com elementos do IntelliJ
 
-A moldura segue o IntelliJ New UI ([ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md)):
+O [ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md) trocou a identidade pela do IntelliJ
+New UI, mas o resultado ficou "literalmente o IntelliJ" e apagou o design feito sob encomenda. O
+[ADR-0012](adr/0012-design-original-com-elementos-do-intellij.md) o substituiu em parte: **o design
+original predomina** (paleta, degradê, formas, cabeçalho `Portfolio_Vinicius`) e do IntelliJ ficam:
 
-- **Barra superior (40px):** widgets de projeto e branch, configuração de execução, Executar,
-  Depurar, Buscar e Configurações. Só Buscar e Executar (nas rotas com preview) funcionam; o resto
-  é decorativo, fora da leitura e do foco.
+- **Barra de ferramentas do design** com ícones da IntelliJ Platform (variante clara, por causa do
+  fundo claro), a branch `master`, Executar (nas rotas com preview) e Buscar. O resto é decorativo,
+  fora da leitura e do foco.
 - **Faixa de ferramentas (40px, só no desktop):** o botão Projeto mostra e esconde o painel do
   projeto (signal `painelVisivel` na casca, com transição que respeita `prefers-reduced-motion`);
   Commit e Estrutura são decorativos.
-- **Barra de status com breadcrumbs:** o caminho vem de `core/breadcrumbs.ts`, que usa o campo
+- **Barra de status com o caminho do arquivo:** vem de `core/breadcrumbs.ts`, que usa o campo
   `pacote` de cada `Secao` em `core/secoes.ts`. Mostra também `linha:coluna`, `LF`, `UTF-8`,
   `4 spaces`, a branch e o commit do deploy.
 - **Ícones oficiais da IntelliJ Platform** (Apache 2.0), em `public/icones/new-ui/`, com os
   créditos em `CREDITOS.md`.
+- **Tipografia e densidade compactas** da change de tokens (Inter na interface, JetBrains Mono no
+  código).
 
 ### Commit do deploy na barra de status
 
@@ -114,8 +119,8 @@ desktop, então esse comportamento é decisão nossa.
 
 Todo valor visual vem de variáveis CSS declaradas em `:root`:
 
-- `src/styles/_tokens.scss`: cores da interface e da sintaxe (paleta Dark do IntelliJ New UI, com o
-  azul `#3574F0` como único acento), tipografia, medidas, espaços, raios e bordas.
+- `src/styles/_tokens.scss`: cores da interface e da sintaxe (a paleta do design original, com o
+  rosa como acento), tipografia (Inter e JetBrains Mono), medidas, espaços, raios e bordas.
 - `src/styles/_movimento.scss`: durações (`--duracao-*`), curvas (`--curva-*`) e a animação da
   troca de seção. Com `prefers-reduced-motion: reduce` as durações zeram e a transição de rota é
   pulada.
@@ -125,16 +130,15 @@ revisão; se faltar um valor, cria-se o token. As animações usam apenas `trans
 
 ### Fontes
 
-A identidade visual é a do IntelliJ IDEA New UI ([ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md)),
-com duas fontes: **Inter** (13px) na interface, do pacote `@fontsource/inter` (pesos 400 e 500), e
-**JetBrains Mono** (14px) no código, de `@fontsource/jetbrains-mono` (pesos 400 e 700). As duas usam
-o subset latino e `font-display: swap` e são servidas pelo próprio site: não há Google Fonts nem
-outra requisição externa para texto.
+Duas fontes, mantidas da change de tokens do ADR-0011: **Inter** (13px) na interface, do pacote
+`@fontsource/inter` (pesos 400 e 500), e **JetBrains Mono** (14px) no código, de
+`@fontsource/jetbrains-mono` (pesos 400 e 700). As duas usam o subset latino e `font-display: swap`
+e são servidas pelo próprio site: não há Google Fonts nem outra requisição externa para texto.
 
 ### Ajustes nativos
 
-`color-scheme: dark` (controles e barras de rolagem nativos escuros), `theme-color` `#2B2D30`
-(a barra do navegador no celular), números tabulares nos números de linha e na posição do cursor
+`color-scheme: dark` (controles e barras de rolagem nativos escuros), `theme-color` (a barra do navegador no
+celular, na cor da barra do design), números tabulares nos números de linha e na posição do cursor
 e `translate="no"` no código, para o tradutor automático não mexer no Java exibido.
 
 ## Acessibilidade
@@ -207,9 +211,9 @@ teste ao lado (`inicio.spec.ts`).
 
 ## Design
 
-O design original (hoje fonte das **informações**, e não do visual: veja o
-[ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md) e o
-[ADR-0011](adr/0011-identidade-visual-intellij-new-ui.md)) é um PDF do Illustrator (30 telas, exportadas do PDF original de 1920×1080) que simula uma IDE escura: barra de ferramentas no topo, árvore de seções à esquerda e editor com código
+O design original (fonte das **informações** e, pelo
+[ADR-0012](adr/0012-design-original-com-elementos-do-intellij.md), também da referência visual; veja
+também o [ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md)) é um PDF do Illustrator (30 telas, exportadas do PDF original de 1920×1080) que simula uma IDE escura: barra de ferramentas no topo, árvore de seções à esquerda e editor com código
 Java à direita. Como o PDF não é legível pelas ferramentas de IA, cada tela foi exportada como
 imagem (`design/telas/tela-01.png` a `tela-30.png`, de 1600×900: o design real é o PNG × 1,2), e os textos de cada tela ficam em
 `design/telas/textos.md`. Nada disso é versionado (`design/` está no `.gitignore`). Cores,
