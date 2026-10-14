@@ -1,8 +1,8 @@
 # 0012: Painel do Git
 
 - **Data:** 2026-10-14
-- **Change:** [painel-do-git](../../openspec/changes/painel-do-git/)
-- **PR:** a definir
+- **Change:** [painel-do-git](../../openspec/changes/archive/2026-10-14-painel-do-git/)
+- **PR:** [#28](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/28)
 - **ADRs:** [0013](../adr/0013-historico-do-git-gerado-no-build.md)
 
 ![Painel do Git aberto no desktop, com o grafo e os commits](imagens/0012-git-desktop.png)
@@ -48,11 +48,11 @@ Commits em pt-BR, PRs, merges e deploys contínuos.
 - **O `GITHUB_SHA` de merge já estava tratado.** O problema do commit de merge no
   `pull_request`, achado na [entrada 0011](0011-design-original-com-icones-e-git.md), tinha
   deixado `SHA_DO_COMMIT` pronto; o painel aproveitou a mesma ideia de ler o ambiente do CI.
-- **Números finais.** Testes unitários: a definir. Testes E2E: a definir.
+- **Números finais.** Testes unitários: 713 (cobertura de 96,59%). Testes E2E: 565, com 34 do painel do Git e axe sem exclusões.
 
 ## Links
 
-- Change: [`openspec/changes/painel-do-git`](../../openspec/changes/painel-do-git/)
+- Change: [`openspec/changes/archive/2026-10-14-painel-do-git`](../../openspec/changes/archive/2026-10-14-painel-do-git/)
 - ADR: [0013 histórico do Git gerado no build](../adr/0013-historico-do-git-gerado-no-build.md)
 - Documentação: [arquitetura](../arquitetura.md#painel-do-git) e [componentes](../componentes.md)
 - Entrada anterior: [0011 design original com ícones e Git](0011-design-original-com-icones-e-git.md)

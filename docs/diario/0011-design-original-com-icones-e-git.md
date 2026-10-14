@@ -1,8 +1,8 @@
 # 0011: Design original com ícones e Git
 
 - **Data:** 2026-10-14
-- **Change:** [design-original-com-icones-e-git](../../openspec/changes/design-original-com-icones-e-git/) (começou como "barras e ícones da New UI")
-- **PR:** a definir
+- **Change:** [design-original-com-icones-e-git](../../openspec/changes/archive/2026-10-14-design-original-com-icones-e-git/) (começou como "barras e ícones da New UI")
+- **PR:** [#27](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/27)
 - **ADRs:** [0012](../adr/0012-design-original-com-elementos-do-intellij.md), que substitui em parte o [0011](../adr/0011-identidade-visual-intellij-new-ui.md)
 
 ![Árvore do projeto em pastas, com os ícones do design](imagens/0011-arvore-pastas.png)
@@ -83,7 +83,7 @@ no ar e ajustando:
 
 ## Links
 
-- Change: [`openspec/changes/design-original-com-icones-e-git`](../../openspec/changes/design-original-com-icones-e-git/)
+- Change: [`openspec/changes/archive/2026-10-14-design-original-com-icones-e-git`](../../openspec/changes/archive/2026-10-14-design-original-com-icones-e-git/)
 - ADRs: [0012 design original com elementos do IntelliJ](../adr/0012-design-original-com-elementos-do-intellij.md)
   e [0011 identidade visual do IntelliJ New UI](../adr/0011-identidade-visual-intellij-new-ui.md)
 - Documentação: [componentes](../componentes.md), [arquitetura](../arquitetura.md) e os
