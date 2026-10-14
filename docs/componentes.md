@@ -342,24 +342,24 @@ O papel `valor` (verde-azulado, `#4fafac`) é o dos valores literais que não s�
 
 Funções curtas para o arquivo de conteúdo ficar legível:
 
-| Função                             | Cria                                         |
-| ---------------------------------- | -------------------------------------------- |
-| `palavraChave(texto)`              | `Trecho` laranja (`public class`, `extends`) |
-| `declaracao(texto)`                | `Trecho` lilás (`String cargo`)              |
-| `literal(texto)`                   | `Trecho` verde (`“Java”`)                    |
-| `valor(texto)`                     | `Trecho` turquesa (`true`)                   |
-| `anotacao(texto)`                  | `Trecho` amarelo-oliva (`@Anotacao`)         |
-| `comentario(texto)`                | `Trecho` cinza de comentário (`// 2x`)       |
-| `link(trecho, href)`               | O mesmo trecho com `href` (link)             |
-| `comum(texto)`                     | `Trecho` na cor padrão do texto              |
-| `linha(recuo, ...trechos)`         | `LinhaDeCodigo`                              |
-| `linhaCompacta(recuo, ...trechos)` | `LinhaDeCodigo` com `densidade: 'compacta'`  |
-| `linhaApertada(recuo, ...trechos)` | `LinhaDeCodigo` com `densidade: 'apertada'`  |
-| `paragrafo(recuo, texto)`          | `LinhaDeParagrafo`                           |
-| `javadoc(recuo, texto)`            | `LinhaDeJavadoc`                             |
-| `vazia()`                          | `LinhaVazia`                                 |
-| `vaziaCompacta()`                  | `LinhaVazia` com `densidade: 'compacta'`     |
-| `vaziaApertada()`                  | `LinhaVazia` com `densidade: 'apertada'`     |
+| Função                             | Cria                                        |
+| ---------------------------------- | ------------------------------------------- |
+| `palavraChave(texto)`              | `Trecho` rosa (`public class`, `extends`)   |
+| `declaracao(texto)`                | `Trecho` laranja (`String cargo`)           |
+| `literal(texto)`                   | `Trecho` verde (`“Java”`)                   |
+| `valor(texto)`                     | `Trecho` verde-azulado (`true`)             |
+| `anotacao(texto)`                  | `Trecho` azul (`@Anotacao`)                 |
+| `comentario(texto)`                | `Trecho` cinza de comentário (`// 2x`)      |
+| `link(trecho, href)`               | O mesmo trecho com `href` (link)            |
+| `comum(texto)`                     | `Trecho` na cor padrão do texto             |
+| `linha(recuo, ...trechos)`         | `LinhaDeCodigo`                             |
+| `linhaCompacta(recuo, ...trechos)` | `LinhaDeCodigo` com `densidade: 'compacta'` |
+| `linhaApertada(recuo, ...trechos)` | `LinhaDeCodigo` com `densidade: 'apertada'` |
+| `paragrafo(recuo, texto)`          | `LinhaDeParagrafo`                          |
+| `javadoc(recuo, texto)`            | `LinhaDeJavadoc`                            |
+| `vazia()`                          | `LinhaVazia`                                |
+| `vaziaCompacta()`                  | `LinhaVazia` com `densidade: 'compacta'`    |
+| `vaziaApertada()`                  | `LinhaVazia` com `densidade: 'apertada'`    |
 
 **Densidade das linhas.** Sem `densidade`, a linha tem a altura normal. As listas das telas
 ocupam menos espaço que o número de linha, e o campo `densidade` reproduz isso:
