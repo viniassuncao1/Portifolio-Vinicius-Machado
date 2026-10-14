@@ -10,7 +10,7 @@
 
 ## 3. Casca e contato [Nanquim]
 
-- [ ] 3.1 Code vision nos projetos com site, limite de 5 abas, ícones decorativos apagados, gaveta com "Seções" e pastas abertas; contatos com cara de link, alvo de toque e "Copiar e-mail" — verificar com `npm run test:ci` e capturas `ux-mobile.png`
+- [x] 3.1 Code vision nos projetos com site, limite de 5 abas, ícones decorativos apagados, gaveta com "Seções" e pastas abertas; contatos com cara de link, alvo de toque e "Copiar e-mail" — verificar com `npm run test:ci` e capturas `ux-mobile.png`
 
 ## 4. Testes [Sentinela]
 
