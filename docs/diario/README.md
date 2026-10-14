@@ -30,6 +30,7 @@ e eu quero mostrar o processo, não só o resultado.
 | [0010](0010-tokens-e-tipografia-intellij.md)        | 2026-10-13 | Identidade do IntelliJ New UI (ADR-0011) quase só por tokens: paleta Dark, Inter e JetBrains Mono, escala compacta.  |
 | [0011](0011-design-original-com-icones-e-git.md)    | 2026-10-14 | Virada de rumo (ADR-0012): o design original volta, com pastas, Git, ▶ na calha e a tipografia compacta do IntelliJ. |
 | [0012](0012-painel-do-git.md)                       | 2026-10-14 | Painel do Git com o histórico real do repositório, gerado no build, sem token e sem e-mails (ADR-0013).              |
+| [0013](0013-tema-claro.md)                          | 2026-10-14 | Tema claro por tokens, aplicado antes da primeira pintura por um script inline, e contraste ajustado (ADR-0014).     |
 
 ## Modelo de entrada
 
