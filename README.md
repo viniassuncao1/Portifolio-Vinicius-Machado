@@ -5,7 +5,7 @@
 Portfólio pessoal de **Vinicius Machado**, desenvolvedor Full Stack (Java, Spring Boot, Angular
 e SQL).
 
-O site imita o **IntelliJ IDEA (New UI, tema escuro)**: as seções do portfólio aparecem como arquivos numa árvore de projeto e o
+O site imita uma IDE escura, com o design autoral do portfólio e elementos do IntelliJ IDEA (ícones, pacotes, Git): as seções do portfólio aparecem como arquivos numa árvore de projeto e o
 conteúdo é apresentado como código. Além de portfólio, este repositório é um exemplo de como eu
 desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 
