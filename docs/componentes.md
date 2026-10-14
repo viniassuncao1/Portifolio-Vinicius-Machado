@@ -423,25 +423,26 @@ reprovava no contraste AA. O papel `valor` é o dos literais que não são texto
 
 Funções curtas para o arquivo de conteúdo ficar legível:
 
-| Função                               | Cria                                         |
-| ------------------------------------ | -------------------------------------------- |
-| `palavraChave(texto)`                | `Trecho` laranja (`public class`, `extends`) |
-| `declaracao(texto)`                  | `Trecho` lilás (`String cargo`)              |
-| `literal(texto)`                     | `Trecho` verde (`“Java”`)                    |
-| `valor(texto)`                       | `Trecho` turquesa (`true`)                   |
-| `anotacao(texto)`                    | `Trecho` amarelo-oliva (`@Anotacao`)         |
-| `comentario(texto)`                  | `Trecho` cinza de comentário (`// 2x`)       |
-| `link(trecho, href)`                 | O mesmo trecho com `href` (link)             |
-| `comum(texto)`                       | `Trecho` na cor padrão do texto              |
-| `linha(recuo, ...trechos)`           | `LinhaDeCodigo`                              |
-| `linhaCompacta(recuo, ...trechos)`   | `LinhaDeCodigo` com `densidade: 'compacta'`  |
-| `linhaApertada(recuo, ...trechos)`   | `LinhaDeCodigo` com `densidade: 'apertada'`  |
-| `linhaExecutavel(recuo, ...trechos)` | `LinhaDeCodigo` com o ▶ de executar na calha |
-| `paragrafo(recuo, texto)`            | `LinhaDeParagrafo`                           |
-| `javadoc(recuo, texto)`              | `LinhaDeJavadoc`                             |
-| `vazia()`                            | `LinhaVazia`                                 |
-| `vaziaCompacta()`                    | `LinhaVazia` com `densidade: 'compacta'`     |
-| `vaziaApertada()`                    | `LinhaVazia` com `densidade: 'apertada'`     |
+| Função                                             | Cria                                         |
+| -------------------------------------------------- | -------------------------------------------- |
+| `palavraChave(texto)`                              | `Trecho` laranja (`public class`, `extends`) |
+| `declaracao(texto)`                                | `Trecho` lilás (`String cargo`)              |
+| `literal(texto)`                                   | `Trecho` verde (`“Java”`)                    |
+| `valor(texto)`                                     | `Trecho` turquesa (`true`)                   |
+| `anotacao(texto)`                                  | `Trecho` amarelo-oliva (`@Anotacao`)         |
+| `comentario(texto)`                                | `Trecho` cinza de comentário (`// 2x`)       |
+| `link(trecho, href)`                               | O mesmo trecho com `href` (link)             |
+| `comum(texto)`                                     | `Trecho` na cor padrão do texto              |
+| `linha(recuo, ...trechos)`                         | `LinhaDeCodigo`                              |
+| `linhaCompacta(recuo, ...trechos)`                 | `LinhaDeCodigo` com `densidade: 'compacta'`  |
+| `linhaApertada(recuo, ...trechos)`                 | `LinhaDeCodigo` com `densidade: 'apertada'`  |
+| `linhaExecutavel(recuo, ...trechos)`               | `LinhaDeCodigo` com o ▶ de executar na calha |
+| `paragrafo(recuo, texto)`                          | `LinhaDeParagrafo`                           |
+| `javadoc(recuo, texto)`                            | `LinhaDeJavadoc`                             |
+| `javadocComRetrato(recuo, texto, retrato, autor?)` | `LinhaDeJavadoc` com foto e `@author`        |
+| `vazia()`                                          | `LinhaVazia`                                 |
+| `vaziaCompacta()`                                  | `LinhaVazia` com `densidade: 'compacta'`     |
+| `vaziaApertada()`                                  | `LinhaVazia` com `densidade: 'apertada'`     |
 
 **Densidade das linhas.** Sem `densidade`, a linha tem a altura normal. As listas das telas
 ocupam menos espaço que o número de linha, e o campo `densidade` reproduz isso:
@@ -467,6 +468,32 @@ coluna de asteriscos e o fechamento `*/` como elementos **só visuais**, e quebr
 colunas, alinhado ao recuo da declaração que vem logo depois. O texto copiado e lido por leitores
 de tela é apenas o `texto`, então o Java continua válido. Prefira `javadoc` ao `paragrafo` quando o
 texto documenta uma declaração.
+
+**Retrato no Javadoc.** `javadocComRetrato(recuo, texto, retrato, autor?)` acrescenta ao Javadoc uma
+**foto redonda à esquerda do texto**, como o IntelliJ mostra uma imagem num comentário de
+documentação renderizado. O código exibido não muda: o retrato é só visual.
+
+- `retrato` é `{ src, alt, tamanho, prioridade? }`. `src` é relativo ao `base href`
+  (`fotos/vinicius.webp`), `alt` descreve a foto ("Foto de Vinicius Machado") e `tamanho` é
+  `'grande'` (96 px, Início e Sobre Mim) ou `'pequeno'` (64 px, recomendação); no celular são 64 e
+  48 px. A imagem usa `NgOptimizedImage` com largura e altura fixas, então não desloca o layout, e
+  tem borda de 1 px por token nos dois temas. `prioridade: true` só para a foto acima da dobra (a do
+  Início); as demais carregam sob demanda.
+- `autor` é `{ nome, href }`. Quando existe, o Javadoc termina com uma linha `@author <nome>` em que
+  o nome é **link externo** (nova aba, `rel="noopener noreferrer"`, com indicação acessível).
+- As fotos ficam em `public/fotos/`, em WebP, com 2x o maior tamanho exibido (192x192 para o
+  Vinicius e 128x128 para a Luana), cada uma com poucos KB.
+
+**Como acrescentar uma recomendação com foto.** Em `features/depoimentos/depoimentos.conteudo.ts`:
+
+1. Coloque a foto, **enviada pela pessoa ou com autorização dela** (nunca baixada de um perfil), em
+   WebP quadrado em `public/fotos/<nome>.webp`, com 2x o tamanho exibido (128x128 para `'pequeno'`).
+2. Escreva o texto da recomendação como parágrafos e junte-os com `\n\n` num só Javadoc.
+3. Use `javadocComRetrato(1, texto, { src: 'fotos/<nome>.webp', alt: 'Foto de <Nome>', tamanho:
+'pequeno' }, { nome: '<Nome>', href: '<link do LinkedIn>' })` e, abaixo dele, o
+   `var <nome> = new Recomendacao(...)`.
+4. Se a foto ainda não existir, use `javadoc(...)` sem retrato: o `@author` só aparece com o
+   retrato.
 
 **Links.** `link(trecho, href)` transforma um trecho em link (`https://`, `mailto:` ou `tel:`). A
 seção Contato usa isso com links reais: `link(literal('"viniciusmassuncao@gmail.com"'),
