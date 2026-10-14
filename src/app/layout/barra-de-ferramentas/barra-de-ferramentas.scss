@@ -7,8 +7,8 @@
   height: var(--altura-barra-ferramentas);
   padding-inline: var(--espaco-3);
   border-block-end: var(--borda-painel);
-  background: var(--degrade-barra-ferramentas);
-  color: var(--cor-texto-barra-ferramentas);
+  background: var(--cor-barra-ferramentas);
+  color: var(--cor-texto);
   font-family: var(--fonte-interface);
   font-size: var(--texto-arvore);
   user-select: none;
@@ -31,11 +31,11 @@ button.botao {
   cursor: pointer;
 
   &:hover {
-    background: var(--cor-passando-barra-ferramentas);
+    background: var(--cor-aba-passando);
   }
 
   &:focus-visible {
-    outline: var(--largura-anel-foco) solid var(--cor-texto-barra-ferramentas);
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: -2px;
   }
 }
@@ -83,8 +83,7 @@ button.botao {
 
   .ramo,
   .executar,
-  .depurar,
-  .configuracoes,
+  .decorativo,
   .controles-janela {
     display: none;
   }

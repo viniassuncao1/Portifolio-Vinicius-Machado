@@ -39,23 +39,33 @@ describe('BarraDeFerramentas', () => {
     expect(raiz.textContent).not.toContain('PortfolioApplication');
   });
 
-  it('usa os ícones claros da IntelliJ Platform, sobre o degradê', async () => {
+  it('usa os ícones do design e só a busca e a branch são da IntelliJ Platform', async () => {
     const { raiz } = await montar();
-    const origens = Array.from(raiz.querySelectorAll('app-icone img')).map((img) =>
-      img.getAttribute('src'),
+    const origens = Array.from(raiz.querySelectorAll('app-icone img')).map(
+      (img) => img.getAttribute('src') ?? '',
     );
+    const daIntellij = origens.filter((origem) => origem.includes('icones/new-ui/'));
 
-    expect(origens.length).toBeGreaterThan(0);
-    origens.forEach((origem) => expect(origem).toContain('icones/new-ui/claro/'));
+    expect(origens.length).toBeGreaterThan(5);
+    expect(daIntellij.map((origem) => /([^/]+)\.svg/.exec(origem)?.[1]).sort()).toEqual([
+      'buscar',
+      'ramo',
+    ]);
   });
 
-  it('deixa Executar, Depurar e Configurações decorativos e sem foco fora dos projetos com site', async () => {
+  it('tem o fundo escuro do design, sem o degradê claro', async () => {
+    const { raiz } = await montar();
+    const barra = raiz.querySelector('app-barra-de-ferramentas')!;
+
+    expect(getComputedStyle(barra).backgroundImage).toBe('none');
+  });
+
+  it('deixa Executar e os demais ícones decorativos e sem foco fora dos projetos com site', async () => {
     const { raiz } = await montar();
 
-    for (const classe of ['executar', 'depurar', 'configuracoes']) {
-      const controle = raiz.querySelector(`.${classe}`);
-      expect(controle?.getAttribute('aria-hidden')).toBe('true');
-      expect(controle?.matches('button, a, [tabindex]')).toBe(false);
+    for (const controle of raiz.querySelectorAll('.executar, .decorativo')) {
+      expect(controle.getAttribute('aria-hidden')).toBe('true');
+      expect(controle.matches('button, a, [tabindex]')).toBe(false);
     }
   });
 

@@ -4,9 +4,10 @@ import { JanelaDePreview } from '../../core/janela-de-preview';
 import { Icone } from '../../shared/icone/icone';
 
 /**
- * Barra de ferramentas do design, com ícones da IntelliJ Platform (variante clara, sobre o degradê).
- * A branch, Depurar e Configurações só imitam a IDE e ficam fora da leitura e do foco. São botões de
- * verdade: Buscar, Executar (nos projetos com site) e, no celular, Projeto, que abre a gaveta.
+ * Barra de ferramentas escura nos cinzas do design, com os ícones do design (Buscar e a branch são
+ * da IntelliJ Platform, que o design não tem). Os ícones só decorativos e a branch ficam fora da
+ * leitura e do foco. São botões de verdade: Buscar, Executar (nos projetos com site) e, no celular,
+ * Projeto, que abre a gaveta.
  */
 @Component({
   selector: 'app-barra-de-ferramentas',
