@@ -31,14 +31,18 @@ test.describe('Depoimentos/Recomendações (/depoimentos)', () => {
     );
   });
 
-  test('declara o record Recommendation e lista as recomendações', async ({ page }) => {
+  test('declara o record Recomendacao e lista as recomendações, sem constantes em caixa alta', async ({
+    page,
+  }) => {
     await page.goto('/depoimentos');
     const texto = await textoDoCodigo(page);
 
     expect(texto).toContain(
-      'record Recommendation(String author, String role, String relationship, LocalDate date) {}',
+      'record Recomendacao(String autora, String cargo, String relacao, LocalDate data) {}',
     );
-    expect(texto).toMatch(/List<Recommendation> ALL = List\.of\(/);
+    expect(texto).toContain('Recomendacao luana = new Recomendacao(');
+    expect(texto).toMatch(/List<Recomendacao> todas = List\.of\(luana\);/);
+    expect(texto).not.toMatch(/static final|\b[A-Z]{3,}_?[A-Z]*\b =/);
     await expect(page.locator('main .papel-comentario').first()).toContainText('recomendação');
   });
 
