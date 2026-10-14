@@ -19,5 +19,5 @@
 
 ## 5. Documentação e integração
 
-- [ ] 5.1 [Escriba] README, `docs/` e a entrada `0013-tema-claro.md` do diário — verificar com `npm run format:check`
+- [x] 5.1 [Escriba] README, `docs/` e a entrada `0013-tema-claro.md` do diário — verificar com `npm run format:check`
 - [ ] 5.2 [Regente] Revisar, abrir o PR, arquivar a change e fazer o merge — verificar pelo PR mesclado e pelo deploy
