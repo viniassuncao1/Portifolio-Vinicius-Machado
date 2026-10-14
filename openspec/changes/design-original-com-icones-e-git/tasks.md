@@ -4,7 +4,7 @@
 
 - [x] 1.1 Copiar os SVGs da New UI (tema escuro) usados para `public/icones/new-ui/` com `CREDITOS.md` (origem, copyright, Apache 2.0) e sem logotipos — verificar pela lista de arquivos e pelo README
 - [x] 1.2 Trocar `shared/icone` e os ícones da árvore e das abas pelos oficiais — verificar com captura `new-ui-arvore.png`
-- [ ] 1.3 Variante clara dos ícones da barra de ferramentas, com a tabela de créditos atualizada — verificar com captura `design-barra.png`
+- [x] 1.3 Variante clara dos ícones da barra de ferramentas, com a tabela de créditos atualizada — verificar com captura `design-barra.png`
 
 ## 2. Dados e build [Grafite e Nanquim]
 
@@ -14,9 +14,9 @@
 ## 3. Visual do design [Pincel]
 
 - [x] 3.1 Barra superior, faixa de ferramentas, painel escondível, barra de status e celular (primeira versão, estilo New UI)
-- [ ] 3.2 Tokens do design de volta (paleta, degradê, controles de janela, raios, abas, foco rosa, `theme-color`), mantendo tipografia e densidade — verificar com captura `design-desktop.png` lado a lado com `tela-05.png`
-- [ ] 3.3 Barra de ferramentas do design com os ícones claros, `master`, Executar e Buscar; cabeçalho `Portfolio_Vinicius` de volta — verificar com captura `design-barra.png`
-- [ ] 3.4 Faixa, status e celular nas cores do design — verificar com capturas `design-status.png` e `design-mobile.png`
+- [x] 3.2 Tokens do design de volta (paleta, degradê, controles de janela, raios, abas, foco rosa, `theme-color`), mantendo tipografia e densidade — verificar com captura `design-desktop.png` lado a lado com `tela-05.png`
+- [x] 3.3 Barra de ferramentas do design com os ícones claros, `master`, Executar e Buscar; cabeçalho `Portfolio_Vinicius` de volta — verificar com captura `design-barra.png`
+- [x] 3.4 Faixa, status e celular nas cores do design — verificar com capturas `design-status.png` e `design-mobile.png`
 
 ## 4. Testes [Sentinela]
 
