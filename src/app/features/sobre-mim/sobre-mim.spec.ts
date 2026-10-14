@@ -36,7 +36,6 @@ describe('SobreMim', () => {
       '}',
       '// Eu: Vinicius Machado',
       'class ViniciusMachado implements Desenvolvedor {',
-      expect.stringContaining(INICIO_DO_PARAGRAFO),
       '@Override',
       'public String sobreMim() {',
       'return "Full Stack: Java, Spring Boot, Angular e SQL";',

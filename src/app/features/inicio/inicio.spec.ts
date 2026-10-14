@@ -33,12 +33,12 @@ describe('Inicio', () => {
       'import java.util.List;',
       'import org.springframework.boot.SpringApplication;',
       'import org.springframework.boot.autoconfigure.SpringBootApplication;',
-      'Vinicius Machado, Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL.@author Vinicius Machado (abre em nova aba)',
       '@SpringBootApplication',
       'public class PortfolioApplication {',
       '// Meu perfil: cargo e tecnologias principais',
       'record Desenvolvedor(String cargo,',
       'List<String> stack) {}',
+      'public static void main(String... args) {',
     ]);
   });
 

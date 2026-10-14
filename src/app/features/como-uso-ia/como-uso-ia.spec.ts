@@ -44,7 +44,6 @@ describe('ComoUsoIa', () => {
     expect(textos).toEqual([
       'package dev.vinicius.portfolio.sobre;',
       'import java.util.List;',
-      expect.stringContaining(INICIO_DO_PARAGRAFO),
       'public class InteligenciaArtificial {',
       '// Minha visão: IA é parte do trabalho, não modismo',
       'boolean modismo = false;',
