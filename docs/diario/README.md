@@ -31,6 +31,7 @@ e eu quero mostrar o processo, não só o resultado.
 | [0011](0011-design-original-com-icones-e-git.md)    | 2026-10-14 | Virada de rumo (ADR-0012): o design original volta, com pastas, Git, ▶ na calha e a tipografia compacta do IntelliJ. |
 | [0012](0012-painel-do-git.md)                       | 2026-10-14 | Painel do Git com o histórico real do repositório, gerado no build, sem token e sem e-mails (ADR-0013).              |
 | [0013](0013-tema-claro.md)                          | 2026-10-14 | Tema claro por tokens, aplicado antes da primeira pintura por um script inline, e contraste ajustado (ADR-0014).     |
+| [0014](0014-janela-de-run-e-java-para-leitura.md)   | 2026-10-14 | Janela de Run com o log do Spring e Java para leitura: domínio em português e PortfolioApplication.java.             |
 
 ## Modelo de entrada
 
