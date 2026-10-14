@@ -33,6 +33,7 @@ e eu quero mostrar o processo, não só o resultado.
 | [0013](0013-tema-claro.md)                          | 2026-10-14 | Tema claro por tokens, aplicado antes da primeira pintura por um script inline, e contraste ajustado (ADR-0014).     |
 | [0014](0014-janela-de-run-e-java-para-leitura.md)   | 2026-10-14 | Janela de Run com o log do Spring e Java para leitura: domínio em português e PortfolioApplication.java.             |
 | [0015](0015-fotos-de-perfil.md)                     | 2026-10-14 | Retrato redondo no Javadoc do editor: fotos do Vinicius e da Luana, com @author linkando o LinkedIn.                 |
+| [0016](0016-boas-vindas-repositorio-e-ux.md)        | 2026-10-14 | Auditoria de UX: tela de boas-vindas, repositório no estilo do GitHub e melhorias de leitura e navegação.            |
 
 ## Modelo de entrada
 
