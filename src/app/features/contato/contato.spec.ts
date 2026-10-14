@@ -37,4 +37,50 @@ describe('Contato', () => {
       'https://github.com/viniassuncao1',
     ]);
   });
+
+  describe('Copiar e-mail', () => {
+    const botao = (raiz: HTMLElement) => raiz.querySelector<HTMLButtonElement>('button.copiar');
+
+    afterEach(() => vi.unstubAllGlobals());
+
+    it('copia o e-mail e anuncia "E-mail copiado"', async () => {
+      const writeText = vi.fn().mockResolvedValue(undefined);
+      vi.stubGlobal('navigator', { clipboard: { writeText } });
+      const fixture = TestBed.createComponent(Contato);
+      await fixture.whenStable();
+      const raiz = fixture.nativeElement as HTMLElement;
+
+      botao(raiz)?.click();
+      await fixture.whenStable();
+
+      expect(writeText).toHaveBeenCalledWith('viniciusmassuncao@gmail.com');
+      const aviso = raiz.querySelector('[aria-live=polite]');
+      expect(aviso?.getAttribute('role')).toBe('status');
+      expect(aviso?.textContent).toBe('E-mail copiado');
+    });
+
+    it('avisa quando a cópia falha', async () => {
+      vi.stubGlobal('navigator', {
+        clipboard: { writeText: vi.fn().mockRejectedValue(new Error('negado')) },
+      });
+      const fixture = TestBed.createComponent(Contato);
+      await fixture.whenStable();
+      const raiz = fixture.nativeElement as HTMLElement;
+
+      botao(raiz)?.click();
+      await fixture.whenStable();
+
+      expect(raiz.querySelector('[aria-live=polite]')?.textContent).toBe(
+        'Não foi possível copiar o e-mail',
+      );
+    });
+
+    it('não mostra o botão sem a Clipboard API', async () => {
+      vi.stubGlobal('navigator', {});
+      const fixture = TestBed.createComponent(Contato);
+      await fixture.whenStable();
+
+      expect(botao(fixture.nativeElement as HTMLElement)).toBeNull();
+    });
+  });
 });
