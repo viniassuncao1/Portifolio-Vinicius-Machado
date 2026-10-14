@@ -1,7 +1,7 @@
 # 0013: Tema claro
 
 - **Data:** 2026-10-14
-- **Change:** [tema-claro](../../openspec/changes/tema-claro/)
+- **Change:** [tema-claro](../../openspec/changes/archive/2026-10-14-tema-claro/)
 - **PR:** [#29](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/29)
 - **ADRs:** [0014](../adr/0014-tema-claro.md)
 
@@ -68,7 +68,7 @@ página piscar.
 
 ## Links
 
-- Change: [`openspec/changes/tema-claro`](../../openspec/changes/tema-claro/)
+- Change: [`openspec/changes/archive/2026-10-14-tema-claro`](../../openspec/changes/archive/2026-10-14-tema-claro/)
 - ADR: [0014 tema claro](../adr/0014-tema-claro.md)
 - Documentação: [arquitetura](../arquitetura.md#tema-claro-e-escuro) e [componentes](../componentes.md)
 - Entrada anterior: [0012 painel do Git](0012-painel-do-git.md)
