@@ -11,6 +11,8 @@ export interface CommitDoHistorico {
   readonly pr?: number;
   /** Branch do PR, só nos merges de PR. */
   readonly branch?: string;
+  /** Título do PR (primeira linha do corpo do merge), só nos merges de PR. */
+  readonly titulo?: string;
 }
 
 /** Formato do arquivo `historico.json`, com os commits do mais novo para o mais antigo. */

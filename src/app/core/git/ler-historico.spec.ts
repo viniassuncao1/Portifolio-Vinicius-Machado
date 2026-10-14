@@ -13,11 +13,11 @@ describe('lerHistorico', () => {
     const historico = lerHistorico({
       geradoEm: '2026-01-01T00:00:00Z',
       repositorio: 'usuario/projeto',
-      commits: [commit, { ...commit, sha: 'f', pr: 27, branch: 'feat/x' }],
+      commits: [commit, { ...commit, sha: 'f', pr: 27, branch: 'feat/x', titulo: 'feat: x' }],
     });
 
     expect(historico?.commits).toHaveLength(2);
-    expect(historico?.commits[1]).toMatchObject({ pr: 27, branch: 'feat/x' });
+    expect(historico?.commits[1]).toMatchObject({ pr: 27, branch: 'feat/x', titulo: 'feat: x' });
   });
 
   it.each([
