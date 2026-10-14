@@ -21,7 +21,6 @@ import { BarraDeFerramentas } from '../barra-de-ferramentas/barra-de-ferramentas
 import { FaixaDeAbas } from '../faixa-de-abas/faixa-de-abas';
 import { FaixaDeFerramentas } from '../faixa-de-ferramentas/faixa-de-ferramentas';
 import { JanelaDeRunComponente } from '../janela-de-run/janela-de-run';
-import { PainelDoGitComponente } from '../painel-do-git/painel-do-git';
 import { PainelLateral } from '../painel-lateral/painel-lateral';
 import { TelaDeBoasVindas } from '../tela-de-boas-vindas/tela-de-boas-vindas';
 
@@ -38,7 +37,6 @@ import { TelaDeBoasVindas } from '../tela-de-boas-vindas/tela-de-boas-vindas';
     BarraDeFerramentas,
     FaixaDeFerramentas,
     PainelLateral,
-    PainelDoGitComponente,
     JanelaDeRunComponente,
     FaixaDeAbas,
     BarraDeStatus,
