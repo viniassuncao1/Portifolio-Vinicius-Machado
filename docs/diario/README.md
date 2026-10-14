@@ -28,7 +28,7 @@ e eu quero mostrar o processo, não só o resultado.
 | [0008](0008-secao-depoimentos.md)                   | 2026-10-13 | Última seção com a primeira recomendação real, Javadoc com parágrafos e as 15 seções completas.                     |
 | [0009](0009-seo-e-compartilhamento.md)              | 2026-10-13 | Metadados Open Graph, descrição por seção, JSON-LD, sitemap no build e o cartão de compartilhamento.                |
 | [0010](0010-tokens-e-tipografia-intellij.md)        | 2026-10-13 | Identidade do IntelliJ New UI (ADR-0011) quase só por tokens: paleta Dark, Inter e JetBrains Mono, escala compacta. |
-| [0011](0011-barras-e-icones-da-new-ui.md)           | 2026-10-13 | Barra superior, faixa de ferramentas, breadcrumbs, commit do deploy e ícones oficiais da IntelliJ Platform.         |
+| [0011](0011-design-original-com-icones-e-git.md)    | 2026-10-14 | Virada de rumo (ADR-0012): o design original volta, com ícones, pacotes e Git do IntelliJ e a tipografia compacta.  |
 
 ## Modelo de entrada
 

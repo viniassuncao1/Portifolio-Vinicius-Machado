@@ -1,83 +1,95 @@
-# 0011: Barras e ícones da New UI
+# 0011: Design original com ícones e Git
 
-- **Data:** 2026-10-13
-- **Change:** [barras-e-icones-da-new-ui](../../openspec/changes/barras-e-icones-da-new-ui/)
+- **Data:** 2026-10-14
+- **Change:** [design-original-com-icones-e-git](../../openspec/changes/design-original-com-icones-e-git/) (começou como "barras e ícones da New UI")
 - **PR:** a definir
-- **ADRs:** [0011](../adr/0011-identidade-visual-intellij-new-ui.md)
+- **ADRs:** [0012](../adr/0012-design-original-com-elementos-do-intellij.md), que substitui em parte o [0011](../adr/0011-identidade-visual-intellij-new-ui.md)
 
-Capturas desta entrada: a definir (as imagens `new-ui-*.png` ainda não foram versionadas).
+Capturas desta entrada: a definir (as imagens ainda não foram versionadas).
 
 ## Problema
 
-Depois da [change de tokens](0010-tokens-e-tipografia-intellij.md), o site já tinha as cores e a
-escala do IntelliJ New UI, mas a **moldura continuava a do Eclipse**: uma barra de ferramentas com
-ícones coloridos antigos, o cabeçalho `Portfolio_Vinicius × — ▢`, o botão de texto "Seções" no
-celular e uma barra de status sem os elementos da New UI. Esta é a segunda das seis changes do
-[ADR-0011](../adr/0011-identidade-visual-intellij-new-ui.md), e a que tira de vez a cara de
-Eclipse.
+Depois da [change de tokens](0010-tokens-e-tipografia-intellij.md), a segunda etapa do
+[ADR-0011](../adr/0011-identidade-visual-intellij-new-ui.md) refez a moldura do site no IntelliJ
+New UI: barra superior, faixa de ferramentas, painel do projeto, barra de status e ícones
+oficiais. Quando o Vinicius viu o resultado, a conclusão foi que o site ficou **"literalmente o
+IntelliJ"**. Tecnicamente estava certo, e era justamente o problema: o portfólio perdeu a
+identidade do design feito sob encomenda para ele, que é o que o diferencia de qualquer outro
+site com cara de IDE.
 
 ## Decisões
 
-- **Barra superior da New UI (40px).** Os widgets de projeto e branch, a configuração de execução,
-  Executar, Depurar, Buscar e Configurações. Só Buscar (abre a busca de seções que já existia) e
-  Executar (nos projetos com preview) funcionam; o resto é decorativo, fora da leitura e do foco.
-- **Faixa de ferramentas e painel escondível.** Uma faixa de 40px à esquerda, só no desktop: o
-  botão Projeto mostra e esconde o painel do projeto, cujo cabeçalho agora é só "Projeto". Commit e
-  Estrutura são decorativos.
-- **Barra de status com breadcrumbs.** O caminho do arquivo
-  (`portfolio-vinicius › src › main › java › … › Skills.java`) vem de `core/breadcrumbs.ts`, a
-  partir do novo campo `pacote` de cada seção. À direita, `linha:coluna`, `LF`, `UTF-8`,
-  `4 spaces`, a branch e o **commit do deploy**, com link para o GitHub. `Java 21` e `main` saíram.
-- **Celular.** Barra superior compacta, sem a faixa; o botão Projeto abre a gaveta e o botão de
-  texto "Seções" saiu.
-- **Ícones oficiais da IntelliJ Platform**, copiados de `JetBrains/intellij-community`
-  (`platform/icons/src/expui`, versões `_dark`) só nos usados, e renderizados por `shared/icone` com
-  `NgOptimizedImage`. Descartei desenhar ícones "parecidos" à mão: o objetivo é parecer o IntelliJ
-  de verdade.
-- **O SHA do commit sai de um script**, `scripts/gerar-informacoes-do-build.mjs`, que roda nos
-  scripts `pre*` e lê só variáveis de ambiente, sem `git` no build.
+- **O design original volta e predomina.** O [ADR-0012](../adr/0012-design-original-com-elementos-do-intellij.md)
+  devolve a paleta das telas (fundos `#2B2B2B` e `#1C1C1C`, palavras-chave e foco em rosa), a
+  barra de ferramentas com degradê e controles de janela, o editor arredondado, as abas e o
+  cabeçalho `Portfolio_Vinicius`.
+- **Do IntelliJ ficam os elementos de IDE de verdade.** Os ícones da IntelliJ Platform (Java,
+  pastas, pacotes, Executar, Buscar, Git), a estrutura do projeto em pacotes, as referências ao
+  Git (a branch `master` e o commit do deploy), a faixa de ferramentas à esquerda, a barra de
+  status com o caminho do arquivo e a tipografia da change de tokens (Inter na interface,
+  JetBrains Mono no código, na escala compacta).
+- **O que já tinha sido feito foi aproveitado.** Ícones e créditos, o campo `pacote` e os
+  breadcrumbs, o script do commit do deploy, a faixa de ferramentas com o painel escondível, a
+  barra de status e o celular continuam. Mudaram as cores e as formas, não a estrutura.
+- **Ícones claros na barra de ferramentas.** O degradê do design é claro, então a barra usa a
+  variante do tema claro dos ícones; no resto da interface, a escura.
+- **A mudança de ideia virou um ADR.** Em vez de reverter em silêncio, o ADR-0012 registra o que
+  eu pensei, o que vi e por que mudei, e mantém o ADR-0011 no histórico como "substituído em
+  parte". Descartei manter o IntelliJ puro (fiel à IDE, mas apaga o design) e voltar ao design
+  sem nada do IntelliJ (recupera a identidade, mas perde os elementos de IDE e a escala compacta
+  que resolveram o "tudo grande demais").
 
 ## Aprendizado
 
-- **Ícones têm licença.** O repositório da JetBrains é Apache 2.0, então dá para usar os ícones
-  de interface, desde que o aviso de copyright e a origem fiquem registrados. Criei
-  `public/icones/new-ui/CREDITOS.md` (com o original de cada arquivo) e uma seção de créditos no
-  README. O cuidado extra foi com **marcas**: a licença cobre os ícones genéricos, não os
-  logotipos de produto. Nenhum logotipo do IntelliJ ou da JetBrains entrou, o selo `PV` faz o papel
-  do ícone do projeto, e o texto diz que o projeto não é afiliado à JetBrains.
-- **No `pull_request`, o `GITHUB_SHA` é o commit de merge.** É um commit temporário que não existe
-  na branch, então o link do commit na barra de status dava errado no deploy de preview. Por isso
-  o script lê primeiro uma variável própria, `SHA_DO_COMMIT`, que o workflow define com
-  `github.event.pull_request.head.sha`. No deploy de produção o `GITHUB_SHA` já é o commit certo.
+- **Testar uma direção custa menos do que discuti-la.** Só vendo o IntelliJ no ar ficou claro que
+  ele era demais. Fatiar o redesign em changes pequenas permitiu parar na segunda, antes de
+  investir nas outras quatro no visual errado.
+- **Dá para voltar mantendo o que funcionou.** A virada não jogou fora o trabalho: a escala
+  compacta, os ícones, os pacotes e o Git ficaram. Separar "identidade" de "elementos de IDE"
+  tornou possível ficar com uma parte e trocar a outra, e o fato de os valores visuais morarem em
+  `_tokens.scss` fez a volta ser, em grande parte, troca de valores.
+- **ADR também serve para mudar de ideia.** Registrar a reviravolta com o contexto e as
+  alternativas é mais útil do que apagar a decisão antiga.
+- **Ícones têm licença.** Os da IntelliJ Platform são Apache 2.0, então registrei os créditos em
+  `public/icones/new-ui/CREDITOS.md`, com uma seção no README. O cuidado com marcas continua:
+  nenhum logotipo do IntelliJ ou da JetBrains entrou, e o projeto não é afiliado à JetBrains.
+- **No `pull_request`, o `GITHUB_SHA` é o commit de merge.** Esse commit temporário não existe na
+  branch e o link do commit na barra de status quebrava no deploy de preview. O script do build lê
+  primeiro `SHA_DO_COMMIT`, que o workflow define com `github.event.pull_request.head.sha`.
 - **O índice do Git compartilhado misturou arquivos num commit.** Com vários agentes na mesma
-  cópia do repositório, um commit levou junto arquivos de outra faixa. É a mesma lição da
-  [entrada 0005](0005-experiencia-de-ide-e-java-moderno.md) e da
+  cópia do repositório, um commit levou arquivos de outra faixa. É a lição das entradas
+  [0005](0005-experiencia-de-ide-e-java-moderno.md) e
   [0006](0006-certificacoes-niveis-e-legibilidade.md): `git add` só com o caminho exato.
 - **Números finais.** Testes unitários: a definir. Testes E2E: a definir.
 
 ## Links
 
-- Change: [`openspec/changes/barras-e-icones-da-new-ui`](../../openspec/changes/barras-e-icones-da-new-ui/)
-- ADR: [0011 identidade visual do IntelliJ New UI](../adr/0011-identidade-visual-intellij-new-ui.md)
+- Change: [`openspec/changes/design-original-com-icones-e-git`](../../openspec/changes/design-original-com-icones-e-git/)
+- ADRs: [0012 design original com elementos do IntelliJ](../adr/0012-design-original-com-elementos-do-intellij.md)
+  e [0011 identidade visual do IntelliJ New UI](../adr/0011-identidade-visual-intellij-new-ui.md)
 - Documentação: [componentes](../componentes.md), [arquitetura](../arquitetura.md) e os
   [créditos dos ícones](../../public/icones/new-ui/CREDITOS.md)
-- Entrada anterior: [0010 tokens e tipografia do IntelliJ](0010-tokens-e-tipografia-intellij.md)
+- Entrada anterior: [0010 tokens e tipografia](0010-tokens-e-tipografia-intellij.md)
 
 ## Rascunho de post para o LinkedIn
 
-> Trocar as cores do meu portfólio pelas do IntelliJ não bastou: a moldura ainda parecia Eclipse.
+> Testei uma direção de design, vi o resultado e voltei atrás. E acho que foi a melhor decisão do
+> projeto.
 >
-> Na segunda etapa do redesign refiz as barras. A barra superior ganhou os widgets de projeto e
-> branch e as ações de Executar e Buscar, o painel do projeto passou a esconder e mostrar pela
-> faixa lateral, e a barra de status ganhou o caminho do arquivo, como num projeto Maven, e o
-> commit do deploy, com link para o GitHub. Os ícones agora são os oficiais da IntelliJ Platform.
+> Meu portfólio simula uma IDE, e eu resolvi refazer a moldura no estilo do IntelliJ, a IDE mais
+> usada em Java. Ficou fiel demais: quando vi no ar, estava literalmente o IntelliJ, e o design
+> feito sob encomenda para mim, que é o que diferencia o site, tinha sumido.
 >
-> Três aprendizados. Ícones têm licença: os da JetBrains são Apache 2.0, então registrei os
-> créditos e deixei de fora qualquer logotipo de produto. No pull request, o GITHUB_SHA é o commit
-> de merge, que não existe na branch, então criei uma variável própria para o link do commit não
-> quebrar. E com vários agentes trabalhando na mesma cópia do repositório, um commit levou
-> arquivos de outra pessoa: git add só com o caminho exato.
+> Em vez de insistir, registrei a mudança de ideia num ADR. O design original volta a predominar
+> (paleta, degradê, formas), e do IntelliJ ficam só os elementos que dão cara de IDE de verdade:
+> ícones de Java, pastas e pacotes, referências ao Git, a faixa de ferramentas, o caminho do
+> arquivo na barra de status e a tipografia compacta.
 >
-> Você confere a licença dos ícones que usa nos seus projetos?
+> Três aprendizados: fatiar o redesign em etapas pequenas me deixou parar na segunda, antes de
+> investir nas outras quatro no visual errado. Concentrar os valores visuais num arquivo de tokens
+> fez a volta ser, em boa parte, trocar valores. E o ADR serve também para registrar que você
+> mudou de ideia, e por quê.
 >
-> #Angular #IntelliJ #OpenSource
+> Quando foi a última vez que você voltou atrás num design e acertou?
+>
+> #Angular #Design #ADR
