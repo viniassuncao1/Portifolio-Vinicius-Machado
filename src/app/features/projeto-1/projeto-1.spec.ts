@@ -12,9 +12,12 @@ describe('Projeto1', () => {
   it('apresenta a Ana com plataforma, automação e integrações', async () => {
     const codigo = (await renderizar()).querySelector('code')?.textContent ?? '';
 
-    expect(codigo).toContain('public class Ana extends AIAgent {');
-    expect(codigo).toContain('String platform = "WhatsApp";');
-    expect(codigo).toContain('String automation = "n8n";');
+    expect(codigo).toContain('package dev.vinicius.portfolio.projetos;');
+    expect(codigo).toContain('public class Ana extends AgenteDeIA {');
+    expect(codigo).toContain('String plataforma = "WhatsApp";');
+    expect(codigo).toContain('String automacao = "n8n";');
+    expect(codigo).toContain('List<String> tarefas = List.of(');
+    expect(codigo).not.toContain('static final');
     expect(codigo).toContain('"Google OAuth 2.0"');
     expect(codigo).toContain('"API do WhatsApp"');
   });

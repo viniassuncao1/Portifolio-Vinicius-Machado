@@ -10,8 +10,10 @@ import {
 } from '../../shared/editor-de-codigo/conteudo';
 import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
 
-/** Conteúdo da tela 10 (design/telas/tela-10.png) em Java moderno: a Ana como uma classe simples. */
+/** Conteúdo da tela 10 (design/telas/tela-10.png) no estilo de leitura (ADR-0011): a Ana como uma classe simples. */
 export const CONTEUDO_PROJETO_1: ConteudoDoEditor = [
+  vazia(),
+  linha(0, palavraChave('package'), comum(' dev.vinicius.portfolio.projetos;')),
   vazia(),
   linha(0, palavraChave('import'), comum(' java.util.List;')),
   vazia(),
@@ -24,16 +26,16 @@ export const CONTEUDO_PROJETO_1: ConteudoDoEditor = [
     palavraChave('public class'),
     comum(' Ana '),
     palavraChave('extends'),
-    comum(' AIAgent {'),
+    comum(' AgenteDeIA {'),
   ),
   linha(1, comentario('// Onde ela atende e com que ferramenta foi construída')),
-  linha(1, comum('String platform = '), literal('"WhatsApp"'), comum(';')),
-  linha(1, comum('String automation = '), literal('"n8n"'), comum(';')),
+  linha(1, comum('String plataforma = '), literal('"WhatsApp"'), comum(';')),
+  linha(1, comum('String automacao = '), literal('"n8n"'), comum(';')),
   vazia(),
   linha(1, comentario('// Integrações')),
   linha(
     1,
-    comum('List<String> integrations = List.of('),
+    comum('List<String> integracoes = List.of('),
     literal('"Google OAuth 2.0"'),
     comum(', '),
     literal('"API do WhatsApp"'),
@@ -41,7 +43,7 @@ export const CONTEUDO_PROJETO_1: ConteudoDoEditor = [
   ),
   vazia(),
   linha(1, comentario('// O que a Ana faz pela fisioterapeuta')),
-  linha(1, comum('List<String> tasks = List.of(')),
+  linha(1, comum('List<String> tarefas = List.of(')),
   linha(
     3,
     literal('"Responde pacientes"'),
@@ -56,10 +58,10 @@ export const CONTEUDO_PROJETO_1: ConteudoDoEditor = [
   linha(1, comum(');')),
   vazia(),
   linha(1, comentario('// Painel de controle (CRM) em React, feito com Claude Code e SDD')),
-  linha(1, comum('String dashboard = '), literal('"CRM em React"'), comum(';')),
+  linha(1, comum('String painel = '), literal('"CRM em React"'), comum(';')),
   vazia(),
   linha(1, anotacao('@Override')),
-  linha(1, palavraChave('public void'), comum(' about() {')),
+  linha(1, palavraChave('public void'), comum(' sobre() {')),
   linha(2, comentario('// Os pacientes mandam feedback todo dia, sem saber que falam com uma IA')),
   linha(1, comum('}')),
   linha(0, comum('}')),
