@@ -158,7 +158,10 @@ test.describe('Retrato e @author: Depoimentos', () => {
     await page.goto('/depoimentos');
     const link = page.getByRole('link', { name: /Luana Porto/ });
 
+    // Chega pelo teclado (Shift+Tab e Tab): só assim o navegador aplica :focus-visible.
     await link.focus();
+    await page.keyboard.press('Shift+Tab');
+    await page.keyboard.press('Tab');
 
     await expect(link).toBeFocused();
     expect(await link.evaluate((el) => getComputedStyle(el).outlineStyle)).not.toBe('none');

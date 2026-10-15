@@ -84,12 +84,12 @@ test.describe('Busca de seções', () => {
     await expect(page.getByRole('option').first()).toContainText('Sobre Mim');
   });
 
-  test('sem filtro lista todos os arquivos (Início e 15 seções)', async ({ page }) => {
+  test('sem filtro lista todos os arquivos (Início e 16 seções)', async ({ page }) => {
     await abrirComFocoNaCasca(page, '/');
     await page.keyboard.press('Control+p');
 
-    await expect(page.getByRole('option')).toHaveCount(16);
-    await expect(dialogo(page).getByRole('status')).toHaveText('16 resultados');
+    await expect(page.getByRole('option')).toHaveCount(17);
+    await expect(dialogo(page).getByRole('status')).toHaveText('17 resultados');
   });
 
   test('usa o singular com um resultado e avisa quando nada casa', async ({ page }) => {
@@ -180,7 +180,7 @@ test.describe('Busca de seções', () => {
     await page.keyboard.press('Control+p');
 
     await expect(campo(page)).toHaveValue('');
-    await expect(page.getByRole('option')).toHaveCount(16);
+    await expect(page.getByRole('option')).toHaveCount(17);
   });
 });
 

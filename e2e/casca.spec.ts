@@ -18,6 +18,7 @@ const SECOES = [
   { slug: 'projeto-2', titulo: 'Projeto 2' },
   { slug: 'projeto-3', titulo: 'Projeto 3' },
   { slug: 'projeto-4', titulo: 'Projeto 4' },
+  { slug: 'projeto-5', titulo: 'Projeto 5' },
   { slug: 'certificacoes', titulo: 'Certificações' },
   { slug: 'eventos', titulo: 'Eventos' },
   { slug: 'formacao', titulo: 'Formação' },
@@ -27,7 +28,7 @@ const SECOES = [
 ];
 
 test.describe('Estrutura da IDE', () => {
-  test('lista as 15 seções na árvore, na ordem do design', async ({ page }) => {
+  test('lista as 16 seções na árvore, na ordem do design', async ({ page }) => {
     await page.goto('/');
 
     await abrirPastas(page);
@@ -216,7 +217,7 @@ test.describe('Seção de projeto', () => {
   });
 });
 
-test.describe('Pré-renderização das 15 rotas', () => {
+test.describe('Pré-renderização das 16 rotas', () => {
   test.use({ javaScriptEnabled: false });
 
   for (const { slug, titulo } of SECOES) {
@@ -226,7 +227,7 @@ test.describe('Pré-renderização das 15 rotas', () => {
       await expect(page).toHaveTitle(`${titulo} | Vinicius Machado`);
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(titulo);
       await expect(arvore(page).locator('[data-tipo=pasta]')).toHaveCount(7);
-      await expect(arvore(page).locator('a[href]')).toHaveCount(15);
+      await expect(arvore(page).locator('a[href]')).toHaveCount(SECOES.length);
       await expect(arquivoDaArvore(page, titulo)).toHaveAttribute('aria-current', 'page');
       await expect(page.getByRole('main').locator('code')).toBeAttached();
     });
