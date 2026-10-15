@@ -2,7 +2,7 @@
 
 ## 1. Conteúdo [Grafite e Nanquim]
 
-- [ ] 1.1 [Grafite] Skills, Experiências e Projeto 5 num arquivo só — verificar com `npm run test:ci`
+- [x] 1.1 [Grafite] Skills, Experiências e Projeto 5 num arquivo só — verificar com `npm run test:ci`
 - [x] 1.2 [Nanquim] Projeto 4 e Certificações num arquivo só — verificar com `npm run test:ci`
 
 ## 2. Casca [Pincel]
