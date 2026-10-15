@@ -116,14 +116,39 @@ O SHA mostrado na barra vem de `scripts/gerar-informacoes-do-build.mjs`, que rod
 **merge**, que não existe na branch e daria um link quebrado. O deploy de preview do
 `ci.yml` define `SHA_DO_COMMIT` com `github.event.pull_request.head.sha`, o commit real da branch.
 
-### Abertura: tela de boas-vindas
+### Abertura com Run
 
-O site abre com uma **tela de boas-vindas** no estilo da splash do IntelliJ
-([ADR-0015](adr/0015-tela-de-boas-vindas.md)): foto, nome, cargo e uma barra que percorre as etapas
-do log do Spring. Dura de 0,6 a 2 s (1 s com movimento reduzido), sem botão de pular, e aparece uma
-vez por sessão (`sessionStorage['boas-vindas-exibida']`), na primeira página aberta. É uma camada só
-do navegador por cima do HTML pré-renderizado, que fica inteiro no DOM; o resto da página fica
-`inert` por esses 2 s. Depois dela, a barra de status avisa `PortfolioApplication started in 1.8 s`.
+O site abre como o IntelliJ rodando o projeto ([ADR-0017](adr/0017-abertura-com-run.md), que
+substituiu a tela de boas-vindas do ADR-0015). A sequência tem fases, cada uma com teto de tempo, e
+**não pode ser pulada** (nem botão nem Esc):
+
+| Fase          | Tempo                                        | O que acontece                                                                           |
+| ------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Splash        | 3 s (teto de 5 s com rede lenta)             | Foto, nome, cargo e as etapas da IDE ("Indexing 16 Java classes…", "Project ready")      |
+| Pronto        | até o clique; execução automática aos 5 s    | Widget de Run com o foco no ▶ (Enter, clique, ⌃R ou ⇧F10); pulso do ▶ e uma dica aos 3 s |
+| Build         | 16 classes, uma a cada 60 ms                 | `> Task :compileJava`, `:processResources`, `:classes`, `:bootRun`                       |
+| Log do Spring | banner + 9 linhas a cada 150 ms, pausa 0,5 s | O log até `Started PortfolioApplication`, o mesmo da janela de Run                       |
+| A IDE aparece | ~0,7 s                                       | A janela recolhe para a barra de status e os painéis entram em sequência                 |
+
+Do clique ao portfólio leva cerca de 4,2 s (teto de 5 s); sem clique, o pior caso é cerca de 12 s.
+
+- **Quando aparece.** Só em `/`, com JavaScript e uma vez por sessão (chave no `sessionStorage`).
+  Quem chega por link direto de uma seção vai ao conteúdo, só com o aviso na barra de status
+  (`PortfolioApplication started in 1.8 s`).
+- **Sem prejudicar o HTML.** Um script inline no `<head>`, como o do tema, liga `data-abertura` no
+  `<html>` antes da primeira pintura; o cartão aparece no primeiro quadro e o nome não anima (LCP).
+  O conteúdo da rota fica no DOM, por baixo. Sem JavaScript, nada muda.
+- **Log do Spring compartilhado.** O texto do log vive em `core/log-do-spring.ts` e é usado pela
+  abertura e pela janela de Run do Executar; a linha do tempo e a lista das 16 classes ficam em
+  `core/linha-do-tempo-da-abertura.ts`. O serviço `Abertura` (`core/abertura.ts`) conduz as fases.
+- **Movimento.** Tokens em `_movimento.scss` (`--duracao-entrada-abertura`, `--duracao-recolher`,
+  `--intervalo-escalonado`, `--curva-suave`) e só `transform`, `opacity` e `clip-path`. O recolher
+  usa a View Transitions API com `view-transition-name` compartilhado entre a janela e o item da
+  barra de status; sem a API, a mesma coreografia por classes. Com `prefers-reduced-motion`, as
+  mesmas etapas sem animação (log completo de uma vez, fades de até 150 ms).
+- **Acessibilidade.** É um `role="dialog"` com `aria-modal="true"` e o resto da casca `inert`. O foco
+  vai ao ▶ quando fica pronto e ao editor no fim; uma região `aria-live` anuncia só os marcos. O ▶ tem
+  área de toque de 44 px e `aria-keyshortcuts`.
 
 ### Janela de Run
 

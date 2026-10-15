@@ -13,7 +13,7 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 | Barra de ferramentas do design (ícones, branch, Buscar)        | todas            | `BarraDeFerramentas`              | `layout/barra-de-ferramentas/` |
 | Faixa de ferramentas à esquerda (Projeto, Commit, Estrutura)   | desktop (nossa)  | `FaixaDeFerramentas`              | `layout/faixa-de-ferramentas/` |
 | Página do repositório (estilo do GitHub, numa aba)             | (nossa)          | `Repositorio`                     | `features/repositorio/`        |
-| Tela de boas-vindas (splash)                                   | (nossa)          | `TelaDeBoasVindas`                | `layout/tela-de-boas-vindas/`  |
+| Abertura com Run (splash, ▶, build e log do Spring)            | (nossa)          | `Abertura`                        | `layout/abertura/`             |
 | Próximo arquivo e code vision                                  | (nossos)         | `ProximoArquivo`, `VisaoDeCodigo` | `shared/`                      |
 | Janela de Run (log de inicialização do Spring)                 | (nosso)          | `JanelaDeRunComponente`           | `layout/janela-de-run/`        |
 | Painel do projeto (cabeçalho "Projeto", árvore, rodapé)        | todas            | `PainelLateral`                   | `layout/painel-lateral/`       |
@@ -159,22 +159,27 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   agora guarda também o título de cada PR.
 - **Entradas e saídas:** nenhuma.
 
-### `TelaDeBoasVindas`
+### `Abertura`
 
-- **Onde:** `layout/tela-de-boas-vindas/tela-de-boas-vindas.ts`, seletor `app-tela-de-boas-vindas`,
-  montada na `Casca` ([ADR-0015](adr/0015-tela-de-boas-vindas.md)).
-- **O que faz:** a abertura no estilo da splash do IntelliJ: um cartão com a foto do Vinicius, o
-  nome, o cargo, "Seja bem-vindo" e a barra "Carregando Portfolio_Vinicius…", com uma linha de status
-  que passa pelas etapas do log do Spring (`Starting PortfolioApplication…`, `Tomcat started on port
-8080`).
-- **Tempo e sessão.** Fica no mínimo 0,6 s e no máximo 2 s e fecha, com um fade de ~200 ms, quando as
-  fontes e a página estão prontas. Aparece uma vez por sessão (`sessionStorage['boas-vindas-exibida']`,
-  serviço `core/boas-vindas.ts`) e só na primeira página aberta. Não tem botão de pular.
-- **Não bloqueia.** É só do navegador e fica por cima do HTML pré-renderizado, que não sai do DOM. É
-  uma região `role="status"` ("Carregando o portfólio de Vinicius Machado") e o resto fica `inert`
-  nesses 2 s. Com `prefers-reduced-motion`, não há barra animada nem fade e o teto cai para 1 s.
-- **Depois dela**, a barra de status mostra por alguns segundos
-  `PortfolioApplication started in 1.8 s`, anunciado de forma educada (`aria-live="polite"`).
+- **Onde:** `layout/abertura/`, montada na `Casca`, com o serviço `core/abertura.ts`
+  ([ADR-0017](adr/0017-abertura-com-run.md), que substituiu a `TelaDeBoasVindas` do ADR-0015).
+- **O que faz:** a abertura do site como a IDE rodando o projeto, em fases: o **cartão da splash**
+  (foto, nome, cargo, "Seja bem-vindo ao meu portfólio" e as etapas "Opening Portfolio_Vinicius…" até
+  "Project ready", 3 s); o **widget de Run** do IntelliJ (`PortfolioApplication ▾`, ▶ verde, debug
+  apagado) com o foco no ▶; a **janela Build/Run**, que compila as 16 classes reais e mostra o log
+  do Spring; e a **entrada da IDE**, em que a janela recolhe para a barra de status e os painéis
+  aparecem em sequência. A linha do tempo completa está em
+  [arquitetura](arquitetura.md#abertura-com-run).
+- **Executar.** Enter, clique no ▶ ou o atalho (⌃R no Mac, ⇧F10 nos demais, em `aria-keyshortcuts`)
+  executam; se ninguém executar, o ▶ é acionado sozinho 5 s depois de pronto. **Não há Pular**:
+  nem botão nem Esc.
+- **Quando aparece.** Só em `/` e uma vez por sessão. Em link direto de uma seção, não aparece, e a
+  barra de status mostra só `PortfolioApplication started in 1.8 s`.
+- **Log compartilhado.** O texto do log do Spring vem de `core/log-do-spring.ts`, o mesmo que a janela
+  de Run usa; a linha do tempo e a lista de classes ficam em `core/linha-do-tempo-da-abertura.ts`.
+- **Acessibilidade e movimento.** `role="dialog"` modal com o resto da casca `inert`; o foco vai ao ▶ e
+  depois ao editor; uma região `aria-live` anuncia só os marcos. Com `prefers-reduced-motion`, as
+  mesmas etapas sem animação.
 
 ### `FaixaDeAbas`
 
@@ -345,7 +350,7 @@ reduce` não há animação e a janela fecha direto.
 - **O que faz:** a janela de Run na parte de baixo da IDE, sozinha nessa área (o Git virou a página do
   repositório). Mostra o **log de inicialização** do `PortfolioApplication`: o banner do Spring
   Boot, `Starting PortfolioApplication using Java 21`, `Tomcat started on port 8080` e `Started
-PortfolioApplication in 1.8 seconds`. O texto vem de `log.ts` (`montarLog`); a data e a hora vêm
+PortfolioApplication in 1.8 seconds`. O texto vem de `core/log-do-spring.ts`, o mesmo da abertura; a data e a hora vêm
   do relógio do navegador, na abertura, e nunca entram no pré-render. O log é texto, nunca imagem.
 - **Revelação do log.** O banner aparece de uma vez e as demais linhas uma a cada ~200 ms, com teto
   de **2,5 s** para o log completo. O texto completo fica sempre no DOM; as linhas ainda não
@@ -353,7 +358,7 @@ PortfolioApplication in 1.8 seconds`. O texto vem de `log.ts` (`montarLog`); a d
   a linha final uma vez, quando o log termina.
 - **Quando abre.** **Só pelo Executar** da barra: abre (ou reexecuta o log) e leva o foco para a
   janela. Ela **não abre mais sozinha** na primeira visita: a abertura agora é a
-  [tela de boas-vindas](adr/0015-tela-de-boas-vindas.md). Com `prefers-reduced-motion: reduce` o log
+  [abertura com Run](adr/0017-abertura-com-run.md). Com `prefers-reduced-motion: reduce` o log
   nasce completo.
 - **Teclado.** Esc, o "×" e o foco devolvido ao botão que abriu fecham a janela.
 - **Entradas e saídas:** nenhuma; o estado vem do serviço `JanelaDeRun`.
