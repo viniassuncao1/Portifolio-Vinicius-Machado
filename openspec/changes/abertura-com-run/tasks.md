@@ -10,7 +10,7 @@
 
 ## 3. Movimento [Compasso]
 
-- [ ] 3.1 Serviço `Abertura` com as fases, execução automática, coreografia, recolher para a barra de status, entrada dos painéis, script inline, movimento reduzido e remoção da tela de boas-vindas antiga — verificar no portal
+- [x] 3.1 Serviço `Abertura` com as fases, execução automática, coreografia, recolher para a barra de status, entrada dos painéis, script inline, movimento reduzido e remoção da tela de boas-vindas antiga — verificar no portal
 
 ## 4. Testes [Sentinela]
 
