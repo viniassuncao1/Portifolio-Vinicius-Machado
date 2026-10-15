@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
-import { BoasVindas } from '../../core/boas-vindas';
+import { Abertura } from '../../core/abertura';
 import { SHA_DO_BUILD } from '../../core/build.gerado';
 import { EstadoDoEditor } from '../../core/estado-do-editor';
 import { BarraDeStatus } from './barra-de-status';
@@ -107,12 +107,30 @@ describe('BarraDeStatus: aviso de inicialização', () => {
     expect(aviso().getAttribute('aria-live')).toBe('polite');
     expect(aviso().textContent).toBe('');
 
-    TestBed.inject(BoasVindas).avisarInicializacao();
+    TestBed.inject(Abertura).avisar();
     fixture.detectChanges();
     expect(aviso().textContent).toBe('PortfolioApplication started in 1.8 s');
 
     vi.advanceTimersByTime(6000);
     fixture.detectChanges();
     expect(aviso().textContent).toBe('');
+  });
+
+  it('o aviso leva o nome da View Transition só durante a revelação', () => {
+    TestBed.configureTestingModule({ providers: [provideRouter([])] });
+    const fixture = TestBed.createComponent(BarraDeStatus);
+    const abertura = TestBed.inject(Abertura);
+    fixture.detectChanges();
+    const aviso = () =>
+      (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>('.aviso')!;
+    expect(aviso().style.viewTransitionName).toBe('');
+
+    abertura.fase.set('revelando');
+    fixture.detectChanges();
+    expect(aviso().style.viewTransitionName).toBe('console-de-run');
+
+    abertura.fase.set('encerrada');
+    fixture.detectChanges();
+    expect(aviso().style.viewTransitionName).toBe('');
   });
 });

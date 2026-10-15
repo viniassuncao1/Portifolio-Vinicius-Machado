@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 
-import { BoasVindas } from '../../core/boas-vindas';
+import { Abertura } from '../../core/abertura';
 import { AbasAbertas } from '../../core/abas-abertas';
 import { breadcrumbs } from '../../core/breadcrumbs';
 import { SHA_CURTO_DO_BUILD, SHA_DO_BUILD } from '../../core/build.gerado';
@@ -25,7 +25,12 @@ export class BarraDeStatus {
   private readonly abas = inject(AbasAbertas);
   private readonly editor = inject(EstadoDoEditor);
   /** Aviso de inicialização, por 6 s depois das boas-vindas; vazio nas demais horas. */
-  protected readonly aviso = inject(BoasVindas).aviso;
+  private readonly abertura = inject(Abertura);
+  protected readonly aviso = this.abertura.aviso;
+  /** Na revelação o aviso é o destino da janela de Run (View Transition `console-de-run`). */
+  protected readonly nomeDaTransicao = computed(() =>
+    this.abertura.fase() === 'revelando' ? 'console-de-run' : null,
+  );
 
   private readonly segmentos = computed(() => {
     const arquivo = this.abas.ativa()?.arquivo ?? ARQUIVO_INICIO;

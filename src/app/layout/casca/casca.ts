@@ -14,6 +14,7 @@ import { filter, map, startWith } from 'rxjs';
 import { DADO_ARVORE_NO_INICIO } from '../../core/secoes';
 import { EstrategiaDeTitulo } from '../../core/estrategia-de-titulo';
 import { Tema } from '../../core/tema';
+import { Abertura } from '../../core/abertura';
 import { JanelaDePreviewComponente } from '../../shared/janela-de-preview/janela-de-preview';
 import { BuscaDeSecoes } from '../busca-de-secoes/busca-de-secoes';
 import { BarraDeStatus } from '../barra-de-status/barra-de-status';
@@ -22,7 +23,7 @@ import { FaixaDeAbas } from '../faixa-de-abas/faixa-de-abas';
 import { FaixaDeFerramentas } from '../faixa-de-ferramentas/faixa-de-ferramentas';
 import { JanelaDeRunComponente } from '../janela-de-run/janela-de-run';
 import { PainelLateral } from '../painel-lateral/painel-lateral';
-import { TelaDeBoasVindas } from '../tela-de-boas-vindas/tela-de-boas-vindas';
+import { AberturaComponente } from '../abertura/abertura';
 
 /**
  * Casca da IDE: barra superior, faixa de ferramentas, painel do projeto e a aba com o editor onde
@@ -42,11 +43,13 @@ import { TelaDeBoasVindas } from '../tela-de-boas-vindas/tela-de-boas-vindas';
     BarraDeStatus,
     BuscaDeSecoes,
     JanelaDePreviewComponente,
-    TelaDeBoasVindas,
+    AberturaComponente,
   ],
   templateUrl: './casca.html',
   styleUrl: './casca.scss',
   host: {
+    // Durante a revelação da abertura os painéis entram em sequência (ver `casca.scss`).
+    '[attr.data-revelando]': "abertura.fase() === 'revelando'",
     '(keydown.escape)': 'fecharEDevolverFoco()',
     // No documento: logo após carregar o foco está no <body>, fora do host da casca.
     '(document:keydown.control.p)': 'abrirBusca($event)',
@@ -60,6 +63,7 @@ export class Casca {
   private readonly conteudo = viewChild<ElementRef<HTMLElement>>('conteudo');
   private readonly barra = viewChild.required(BarraDeFerramentas);
 
+  protected readonly abertura = inject(Abertura);
   protected readonly titulo = inject(EstrategiaDeTitulo).titulo;
   protected readonly gavetaAberta = signal(false);
   protected readonly painelVisivel = signal(true);
