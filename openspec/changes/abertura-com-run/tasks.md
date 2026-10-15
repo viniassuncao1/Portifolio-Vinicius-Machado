@@ -18,5 +18,5 @@
 
 ## 5. Documentação e integração
 
-- [ ] 5.1 [Escriba] ADR-0017, README, `docs/` e a entrada do diário — verificar com `npm run format:check`
+- [x] 5.1 [Escriba] ADR-0017, README, `docs/` e a entrada do diário — verificar com `npm run format:check`
 - [ ] 5.2 [Regente] Revisar, abrir o PR, arquivar a change e fazer o merge — verificar pelo PR mesclado e pelo deploy
