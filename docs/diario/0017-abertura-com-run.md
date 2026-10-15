@@ -23,7 +23,7 @@ O plano de design e de animação foi feito antes do código, com as skills do E
 quadro a quadro está na change.
 
 - **Uma sequência em fases.** Splash de 3 s (foto, nome, cargo e as etapas da IDE), widget de Run com
-  o ▶ pronto, build das 16 classes reais do portfólio (`> Task :compileJava`…), log do Spring até
+  o ▶ pronto, build das classes reais do portfólio (uma por seção) (`> Task :compileJava`…), log do Spring até
   `Started PortfolioApplication` e, por fim, a IDE aparecendo: a janela recolhe para a barra de
   status e os painéis entram em sequência.
 - **Sem pular.** Foi uma decisão do Vinicius: nem botão nem Esc. O cuidado foi dar um teto a cada
@@ -61,7 +61,7 @@ quadro a quadro está na change.
 >
 > O site simula o IntelliJ, e a abertura era uma tela de boas-vindas de 2 segundos. Achei curta e
 > sem história. Troquei por uma sequência: uma splash com a minha foto, o botão de Run do IntelliJ
-> pronto para ser acionado, o build compilando as 16 classes do próprio portfólio, o Spring subindo
+> pronto para ser acionado, o build compilando as classes do próprio portfólio, o Spring subindo
 > na porta 8080 e, por fim, a IDE aparecendo.
 >
 > Antes de codar, planejei tudo quadro a quadro, com tempos e easings, usando skills de IA para

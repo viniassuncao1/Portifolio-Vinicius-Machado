@@ -18,12 +18,12 @@ de UX de 14/10, e validado num protótipo antes de virar código.
 ## Decisão
 
 1. **Splash de 3 s** com foto, nome, cargo e as etapas da IDE ("Opening Portfolio_Vinicius…",
-   "Indexing 16 Java classes…", "Project ready"), com teto de 5 s se a rede estiver lenta.
+   "Indexing 17 Java classes…", "Project ready"), com teto de 5 s se a rede estiver lenta.
 2. **Pronto para executar:** o widget de Run do IntelliJ (`PortfolioApplication`, ▶ verde) recebe o
    foco. Enter, clique ou atalho (⌃R no Mac, ⇧F10 nos demais) executam.
 3. **Execução automática:** se ninguém executar, o ▶ é acionado sozinho 5 s depois de ficar pronto,
    para o visitante nunca ficar preso.
-4. **Build e log do Spring (~3,4 s):** uma janela Build/Run compila as 16 classes reais do portfólio
+4. **Build e log do Spring (~3,4 s):** uma janela Build/Run compila as classes reais do portfólio (uma por seção, hoje 17, mais o `PortfolioApplication`; a lista vem de `secoes.ts`)
    (`> Task :compileJava`, `:processResources`, `:classes`, `:bootRun`) e mostra o log do Spring até
    `Started PortfolioApplication`. Em seguida a janela recolhe para a barra de status e os painéis
    da IDE entram em sequência (~0,7 s). O log do Spring é o mesmo da janela de Run, compartilhado.

@@ -37,14 +37,14 @@ O raciocínio completo, com alternativas descartadas, está no design da change 
 ## Rotas e casca da IDE
 
 `app.routes.ts` tem uma rota-pai `''` com o componente `Casca` (`layout/`) e as rotas filhas:
-o Início (`''`) e as 15 seções de `core/secoes.ts` (`sobre-mim`, `skills`, `contato` etc.), mais
+o Início (`''`) e as 16 seções de `core/secoes.ts` (`sobre-mim`, `skills`, `contato` etc.), mais
 uma rota por página extra das seções que declaram `paginas` (`/skills/2`). A casca
 (barra superior, faixa de ferramentas, painel do projeto, faixa de abas, editor e barra de status) é montada uma vez e não recarrega entre
 seções: só o conteúdo do `<router-outlet>` troca, e a View Transitions API anima apenas ele.
 
 `core/secoes.ts` é a fonte única da lista de seções: dela saem os itens da árvore, as rotas e os
 títulos. Enquanto uma seção não tem feature própria, a rota dela carrega `SecaoEmConstrucao`
-(`shared/`). O Início e as 15 seções são todos pré-renderizados (`RenderMode.Prerender` em `**`),
+(`shared/`). O Início e as 16 seções são todos pré-renderizados (`RenderMode.Prerender` em `**`),
 então cada um vira um HTML estático com o conteúdo já desenhado.
 
 O título da janela segue o formato `<seção> | Vinicius Machado` (`EstrategiaDeTitulo`) e o mesmo
@@ -120,27 +120,30 @@ O SHA mostrado na barra vem de `scripts/gerar-informacoes-do-build.mjs`, que rod
 
 O site abre como o IntelliJ rodando o projeto ([ADR-0017](adr/0017-abertura-com-run.md), que
 substituiu a tela de boas-vindas do ADR-0015). A sequência tem fases, cada uma com teto de tempo, e
-**não pode ser pulada** (nem botão nem Esc):
+**não pode ser pulada** (nem botão nem Esc, que não faz nada):
 
 | Fase          | Tempo                                        | O que acontece                                                                           |
 | ------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Splash        | 3 s (teto de 5 s com rede lenta)             | Foto, nome, cargo e as etapas da IDE ("Indexing 16 Java classes…", "Project ready")      |
+| Splash        | 3 s (teto de 5 s com rede lenta)             | Foto, nome, cargo e as etapas da IDE ("Indexing 17 Java classes…", "Project ready")      |
 | Pronto        | até o clique; execução automática aos 5 s    | Widget de Run com o foco no ▶ (Enter, clique, ⌃R ou ⇧F10); pulso do ▶ e uma dica aos 3 s |
-| Build         | 16 classes, uma a cada 60 ms                 | `> Task :compileJava`, `:processResources`, `:classes`, `:bootRun`                       |
+| Build         | 17 classes, uma a cada 60 ms                 | `> Task :compileJava`, `:processResources`, `:classes`, `:bootRun`                       |
 | Log do Spring | banner + 9 linhas a cada 150 ms, pausa 0,5 s | O log até `Started PortfolioApplication`, o mesmo da janela de Run                       |
 | A IDE aparece | ~0,7 s                                       | A janela recolhe para a barra de status e os painéis entram em sequência                 |
 
 Do clique ao portfólio leva cerca de 4,2 s (teto de 5 s); sem clique, o pior caso é cerca de 12 s.
 
-- **Quando aparece.** Só em `/`, com JavaScript e uma vez por sessão (chave no `sessionStorage`).
+- **Quando aparece.** Só em `/`, com JavaScript e uma vez por sessão (`sessionStorage['abertura-exibida']`).
   Quem chega por link direto de uma seção vai ao conteúdo, só com o aviso na barra de status
   (`PortfolioApplication started in 1.8 s`).
 - **Sem prejudicar o HTML.** Um script inline no `<head>`, como o do tema, liga `data-abertura` no
   `<html>` antes da primeira pintura; o cartão aparece no primeiro quadro e o nome não anima (LCP).
   O conteúdo da rota fica no DOM, por baixo. Sem JavaScript, nada muda.
 - **Log do Spring compartilhado.** O texto do log vive em `core/log-do-spring.ts` e é usado pela
-  abertura e pela janela de Run do Executar; a linha do tempo e a lista das 16 classes ficam em
-  `core/linha-do-tempo-da-abertura.ts`. O serviço `Abertura` (`core/abertura.ts`) conduz as fases.
+  abertura e pela janela de Run do Executar; a linha do tempo (todos os tempos em constantes) e a lista das classes compiladas ficam em
+  `core/linha-do-tempo-da-abertura.ts`. A lista, `CLASSES_COMPILADAS`, é **derivada de `core/secoes.ts`**
+  (uma classe por seção, na ordem da árvore, mais `PortfolioApplication`), então são 17 hoje e uma
+  seção nova entra sozinha; cada classe a mais empurra o resto do build em 60 ms. O serviço `Abertura` (`core/abertura.ts`) conduz as fases e o componente `layout/abertura/`
+  (`abertura.ts`/`.html`, `abertura.scss`, `widget-de-run.scss` e `janela-de-build.scss`) as desenha.
 - **Movimento.** Tokens em `_movimento.scss` (`--duracao-entrada-abertura`, `--duracao-recolher`,
   `--intervalo-escalonado`, `--curva-suave`) e só `transform`, `opacity` e `clip-path`. O recolher
   usa a View Transitions API com `view-transition-name` compartilhado entre a janela e o item da
@@ -267,7 +270,7 @@ O site tem dois temas ([ADR-0014](adr/0014-tema-claro.md)), feitos só por token
 ## Acessibilidade
 
 A meta é WCAG AA. Os E2E rodam o **axe** (`@axe-core/playwright`, tags `wcag2a` e `wcag2aa`) no
-Início e nas 15 rotas, e qualquer violação reprova o PR. Elementos decorativos (barra de
+Início e nas 16 rotas, e qualquer violação reprova o PR. Elementos decorativos (barra de
 ferramentas, numeração, posição do cursor) usam `aria-hidden`; as regras do axe não são desligadas. A decisão
 está no [ADR-0009](adr/0009-acessibilidade-automatizada-com-axe.md).
 
