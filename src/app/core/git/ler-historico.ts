@@ -6,7 +6,7 @@ const ehRegistro = (valor: unknown): valor is Record<string, unknown> =>
 
 function lerCommit(dado: unknown): CommitDoHistorico | null {
   if (!ehRegistro(dado)) return null;
-  const { sha, pais, autor, data, assunto, pr, branch } = dado;
+  const { sha, pais, autor, data, assunto, pr, branch, titulo } = dado;
   if (!ehTexto(sha) || !ehTexto(autor) || !ehTexto(data) || typeof assunto !== 'string')
     return null;
   if (!Array.isArray(pais) || !pais.every(ehTexto)) return null;
@@ -18,6 +18,7 @@ function lerCommit(dado: unknown): CommitDoHistorico | null {
     assunto,
     ...(typeof pr === 'number' ? { pr } : {}),
     ...(ehTexto(branch) ? { branch } : {}),
+    ...(ehTexto(titulo) ? { titulo } : {}),
   };
 }
 

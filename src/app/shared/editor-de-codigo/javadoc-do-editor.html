@@ -1,0 +1,37 @@
+@if (comBotao()) {
+  <button
+    type="button"
+    class="alternar-leitura"
+    aria-label="Alternar modo de leitura"
+    [attr.aria-pressed]="leitura.ativo()"
+    (click)="leitura.alternar()"
+  >
+    <app-icone nome="documentacao" />
+  </button>
+}
+<span class="javadoc-texto">
+  @if (item().retrato; as retrato) {
+    <img
+      class="retrato"
+      [class.pequeno]="retrato.tamanho === 'pequeno'"
+      [ngSrc]="retrato.src"
+      [alt]="retrato.alt"
+      [width]="ladoDoRetrato[retrato.tamanho]"
+      [height]="ladoDoRetrato[retrato.tamanho]"
+      [priority]="retrato.prioridade === true"
+    />
+  }
+  <span class="javadoc-corpo">
+    @for (texto of paragrafos(); track $index) {
+      <span class="javadoc-paragrafo">{{ $last ? texto : texto + ' ' }}</span>
+    }
+    @if (item().autor; as autor) {
+      <span class="javadoc-paragrafo javadoc-autor"
+        >&#64;author
+        <a [href]="autor.href" target="_blank" rel="noopener noreferrer"
+          >{{ autor.nome }}<span class="aviso-nova-aba"> (abre em nova aba)</span></a
+        ></span
+      >
+    }
+  </span></span
+>

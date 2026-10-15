@@ -2,7 +2,7 @@ import { Route, Routes } from '@angular/router';
 
 import { DADO_ARVORE_NO_INICIO, SECOES, totalDePaginas } from './core/secoes';
 import type { DadosDePagina, Secao } from './core/secoes';
-import { TITULO_INICIO } from './core/titulos';
+import { TITULO_INICIO, TITULO_REPOSITORIO } from './core/titulos';
 import { Casca } from './layout/casca/casca';
 
 type CarregadorDeSecao = NonNullable<Route['loadComponent']>;
@@ -60,6 +60,12 @@ export const routes: Routes = [
         loadComponent: () => import('./features/inicio/inicio').then((m) => m.Inicio),
       },
       ...SECOES.flatMap(rotasDaSecao),
+      {
+        path: 'repositorio',
+        title: TITULO_REPOSITORIO,
+        loadComponent: () =>
+          import('./features/repositorio/repositorio').then((m) => m.Repositorio),
+      },
     ],
   },
   { path: '**', redirectTo: '' },

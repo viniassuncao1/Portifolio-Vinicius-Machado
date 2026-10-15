@@ -3,7 +3,7 @@ import type { Route } from '@angular/router';
 import { routes } from './app.routes';
 import { SECOES, totalDePaginas } from './core/secoes';
 import type { Secao } from './core/secoes';
-import { TITULO_INICIO } from './core/titulos';
+import { TITULO_INICIO, TITULO_REPOSITORIO } from './core/titulos';
 import { ComoUsoIa } from './features/como-uso-ia/como-uso-ia';
 import { Diferenciais } from './features/diferenciais/diferenciais';
 import { Inicio } from './features/inicio/inicio';
@@ -36,10 +36,14 @@ const FEATURES: Readonly<Record<string, unknown>> = {
 
 describe('rotas', () => {
   it('têm o Início e as rotas de cada seção (uma por página), na ordem de SECOES', () => {
-    expect(filhas.map((rota) => rota.path)).toEqual(['', ...SECOES.flatMap(caminhosDe)]);
+    expect(filhas.map((rota) => rota.path)).toEqual([
+      '',
+      ...SECOES.flatMap(caminhosDe),
+      'repositorio',
+    ]);
   });
 
-  it('dão a cada página de cada seção o título da árvore e ao Início o Portfolio_Vinicius', () => {
+  it('dão a cada página de cada seção o título da árvore e ao Início o título do Início', () => {
     expect(rotaDe('')?.title).toBe(TITULO_INICIO);
     SECOES.flatMap((secao) => caminhosDe(secao).map((caminho) => ({ caminho, secao }))).forEach(
       ({ caminho, secao }) => expect(rotaDe(caminho)?.title).toBe(secao.titulo),
@@ -55,6 +59,11 @@ describe('rotas', () => {
         });
       });
     }
+  });
+
+  it('carregam a página do repositório, com o título que dá nome à aba', async () => {
+    expect(rotaDe('repositorio')?.title).toBe(TITULO_REPOSITORIO);
+    expect(typeof (await carregar('repositorio'))).toBe('function');
   });
 
   it('carregam o Início na rota raiz', async () => {

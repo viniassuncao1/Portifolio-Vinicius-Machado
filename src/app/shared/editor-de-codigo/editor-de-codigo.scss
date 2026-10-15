@@ -1,15 +1,4 @@
-@use 'sass:string';
-
-// Coluna de "*" do bloco de comentário: o pseudo-elemento é recortado pela altura do bloco.
-$quantidade-de-marcadores: 60;
-
-@function coluna-de-marcadores($quantidade) {
-  $coluna: '*';
-  @for $i from 2 through $quantidade {
-    $coluna: $coluna + '\A *';
-  }
-  @return $coluna;
-}
+@use 'marcadores' as *;
 
 :host {
   display: grid;
@@ -106,7 +95,7 @@ $quantidade-de-marcadores: 60;
   overflow-wrap: anywhere;
 
   &::before {
-    content: coluna-de-marcadores($quantidade-de-marcadores) / '';
+    content: coluna-de-marcadores() / '';
     position: absolute;
     inset-block: 0;
     inset-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo) - var(--afastamento-marcador));
@@ -117,99 +106,20 @@ $quantidade-de-marcadores: 60;
   }
 }
 
-// Javadoc: `/**`, a coluna de `*` e `*/` são pseudo-elementos (fora do texto copiado e lido). O `*`
-// fica uma coluna à direita do `/`, como numa IDE; o texto começa três colunas depois do recuo.
-.javadoc {
-  --avanco: calc(0.6em + var(--espacamento-letras-codigo));
-
+// Code vision (IntelliJ): uma linha pequena e cinza acima da declaração da classe, sem número. Some
+// quando não há botão (rotas sem preview), e a coluna de números ganha um espaço do mesmo tamanho.
+.visao-de-codigo {
   display: block;
-  padding-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo));
-  color: var(--cor-sintaxe-comentario);
-  font-size: var(--texto-comentario);
-  letter-spacing: var(--espacamento-letras-codigo);
-  line-height: var(--altura-linha-comentario);
-  white-space: normal;
-
-  &::before,
-  &::after {
-    display: block;
-    white-space: pre;
-    user-select: none;
-  }
-
-  &::before {
-    // Strings separadas: `/` e `*` juntos seriam lidos como comentário de CSS pelo Angular.
-    content: '/' '*' '*' / '';
-  }
-
-  &::after {
-    content: '*' '/' / '';
-    padding-inline-start: var(--avanco);
-  }
-}
-
-.javadoc-texto {
-  position: relative;
-  box-sizing: content-box;
-  // O retrato (se houver) fica à esquerda do corpo; o bloco cresce para o maior dos dois e a coluna
-  // de `*` a acompanha.
-  display: flex;
-  gap: var(--espaco-3);
-  align-items: flex-start;
-  padding-inline-start: calc(3 * var(--avanco));
-  overflow-wrap: anywhere;
-
-  &::before {
-    content: coluna-de-marcadores($quantidade-de-marcadores) / '';
-    position: absolute;
-    inset-block: 0;
-    inset-inline-start: var(--avanco);
-    overflow: hidden;
-    color: var(--cor-sintaxe-comentario-marcador);
-    white-space: pre;
-    user-select: none;
-  }
-}
-
-.javadoc-corpo {
-  display: block;
-  min-inline-size: 0;
-  // Mesma quebra do parágrafo: 72 colunas de texto depois das três colunas de ` * `.
-  max-inline-size: calc(var(--colunas-paragrafo) * var(--avanco));
-}
-
-.retrato {
-  flex: none;
   box-sizing: border-box;
-  width: var(--lado-retrato-grande);
-  height: var(--lado-retrato-grande);
-  margin-block: var(--espaco-1);
-  border: var(--borda-largura) solid var(--cor-borda);
-  border-radius: 50%;
-  object-fit: cover;
+  height: var(--altura-visao-de-codigo);
+  padding-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo));
+  color: var(--cor-texto-esmaecido);
+  font-family: var(--fonte-interface);
+  font-size: var(--texto-status);
+  line-height: var(--altura-visao-de-codigo);
 
-  &.pequeno {
-    width: var(--lado-retrato-pequeno);
-    height: var(--lado-retrato-pequeno);
-  }
-}
-
-.aviso-nova-aba {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.javadoc-paragrafo {
-  display: block;
-
-  // Entre parágrafos, uma linha inteira: a coluna de `*` do bloco desenha o ` *` dela.
-  & + & {
-    margin-block-start: var(--altura-linha-comentario);
+  &:not(:has(button)) {
+    display: none;
   }
 }
 
@@ -298,6 +208,23 @@ a[class^='papel-'] {
   }
 }
 
+// Em modo de leitura a digitação revela o bloco renderizado inteiro de uma vez, quando chega a vez dele.
+:host(.digitando) .javadoc[data-modo='leitura'] {
+  clip-path: none;
+  opacity: clamp(0, (var(--digitado, 0) - var(--indice, 0)) * 100, 1);
+}
+
+// Celular: as linhas de código quebram em vez de rolar na horizontal, com recuo pendurado (a linha
+// seguinte entra 2 colunas à frente da primeira).
+@media (max-width: 767.98px) {
+  .linha {
+    padding-inline-start: calc(var(--recuo, 0) * var(--recuo-codigo) + 2ch);
+    text-indent: -2ch;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :host(.digitando) {
     .linha,
@@ -311,4 +238,9 @@ a[class^='papel-'] {
   :host(.pronto) .linha.atual:not(.vazia)::after {
     animation: none;
   }
+}
+
+// "Próximo arquivo →" depois do último item, na coluna do código (a dos números fica só com o texto).
+app-proximo-arquivo {
+  grid-column: 2;
 }

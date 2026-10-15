@@ -8,8 +8,10 @@ import { mkdir, writeFile } from 'node:fs/promises';
 const PASTA = new URL('../public/git/', import.meta.url);
 const ARQUIVO = new URL('historico.json', PASTA);
 const SEPARADOR = '\x1f';
-// %aN é o nome do autor já passado pelo .mailmap.
-const FORMATO = ['%H', '%P', '%aN', '%aI', '%s'].join(SEPARADOR);
+const FIM_DO_COMMIT = '\x1e';
+// %aN é o nome do autor já passado pelo .mailmap; o corpo (%b) vem por último porque tem quebras
+// de linha, e cada commit termina em FIM_DO_COMMIT.
+const FORMATO = `${['%H', '%P', '%aN', '%aI', '%s', '%b'].join(SEPARADOR)}${FIM_DO_COMMIT}`;
 const LIMITE_DA_SAIDA_EM_BYTES = 64 * 1024 * 1024;
 const REPOSITORIO_PADRAO = 'viniassuncao1/Portifolio-Vinicius-Machado';
 const MERGE_DE_PR = /^Merge pull request #(\d+) from [^/\s]+\/(\S+)/;
@@ -33,9 +35,17 @@ function descobrirRepositorio() {
   }
 }
 
-function lerCommit(linha) {
-  const [sha, pais, autor, data, assunto] = linha.split(SEPARADOR);
+/** Título do PR: a primeira linha do corpo do merge, que o GitHub preenche com o título do PR. */
+const tituloDoPr = (corpo) =>
+  corpo
+    .split('\n')
+    .find((linha) => linha.trim() !== '')
+    ?.trim();
+
+function lerCommit(registro) {
+  const [sha, pais, autor, data, assunto, corpo = ''] = registro.trim().split(SEPARADOR);
   const merge = MERGE_DE_PR.exec(assunto);
+  const titulo = merge ? tituloDoPr(corpo) : undefined;
   return {
     sha,
     pais: pais === '' ? [] : pais.split(' '),
@@ -43,6 +53,7 @@ function lerCommit(linha) {
     data,
     assunto,
     ...(merge ? { pr: Number(merge[1]), branch: merge[2] } : {}),
+    ...(titulo ? { titulo } : {}),
   };
 }
 
@@ -50,7 +61,10 @@ function lerHistorico() {
   try {
     if (git('rev-parse', '--is-shallow-repository') !== 'false') return [];
     const saida = git('log', '--topo-order', `--format=${FORMATO}`);
-    return saida === '' ? [] : saida.split('\n').map(lerCommit);
+    return saida
+      .split(FIM_DO_COMMIT)
+      .filter((registro) => registro.trim() !== '')
+      .map(lerCommit);
   } catch {
     return [];
   }

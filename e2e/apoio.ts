@@ -29,7 +29,9 @@ export async function abrirComFocoNaCasca(page: Page, url: string): Promise<void
  * ainda aparece. Sem a janela aberta (movimento reduzido, sessão já vista) volta na hora.
  */
 export async function esperarLogDoRun(page: Page): Promise<void> {
-  await expect(page.locator('main app-editor-de-codigo')).toHaveClass(/pronto/);
+  // A página do repositório não tem editor; nas demais o editor só fica `pronto` já hidratado.
+  const editor = page.locator('main app-editor-de-codigo');
+  if ((await editor.count()) > 0) await expect(editor).toHaveClass(/pronto/);
   await expect(
     page.locator('app-janela-de-run[data-aberto="true"] section[data-terminado="false"]'),
   ).toHaveCount(0);
@@ -54,13 +56,16 @@ export async function linhasDoCodigo(page: Page): Promise<string[]> {
 }
 
 /**
- * Só o código que o compilador lê: sem textos entre aspas, comentários e Javadoc, uma linha por
- * linha do editor.
+ * Só o código que o compilador lê: sem textos entre aspas, comentários, Javadoc e code vision, uma
+ * linha por linha do editor.
  */
 export async function codigoSemTextos(page: Page): Promise<string> {
   return page.locator('main code > span').evaluateAll((linhas) =>
     linhas
-      .filter((linha) => !linha.classList.contains('javadoc'))
+      .filter(
+        (linha) =>
+          !linha.classList.contains('javadoc') && !linha.classList.contains('visao-de-codigo'),
+      )
       .map((linha) =>
         Array.from(linha.children)
           .filter(
@@ -161,4 +166,16 @@ export function contraste(a: string, b: string): number {
   };
   const [claro, escuro] = [luminancia(a), luminancia(b)].sort((x, y) => y - x);
   return (claro + 0.05) / (escuro + 0.05);
+}
+
+/**
+ * Pede a primeira visita de verdade: desfaz a marca de sessão que `fixtures.ts` semeia, uma vez por
+ * aba (`window.name` sobrevive às navegações da aba, então recarregar já conta como mesma sessão).
+ */
+export async function verBoasVindas(page: Page): Promise<void> {
+  await page.addInitScript((chave) => {
+    if (window.name.includes('sem-semente')) return;
+    window.name += ' sem-semente';
+    sessionStorage.removeItem(chave);
+  }, 'boas-vindas-exibida');
 }

@@ -9,6 +9,7 @@
     id="painel-lateral"
     [attr.data-aberta]="gavetaAberta()"
     [noInicio]="arvoreNoInicio()"
+    [gavetaAberta]="gavetaAberta()"
     (secaoEscolhida)="fecharEDevolverFoco()"
     (fecharGaveta)="fecharEDevolverFoco()"
   />
@@ -25,10 +26,10 @@
         <span class="polegar"></span>
       </div>
     </main>
-    <app-painel-do-git id="painel-do-git" />
     <app-janela-de-run id="janela-de-run" />
   </div>
 </div>
 <app-barra-de-status />
 <app-busca-de-secoes />
 <app-janela-de-preview />
+<app-tela-de-boas-vindas />

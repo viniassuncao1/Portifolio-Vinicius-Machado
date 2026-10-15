@@ -1,9 +1,9 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import type { Page } from '@playwright/test';
 
 import { abrirPastas, arquivoDaArvore } from './apoio';
 
-const status = (page: Page) => page.getByRole('status').filter({ hasText: 'UTF-8' });
+const status = (page: Page) => page.getByRole('contentinfo');
 
 test.describe('Barra de status', () => {
   // Movimento reduzido: o código aparece pronto, sem a digitação interferir nos cliques.
@@ -64,12 +64,14 @@ test.describe('Barra de status', () => {
     await expect(status(page).locator('.posicao')).toHaveText('5:1');
   });
 
-  test('tem o papel status e só o arquivo fica na leitura: a posição é aria-hidden', async ({
+  test('é o contentinfo da página, e só o arquivo e o aviso ficam na leitura como status (a posição é aria-hidden)', async ({
     page,
   }) => {
     await page.goto('/sobre-mim');
 
-    await expect(status(page)).toHaveAttribute('role', 'status');
+    await expect(status(page)).toBeVisible();
+    await expect(status(page).locator('.arquivo')).toHaveAttribute('role', 'status');
+    await expect(status(page).locator('.aviso')).toHaveAttribute('aria-live', 'polite');
     await expect(status(page).locator('.posicao')).toHaveAttribute('aria-hidden', 'true');
     await expect(status(page).locator('.arquivo')).not.toHaveAttribute('aria-hidden', 'true');
   });

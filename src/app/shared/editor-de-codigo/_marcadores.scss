@@ -1,0 +1,10 @@
+// Coluna de "*" do bloco de comentário: o pseudo-elemento é recortado pela altura do bloco.
+$quantidade-de-marcadores: 60;
+
+@function coluna-de-marcadores($quantidade: $quantidade-de-marcadores) {
+  $coluna: '*';
+  @for $i from 2 through $quantidade {
+    $coluna: $coluna + '\A *';
+  }
+  @return $coluna;
+}

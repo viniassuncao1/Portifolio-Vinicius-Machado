@@ -15,6 +15,9 @@ export class PainelLateral {
   /** Árvore como no Início: primeira seção destacada, sem página atual. */
   readonly noInicio = input(false);
 
+  /** Com a gaveta aberta no celular, todas as pastas da árvore abrem. */
+  readonly gavetaAberta = input(false);
+
   /** Repassa a escolha de uma seção para a casca fechar a gaveta. */
   readonly secaoEscolhida = output<void>();
 

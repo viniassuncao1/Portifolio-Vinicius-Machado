@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 import { abrirPastas, arquivoDaArvore, linhasDoCodigo } from './apoio';
 
@@ -7,7 +7,9 @@ test.describe('Página inicial', () => {
     await page.goto('/');
 
     await expect(page).toHaveTitle(/Vinicius Machado/);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Portfolio_Vinicius');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'Vinicius Machado, Desenvolvedor Full Stack',
+    );
   });
 
   test('redireciona rotas inexistentes para a página inicial', async ({ page }) => {
@@ -23,7 +25,9 @@ test.describe('Pré-renderização', () => {
   test('entrega o conteúdo no HTML sem depender de JavaScript', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Portfolio_Vinicius');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'Vinicius Machado, Desenvolvedor Full Stack',
+    );
   });
 });
 
@@ -32,7 +36,6 @@ const CODIGO_DO_INICIO = [
   'import java.util.List;',
   'import org.springframework.boot.SpringApplication;',
   'import org.springframework.boot.autoconfigure.SpringBootApplication;',
-  expect.stringContaining('Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL.'),
   '@SpringBootApplication',
   'public class PortfolioApplication {',
   expect.stringMatching(/^\/\/ .+/),
@@ -46,6 +49,8 @@ const CODIGO_DO_INICIO = [
   'SpringApplication.run(PortfolioApplication.class, args);',
   '}',
   '}',
+  '// Próximo: ver os projetos →',
+  '// Fale comigo →',
 ];
 
 test.describe('Código do Início em Java moderno', () => {
@@ -111,7 +116,9 @@ test.describe('Título do Início', () => {
     await page.goto('/');
 
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Portfolio_Vinicius');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'Vinicius Machado, Desenvolvedor Full Stack',
+    );
     await expect(page).toHaveTitle('Vinicius Machado | Desenvolvedor Full Stack');
   });
 });

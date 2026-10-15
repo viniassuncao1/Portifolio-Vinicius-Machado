@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test.describe('Links no código do editor', () => {
   test('os links externos de Contato abrem em outra aba, com rel seguro', async ({ page }) => {

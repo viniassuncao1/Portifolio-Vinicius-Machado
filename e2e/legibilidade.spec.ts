@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 import { SECOES, totalDePaginas } from '../src/app/core/secoes';
 import { codigoSemTextos, comentariosDoCodigo, listasDe, textoDoCodigo } from './apoio';

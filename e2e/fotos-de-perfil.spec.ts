@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import type { Page } from '@playwright/test';
 
 import { abrirPastas, arquivoDaArvore, esperarLogDoRun } from './apoio';
@@ -226,21 +226,26 @@ test.describe('Sem deslocamento de layout ao carregar a foto', () => {
 });
 
 test.describe('Retrato durante a digitação', () => {
-  test('a foto é recortada junto com o Javadoc a que pertence e aparece quando ele aparece', async ({
-    page,
-  }) => {
-    await page.addInitScript(() => {
+  const abrirSobreMimDigitando = async (page: Page, modoCru: boolean) => {
+    await page.addInitScript((cru) => {
       window.requestAnimationFrame = () => 0;
-    });
+      if (cru) sessionStorage.setItem('modo-de-leitura', 'desligado');
+    }, modoCru);
     await page.goto('/');
     await abrirPastas(page);
     await arquivoDaArvore(page, 'Sobre Mim').click();
     await expect(page).toHaveURL(/\/sobre-mim$/);
     await expect(page.locator(EDITOR)).toHaveClass(/digitando/);
+  };
 
+  test('no modo cru a foto é recortada junto com o Javadoc e aparece quando ele aparece', async ({
+    page,
+  }) => {
+    await abrirSobreMimDigitando(page, true);
     const javadoc = page.locator('main .javadoc');
 
     // Como o retrato é filho do .javadoc, o recorte do bloco o esconde junto com o texto.
+    await expect(javadoc).toHaveAttribute('data-modo', 'cru');
     await expect(javadoc).toHaveCSS('clip-path', /inset/);
     expect(await retrato(page).evaluate((img) => !!img.closest('.javadoc'))).toBe(true);
 
@@ -248,6 +253,23 @@ test.describe('Retrato durante a digitação', () => {
 
     await expect(page.locator(EDITOR)).toHaveClass(/pronto/);
     await expect(javadoc).toHaveCSS('clip-path', 'none');
+    await expect(retrato(page)).toBeVisible();
+  });
+
+  test('no modo de leitura o bloco inteiro (foto e texto) surge por opacidade, junto', async ({
+    page,
+  }) => {
+    await abrirSobreMimDigitando(page, false);
+    const javadoc = page.locator('main .javadoc');
+
+    await expect(javadoc).toHaveAttribute('data-modo', 'leitura');
+    await expect(javadoc).toHaveCSS('opacity', '0');
+    expect(await retrato(page).evaluate((img) => !!img.closest('.javadoc'))).toBe(true);
+
+    await page.keyboard.press('Shift');
+
+    await expect(page.locator(EDITOR)).toHaveClass(/pronto/);
+    await expect(javadoc).toHaveCSS('opacity', '1');
     await expect(retrato(page)).toBeVisible();
   });
 });

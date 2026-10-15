@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import type { Result } from 'axe-core';
 
 import { SECOES, totalDePaginas } from '../src/app/core/secoes';

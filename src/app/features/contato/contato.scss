@@ -1,0 +1,60 @@
+:host {
+  display: block;
+  // Quanto cada lado da linha cresce para a área de toque chegar a --tamanho-alvo-toque.
+  --folga-alvo-de-toque: calc((var(--tamanho-alvo-toque) - var(--altura-linha-codigo)) / 2);
+}
+
+// Contatos com cara de link: sublinhado pontilhado e ↗ nos externos (abrem em nova aba). O padding
+// com margem negativa aumenta a área de toque sem mudar a altura da linha, que a coluna de
+// números acompanha.
+:host ::ng-deep .linha a[class^='papel-'] {
+  display: inline-block;
+  padding-block: var(--folga-alvo-de-toque);
+  margin-block: calc(-1 * var(--folga-alvo-de-toque));
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+
+  &:hover {
+    text-decoration-style: solid;
+  }
+
+  &[target='_blank']::after {
+    // Texto alternativo vazio: o ícone é decorativo para leitores de tela.
+    content: ' ↗' / '';
+  }
+}
+
+.acoes {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3) var(--espaco-4);
+  background: var(--cor-editor);
+  font-family: var(--fonte-interface);
+  font-size: var(--texto-arvore);
+}
+
+.copiar {
+  box-sizing: border-box;
+  min-block-size: var(--tamanho-alvo-toque);
+  padding-inline: var(--espaco-3);
+  border: var(--borda-painel);
+  border-radius: var(--raio-controle);
+  background: transparent;
+  color: var(--cor-texto);
+  font: inherit;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--cor-aba-passando);
+  }
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: 2px;
+  }
+}
+
+.aviso {
+  color: var(--cor-texto-esmaecido);
+}

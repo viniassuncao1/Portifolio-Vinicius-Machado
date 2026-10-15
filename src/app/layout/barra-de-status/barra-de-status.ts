@@ -1,5 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 
+import { BoasVindas } from '../../core/boas-vindas';
 import { AbasAbertas } from '../../core/abas-abertas';
 import { breadcrumbs } from '../../core/breadcrumbs';
 import { SHA_CURTO_DO_BUILD, SHA_DO_BUILD } from '../../core/build.gerado';
@@ -10,8 +11,9 @@ import { Icone } from '../../shared/icone/icone';
 const REPOSITORIO = 'https://github.com/viniassuncao1/Portifolio-Vinicius-Machado';
 
 /**
- * Barra de status da New UI no rodapé da casca. É uma região `status`, mas só o nome do arquivo é
- * lido: o caminho e a posição do cursor (que muda a cada clique) ficam fora da leitura.
+ * Barra de status da New UI no rodapé da casca. É o landmark `contentinfo` (`<footer>`; `role=status` não
+ * é permitido nele). Só o nome do arquivo e o aviso de inicialização são regiões `status`, lidas ao
+ * mudar: o caminho e a posição do cursor (que muda a cada clique) ficam fora da leitura.
  */
 @Component({
   selector: 'app-barra-de-status',
@@ -22,6 +24,8 @@ const REPOSITORIO = 'https://github.com/viniassuncao1/Portifolio-Vinicius-Machad
 export class BarraDeStatus {
   private readonly abas = inject(AbasAbertas);
   private readonly editor = inject(EstadoDoEditor);
+  /** Aviso de inicialização, por 6 s depois das boas-vindas; vazio nas demais horas. */
+  protected readonly aviso = inject(BoasVindas).aviso;
 
   private readonly segmentos = computed(() => {
     const arquivo = this.abas.ativa()?.arquivo ?? ARQUIVO_INICIO;

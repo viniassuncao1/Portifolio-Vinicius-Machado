@@ -111,9 +111,25 @@ indicando o estado com `aria-pressed`, e o editor SHALL ocupar o espaço liberad
 - **THEN** o painel some, o editor ocupa a largura e o botão fica com `aria-pressed="false"`
 
 ### Requirement: Abrir o Git pela faixa de ferramentas
-O botão Commit da faixa de ferramentas SHALL abrir e fechar o painel do Git, indicando o estado
-com `aria-pressed`.
+O botão Commit da faixa de ferramentas SHALL abrir a página do repositório numa aba do editor,
+indicando com `aria-current="page"` quando ela é a página atual.
 
 #### Scenario: Commit na faixa
-- **WHEN** o visitante ativa Commit com o painel fechado
-- **THEN** o painel do Git abre e o botão fica com `aria-pressed="true"`
+- **WHEN** o visitante ativa Commit
+- **THEN** a aba `Portfolio-Vinicius-Machado` abre e o botão fica com `aria-current="page"`
+
+### Requirement: Seções fáceis de achar no celular
+No celular, o botão que abre a árvore SHALL ter o texto visível "Seções" e as pastas da gaveta
+SHALL começar abertas.
+
+#### Scenario: Abrir a gaveta
+- **WHEN** o visitante ativa "Seções" numa tela de 390x844
+- **THEN** a gaveta abre com todas as pastas abertas
+
+### Requirement: Decorativos discretos
+Os ícones decorativos da barra superior SHALL ficar mais apagados que os botões reais e MUST NOT
+ter efeito de hover.
+
+#### Scenario: Passar o mouse num ícone decorativo
+- **WHEN** o visitante passa o mouse num ícone decorativo da barra
+- **THEN** nada muda no ícone

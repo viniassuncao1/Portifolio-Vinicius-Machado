@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import type { Page } from '@playwright/test';
 
 import { SECOES, totalDePaginas } from '../src/app/core/secoes';
@@ -8,9 +8,12 @@ const ORIGEM = 'https://portfolio-vinicius-machado.vercel.app';
 const SITE = 'Vinicius Machado';
 const IMAGEM = `${ORIGEM}/compartilhamento/portfolio.png`;
 const LIMITE_DA_DESCRICAO = 160;
-const TOTAL_DE_PAGINAS = 24;
+const TOTAL_DE_PAGINAS = 25;
 
-/** O Início e cada página de cada seção, como o visitante digita: `/`, `/skills`, `/skills/2`. */
+/**
+ * O Início, cada página de cada seção (`/`, `/skills`, `/skills/2`) e a página do repositório, que
+ * não é uma seção da árvore mas tem rota e aba próprias.
+ */
 const ROTAS = [
   '/',
   ...SECOES.flatMap((secao) =>
@@ -18,6 +21,7 @@ const ROTAS = [
       i === 0 ? `/${secao.slug}` : `/${secao.slug}/${i + 1}`,
     ),
   ),
+  '/repositorio',
 ];
 
 /** Endereço absoluto esperado de uma rota: o Início termina na barra, as demais não. */
@@ -51,7 +55,7 @@ async function metadados(page: Page) {
   };
 }
 
-test('a lista de rotas tem as 24 páginas, sem repetir nenhuma', () => {
+test('a lista de rotas tem as 25 páginas, sem repetir nenhuma', () => {
   expect(ROTAS).toHaveLength(TOTAL_DE_PAGINAS);
   expect(new Set(ROTAS).size).toBe(ROTAS.length);
 });
@@ -172,7 +176,7 @@ test.describe('Arquivos de SEO servidos pelo site', () => {
     expect(texto).toMatch(new RegExp(`^Sitemap: ${ORIGEM}/sitemap\\.xml$`, 'm'));
   });
 
-  test('/sitemap.xml é XML e lista as 24 páginas em endereços absolutos', async ({ request }) => {
+  test('/sitemap.xml é XML e lista as 25 páginas em endereços absolutos', async ({ request }) => {
     const resposta = await request.get('/sitemap.xml');
     const xml = await resposta.text();
     const enderecos = Array.from(xml.matchAll(/<loc>([^<]+)<\/loc>/g), (m) => m[1]);

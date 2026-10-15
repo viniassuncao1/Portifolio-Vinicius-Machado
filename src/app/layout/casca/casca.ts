@@ -13,7 +13,6 @@ import { filter, map, startWith } from 'rxjs';
 
 import { DADO_ARVORE_NO_INICIO } from '../../core/secoes';
 import { EstrategiaDeTitulo } from '../../core/estrategia-de-titulo';
-import { JanelaDeRun } from '../../core/janela-de-run';
 import { Tema } from '../../core/tema';
 import { JanelaDePreviewComponente } from '../../shared/janela-de-preview/janela-de-preview';
 import { BuscaDeSecoes } from '../busca-de-secoes/busca-de-secoes';
@@ -22,8 +21,8 @@ import { BarraDeFerramentas } from '../barra-de-ferramentas/barra-de-ferramentas
 import { FaixaDeAbas } from '../faixa-de-abas/faixa-de-abas';
 import { FaixaDeFerramentas } from '../faixa-de-ferramentas/faixa-de-ferramentas';
 import { JanelaDeRunComponente } from '../janela-de-run/janela-de-run';
-import { PainelDoGitComponente } from '../painel-do-git/painel-do-git';
 import { PainelLateral } from '../painel-lateral/painel-lateral';
+import { TelaDeBoasVindas } from '../tela-de-boas-vindas/tela-de-boas-vindas';
 
 /**
  * Casca da IDE: barra superior, faixa de ferramentas, painel do projeto e a aba com o editor onde
@@ -38,12 +37,12 @@ import { PainelLateral } from '../painel-lateral/painel-lateral';
     BarraDeFerramentas,
     FaixaDeFerramentas,
     PainelLateral,
-    PainelDoGitComponente,
     JanelaDeRunComponente,
     FaixaDeAbas,
     BarraDeStatus,
     BuscaDeSecoes,
     JanelaDePreviewComponente,
+    TelaDeBoasVindas,
   ],
   templateUrl: './casca.html',
   styleUrl: './casca.scss',
@@ -83,9 +82,6 @@ export class Casca {
   constructor() {
     // Instancia o serviço de tema no carregamento: ele sincroniza color-scheme e theme-color.
     inject(Tema);
-    // Só no navegador (afterNextRender nunca roda no pré-render): o log abre uma vez por sessão.
-    const run = inject(JanelaDeRun);
-    afterNextRender(() => run.abrirNaPrimeiraVisita());
     // Cada página abre no topo: o editor é a região rolável e a rolagem não se reinicia sozinha.
     this.router.events
       .pipe(

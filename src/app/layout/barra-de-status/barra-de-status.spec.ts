@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
+import { BoasVindas } from '../../core/boas-vindas';
 import { SHA_DO_BUILD } from '../../core/build.gerado';
 import { EstadoDoEditor } from '../../core/estado-do-editor';
 import { BarraDeStatus } from './barra-de-status';
@@ -83,11 +84,35 @@ describe('BarraDeStatus', () => {
     expect(raiz.querySelector('.posicao')?.textContent).toBe('7:1');
   });
 
-  it('é uma região status e só o arquivo fica na leitura, sem a posição do cursor', async () => {
+  it('é o landmark contentinfo e só o arquivo é status, sem a posição do cursor', async () => {
     const { raiz } = await abrir('/skills');
 
-    expect(raiz.querySelector('[role="status"]')).not.toBeNull();
+    expect(raiz.querySelector('footer')?.hasAttribute('role')).toBe(false);
+    expect(raiz.querySelector('.arquivo')?.getAttribute('role')).toBe('status');
     expect(raiz.querySelector('.posicao')?.getAttribute('aria-hidden')).toBe('true');
     expect(raiz.querySelector('.arquivo')?.hasAttribute('aria-hidden')).toBe(false);
+  });
+});
+
+describe('BarraDeStatus: aviso de inicialização', () => {
+  afterEach(() => vi.useRealTimers());
+
+  it('mostra o aviso por 6 s numa região aria-live polite e depois o esconde', async () => {
+    vi.useFakeTimers();
+    TestBed.configureTestingModule({ providers: [provideRouter([])] });
+    const fixture = TestBed.createComponent(BarraDeStatus);
+    fixture.detectChanges();
+    const aviso = () => (fixture.nativeElement as HTMLElement).querySelector('.aviso')!;
+    expect(aviso().getAttribute('role')).toBe('status');
+    expect(aviso().getAttribute('aria-live')).toBe('polite');
+    expect(aviso().textContent).toBe('');
+
+    TestBed.inject(BoasVindas).avisarInicializacao();
+    fixture.detectChanges();
+    expect(aviso().textContent).toBe('PortfolioApplication started in 1.8 s');
+
+    vi.advanceTimersByTime(6000);
+    fixture.detectChanges();
+    expect(aviso().textContent).toBe('');
   });
 });

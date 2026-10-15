@@ -49,6 +49,18 @@
   color: var(--cor-texto);
 }
 
+.aviso {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--cor-texto);
+  text-overflow: ellipsis;
+
+  &:empty {
+    display: none;
+  }
+}
+
 .posicao,
 .item {
   flex: none;

@@ -73,15 +73,15 @@ describe('JanelaDeRunComponente', () => {
     expect(run.aberto()).toBe(false);
   });
 
-  it('a abertura automática não rouba o foco', async () => {
+  it('sem o Executar a janela não abre e não rouba o foco', async () => {
     const botao = document.createElement('button');
     document.body.append(botao);
     botao.focus();
     const fixture = TestBed.createComponent(JanelaDeRunComponente);
-    TestBed.inject(JanelaDeRun).abrirNaPrimeiraVisita();
     fixture.detectChanges();
     await fixture.whenStable();
 
+    expect(TestBed.inject(JanelaDeRun).aberto()).toBe(false);
     expect(document.activeElement).toBe(botao);
     botao.remove();
   });

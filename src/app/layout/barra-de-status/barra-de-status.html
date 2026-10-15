@@ -1,4 +1,4 @@
-<footer class="barra" role="status">
+<footer class="barra">
   <span class="caminho">
     <span class="prefixo" aria-hidden="true">
       <span class="projeto">{{ projeto() }}</span>
@@ -8,8 +8,9 @@
       }
       <span class="separador">›</span>
     </span>
-    <span class="arquivo">{{ arquivo() }}</span>
+    <span class="arquivo" role="status">{{ arquivo() }}</span>
   </span>
+  <span class="aviso" role="status" aria-live="polite">{{ aviso() }}</span>
   <span class="posicao" aria-hidden="true">{{ posicao() }}</span>
   <span class="item">{{ quebraDeLinha }}</span>
   <span class="item">{{ codificacao }}</span>

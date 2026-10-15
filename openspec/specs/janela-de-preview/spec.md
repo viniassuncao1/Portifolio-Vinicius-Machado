@@ -59,3 +59,11 @@ No celular, a janela SHALL ocupar a tela inteira, com os mesmos controles.
 #### Scenario: Preview no celular
 - **WHEN** o visitante abre o preview numa tela de 390x844
 - **THEN** a janela ocupa a tela e a página por trás não rola
+
+### Requirement: Preview fácil de achar
+Nos projetos com site, o editor SHALL mostrar acima da declaração da classe, no estilo code
+vision do IntelliJ, o botão `▶ Executar · Ver o site ao vivo`, que abre a janela de preview.
+
+#### Scenario: Code vision no Projeto 2
+- **WHEN** o visitante ativa `▶ Executar · Ver o site ao vivo` no Projeto 2
+- **THEN** a janela de preview do projeto abre

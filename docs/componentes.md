@@ -8,41 +8,43 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 
 ## Inventário das telas
 
-| Elemento da tela                                               | Telas            | Componente                  | Pasta                          |
-| -------------------------------------------------------------- | ---------------- | --------------------------- | ------------------------------ |
-| Barra de ferramentas do design (ícones, branch, Buscar)        | todas            | `BarraDeFerramentas`        | `layout/barra-de-ferramentas/` |
-| Faixa de ferramentas à esquerda (Projeto, Commit, Estrutura)   | desktop (nossa)  | `FaixaDeFerramentas`        | `layout/faixa-de-ferramentas/` |
-| Painel do Git (grafo, commits e detalhes)                      | (nosso)          | `PainelDoGitComponente`     | `layout/painel-do-git/`        |
-| Janela de Run (log de inicialização do Spring)                 | (nosso)          | `JanelaDeRunComponente`     | `layout/janela-de-run/`        |
-| Painel do projeto (cabeçalho "Projeto", árvore, rodapé)        | todas            | `PainelLateral`             | `layout/painel-lateral/`       |
-| Árvore de seções com ícones                                    | todas            | `ArvoreDeSecoes`            | `layout/arvore-de-secoes/`     |
-| Faixa de abas dos arquivos abertos                             | todas (nossa)    | `FaixaDeAbas`               | `layout/faixa-de-abas/`        |
-| Barra de status no rodapé                                      | (nossa)          | `BarraDeStatus`             | `layout/barra-de-status/`      |
-| Busca de seções (Ctrl/Cmd+P)                                   | (nossa)          | `BuscaDeSecoes`             | `layout/busca-de-secoes/`      |
-| Casca (junta tudo e hospeda as rotas)                          | todas            | `Casca`                     | `layout/casca/`                |
-| Editor com numeração e sintaxe                                 | todas            | `EditorDeCodigo`            | `shared/editor-de-codigo/`     |
-| Bloco de comentário com `*`                                    | 02-04, 07-18, 29 | parte do `EditorDeCodigo`   | `shared/editor-de-codigo/`     |
-| Ícones (arquivo, pasta, ferramenta, IA...)                     | todas            | `Icone`                     | `shared/icone/`                |
-| "×" fino                                                       | todas            | `GlifoFechar`               | `shared/glifo-fechar/`         |
-| Início                                                         | 01               | `Inicio`                    | `features/inicio/`             |
-| Sobre Mim                                                      | 02               | `SobreMim`                  | `features/sobre-mim/`          |
-| Diferenciais                                                   | 03               | `Diferenciais`              | `features/diferenciais/`       |
-| Como uso a IA                                                  | 04               | `ComoUsoIa`                 | `features/como-uso-ia/`        |
-| Skills / STACK (3 páginas, a 3ª com os níveis de conhecimento) | 05, 06 e níveis  | `Skills`                    | `features/skills/`             |
-| Controle de páginas (1/2, setas SVG)                           | 05, 06 (nosso)   | `PaginasDaSecao`            | `shared/paginas-da-secao/`     |
-| Experiências (3 páginas)                                       | 07-09            | `Experiencias`              | `features/experiencias/`       |
-| Eventos                                                        | 22               | `Eventos`                   | `features/eventos/`            |
-| Projeto 1: Ana, agente de IA no WhatsApp                       | 10               | `Projeto1`                  | `features/projeto-1/`          |
-| Projeto 2: landing page da Dra. Juliana (com preview)          | 11-13            | `Projeto2`                  | `features/projeto-2/`          |
-| Projeto 3: landing page da Watts Company (com preview)         | 14, 15           | `Projeto3`                  | `features/projeto-3/`          |
-| Projeto 4: cases da Memora (3 páginas)                         | 16-18            | `Projeto4`                  | `features/projeto-4/`          |
-| Certificações (3 páginas, 9 cursos)                            | (nossa)          | `Certificacoes`             | `features/certificacoes/`      |
-| Formação                                                       | 28               | `Formacao`                  | `features/formacao/`           |
-| Idiomas                                                        | 28               | `Idiomas`                   | `features/idiomas/`            |
-| Contato (links reais)                                          | 30               | `Contato`                   | `features/contato/`            |
-| Seção sem conteúdo ainda                                       | 10-21, 23-27, 29 | `SecaoEmConstrucao`         | `shared/secao-em-construcao/`  |
-| Janela de preview de site                                      | 11-15            | `JanelaDePreviewComponente` | `shared/janela-de-preview/`    |
-| ▶ Executar na calha (abre o preview)                           | (nosso)          | `BotaoExecutar`             | `shared/botao-executar/`       |
+| Elemento da tela                                               | Telas            | Componente                        | Pasta                          |
+| -------------------------------------------------------------- | ---------------- | --------------------------------- | ------------------------------ |
+| Barra de ferramentas do design (ícones, branch, Buscar)        | todas            | `BarraDeFerramentas`              | `layout/barra-de-ferramentas/` |
+| Faixa de ferramentas à esquerda (Projeto, Commit, Estrutura)   | desktop (nossa)  | `FaixaDeFerramentas`              | `layout/faixa-de-ferramentas/` |
+| Página do repositório (estilo do GitHub, numa aba)             | (nossa)          | `Repositorio`                     | `features/repositorio/`        |
+| Tela de boas-vindas (splash)                                   | (nossa)          | `TelaDeBoasVindas`                | `layout/tela-de-boas-vindas/`  |
+| Próximo arquivo e code vision                                  | (nossos)         | `ProximoArquivo`, `VisaoDeCodigo` | `shared/`                      |
+| Janela de Run (log de inicialização do Spring)                 | (nosso)          | `JanelaDeRunComponente`           | `layout/janela-de-run/`        |
+| Painel do projeto (cabeçalho "Projeto", árvore, rodapé)        | todas            | `PainelLateral`                   | `layout/painel-lateral/`       |
+| Árvore de seções com ícones                                    | todas            | `ArvoreDeSecoes`                  | `layout/arvore-de-secoes/`     |
+| Faixa de abas dos arquivos abertos                             | todas (nossa)    | `FaixaDeAbas`                     | `layout/faixa-de-abas/`        |
+| Barra de status no rodapé                                      | (nossa)          | `BarraDeStatus`                   | `layout/barra-de-status/`      |
+| Busca de seções (Ctrl/Cmd+P)                                   | (nossa)          | `BuscaDeSecoes`                   | `layout/busca-de-secoes/`      |
+| Casca (junta tudo e hospeda as rotas)                          | todas            | `Casca`                           | `layout/casca/`                |
+| Editor com numeração e sintaxe                                 | todas            | `EditorDeCodigo`                  | `shared/editor-de-codigo/`     |
+| Bloco de comentário com `*`                                    | 02-04, 07-18, 29 | parte do `EditorDeCodigo`         | `shared/editor-de-codigo/`     |
+| Ícones (arquivo, pasta, ferramenta, IA...)                     | todas            | `Icone`                           | `shared/icone/`                |
+| "×" fino                                                       | todas            | `GlifoFechar`                     | `shared/glifo-fechar/`         |
+| Início                                                         | 01               | `Inicio`                          | `features/inicio/`             |
+| Sobre Mim                                                      | 02               | `SobreMim`                        | `features/sobre-mim/`          |
+| Diferenciais                                                   | 03               | `Diferenciais`                    | `features/diferenciais/`       |
+| Como uso a IA                                                  | 04               | `ComoUsoIa`                       | `features/como-uso-ia/`        |
+| Skills / STACK (3 páginas, a 3ª com os níveis de conhecimento) | 05, 06 e níveis  | `Skills`                          | `features/skills/`             |
+| Controle de páginas (1/2, setas SVG)                           | 05, 06 (nosso)   | `PaginasDaSecao`                  | `shared/paginas-da-secao/`     |
+| Experiências (3 páginas)                                       | 07-09            | `Experiencias`                    | `features/experiencias/`       |
+| Eventos                                                        | 22               | `Eventos`                         | `features/eventos/`            |
+| Projeto 1: Ana, agente de IA no WhatsApp                       | 10               | `Projeto1`                        | `features/projeto-1/`          |
+| Projeto 2: landing page da Dra. Juliana (com preview)          | 11-13            | `Projeto2`                        | `features/projeto-2/`          |
+| Projeto 3: landing page da Watts Company (com preview)         | 14, 15           | `Projeto3`                        | `features/projeto-3/`          |
+| Projeto 4: cases da Memora (3 páginas)                         | 16-18            | `Projeto4`                        | `features/projeto-4/`          |
+| Certificações (3 páginas, 9 cursos)                            | (nossa)          | `Certificacoes`                   | `features/certificacoes/`      |
+| Formação                                                       | 28               | `Formacao`                        | `features/formacao/`           |
+| Idiomas                                                        | 28               | `Idiomas`                         | `features/idiomas/`            |
+| Contato (links com cara de link e Copiar e-mail)               | 30               | `Contato`                         | `features/contato/`            |
+| Seção sem conteúdo ainda                                       | 10-21, 23-27, 29 | `SecaoEmConstrucao`               | `shared/secao-em-construcao/`  |
+| Janela de preview de site                                      | 11-15            | `JanelaDePreviewComponente`       | `shared/janela-de-preview/`    |
+| ▶ Executar na calha (abre o preview)                           | (nosso)          | `BotaoExecutar`                   | `shared/botao-executar/`       |
 
 O design é **referência de identidade visual** ([ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md)).
 Por isso o site tem o que as telas, estáticas, não mostram: a faixa de abas, a barra de status, a
@@ -72,7 +74,8 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 - **Onde:** `layout/painel-lateral/painel-lateral.ts`, seletor `app-painel-lateral`.
 - **O que faz:** moldura da árvore: cabeçalho `Portfolio_Vinicius` do design, com os controles de janela
   (decorativo, `aria-hidden`), a `ArvoreDeSecoes` e o
-  rodapé com a barra de rolagem decorativa. No celular mostra o botão "Fechar seções".
+  rodapé com a barra de rolagem decorativa. No celular mostra o botão "Fechar seções"; a gaveta abre pelo botão **Seções** da barra (ícone com o
+  rótulo visível) e com as **pastas já abertas**, para o visitante ver os arquivos de cara.
 - **Saídas:** `secaoEscolhida` (repassa a escolha da árvore) e `fecharGaveta` (botão "Fechar
   seções"). Método público: `focarPrimeiroItem()`.
 
@@ -118,8 +121,10 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   escuro e de lua no claro, desenhados no padrão dos ícones do design). Tem `aria-label` "Usar tema
   claro" ou "Usar tema escuro" e `aria-pressed` no claro; chama `Tema.alternar()`, que troca com um crossfade curto (View Transition) quando o navegador e o movimento reduzido permitem. Não existe no
   design nem no IntelliJ (desvio do [ADR-0014](adr/0014-tema-claro.md)).
-- **Branch `master`:** é um botão de verdade que abre e fecha o painel do Git
-  (`aria-controls="painel-do-git"`, `aria-expanded`).
+- **Branch `master`:** é um botão de verdade que abre a aba da página do repositório
+  (`/repositorio`, [ADR-0016](adr/0016-repositorio-no-estilo-do-github.md)).
+- **Ícones decorativos** (os que só imitam a IDE) ficam mais apagados (opacidade 0,55) e sem efeito
+  de hover, para não parecerem clicáveis.
 - **Celular:** a barra fica compacta e escura, com Projeto (ícone) e Buscar.
 
 ### `FaixaDeFerramentas`
@@ -127,30 +132,49 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 - **Onde:** `layout/faixa-de-ferramentas/faixa-de-ferramentas.ts`, seletor
   `app-faixa-de-ferramentas`.
 - **O que faz:** a faixa de 40px à esquerda, só no desktop. **Projeto** mostra e esconde o painel
-  do projeto; **Commit** abre e fecha o painel do Git (`aria-pressed`); **Estrutura** só imita a
+  do projeto; **Commit** abre a aba do repositório; **Estrutura** só imita a
   IDE (fora da leitura e do foco).
 - **Entrada e saída:** `painelVisivel = input.required<boolean>()` e `alternarPainel`.
 
-### `PainelDoGitComponente`
+### `Repositorio` (página do repositório)
 
-- **Onde:** `layout/painel-do-git/painel-do-git.ts`, seletor `app-painel-do-git`, montado na
-  `Casca` com `id="painel-do-git"`.
-- **O que faz:** o painel do Git na parte de baixo da área do editor, como o Git Log do IntelliJ
-  (no celular, em tela cheia). Cabeçalho "Git" com a aba visual "Log" e o botão de fechar; abaixo,
-  a lista de commits e os detalhes do escolhido. Cada linha tem o grafo (SVG, `aria-hidden`), o
-  assunto, o autor e a data relativa. Os detalhes mostram SHA, mensagem, autor, data, o link do
-  commit no GitHub e, nos merges, o link do PR.
-- **Teclado e leitores de tela:** a lista é um `listbox` com `aria-activedescendant`. As setas movem
-  o commit ativo, Enter ou clique mostram os detalhes, e **Esc fecha** e devolve o foco a quem
-  abriu. O foco entra no painel ao abrir e vai para a lista quando o histórico chega.
-- **Estados:** carregando, erro (com "Tentar de novo"), vazio ("O histórico do Git não está
-  disponível nesta versão do site") e pronto.
-- **Estado do serviço:** o serviço `PainelDoGit` (`core/painel-do-git.ts`) tem `aberto`, `estado`,
-  `historico` e `vazio`, e os métodos `abrir(origem)`, `fechar()`, `alternar(origem)` e
-  `tentarDeNovo()`. O histórico só é baixado na primeira abertura. O host recebe `data-aberto`: o CSS
-  anima `opacity` e `transform` com `@starting-style` (entrada a partir de 0,6, nunca de 0) e
-  `transition-behavior: allow-discrete` no `display`, sem animação com movimento reduzido.
+- **Onde:** `features/repositorio/repositorio.ts`, rota `/repositorio` (`loadComponent`), com a aba
+  `Portfolio-Vinicius-Machado`, fora da árvore de seções. Substituiu o painel do Git
+  ([ADR-0016](adr/0016-repositorio-no-estilo-do-github.md)); o `master` da barra e o Commit da faixa
+  abrem essa aba.
+- **O que faz:** uma página no estilo de um repositório do GitHub, dentro da IDE e nos dois temas,
+  em uma coluna de até ~960 px. Cabeçalho com o nome, o selo "Público", uma frase que explica o que
+  o repositório mostra e o botão "Ver no GitHub" (nova aba); os números (commits, pull requests
+  mesclados, desde quando, último deploy); **"Como o trabalho se divide"**, uma barra com a
+  proporção de commits por tipo, com legenda em texto e porcentagem (nunca só cor). A barra mostra
+  os tipos com **3% ou mais dos commits, por frequência** (hoje `docs`, `feat`, `test`, `fix`,
+  `refactor` e `chore`) e, no fim, um segmento **listrado "outros"** que reúne os tipos abaixo de 3%
+  e os commits sem tipo; a legenda diz quais entram nele (`agrupar-tipos.ts`); os **últimos pull requests** (título, número, branch, data e link); os
+  **últimos commits de código**, sem os de marcar tarefas; e "Ver todo o histórico no GitHub →".
+- **Dados.** O serviço `HistoricoDoRepositorio` (`core/repositorio.ts`) baixa
+  `git/historico.json` na primeira vez que a página pede (nunca no servidor nem no carregamento
+  inicial) e guarda o resultado; estados `ocioso`, `carregando`, `pronto` e `erro` (com "Tentar de
+  novo"). O resumo (contagem por tipo, últimos PRs e commits) vem de funções puras calculadas no
+  navegador. A geração do JSON é a do [ADR-0013](adr/0013-historico-do-git-gerado-no-build.md), que
+  agora guarda também o título de cada PR.
 - **Entradas e saídas:** nenhuma.
+
+### `TelaDeBoasVindas`
+
+- **Onde:** `layout/tela-de-boas-vindas/tela-de-boas-vindas.ts`, seletor `app-tela-de-boas-vindas`,
+  montada na `Casca` ([ADR-0015](adr/0015-tela-de-boas-vindas.md)).
+- **O que faz:** a abertura no estilo da splash do IntelliJ: um cartão com a foto do Vinicius, o
+  nome, o cargo, "Seja bem-vindo" e a barra "Carregando Portfolio_Vinicius…", com uma linha de status
+  que passa pelas etapas do log do Spring (`Starting PortfolioApplication…`, `Tomcat started on port
+8080`).
+- **Tempo e sessão.** Fica no mínimo 0,6 s e no máximo 2 s e fecha, com um fade de ~200 ms, quando as
+  fontes e a página estão prontas. Aparece uma vez por sessão (`sessionStorage['boas-vindas-exibida']`,
+  serviço `core/boas-vindas.ts`) e só na primeira página aberta. Não tem botão de pular.
+- **Não bloqueia.** É só do navegador e fica por cima do HTML pré-renderizado, que não sai do DOM. É
+  uma região `role="status"` ("Carregando o portfólio de Vinicius Machado") e o resto fica `inert`
+  nesses 2 s. Com `prefers-reduced-motion`, não há barra animada nem fade e o teto cai para 1 s.
+- **Depois dela**, a barra de status mostra por alguns segundos
+  `PortfolioApplication started in 1.8 s`, anunciado de forma educada (`aria-live="polite"`).
 
 ### `FaixaDeAbas`
 
@@ -160,7 +184,9 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   `aria-selected` e roving tabindex. Setas e Home/End movem o foco, Enter e Espaço abrem e Delete
   fecha. Os botões de fechar ficam **fora do `tablist`** (que só pode ter abas), cada um sobre a
   ponta da sua aba, com `aria-label` "Fechar `<arquivo>`". A aba ativa é levada à área visível
-  (sem animar com movimento reduzido). O estado vem do serviço `AbasAbertas`.
+  (sem animar com movimento reduzido). O estado vem do serviço `AbasAbertas`. Há no **máximo 5 abas** (`LIMITE_DE_ABAS`): abrir a sexta
+  fecha a menos usada recentemente, nunca a ativa, como o "Tab limit" do IntelliJ. A aba do Início
+  se chama `PortfolioApplication.java` e a do repositório, `Portfolio-Vinicius-Machado`.
 - **Entradas e saídas:** nenhuma.
 
 ### `BarraDeStatus`
@@ -210,11 +236,37 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   não digitam de novo. Clicar numa linha a torna a atual e informa a posição ao `EstadoDoEditor`.
 - **Links:** um trecho com `href` vira `<a>` com a cor do papel. Links externos abrem em nova aba
   com `rel="noopener noreferrer"`.
+- **Modo de leitura do Javadoc.** Ligado por padrão, mostra o Javadoc como texto formatado, a
+  "Rendered View" do IntelliJ: Inter 14 px, largura de até 65 caracteres, fundo próprio
+  (`--cor-javadoc-renderizado`, nos dois temas) e sem a coluna de `*` nem o `/**` e o `*/`. Um botão
+  de livro na calha (`aria-pressed`) alterna para o comentário cru; a escolha vale para o site todo
+  e fica no `sessionStorage` (serviço `ModoDeLeitura`). Retrato e `@author` continuam, a digitação
+  revela o bloco de uma vez e o texto copiado é o mesmo nos dois modos.
+- **Quebra suave no celular.** Abaixo de 768px as linhas longas quebram (`white-space: pre-wrap`),
+  com recuo pendurado e a numeração alinhada à primeira linha visual, em vez de cortar o texto à
+  direita.
+- **Code vision e Próximo arquivo.** O editor renderiza o `VisaoDeCodigo` acima da classe executável
+  (sem número de linha) e o `ProximoArquivo` no fim do conteúdo.
 - **Entrada:** `conteudo = input.required<ConteudoDoEditor>()`.
 
 ```html
 <app-editor-de-codigo [conteudo]="conteudo" />
 ```
+
+### `VisaoDeCodigo` (code vision)
+
+- **Onde:** `shared/visao-de-codigo/visao-de-codigo.ts`, seletor `app-visao-de-codigo`.
+- **O que faz:** a linha de _code vision_ do IntelliJ acima da declaração da classe, só nos projetos
+  com site: o botão `▶ Executar · Ver o site ao vivo`, menor e em cinza. Abre a janela de preview,
+  com o mesmo efeito do ▶ da calha, para o visitante achar o site sem procurar.
+
+### `ProximoArquivo`
+
+- **Onde:** `shared/proximo-arquivo/proximo-arquivo.ts`, seletor `app-proximo-arquivo`.
+- **O que faz:** um comentário clicável no fim de cada seção, `// Próximo: Diferenciais.java →`, que
+  leva ao arquivo seguinte na ordem da árvore, para seguir lendo sem voltar a ela. A seção seguinte
+  vem de `core/proxima-secao.ts`. Não aparece no Início (que tem os atalhos `// Próximo: ver os
+projetos →` e `// Fale comigo →`) nem na última seção.
 
 ### `Icone`
 
@@ -290,8 +342,8 @@ reduce` não há animação e a janela fecha direto.
 
 - **Onde:** `layout/janela-de-run/janela-de-run.ts`, seletor `app-janela-de-run`, montado na `Casca`
   com `id="janela-de-run"`.
-- **O que faz:** a janela de Run na parte de baixo da IDE, dividindo a área com o painel do Git (um
-  de cada vez). Mostra o **log de inicialização** do `PortfolioApplication`: o banner do Spring
+- **O que faz:** a janela de Run na parte de baixo da IDE, sozinha nessa área (o Git virou a página do
+  repositório). Mostra o **log de inicialização** do `PortfolioApplication`: o banner do Spring
   Boot, `Starting PortfolioApplication using Java 21`, `Tomcat started on port 8080` e `Started
 PortfolioApplication in 1.8 seconds`. O texto vem de `log.ts` (`montarLog`); a data e a hora vêm
   do relógio do navegador, na abertura, e nunca entram no pré-render. O log é texto, nunca imagem.
@@ -299,12 +351,12 @@ PortfolioApplication in 1.8 seconds`. O texto vem de `log.ts` (`montarLog`); a d
   de **2,5 s** para o log completo. O texto completo fica sempre no DOM; as linhas ainda não
   reveladas só ficam escondidas. **Pular** completa na hora. Uma região `aria-live="polite"` anuncia
   a linha final uma vez, quando o log termina.
-- **Quando abre.** Sozinha, **uma vez por sessão** (`sessionStorage['run-exibido']`), na primeira
-  página, sem roubar o foco e sem bloquear o conteúdo. Com `prefers-reduced-motion: reduce` não abre
-  sozinha e o log nasce completo. Pelo **Executar** da barra abre (ou reexecuta) e leva o foco para
-  a janela.
+- **Quando abre.** **Só pelo Executar** da barra: abre (ou reexecuta o log) e leva o foco para a
+  janela. Ela **não abre mais sozinha** na primeira visita: a abertura agora é a
+  [tela de boas-vindas](adr/0015-tela-de-boas-vindas.md). Com `prefers-reduced-motion: reduce` o log
+  nasce completo.
 - **Teclado.** Esc, o "×" e o foco devolvido ao botão que abriu fecham a janela.
-- **Entradas e saídas:** nenhuma; o estado vem dos serviços `JanelaDeRun` e `AreaDeBaixo`.
+- **Entradas e saídas:** nenhuma; o estado vem do serviço `JanelaDeRun`.
 
 ### `BotaoExecutar`
 
@@ -341,12 +393,8 @@ O estado da IDE mora em serviços (`@Service`), e não nos componentes da casca.
 - **`Secao.arquivo`** (`core/secoes.ts`): o nome do arquivo `.java` de cada seção
   (`SobreMim.java`), usado pela aba, pela barra de status e pela busca. O Início tem
   `ARQUIVO_INICIO` (`PortfolioApplication.java`).
-- **`AreaDeBaixo`** (`core/area-de-baixo.ts`): qual janela de ferramenta ocupa a área de baixo da
-  IDE, `'run'` ou `'git'`. Só uma de cada vez: `abrir(janela)` troca, `fechar(janela)` só fecha se
-  ela ainda for a aberta.
 - **`JanelaDeRun`** (`core/janela-de-run.ts`): o estado da janela de Run (`aberto`, `execucao`,
-  `inicio`, `terminado`, `focarAoAbrir`). `abrirNaPrimeiraVisita()` abre sozinha uma vez por sessão
-  (nunca no servidor nem com movimento reduzido), `executar(origem)` abre ou reinicia o log,
+  `inicio`, `terminado`, `focarAoAbrir`). `executar(origem)` abre ou reinicia o log,
   `concluir()` marca o fim da revelação (ou o "Pular") e `fechar()` devolve o foco à origem.
 - **`JanelaDePreview`** (`core/janela-de-preview.ts`): guarda o preview aberto (`preview`, signal
   somente leitura), o elemento que abriu a janela e o preview da rota atual (`previewDaRota`, calculado
@@ -498,6 +546,11 @@ documentação renderizado. O código exibido não muda: o retrato é só visual
 **Links.** `link(trecho, href)` transforma um trecho em link (`https://`, `mailto:` ou `tel:`). A
 seção Contato usa isso com links reais: `link(literal('"viniciusmassuncao@gmail.com"'),
 'mailto:viniciusmassuncao@gmail.com')`.
+
+**Contato.** Os contatos parecem links: sublinhado pontilhado, ícone ↗ nos externos
+(`aria-hidden`) e área de toque de pelo menos 24 px (44 px no celular, o `--tamanho-alvo-toque`), o
+que também resolveu a falha `target-size` do axe. O botão **"Copiar e-mail"** usa a Clipboard API e
+avisa "E-mail copiado" numa região `aria-live="polite"`; sem a API, ele não aparece.
 
 ## Regra de conteúdo: Java para leitura
 

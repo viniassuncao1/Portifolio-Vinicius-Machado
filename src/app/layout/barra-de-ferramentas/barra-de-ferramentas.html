@@ -2,12 +2,12 @@
   #botaoProjeto
   type="button"
   class="botao projeto-celular"
-  aria-label="Projeto"
   aria-controls="painel-lateral"
   [attr.aria-expanded]="gavetaAberta()"
   (click)="alternarGaveta.emit()"
 >
   <app-icone nome="design-projeto" />
+  <span class="rotulo-celular">Seções</span>
 </button>
 <span class="botao decorativo" aria-hidden="true"><app-icone nome="design-arquivo" /></span>
 <span class="botao decorativo" aria-hidden="true"><app-icone nome="design-pasta" /></span>
@@ -56,10 +56,8 @@
 <button
   type="button"
   class="ramo"
-  aria-controls="painel-do-git"
-  aria-label="Branch master, abrir o painel do Git"
-  [attr.aria-expanded]="git.aberto()"
-  (click)="git.alternar($any($event.currentTarget))"
+  aria-label="Branch master, abrir o repositório"
+  (click)="abrirRepositorio()"
 >
   <app-icone nome="ramo" />
   {{ ramo }}

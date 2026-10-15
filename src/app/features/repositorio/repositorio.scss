@@ -1,0 +1,316 @@
+:host {
+  display: block;
+  color: var(--cor-texto);
+  font-family: var(--fonte-interface);
+  font-size: var(--texto-arvore);
+}
+
+// Página de leitura centrada, com largura máxima como a do GitHub; no celular, uma coluna.
+.pagina {
+  box-sizing: border-box;
+  max-inline-size: 60rem;
+  margin-inline: auto;
+  padding: var(--espaco-5) var(--espaco-4) var(--espaco-7);
+}
+
+.cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+  padding-block-end: var(--espaco-4);
+  border-block-end: 1px solid var(--cor-separador);
+}
+
+.marca {
+  flex: none;
+  inline-size: 2rem;
+  block-size: 2rem;
+  fill: var(--cor-texto-forte);
+}
+
+.identidade {
+  flex: 1 1 18rem;
+  min-inline-size: 0;
+}
+
+.nome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-2);
+  margin: 0;
+  color: var(--cor-texto-forte);
+  font-size: 1.25rem;
+  font-weight: var(--peso-medio);
+  overflow-wrap: anywhere;
+}
+
+.selo {
+  padding: 0 var(--espaco-2);
+  border: 1px solid var(--cor-texto-esmaecido);
+  border-radius: 1rem;
+  color: var(--cor-texto-esmaecido);
+  font-size: var(--texto-status);
+  font-weight: var(--peso-regular);
+  line-height: 1.25rem;
+}
+
+.descricao {
+  max-inline-size: 65ch;
+  margin: var(--espaco-2) 0 0;
+  color: var(--cor-texto);
+  font-size: var(--texto-comentario);
+  line-height: 1.5;
+}
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--tamanho-alvo-toque);
+  padding-inline: var(--espaco-3);
+  border: 1px solid var(--cor-separador);
+  border-radius: 0.375rem;
+  background: var(--cor-botao);
+  color: var(--cor-texto-forte);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--cor-aba-passando);
+  }
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: var(--largura-anel-foco) solid var(--cor-foco);
+  outline-offset: 2px;
+}
+
+.numeros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--espaco-3);
+  margin: var(--espaco-4) 0 0;
+}
+
+.numero {
+  padding: var(--espaco-3);
+  border: 1px solid var(--cor-separador);
+  border-radius: 0.375rem;
+
+  dt {
+    color: var(--cor-texto-esmaecido);
+    font-size: var(--texto-status);
+  }
+
+  dd {
+    margin: var(--espaco-1) 0 0;
+    color: var(--cor-texto-forte);
+    font-size: 1.125rem;
+    font-weight: var(--peso-medio);
+  }
+}
+
+.bloco {
+  margin-block-start: var(--espaco-6);
+}
+
+.subtitulo {
+  margin: 0 0 var(--espaco-2);
+  color: var(--cor-texto-forte);
+  font-size: 1rem;
+  font-weight: var(--peso-medio);
+}
+
+.explicacao {
+  max-inline-size: 65ch;
+  margin: 0 0 var(--espaco-3);
+  color: var(--cor-texto-esmaecido);
+  font-size: var(--texto-comentario);
+  line-height: 1.5;
+}
+
+// Barra empilhada com a proporção dos tipos; a legenda ao lado diz o mesmo em texto.
+.barra {
+  display: flex;
+  block-size: 0.5rem;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  background: var(--cor-borda);
+}
+
+.trecho {
+  flex-basis: 0;
+  min-inline-size: 2px;
+}
+
+.legenda {
+  display: grid;
+  gap: var(--espaco-2);
+  margin: var(--espaco-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item-da-legenda {
+  display: grid;
+  grid-template-columns: 0.75rem 5.5rem 1fr auto;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.amostra {
+  inline-size: 0.75rem;
+  block-size: 0.75rem;
+  border-radius: 50%;
+}
+
+.tipo {
+  color: var(--cor-texto-forte);
+  font-family: var(--fonte-mono);
+}
+
+.significado {
+  color: var(--cor-texto);
+}
+
+.quantidade {
+  color: var(--cor-texto-esmaecido);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-tipo='feat'] {
+  background: var(--cor-sintaxe-literal);
+}
+
+[data-tipo='fix'] {
+  background: var(--cor-sintaxe-palavra-chave);
+}
+
+[data-tipo='test'] {
+  background: var(--cor-sintaxe-valor);
+}
+
+[data-tipo='docs'] {
+  background: var(--cor-sintaxe-anotacao);
+}
+
+[data-tipo='refactor'] {
+  background: var(--cor-sintaxe-campo);
+}
+
+[data-tipo='chore'] {
+  background: var(--cor-texto-esmaecido);
+}
+
+// `outros` reúne os tipos pequenos: listrado, para não se confundir com nenhuma cor de tipo. Um tipo
+// raro sozinho nunca convive com ele e usa o mesmo desenho.
+[data-tipo='outros'],
+[data-tipo='perf'],
+[data-tipo='ci'],
+[data-tipo='build'],
+[data-tipo='style'],
+[data-tipo='revert'] {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--cor-texto-esmaecido) 0 2px,
+    var(--cor-editor) 2px 4px
+  );
+}
+
+.lista {
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--cor-separador);
+  border-radius: 0.375rem;
+  list-style: none;
+}
+
+.linha-da-lista {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3);
+
+  & + & {
+    border-block-start: 1px solid var(--cor-separador);
+  }
+}
+
+.icone-de-pr {
+  flex: none;
+  inline-size: 1rem;
+  block-size: 1rem;
+  margin-block-start: 0.125rem;
+  fill: var(--cor-sintaxe-campo);
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  min-inline-size: 0;
+}
+
+.titulo-do-item {
+  color: var(--cor-texto-forte);
+  font-weight: var(--peso-medio);
+  overflow-wrap: anywhere;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.detalhe {
+  color: var(--cor-texto-esmaecido);
+  font-size: var(--texto-status);
+
+  code {
+    font-family: var(--fonte-mono);
+  }
+}
+
+.tudo {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--tamanho-alvo-toque);
+  margin-block-start: var(--espaco-5);
+  color: var(--cor-texto-forte);
+  font-weight: var(--peso-medio);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.mensagem {
+  margin: var(--espaco-5) 0 0;
+  color: var(--cor-texto);
+  font-size: var(--texto-comentario);
+}
+
+.aviso-nova-aba {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .item-da-legenda {
+    grid-template-columns: 0.75rem 5rem 1fr;
+
+    .quantidade {
+      grid-column: 3;
+    }
+  }
+}

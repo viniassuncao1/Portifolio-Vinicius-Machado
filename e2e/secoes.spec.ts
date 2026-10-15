@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import type { Locator } from '@playwright/test';
 
 import { SECOES, totalDePaginas } from '../src/app/core/secoes';
@@ -38,7 +38,6 @@ test.describe('Sobre Mim (/sobre-mim)', () => {
       '}',
       expect.stringMatching(/^\/\/ .+/),
       'class ViniciusMachado implements Desenvolvedor {',
-      expect.stringContaining('Sou desenvolvedor Full Stack'),
       '@Override',
       'public String sobreMim() {',
       'return "Full Stack: Java, Spring Boot, Angular e SQL";',
@@ -129,7 +128,6 @@ test.describe('Diferenciais (/diferenciais)', () => {
 
     expect(await linhasDoCodigo(page)).toEqual([
       'package dev.vinicius.portfolio.sobre;',
-      expect.stringContaining('Moro em Brasília há 20 anos.'),
       'public class Diferenciais {',
       expect.stringMatching(/^\/\/ .+/),
       'record DadosPessoais(',

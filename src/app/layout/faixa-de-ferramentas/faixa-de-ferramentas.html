@@ -12,9 +12,8 @@
   type="button"
   class="botao"
   aria-label="Commit"
-  aria-controls="painel-do-git"
-  [attr.aria-pressed]="git.aberto()"
-  (click)="git.alternar($any($event.currentTarget))"
+  [attr.aria-current]="noRepositorio() ? 'page' : null"
+  (click)="abrirRepositorio()"
 >
   <app-icone nome="commit" />
 </button>

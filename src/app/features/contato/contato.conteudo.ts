@@ -10,6 +10,9 @@ import {
 } from '../../shared/editor-de-codigo/conteudo';
 import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
 
+/** Endereço copiado pelo botão "Copiar e-mail". */
+export const EMAIL_DE_CONTATO = 'viniciusmassuncao@gmail.com';
+
 /** Conteúdo da tela 30 (design/telas/tela-30.png), no estilo de leitura (ADR-0011); os quatro contatos são links reais. */
 export const CONTEUDO_CONTATO: ConteudoDoEditor = [
   vazia(),
@@ -26,11 +29,7 @@ export const CONTEUDO_CONTATO: ConteudoDoEditor = [
   vazia(),
   linha(1, comentario('// Fale comigo: clique em qualquer contato abaixo')),
   linha(1, declaracao('Contatos'), comum(' vinicius = '), palavraChave('new'), comum(' Contatos(')),
-  linha(
-    2,
-    link(literal('"viniciusmassuncao@gmail.com"'), 'mailto:viniciusmassuncao@gmail.com'),
-    comum(','),
-  ),
+  linha(2, link(literal(`"${EMAIL_DE_CONTATO}"`), `mailto:${EMAIL_DE_CONTATO}`), comum(',')),
   linha(2, link(literal('"+55 61 98283-7805"'), 'tel:+5561982837805'), comum(',')),
   linha(
     2,

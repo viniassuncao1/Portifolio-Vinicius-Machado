@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import type { Page, Route } from '@playwright/test';
 
 import { SECOES, totalDePaginas } from '../src/app/core/secoes';
@@ -361,7 +361,7 @@ test.describe('theme-color e color-scheme nos dois temas', () => {
         .evaluate((el) => getComputedStyle(el).fontVariantNumeric);
 
     expect(await variante('main .numeros span')).toContain('tabular-nums');
-    expect(await variante('[role="status"] .posicao')).toContain('tabular-nums');
+    expect(await variante('app-barra-de-status footer .posicao')).toContain('tabular-nums');
   });
 });
 
@@ -536,7 +536,7 @@ test.describe('Contraste das cores de sintaxe no claro', () => {
       ['main .numeros span', FUNDO_DO_EDITOR.claro],
       ['main .numeros span', FUNDO_DA_LINHA_ATUAL],
       ['nav[aria-label="Seções do portfólio"] a', 'rgb(236, 236, 236)'],
-      ['[role="status"] .item', 'rgb(236, 236, 236)'],
+      ['app-barra-de-status footer .item', 'rgb(236, 236, 236)'],
     ] as const) {
       const texto = await cor(seletor);
       expect(contraste(texto, fundoEsperado), `${seletor} ${texto}`).toBeGreaterThanOrEqual(4.5);
@@ -637,7 +637,7 @@ for (const [nome, viewport] of [
   ['desktop', DESKTOP],
   ['celular', CELULAR],
 ] as const) {
-  test.describe(`Busca, painel do Git e janela de preview no tema claro, ${nome}`, () => {
+  test.describe(`Busca, repositório e janela de preview no tema claro, ${nome}`, () => {
     test.use({ colorScheme: 'light', viewport });
 
     test.beforeEach(async ({ page }) => {
@@ -656,31 +656,26 @@ for (const [nome, viewport] of [
       expect(await violacoes(page)).toEqual([]);
     });
 
-    test('o painel do Git é claro, com o merge escolhido, e não tem violações', async ({
+    test('a página do repositório é clara, com o histórico carregado, e não tem violações', async ({
       page,
     }) => {
       await page.route('**/git/historico.json', responder(HISTORICO));
-      await abrirNoClaro(page, '/');
-      await page.getByRole('button', { name: 'Branch master, abrir o painel do Git' }).click();
-      const lista = page.getByRole('listbox', { name: 'Commits' });
-      await expect(lista).toBeVisible();
-      await lista.getByRole('option', { name: /Merge pull request #27/ }).click();
-      await expect(page.getByRole('complementary', { name: 'Detalhes do commit' })).toContainText(
-        '703a632197fe',
-      );
+      await abrirNoClaro(page, '/sobre-mim');
+      await page.getByRole('button', { name: 'Branch master, abrir o repositório' }).click();
+      await expect(page).toHaveURL(/\/repositorio$/);
+      await expect(page.locator('main dl.numeros')).toBeVisible();
 
-      const painel = page.getByRole('region', { name: 'Git' });
-      const claro = await painel.evaluate(
-        (el) => getComputedStyle(el.parentElement!).backgroundColor,
-      );
-      expect(contraste(claro, 'rgb(255, 255, 255)')).toBeLessThan(2);
+      const fundo = await page
+        .locator('main app-repositorio')
+        .evaluate((el) => getComputedStyle(el.closest('main') ?? el).backgroundColor);
+      expect(contraste(fundo, 'rgb(255, 255, 255)')).toBeLessThan(2);
       expect(await violacoes(page)).toEqual([]);
     });
 
-    test('o painel do Git com erro também passa no claro', async ({ page }) => {
+    test('a página do repositório com erro também passa no claro', async ({ page }) => {
       await page.route('**/git/historico.json', (rota) => rota.fulfill({ status: 500, body: '' }));
-      await abrirNoClaro(page, '/');
-      await page.getByRole('button', { name: 'Branch master, abrir o painel do Git' }).click();
+      await abrirNoClaro(page, '/sobre-mim');
+      await page.getByRole('button', { name: 'Branch master, abrir o repositório' }).click();
       await expect(page.getByRole('alert')).toBeVisible();
 
       expect(await violacoes(page)).toEqual([]);
@@ -706,7 +701,7 @@ for (const [nome, viewport] of [
     }) => {
       await abrirNoClaro(page, '/');
       if (viewport.width < 768) {
-        await page.getByRole('button', { name: 'Projeto' }).click();
+        await page.getByRole('button', { name: 'Seções', exact: true }).click();
       }
       await abrirPastas(page);
       await expect(arquivoDaArvore(page, 'Sobre Mim')).toBeVisible();

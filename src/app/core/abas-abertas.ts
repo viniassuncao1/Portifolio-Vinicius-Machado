@@ -13,7 +13,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
+import type { NomeDoIcone } from '../shared/icone/icone';
 import { ARQUIVO_INICIO, SECOES } from './secoes';
+import { TITULO_REPOSITORIO } from './titulos';
 
 export interface Aba {
   /** Slug da seção; vazio para o Início. */
@@ -21,14 +23,27 @@ export interface Aba {
   readonly arquivo: string;
   /** Endereço aberto ao ativar a aba. */
   readonly rota: string;
+  /** Ícone da aba; sem ele vale o de arquivo. */
+  readonly icone?: NomeDoIcone;
 }
 
 const CHAVE_DA_SESSAO = 'abas-abertas';
+/** Limite da faixa: abrir mais uma fecha a aba usada há mais tempo. */
+export const LIMITE_DE_ABAS = 5;
 
 const ABA_INICIO: Aba = { slug: '', arquivo: ARQUIVO_INICIO, rota: '/' };
+/** A página do repositório (`/repositorio`) não é uma seção: aba própria, com o ícone do GitHub. */
+export const SLUG_DO_REPOSITORIO = 'repositorio';
+const ABA_REPOSITORIO: Aba = {
+  slug: SLUG_DO_REPOSITORIO,
+  arquivo: TITULO_REPOSITORIO,
+  rota: `/${SLUG_DO_REPOSITORIO}`,
+  icone: 'github',
+};
 const ABAS_POSSIVEIS: readonly Aba[] = [
   ABA_INICIO,
   ...SECOES.map((secao) => ({ slug: secao.slug, arquivo: secao.arquivo, rota: `/${secao.slug}` })),
+  ABA_REPOSITORIO,
 ];
 
 const abaDoSlug = (slug: string): Aba | undefined => ABAS_POSSIVEIS.find((a) => a.slug === slug);
@@ -47,6 +62,8 @@ export class AbasAbertas {
   private readonly navegador = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly lista = signal<readonly Aba[]>([]);
   private readonly slugAtivo = signal('');
+  /** Slugs do menos para o mais recentemente usado, para escolher qual aba fechar no limite. */
+  private usadas: readonly string[] = [];
   /** Só depois de restaurar a sessão é seguro gravar, senão a aba atual apagaria as guardadas. */
   private sessaoRestaurada = false;
 
@@ -71,9 +88,26 @@ export class AbasAbertas {
     const aba = abaDoSlug(slug);
     if (!aba) return;
     this.slugAtivo.set(slug);
+    this.usadas = [...this.usadas.filter((usada) => usada !== slug), slug];
     if (this.lista().some((a) => a.slug === slug)) return;
-    this.lista.update((abas) => [...abas, aba]);
+    this.lista.update((abas) => this.semExcedentes([...abas, aba], slug));
     this.salvar();
+  }
+
+  /** Mantém no máximo {@link LIMITE_DE_ABAS} abas, fechando as menos usadas (nunca a ativa). */
+  private semExcedentes(abas: readonly Aba[], ativa: string): readonly Aba[] {
+    let restantes = abas;
+    while (restantes.length > LIMITE_DE_ABAS) {
+      const menosUsada = restantes
+        .filter((aba) => aba.slug !== ativa)
+        .reduce((a, b) => (this.usoDe(b.slug) < this.usoDe(a.slug) ? b : a));
+      restantes = restantes.filter((aba) => aba !== menosUsada);
+    }
+    return restantes;
+  }
+
+  private usoDe(slug: string): number {
+    return this.usadas.indexOf(slug);
   }
 
   /** Fecha uma aba. Se era a ativa, vai para a vizinha (à direita, senão à esquerda) ou para `/`. */

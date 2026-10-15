@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import type { Page } from '@playwright/test';
 
 import { abrirHidratada, abrirPastas, arquivoDaArvore } from './apoio';
@@ -50,7 +50,7 @@ test.describe('Estrutura da IDE', () => {
       'true',
     );
     await expect(page.getByRole('main')).toBeVisible();
-    await expect(page.getByRole('status')).toContainText('Projeto2.java');
+    await expect(page.getByRole('contentinfo')).toContainText('Projeto2.java');
   });
 
   test('destaca "Sobre Mim" no Início, sem marcar página atual', async ({ page }) => {
@@ -138,7 +138,9 @@ test.describe('Navegação pela árvore', () => {
     await page.goBack();
 
     await expect(page).toHaveURL('/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Portfolio_Vinicius');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'Vinicius Machado, Desenvolvedor Full Stack',
+    );
   });
 });
 

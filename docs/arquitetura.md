@@ -116,56 +116,58 @@ O SHA mostrado na barra vem de `scripts/gerar-informacoes-do-build.mjs`, que rod
 **merge**, que não existe na branch e daria um link quebrado. O deploy de preview do
 `ci.yml` define `SHA_DO_COMMIT` com `github.event.pull_request.head.sha`, o commit real da branch.
 
-### Área de baixo: Git e Run
+### Abertura: tela de boas-vindas
 
-O painel do Git e a **janela de Run** dividem a mesma área, na parte de baixo da coluna do editor,
-como as janelas de ferramenta do IntelliJ. O serviço `AreaDeBaixo` (`core/area-de-baixo.ts`) guarda
-qual está aberta (`'run'` ou `'git'`): abrir uma fecha a outra, e as duas usam a mesma animação
-(`data-aberto`, com `prefers-reduced-motion` respeitado). O editor continua rolável acima dela.
+O site abre com uma **tela de boas-vindas** no estilo da splash do IntelliJ
+([ADR-0015](adr/0015-tela-de-boas-vindas.md)): foto, nome, cargo e uma barra que percorre as etapas
+do log do Spring. Dura de 0,6 a 2 s (1 s com movimento reduzido), sem botão de pular, e aparece uma
+vez por sessão (`sessionStorage['boas-vindas-exibida']`), na primeira página aberta. É uma camada só
+do navegador por cima do HTML pré-renderizado, que fica inteiro no DOM; o resto da página fica
+`inert` por esses 2 s. Depois dela, a barra de status avisa `PortfolioApplication started in 1.8 s`.
 
-A **janela de Run** simula rodar o projeto: mostra o log de inicialização do `PortfolioApplication`
-(banner do Spring, `Starting PortfolioApplication using Java 21`, `Tomcat started on port 8080`,
-`Started PortfolioApplication in 1.8 seconds`). O texto é fixo (`layout/janela-de-run/log.ts`), com
-data e hora geradas no navegador, e **nunca entra no HTML pré-renderizado**. Abre sozinha uma vez
-por sessão (`sessionStorage['run-exibido']`), sem roubar o foco e sem bloquear o conteúdo; revela o
-log em até 2,5 s, e "Pular", Esc e o fechar sempre estão à mão. Com movimento reduzido, não abre
-sozinha. O Executar da barra a reabre e reinicia o log fora dos projetos com site; nos projetos com
-site continua abrindo o preview.
+### Janela de Run
 
-### Painel do Git
+A **janela de Run** simula rodar o projeto e ocupa sozinha a área de baixo da IDE. Mostra o log de
+inicialização do `PortfolioApplication` (banner do Spring, `Starting PortfolioApplication using
+Java 21`, `Tomcat started on port 8080`, `Started PortfolioApplication in 1.8 seconds`). O texto é
+fixo (`layout/janela-de-run/log.ts`), com data e hora geradas no navegador, e **nunca entra no HTML
+pré-renderizado**. Abre **só pelo Executar** da barra (que, nos projetos com site, abre o preview);
+revela o log em até 2,5 s, e "Pular", Esc e o fechar estão sempre à mão.
 
-O indicador `master` da barra de ferramentas e o ícone Commit da faixa abrem o **painel do Git**,
-com o histórico real do repositório ([ADR-0013](adr/0013-historico-do-git-gerado-no-build.md)).
+### Página do repositório
 
-- **Histórico gerado no build.** `scripts/gerar-historico-do-git.mjs` roda nos scripts `pre*`
-  (junto do de informações do build), lê o `git log` com `execFileSync` (sem shell) e grava
-  `public/git/historico.json`, que está no `.gitignore`. Cada commit tem SHA, pais, nome do autor,
-  data, assunto e, nos merges de PR, o número e a branch. **Não há e-mails** no arquivo, e não há
-  token nem chamada à API do GitHub. Sem `git`, sem repositório ou em clone raso, o script grava a
-  lista vazia e nunca falha o build.
-- **Nome do autor unificado.** O `.mailmap` da raiz junta as grafias do nome (`%aN`, o nome já
-  passado pelo `.mailmap`), então o painel mostra uma só.
-- **Histórico completo no CI.** Os jobs que fazem build (`build-e2e`, `deploy-preview` e
-  `deploy-producao`) usam `fetch-depth: 0` no checkout; com o checkout raso, o histórico sairia
-  vazio.
-- **`core/git/`.** `historico.ts` tem os tipos (`CommitDoHistorico`, `HistoricoDoGit`);
-  `ler-historico.ts` valida o JSON no limite do sistema (`lerHistorico` devolve `null` se o formato
-  estiver errado) e monta os endereços do commit e do PR; `faixas.ts` tem `calcularFaixas`.
-- **Faixas do grafo no navegador.** `calcularFaixas` é uma função pura: cada commit ocupa uma
-  coluna, o primeiro pai herda a coluna e os outros pais abrem colunas novas, que fecham quando o
-  pai é alcançado. Ela roda no navegador, e não no script, para ser testada com o Vitest e manter o
-  script simples. O painel desenha o resultado em SVG (`layout/painel-do-git/grafo.ts`), com as
-  cores `--cor-grafo-1` a `--cor-grafo-6`.
-- **Carregamento sob demanda.** O serviço `PainelDoGit` (`core/painel-do-git.ts`) guarda se o painel
-  está aberto, o estado do histórico (`ocioso`, `carregando`, `pronto` ou `erro`) e o JSON. O
-  arquivo só é baixado na **primeira abertura**, nunca no servidor nem no carregamento inicial, e
-  fica guardado no serviço. O painel não é pré-renderizado aberto, então as datas relativas só são
-  calculadas no navegador.
+O indicador `master` da barra e o ícone Commit da faixa abrem a aba `Portfolio-Vinicius-Machado`,
+na rota `/repositorio`: uma página no estilo de um repositório do GitHub, com o que o projeto é, os
+números, a proporção de commits por tipo, os últimos pull requests e commits e um link para o
+histórico completo ([ADR-0016](adr/0016-repositorio-no-estilo-do-github.md)). Ela substituiu o
+painel do Git da área de baixo.
+
+- **Histórico gerado no build** ([ADR-0013](adr/0013-historico-do-git-gerado-no-build.md)).
+  `scripts/gerar-historico-do-git.mjs` roda nos scripts `pre*`, lê o `git log` com `execFileSync`
+  (sem shell) e grava `public/git/historico.json`, que está no `.gitignore`. Cada commit tem SHA,
+  pais, nome do autor, data, assunto e, nos merges de PR, o número, a branch e o **título do PR**.
+  **Não há e-mails**, token nem chamada à API do GitHub. Sem `git`, sem repositório ou em clone
+  raso, grava a lista vazia e nunca falha o build.
+- **Nome do autor unificado** pelo `.mailmap` (`%aN`).
+- **Histórico completo no CI.** Os jobs de build (`build-e2e`, `deploy-preview` e `deploy-producao`)
+  usam `fetch-depth: 0`.
+- **`core/git/`.** `historico.ts` tem os tipos; `ler-historico.ts` valida o JSON no limite do
+  sistema (`lerHistorico` devolve `null` se o formato estiver errado) e monta os endereços do commit
+  e do PR.
+- **Resumo no navegador.** Funções puras calculam a contagem por tipo do Conventional Commits, os
+  últimos PRs e os últimos commits de código (sem os de marcar tarefas), e por isso são testadas com
+  o Vitest. Commits de merge não entram na contagem por tipo. Na barra, `agruparTiposPequenos`
+  (`features/repositorio/agrupar-tipos.ts`) mostra os tipos com 3% ou mais dos commits, por
+  frequência, e reúne os menores e os commits sem tipo num segmento "outros", que a legenda detalha.
+- **Carregamento sob demanda.** O serviço `HistoricoDoRepositorio` (`core/repositorio.ts`) guarda o
+  estado (`ocioso`, `carregando`, `pronto` ou `erro`) e baixa o JSON só na primeira abertura da
+  página, nunca no servidor nem no carregamento inicial. A rota é pré-renderizada com o esqueleto, e
+  as datas relativas só são calculadas no navegador.
 
 ### Gaveta no celular
 
-Abaixo de 768px o painel do projeto vira uma **gaveta**. O botão Projeto da barra superior
-(`aria-expanded` e `aria-controls`) a abre e leva o foco ao primeiro item; Escape, o botão "Fechar
+Abaixo de 768px o painel do projeto vira uma **gaveta**. O botão **Seções** da barra superior
+(ícone com rótulo visível, `aria-expanded` e `aria-controls`) a abre, com as pastas já abertas, e leva o foco ao primeiro item; Escape, o botão "Fechar
 seções" ou a escolha de uma seção a fecham e devolvem o foco ao botão. O design só tem telas de
 desktop, então esse comportamento é decisão nossa.
 

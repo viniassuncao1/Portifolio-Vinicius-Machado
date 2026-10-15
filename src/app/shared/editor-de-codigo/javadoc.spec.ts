@@ -52,7 +52,10 @@ describe('javadoc', () => {
 
     function regra(seletor: string): string {
       const [base, pseudo = ''] = seletor.split('::');
-      const molde = `${base.replaceAll('.', '\\.')}\\[[^\\]]*\\]${pseudo ? `::${pseudo}` : ''}\\s*\\{([^}]*)\\}`;
+      // O bloco é um componente: o seu `:host` aparece como `[_nghost-…]`.
+      const alvo = base === ':host' ? '' : base.replaceAll('.', '\\.');
+      const atributo = base === ':host' ? '\\[_nghost-[^\\]]*\\]' : '\\[[^\\]]*\\]';
+      const molde = `${alvo}${atributo}${pseudo ? `::${pseudo}` : ''}\\s*\\{([^}]*)\\}`;
       return Array.from(estilos().matchAll(new RegExp(molde, 'g')), (achada) => achada[1]).join(
         '\n',
       );
@@ -61,8 +64,8 @@ describe('javadoc', () => {
     it('desenha `/**` e `*/` por pseudo-elementos sem texto alternativo', () => {
       renderizar();
 
-      expect(regra('.javadoc::before')).toMatch(/content:\s*"\/"\s+"\*"\s+"\*"\s*\/\s*""/);
-      expect(regra('.javadoc::after')).toMatch(/content:\s*"\*"\s+"\/"\s*\/\s*""/);
+      expect(regra(':host::before')).toMatch(/content:\s*"\/"\s+"\*"\s+"\*"\s*\/\s*""/);
+      expect(regra(':host::after')).toMatch(/content:\s*"\*"\s+"\/"\s*\/\s*""/);
     });
 
     it('põe a coluna de `*` fora do texto, uma coluna à direita do `/`', () => {
@@ -71,7 +74,7 @@ describe('javadoc', () => {
 
       expect(marcadores).toContain('position: absolute');
       expect(marcadores).toMatch(/inset-inline-start:\s*var\(--avanco\)/);
-      expect(regra('.javadoc::after')).toMatch(/padding-inline-start:\s*var\(--avanco\)/);
+      expect(regra(':host::after')).toMatch(/padding-inline-start:\s*var\(--avanco\)/);
     });
 
     it('começa o texto três colunas depois do recuo, alinhado sob o ` * `', () => {
@@ -84,7 +87,7 @@ describe('javadoc', () => {
 
     it('usa a cor de comentário e a mesma largura de 72 colunas do parágrafo', () => {
       renderizar();
-      const corpo = regra('.javadoc');
+      const corpo = regra(':host');
 
       expect(corpo).toContain('var(--cor-sintaxe-comentario)');
       expect(regra('.javadoc-corpo')).toMatch(

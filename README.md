@@ -18,16 +18,22 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
   carregamento rápido e SEO.
 - **Casca de IDE como rota-pai:** a barra, o painel e a aba são montados uma vez; as 15 seções
   são rotas filhas pré-renderizadas, com o conteúdo definido como dados tipados.
-- **Painel do Git:** o indicador `master` da barra e o ícone Commit da faixa abrem um painel com o
-  **histórico real do repositório** (grafo das branches, commits e PRs), como o Git Log do
-  IntelliJ. O histórico é gerado no build, sem token e sem e-mails
-  ([ADR-0013](docs/adr/0013-historico-do-git-gerado-no-build.md)).
+- **Tela de boas-vindas:** o site abre com uma splash no estilo do IntelliJ (foto, nome e uma
+  barra de carregamento de até 2 s, uma vez por sessão), sem esconder o conteúdo
+  ([ADR-0015](docs/adr/0015-tela-de-boas-vindas.md)).
+- **Página do repositório:** o `master` da barra e o ícone Commit abrem, numa aba, uma página no
+  estilo do GitHub com os números do projeto, a proporção de commits por tipo e os últimos pull
+  requests. O histórico é gerado no build, sem token e sem e-mails
+  ([ADR-0016](docs/adr/0016-repositorio-no-estilo-do-github.md),
+  [ADR-0013](docs/adr/0013-historico-do-git-gerado-no-build.md)).
+- **UX pensada para quem recruta:** Javadoc em modo de leitura, "Próximo arquivo →", atalhos no
+  Início, code vision para ver o site dos projetos e contatos fáceis de tocar.
 - **Fotos de perfil no Javadoc:** o Início, o Sobre Mim e a recomendação recebida mostram um
   retrato redondo à esquerda do comentário de documentação, como o IntelliJ faz no modo de leitura,
   com o `@author` linkando o LinkedIn de quem recomendou.
-- **Janela de Run:** ao abrir o site, a IDE "roda" o `PortfolioApplication` e mostra o log de
-  inicialização do Spring Boot (uma vez por sessão, com "Pular" e sem bloquear a leitura). O ▶
-  Executar da barra reabre o log.
+- **Janela de Run:** a IDE "roda" o `PortfolioApplication` e mostra o log de
+  inicialização do Spring Boot quando o visitante usa o ▶ Executar da barra (com "Pular" e sem
+  bloquear a leitura).
 - **Java para leitura:** o código de cada seção é Java 21 válido, com domínio em português e sem
   cerimônia (`record Evento(String nome, int vezes)`), para quem recruta ler como frase
   ([guia de estilo](docs/componentes.md#guia-de-estilo)).
@@ -125,7 +131,7 @@ Tudo roda no workflow [`ci.yml`](.github/workflows/ci.yml):
 - **CD:** com tudo verde, publica na Vercel. Cada PR ganha uma URL de preview, e cada push na
   `main` atualiza a produção.
 
-O build precisa do histórico completo do Git para gerar o painel do Git, então os jobs do CI usam
+O build precisa do histórico completo do Git para gerar a página do repositório, então os jobs do CI usam
 `fetch-depth: 0`. Em clone raso ou sem `git`, o painel mostra uma mensagem e o build não falha.
 
 Detalhes em [docs/deploy.md](docs/deploy.md).

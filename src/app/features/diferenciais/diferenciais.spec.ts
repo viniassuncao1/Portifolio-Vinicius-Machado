@@ -33,7 +33,6 @@ describe('Diferenciais', () => {
 
     expect(textos).toEqual([
       'package dev.vinicius.portfolio.sobre;',
-      expect.stringContaining(INICIO_DO_PARAGRAFO),
       'public class Diferenciais {',
       '// Os dados que me definem',
       'record DadosPessoais(',
@@ -98,7 +97,7 @@ describe('Diferenciais', () => {
     );
   });
 
-  it('recua os componentes três níveis, a variável um e o parágrafo zero', async () => {
+  it('recua os componentes três níveis, e a variável um', async () => {
     const raiz = await renderizar();
     const recuo = (texto: string) =>
       (linhaDe(raiz, texto) as HTMLElement).style.getPropertyValue('--recuo');
@@ -107,7 +106,6 @@ describe('Diferenciais', () => {
     expect(recuo('DadosPessoais vinicius')).toBe('1');
     expect(recuo('"Mineiro"')).toBe('3');
     expect(recuo('public class Diferenciais')).toBe('0');
-    expect(recuo(INICIO_DO_PARAGRAFO)).toBe('0');
   });
 
   it('começa e termina o parágrafo com os textos da spec', async () => {
