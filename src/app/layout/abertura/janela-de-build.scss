@@ -1,0 +1,331 @@
+// Janela Build/Run da abertura: abas, barra de build, saída das tarefas e log do Spring.
+.janela {
+  display: none;
+  grid-template-rows: auto 2px minmax(0, 1fr);
+  inline-size: min(55rem, 100%);
+  block-size: min(32.5rem, 72dvh);
+  overflow: hidden;
+  border: var(--borda-painel);
+  border-radius: var(--raio-aba);
+  background: var(--cor-editor);
+  box-shadow: var(--sombra-abertura);
+  transform-origin: 0 100%;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.abertura:is([data-fase='compilando'], [data-fase='iniciando'], [data-fase='revelando']) .janela {
+  display: grid;
+}
+
+.abertura:is([data-fase='compilando'], [data-fase='iniciando']) .janela {
+  animation: janela-entra var(--duracao-entrada-abertura, 280ms)
+    var(--curva-suave, var(--curva-saida)) var(--atraso-janela-abertura, 80ms) backwards;
+}
+
+// A View Transition recolhe esta janela até o item da barra de status: o serviço dá o nome
+// `console-de-run` à janela (estado antigo) e ao item (estado novo) só na troca, então ele não fica
+// aqui: nome repetido nos dois estados cancela a transição.
+
+// Sem a API de View Transitions, o serviço marca o host e escreve nele o caminho até o item da barra
+// de status (`--recolher-x`, `--recolher-y` em px e `--recolher-sx`, `--recolher-sy` de escala).
+:host([data-recolher-fallback]) .janela {
+  transform-origin: 0 0;
+  animation: recolher var(--duracao-recolher, 360ms) var(--curva-padrao) forwards;
+}
+
+.topo {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-1);
+  padding: var(--espaco-1) var(--espaco-2) 0 var(--espaco-3);
+  background: var(--cor-painel);
+}
+
+.abas {
+  display: flex;
+}
+
+.aba {
+  position: relative;
+  padding: var(--espaco-2) var(--espaco-3);
+  color: var(--cor-texto-esmaecido);
+  white-space: nowrap;
+
+  &.ativa {
+    color: var(--cor-texto-forte);
+  }
+
+  // O traço da aba ativa é desenhado pelo acento, esticando da esquerda.
+  &.ativa::after {
+    content: '';
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline: 0;
+    block-size: 2px;
+    background: var(--cor-acento);
+    transform-origin: left;
+    animation: traco var(--duracao-media) var(--curva-padrao) backwards;
+  }
+}
+
+.contador {
+  margin-inline-start: auto;
+  color: var(--cor-texto-esmaecido);
+  font-size: var(--texto-status);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.progresso-build {
+  background: var(--cor-linha-selecionada);
+  overflow: hidden;
+
+  span {
+    display: block;
+    block-size: 100%;
+    background: var(--cor-run);
+    transform: scaleX(var(--p, 0));
+    transform-origin: left;
+    transition: transform var(--duracao-rapida) linear;
+  }
+}
+
+// Cada painel guarda o fim do texto à vista (como um console rolado) sem barra de rolagem: o que
+// passa do topo é recortado, então não há região rolável para o teclado alcançar.
+.paineis {
+  position: relative;
+  min-block-size: 0;
+}
+
+.painel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &:not([hidden]) {
+    animation: sumir-ao-contrario var(--duracao-rapida) var(--curva-padrao) backwards;
+  }
+}
+
+.painel.build {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  // A saída do build cresce de cima para baixo; o corte só importa no celular (abaixo).
+  align-items: start;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.arvore-build {
+  align-self: start;
+  padding: var(--espaco-2) var(--espaco-3);
+  border-inline-end: var(--borda-divisoria);
+  font-size: var(--texto-status);
+
+  p {
+    display: flex;
+    gap: var(--espaco-2);
+    align-items: baseline;
+    margin: 0 0 var(--espaco-1);
+  }
+
+  .filha {
+    padding-inline-start: var(--espaco-4);
+  }
+
+  .ok {
+    color: var(--cor-run);
+  }
+
+  .rodando {
+    color: var(--cor-texto-esmaecido);
+  }
+}
+
+.saida,
+.log {
+  margin: 0;
+  padding: var(--espaco-2) var(--espaco-3);
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-status);
+  line-height: 1.25rem;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+
+  code {
+    display: block;
+    font: inherit;
+  }
+}
+
+.saida .tarefa,
+.saida .arquivo,
+.log .linha {
+  display: block;
+}
+
+.saida .tarefa {
+  color: var(--cor-texto-forte);
+}
+
+.saida .arquivo {
+  color: var(--cor-texto-esmaecido);
+}
+
+.saida .tarefa,
+.saida .arquivo {
+  animation: linha-do-build var(--duracao-rapida) var(--curva-saida) backwards;
+}
+
+.saida .arquivo .ok {
+  color: var(--cor-run);
+}
+
+// Log do Spring: o log de verdade não "escorrega", as linhas só aparecem. Cores por tokens.
+.log .linha {
+  border-radius: 0.25rem;
+  animation: sumir-ao-contrario var(--duracao-rapida) var(--curva-saida) backwards;
+
+  // `Started PortfolioApplication`: a linha ganha o realce e o ✓ verde (texto de pseudo-elemento:
+  // não entra no texto copiado nem na leitura).
+  // Linha comprida do Spring: a continuação entra 4 colunas, como um console estreito.
+  &:has(.papel-data) {
+    padding-inline-start: 4ch;
+    text-indent: -4ch;
+  }
+
+  &.final {
+    background: var(--cor-linha-atual);
+    transition: background-color var(--duracao-media) var(--curva-saida);
+  }
+
+  &.final::after {
+    content: '  ✓';
+    color: var(--cor-run);
+    animation: sumir-ao-contrario var(--duracao-media) var(--curva-saida) backwards;
+  }
+}
+
+.papel-banner,
+.papel-versao,
+.papel-nivel {
+  color: var(--cor-sintaxe-literal);
+}
+
+.papel-data,
+.papel-thread {
+  color: var(--cor-sintaxe-comentario);
+}
+
+.papel-pid {
+  color: var(--cor-sintaxe-campo);
+}
+
+.papel-logger,
+.papel-logger-curto {
+  color: var(--cor-sintaxe-valor);
+}
+
+.papel-mensagem {
+  color: var(--cor-texto);
+}
+
+.papel-logger-curto {
+  display: none;
+}
+
+// Só para leitores de tela: a região anuncia os marcos, não o log linha a linha.
+
+@media (max-width: 767.98px) {
+  .painel.build {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: end;
+  }
+
+  .arvore-build,
+  .contador {
+    display: none;
+  }
+
+  // Log curto: `INFO  TomcatWebServer : Tomcat started on port 8080`, sem data, PID nem thread.
+  .log .papel-data,
+  .log .papel-pid,
+  .log .papel-thread {
+    display: none;
+  }
+
+  .log .linha:has(.papel-logger-curto) .papel-logger {
+    display: none;
+  }
+
+  .log .papel-logger-curto {
+    display: inline;
+  }
+
+  .log .papel-banner,
+  .log .papel-versao {
+    font-size: 9px;
+    line-height: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progresso-build span {
+    transition: none;
+  }
+
+  .aba.ativa::after,
+  .saida .tarefa,
+  .saida .arquivo {
+    animation: none;
+  }
+
+  .abertura:is([data-fase='compilando'], [data-fase='iniciando']) .janela {
+    animation: sumir-ao-contrario var(--duracao-reduzida-abertura, 150ms) linear backwards;
+  }
+
+  :host([data-recolher-fallback]) .janela {
+    animation: sumir var(--duracao-reduzida-abertura, 150ms) linear forwards;
+  }
+}
+
+@keyframes janela-entra {
+  from {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.98);
+  }
+}
+
+@keyframes linha-do-build {
+  from {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+}
+
+@keyframes traco {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+// Fallback do recolher: o serviço escreve no host o caminho até o item da barra de status.
+@keyframes recolher {
+  to {
+    opacity: 0;
+    transform: translate(var(--recolher-x, 0), var(--recolher-y, 45dvh))
+      scale(var(--recolher-sx, 0.3), var(--recolher-sy, 0.05));
+  }
+}

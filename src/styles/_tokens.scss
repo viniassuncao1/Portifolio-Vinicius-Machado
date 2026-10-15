@@ -33,6 +33,13 @@
   --cor-acento: #de60d2;
   --largura-anel-foco: 2px;
   --cor-fundo-modal: rgb(0 0 0 / 55%);
+  // Abertura: o verde do Run segue o ícone da IntelliJ Platform (5,75:1 sobre o painel), o stop é o
+  // vermelho dela (3,84:1, só ícone); o fundo cobre a casca sem esconder que ela está por baixo.
+  --cor-run: #5fb865;
+  --cor-stop: #db5c5c;
+  --cor-fundo-abertura: rgb(28 28 28 / 92%);
+  --cor-contorno-foto: rgb(255 255 255 / 10%);
+  --sombra-abertura: 0 1px 2px rgb(0 0 0 / 30%), 0 1.5rem 3rem rgb(0 0 0 / 35%);
   // Qual variante dos ícones da IntelliJ Platform aparece (a do tema escuro ou a do claro)
   --exibir-icone-escuro: block;
   --exibir-icone-claro: none;
@@ -185,6 +192,11 @@
   --cor-javadoc-renderizado: #ececec;
   --cor-acento: #9a2a8c;
   --cor-fundo-modal: rgb(0 0 0 / 35%);
+  --cor-run: #1f7a36;
+  --cor-stop: #c23b3b;
+  --cor-fundo-abertura: rgb(217 217 217 / 92%);
+  --cor-contorno-foto: rgb(0 0 0 / 10%);
+  --sombra-abertura: 0 1px 2px rgb(0 0 0 / 8%), 0 1.5rem 3rem rgb(0 0 0 / 18%);
   --exibir-icone-escuro: none;
   --exibir-icone-claro: block;
 

@@ -1,0 +1,130 @@
+<div
+  class="abertura"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="nome-da-abertura"
+  [attr.data-fase]="fase()"
+>
+  <div class="fundo"></div>
+  <div class="palco">
+    <section class="cartao">
+      <img
+        class="foto"
+        ngSrc="fotos/vinicius.webp"
+        width="96"
+        height="96"
+        priority
+        alt="Foto de Vinicius Machado"
+      />
+      <h2 class="nome" id="nome-da-abertura">Vinicius Machado</h2>
+      <p class="cargo">Desenvolvedor Full Stack Júnior</p>
+      <p class="frase">Seja bem-vindo ao meu portfólio</p>
+
+      <div class="zona">
+        <div class="carregando" aria-hidden="true">
+          <div class="barra"><span class="preenchimento" [style.--p]="progresso()"></span></div>
+          <p class="etapa">{{ etapaTexto() }}</p>
+        </div>
+
+        <div class="widget">
+          <span class="config" aria-hidden="true">
+            <svg class="icone-spring" viewBox="0 0 16 16" focusable="false">
+              <path
+                fill="currentColor"
+                d="M13.6 2.2c-.2.6-.6 1.1-1 1.5A6.5 6.5 0 1 0 14 8c0-2-.1-3.8-.4-5.8zM4.6 13a.6.6 0 1 1 0-1.1.6.6 0 0 1 0 1.1zm8.1-3.4c-1.3 1.8-4.2 1.2-6 1.3 0 0-.3 0-.6.1 0 0 .1-.1.3-.1 1.3-.4 1.9-.5 2.6-.9 1.3-.7 2.6-2.2 2.9-3.7-.5 1.4-2 2.6-3.4 3.1-1 .4-2.7.7-2.7.7h-.1c-1.2-.6-1.2-3.2.9-4 .9-.4 1.8-.2 2.8-.4 1.1-.3 2.3-1 2.8-2 .5 1.6 1.2 4.1.5 5.9z"
+              />
+            </svg>
+            <span class="nome-config">PortfolioApplication</span>
+            <span class="seta">▾</span>
+          </span>
+          <button
+            #botaoRun
+            type="button"
+            class="botao-run"
+            aria-label="Executar PortfolioApplication"
+            [attr.aria-keyshortcuts]="teclasDoAtalho()"
+            (click)="executar()"
+          >
+            <svg class="play" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d="M4 2.5v11l9-5.5z" />
+            </svg>
+            <svg class="stop" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <rect x="3.5" y="3.5" width="9" height="9" rx="1" fill="currentColor" />
+            </svg>
+          </button>
+          <span class="botao-debug" aria-hidden="true">
+            <svg viewBox="0 0 16 16" focusable="false">
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.2"
+                d="M8 3a3 3 0 0 0-3 3v4a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM5.5 2 4 .5M10.5 2 12 .5M2 8h3m6 0h3M2.5 12.5 5 11m6 0 2.5 1.5"
+              />
+            </svg>
+          </span>
+          <kbd class="atalho" aria-hidden="true">{{ atalho() }}</kbd>
+        </div>
+      </div>
+
+      <p class="dica" aria-hidden="true">
+        @if (dicaEmDestaque()) {
+          <span class="destaque">Executando sozinho em instantes…</span>
+        } @else {
+          <span class="so-teclado">Enter para executar</span>
+          <span class="so-toque">Toque em ▶ para executar</span>
+        }
+      </p>
+    </section>
+
+    <section class="janela" #janela tabindex="-1" aria-label="Execução do PortfolioApplication">
+      <div class="topo">
+        <div class="abas" aria-hidden="true">
+          <span class="aba" [class.ativa]="abaAtiva() === 'build'">Build</span>
+          <span class="aba" [class.ativa]="abaAtiva() === 'run'">Run: PortfolioApplication</span>
+        </div>
+        <span class="contador" aria-hidden="true">
+          @if (abaAtiva() === 'run') {
+            Running
+          } @else if (buildConcluido()) {
+            Build concluído
+          } @else {
+            Compilando {{ arquivosCompilados().length }}/{{ totalDeClasses }}
+          }
+        </span>
+      </div>
+      <div class="progresso-build" aria-hidden="true">
+        <span [style.--p]="progressoDoBuild()"></span>
+      </div>
+
+      <div class="paineis">
+        <div class="painel build" [hidden]="abaAtiva() !== 'build'">
+          <div class="arvore-build" aria-hidden="true">
+            <p>
+              <span [class]="buildConcluido() ? 'ok' : 'rodando'">{{
+                buildConcluido() ? '✓' : '◌'
+              }}</span>
+              Portfolio_Vinicius: {{ buildConcluido() ? 'build successful' : 'building…' }}
+            </p>
+            <p class="filha">
+              <span [class]="buildConcluido() ? 'ok' : 'rodando'">{{
+                buildConcluido() ? '✓' : '◌'
+              }}</span>
+              :compileJava
+            </p>
+          </div>
+          <pre
+            class="saida"
+            translate="no"
+          ><code>@for (tarefa of tarefas(); track tarefa; let i = $index) {<span class="tarefa">&gt; Task :{{ tarefa }}</span>@if (i === 0) {@for (arquivo of arquivosCompilados(); track arquivo) {<span class="arquivo"><span class="ok">  ✓ </span>{{ arquivo }}</span>}}}</code></pre>
+        </div>
+        <div class="painel" [hidden]="abaAtiva() !== 'run'">
+          <pre
+            class="log"
+            translate="no"
+          ><code>@for (linha of linhasDoLog(); track $index) {<span class="linha" [class.final]="linha.texto.includes('Started PortfolioApplication')">@for (trecho of linha.trechos; track $index) {<span [class]="'papel-' + trecho.papel">{{ trecho.texto }}</span>}</span>}</code></pre>
+        </div>
+      </div>
+    </section>
+  </div>
+  <p class="somente-leitores" aria-live="polite">{{ anuncio() }}</p>
+</div>
