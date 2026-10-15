@@ -112,6 +112,8 @@ describe('AberturaComponente', () => {
   it('ao encerrar o foco vai para o main e a camada é dispensada', async () => {
     const { fixture, el, main, abertura } = await montar();
 
+    abertura.fase.set('revelando');
+    await avancar(fixture, 0);
     abertura.fase.set('encerrada');
     abertura.dispensada.set(true);
     await avancar(fixture, 0);
@@ -127,5 +129,17 @@ describe('AberturaComponente', () => {
 
     expect(viva?.getAttribute('aria-live')).toBe('polite');
     expect(viva?.textContent).toContain('Carregando o portfólio');
+  });
+
+  it('sem abertura (estado inicial encerrado) não leva o foco ao main', async () => {
+    raiz().removeAttribute(ATRIBUTO_DA_ABERTURA);
+    const fixture = TestBed.createComponent(Hospedeiro);
+    document.body.append(fixture.nativeElement);
+    fixture.detectChanges();
+    await vi.advanceTimersByTimeAsync(0);
+    fixture.detectChanges();
+
+    expect(TestBed.inject(Abertura).fase()).toBe('encerrada');
+    expect(document.activeElement).toBe(document.body);
   });
 });

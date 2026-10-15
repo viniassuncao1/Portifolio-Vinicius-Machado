@@ -50,6 +50,7 @@ export class AberturaComponente {
   private readonly botaoRun = viewChild<ElementRef<HTMLElement>>('botaoRun');
   private readonly janela = viewChild<ElementRef<HTMLElement>>('janela');
   private bloqueados: Element[] = [];
+  private faseAnterior: string | null = null;
 
   protected readonly abertura = inject(Abertura);
   protected readonly recolherPorClasses = signal(false);
@@ -96,12 +97,16 @@ export class AberturaComponente {
   }
 
   private aoMudarDeFase(fase: string): void {
+    const anterior = this.faseAnterior;
+    this.faseAnterior = fase;
     untracked(() => {
       if (fase === 'splash') this.bloquearOResto();
       if (fase === 'pronto') this.focarDepoisDeRenderizar(() => this.botaoRun());
       if (fase === 'compilando') this.focarDepoisDeRenderizar(() => this.janela());
-      if (fase === 'revelando') this.liberarOResto();
-      if (fase === 'encerrada') this.focarOEditor();
+      // Libera também ao encerrar: com a aba oculta a revelação pode ser pulada pelo relógio.
+      if (fase === 'revelando' || fase === 'encerrada') this.liberarOResto();
+      // O foco só vai para o editor quando a abertura realmente rodou: nunca no estado inicial.
+      if (fase === 'encerrada' && anterior === 'revelando') this.focarOEditor();
     });
   }
 
