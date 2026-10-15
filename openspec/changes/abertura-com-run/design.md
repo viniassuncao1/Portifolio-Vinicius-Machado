@@ -36,7 +36,7 @@ vale esta change: não há pular.**
 | --- | --- | --- |
 | Splash | 3 s (degraus de 0,4/1,1/1,8/2,5 s) | 5 s com rede lenta |
 | Pronto | até o clique; pulso do ▶ em 0,3 s e 3 s; dica "Executando sozinho em instantes…" aos 3 s | execução automática aos 5 s |
-| Build | 16 classes, uma a cada 60 ms; troca para Run aos 1,46 s | — |
+| Build | uma classe por seção (derivadas de `secoes.ts`, hoje 17), uma a cada 60 ms; troca para Run aos 1,46 s | — |
 | Log do Spring | banner aos 1,58 s; 9 linhas a cada 150 ms; pausa de 0,5 s | — |
 | A IDE aparece | 0,72 s (recolher em 360 ms + painéis com intervalo de 60 ms) | — |
 

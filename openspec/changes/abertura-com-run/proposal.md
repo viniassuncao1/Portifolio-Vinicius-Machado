@@ -13,12 +13,12 @@ protótipo.
 ## What Changes
 
 - **Splash de 3 s** com foto, nome, cargo, "Seja bem-vindo ao meu portfólio" e a barra com as
-  etapas da IDE ("Opening Portfolio_Vinicius…", "Resolving Gradle dependencies…", "Indexing 16
+  etapas da IDE ("Opening Portfolio_Vinicius…", "Resolving Gradle dependencies…", "Indexing N
   Java classes…", "Project ready").
 - **Pronto para executar:** o widget de Run do IntelliJ (`PortfolioApplication ▾`, ▶ verde, debug
   apagado, atalho ⌃R no Mac e ⇧F10 nos outros) com o foco no ▶; Enter, clique ou atalho
   executam. Se ninguém executar em 5 s, o ▶ é acionado sozinho (o visitante nunca fica preso).
-- **Execução (~3,4 s):** janela Build/Run com `> Task :compileJava` compilando as 16 classes
+- **Execução (~3,4 s):** janela Build/Run com `> Task :compileJava` compilando as classes
   reais do portfólio, depois `:processResources`, `:classes`, `:bootRun`, e o log do Spring até
   `Started PortfolioApplication`.
 - **A IDE aparece (~0,7 s):** a janela de Run recolhe para a barra de status e os painéis da IDE

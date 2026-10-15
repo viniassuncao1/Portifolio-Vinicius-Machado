@@ -51,8 +51,8 @@ SHALL executar. Se ninguém executar em 5 s, a execução MUST começar sozinha.
 - **THEN** a execução começa sozinha
 
 ### Requirement: Build e Spring
-Ao executar, a abertura SHALL mostrar a janela Build/Run com `> Task :compileJava`, as 16
-classes do portfólio sendo compiladas, as tarefas seguintes e o log do Spring até `Started
+Ao executar, a abertura SHALL mostrar a janela Build/Run com `> Task :compileJava`, uma
+classe por seção do portfólio sendo compilada (lista derivada das seções), as tarefas seguintes e o log do Spring até `Started
 PortfolioApplication`, e então SHALL revelar a IDE com a janela recolhendo para a barra de
 status, em no máximo 5 s desde o início da execução, com o foco no editor ao fim.
 
