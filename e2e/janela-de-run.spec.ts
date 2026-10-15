@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from './fixtures';
 import type { Page } from '@playwright/test';
 
-import { verBoasVindas } from './apoio';
+import { verAbertura } from './apoio';
 
 const janela = (page: Page) => page.locator('app-janela-de-run');
 const executar = (page: Page) =>
@@ -10,10 +10,10 @@ const executar = (page: Page) =>
 const log = (page: Page) => page.getByRole('region', { name: /Log de inicialização/ });
 
 test.describe('Janela de Run: nunca abre sozinha', () => {
-  test('na primeira visita de verdade, nem depois das boas-vindas, a janela não abre', async ({
+  test('na primeira visita de verdade a um link direto, só o aviso aparece e a janela não abre', async ({
     page,
   }) => {
-    await verBoasVindas(page);
+    await verAbertura(page);
     await page.goto('/skills');
     await expect(page.locator('app-barra-de-status .aviso')).toContainText(
       'PortfolioApplication started in 1.8 s',
@@ -148,11 +148,12 @@ test.describe('Janela de Run: Pular, Esc e leitura durante o log', () => {
     await expect(janela(page)).toHaveAttribute('data-aberto', 'true');
     await expect(page.locator('main code > .linha').first()).toBeVisible();
 
-    const editor = (await page.locator('main app-editor-de-codigo').boundingBox())!;
+    // O `main` rola por dentro: a janela de Run fica abaixo dele, sem cobrir o texto.
+    const main = (await page.getByRole('main').boundingBox())!;
     const caixa = (await janela(page).boundingBox())!;
 
-    expect(editor.y + editor.height).toBeLessThanOrEqual(caixa.y + 1);
-    expect(editor.height).toBeGreaterThan(300);
+    expect(main.y + main.height).toBeLessThanOrEqual(caixa.y + 1);
+    expect(main.height).toBeGreaterThan(300);
   });
 
   test('aberto pelo Executar com movimento reduzido, o log já nasce completo e sem Pular', async ({

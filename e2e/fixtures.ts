@@ -1,13 +1,14 @@
 import { expect, test as base } from '@playwright/test';
 import type { BrowserContext } from '@playwright/test';
 
-/** Chave que marca a sessão em que a tela de boas-vindas já foi vista (core/boas-vindas.ts). */
-const CHAVE_DAS_BOAS_VINDAS = 'boas-vindas-exibida';
+/** Chave que marca a sessão em que a abertura (ou o aviso, num link direto) já foi exibida (core/abertura.ts). */
+const CHAVE_DA_ABERTURA = 'abertura-exibida';
 
 /**
- * A tela de boas-vindas deixa a casca `inert` por até 2 s na primeira página de cada sessão. Para
- * os testes não esperarem por ela, todo contexto começa com a sessão já marcada. Só
- * `boas-vindas.spec.ts` pede a primeira visita de verdade, com `verBoasVindas(page)`.
+ * A abertura deixa a casca `inert` por até ~12 s na primeira visita a `/` de cada sessão. Para os
+ * testes não esperarem por ela, todo contexto começa com a sessão já marcada. Só `abertura.spec.ts`
+ * (e o teste de link direto da janela de Run) pedem a primeira visita de verdade, com
+ * `verAbertura(page)`.
  */
 const semearSessao = (contexto: BrowserContext) =>
   contexto.addInitScript((chave) => {
@@ -16,7 +17,7 @@ const semearSessao = (contexto: BrowserContext) =>
     } catch {
       // Armazenamento bloqueado pelo teste: a tela só aparece se o app não conseguir lembrar.
     }
-  }, CHAVE_DAS_BOAS_VINDAS);
+  }, CHAVE_DA_ABERTURA);
 
 export const test = base.extend({
   // Cobre o `page` do Playwright: o contexto já nasce com a sessão marcada.
