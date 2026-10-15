@@ -67,6 +67,35 @@ describe('montarLog', () => {
     );
   });
 
+  it('traz o logger curto logo depois do logger, sem mudar o texto corrido da linha', () => {
+    const linha = montarLog(INICIO).at(-1)!;
+    const papeis = linha.trechos.map((trecho) => trecho.papel);
+    const curto = linha.trechos[papeis.indexOf('logger-curto')];
+
+    expect(papeis.indexOf('logger-curto')).toBe(papeis.indexOf('logger') + 1);
+    expect(curto.texto).toBe('PortfolioApplication');
+    expect(linha.texto).not.toContain('logger-curto');
+    expect(linha.texto).toMatch(/ d\.v\.portfolio\.PortfolioApplication {2,}: Started/);
+  });
+
+  it('tem um logger curto em todas as mensagens', () => {
+    const curtos = montarLog(INICIO).map(
+      (linha) => linha.trechos.find((t) => t.papel === 'logger-curto')?.texto,
+    );
+
+    expect(curtos.every((texto) => !!texto)).toBe(true);
+    expect(new Set(curtos)).toEqual(
+      new Set([
+        'PortfolioApplication',
+        'TomcatWebServer',
+        'StandardService',
+        'StandardEngine',
+        '[localhost].[/]',
+        'ServletWebServerAppCtx',
+      ]),
+    );
+  });
+
   it('tem a data com o deslocamento do fuso', () => {
     expect(dataDoLog(INICIO)).toMatch(/^2026-10-14T15:02:11\.482[+-]\d{2}:\d{2}$/);
   });
