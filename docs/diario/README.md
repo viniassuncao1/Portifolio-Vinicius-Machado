@@ -35,6 +35,7 @@ e eu quero mostrar o processo, não só o resultado.
 | [0015](0015-fotos-de-perfil.md)                     | 2026-10-14 | Retrato redondo no Javadoc do editor: fotos do Vinicius e da Luana, com @author linkando o LinkedIn.                 |
 | [0016](0016-boas-vindas-repositorio-e-ux.md)        | 2026-10-14 | Auditoria de UX: tela de boas-vindas, repositório no estilo do GitHub e melhorias de leitura e navegação.            |
 | [0017](0017-abertura-com-run.md)                    | 2026-10-15 | A abertura vira rodar o projeto: splash, Run, build das classes e log do Spring, sem pular (ADR-0017).               |
+| [0018](0018-projeto-5-o-proprio-portfolio.md)       | 2026-10-15 | Projeto 5, "Este portfólio": o estudo com IA, SDD no OpenSpec, ECC e Maestri, com fatos conferidos.                  |
 
 ## Modelo de entrada
 
