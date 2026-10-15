@@ -14,7 +14,7 @@
 
 ## 4. Testes [Sentinela]
 
-- [ ] 4.1 Cobrir as specs (fases e tempos com relógio, execução automática, sem pular, link direto, sessão, movimento reduzido, sem JavaScript, foco, axe em cada fase nos dois temas e no celular) — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
+- [x] 4.1 Cobrir as specs (fases e tempos com relógio, execução automática, sem pular, link direto, sessão, movimento reduzido, sem JavaScript, foco, axe em cada fase nos dois temas e no celular) — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
 
 ## 5. Documentação e integração
 
