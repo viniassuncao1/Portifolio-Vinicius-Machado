@@ -80,6 +80,9 @@ const MENSAGENS: readonly Mensagem[] = [
   },
 ];
 
+/** Quantas mensagens INFO o log tem (a última é o "Started"). */
+export const QUANTIDADE_DE_MENSAGENS_DO_LOG = MENSAGENS.length;
+
 const doisDigitos = (n: number): string => String(n).padStart(2, '0');
 
 /** Data e hora no formato do log do Spring Boot 3: `2026-10-14T15:02:11.482-03:00`. */
@@ -95,13 +98,10 @@ export function dataDoLog(data: Date): string {
   );
 }
 
-/**
- * O log de inicialização do `PortfolioApplication`: o banner do Spring e as linhas no formato do
- * Spring Boot 3 (data, nível, PID, thread, logger e mensagem). Só o instante e o PID mudam: vêm do
- * relógio do navegador na abertura, então o pré-render nunca tem datas.
- */
-export function montarLog(inicio: Date): readonly LinhaDoLog[] {
-  const pid = 4000 + (inicio.getTime() % 5000);
+const LINHA_EM_BRANCO: LinhaDoLog = { texto: '', trechos: [] };
+
+/** O banner do Spring e a linha `:: Spring Boot ::`, que aparecem de uma vez antes das mensagens. */
+export function montarBanner(): readonly LinhaDoLog[] {
   const banner: LinhaDoLog[] = BANNER.map((texto) => ({
     texto,
     trechos: [{ texto, papel: 'banner' }],
@@ -110,9 +110,18 @@ export function montarLog(inicio: Date): readonly LinhaDoLog[] {
     texto: VERSAO_DO_SPRING,
     trechos: [{ texto: VERSAO_DO_SPRING, papel: 'versao' }],
   };
+  return [...banner, versao];
+}
 
+/**
+ * As 9 mensagens INFO de inicialização do `PortfolioApplication`, no formato do Spring Boot 3 (data,
+ * nível, PID, thread, logger e mensagem), sem o banner. Só o instante e o PID mudam: vêm do relógio
+ * do navegador na abertura, então o pré-render nunca tem datas. A última é o "Started".
+ */
+export function montarLog(inicio: Date): readonly LinhaDoLog[] {
+  const pid = 4000 + (inicio.getTime() % 5000);
   let instante = inicio.getTime();
-  const linhas = MENSAGENS.map((mensagem): LinhaDoLog => {
+  return MENSAGENS.map((mensagem): LinhaDoLog => {
     instante += mensagem.depois;
     const data = dataDoLog(new Date(instante));
     const thread = '[           main]';
@@ -131,5 +140,11 @@ export function montarLog(inicio: Date): readonly LinhaDoLog[] {
       ],
     };
   });
-  return [...banner, versao, { texto: '', trechos: [] }, ...linhas];
 }
+
+/** O log inteiro como a janela de Run mostra: banner, linha em branco e as mensagens. */
+export const montarLogCompleto = (inicio: Date): readonly LinhaDoLog[] => [
+  ...montarBanner(),
+  LINHA_EM_BRANCO,
+  ...montarLog(inicio),
+];

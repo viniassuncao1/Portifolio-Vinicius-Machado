@@ -1,14 +1,40 @@
-import { dataDoLog, montarLog } from './log';
+import { dataDoLog, montarBanner, montarLog, montarLogCompleto } from './log-do-spring';
 
 const INICIO = new Date(2026, 9, 14, 15, 2, 11, 482);
 
+describe('montarBanner', () => {
+  it('tem o banner do Spring e a linha da versão, sem mensagens', () => {
+    const linhas = montarBanner();
+
+    expect(linhas).toHaveLength(7);
+    expect(linhas.at(-1)?.texto).toContain(':: Spring Boot ::');
+    expect(linhas.every((linha) => !linha.texto.includes('INFO'))).toBe(true);
+  });
+});
+
+describe('montarLogCompleto', () => {
+  it('junta banner, linha em branco e as 9 mensagens', () => {
+    const linhas = montarLogCompleto(INICIO);
+
+    expect(linhas).toHaveLength(7 + 1 + 9);
+    expect(linhas[7].texto).toBe('');
+    expect(linhas.at(-1)).toEqual(montarLog(INICIO).at(-1));
+  });
+});
+
 describe('montarLog', () => {
-  it('tem o banner do Spring, a versão e as linhas de inicialização', () => {
+  it('tem só as 9 mensagens INFO, sem o banner', () => {
+    const linhas = montarLog(INICIO);
+
+    expect(linhas).toHaveLength(9);
+    expect(linhas.every((linha) => linha.texto.includes(' INFO '))).toBe(true);
+  });
+
+  it('tem as linhas de inicialização, da primeira ao Started', () => {
     const texto = montarLog(INICIO)
       .map((linha) => linha.texto)
       .join('\n');
 
-    expect(texto).toContain(':: Spring Boot ::');
     expect(texto).toContain('Starting PortfolioApplication using Java 21');
     expect(texto).toContain("Tomcat started on port 8080 (http) with context path '/'");
     expect(montarLog(INICIO).at(-1)?.texto).toContain(
