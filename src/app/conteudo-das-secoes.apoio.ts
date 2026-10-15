@@ -1,4 +1,4 @@
-import { CONTEUDOS_CERTIFICACOES } from './features/certificacoes/certificacoes.conteudo';
+import { CONTEUDO_CERTIFICACOES } from './features/certificacoes/certificacoes.conteudo';
 import { CONTEUDO_COMO_USO_IA } from './features/como-uso-ia/como-uso-ia.conteudo';
 import { CONTEUDO_CONTATO } from './features/contato/contato.conteudo';
 import { CONTEUDO_DIFERENCIAIS } from './features/diferenciais/diferenciais.conteudo';
@@ -29,10 +29,7 @@ export const DOCUMENTOS: readonly (readonly [string, ConteudoDoEditor])[] = [
   ['Formação', CONTEUDO_FORMACAO],
   ['Idiomas', CONTEUDO_IDIOMAS],
   ['Contato', CONTEUDO_CONTATO],
-  ...CONTEUDOS_CERTIFICACOES.map((c, i): [string, ConteudoDoEditor] => [
-    `Certificações ${i + 1}/${CONTEUDOS_CERTIFICACOES.length}`,
-    c,
-  ]),
+  ['Certificações', CONTEUDO_CERTIFICACOES],
 ];
 
 /** Texto de uma linha como o leitor vê: trechos de código ou o texto do Javadoc/parágrafo. */

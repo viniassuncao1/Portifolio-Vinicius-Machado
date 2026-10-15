@@ -19,8 +19,6 @@ interface Curso {
   readonly concluidoEm: readonly [ano: number, mes: number, dia: number];
 }
 
-const CURSOS_POR_PAGINA = 3;
-
 const CURSOS: readonly Curso[] = [
   {
     variavel: 'springBoot',
@@ -104,7 +102,18 @@ const curso = (c: Curso): readonly Linha[] => {
   ];
 };
 
-const registro: readonly Linha[] = [
+/**
+ * Conteúdo da seção (telas 19 a 21) num arquivo só: o cabeçalho e o record uma vez, e os nove
+ * cursos num bloco, do mais recente para o mais antigo.
+ */
+export const CONTEUDO_CERTIFICACOES: ConteudoDoEditor = [
+  vazia(),
+  linha(0, palavraChave('package'), comum(' dev.vinicius.portfolio.formacao;')),
+  vazia(),
+  linha(0, palavraChave('import'), comum(' java.time.LocalDate;')),
+  vazia(),
+  linha(0, palavraChave('public class'), comum(' Certificacoes {')),
+  vazia(),
   linha(1, comentario('// Cada curso tem o nome, as horas e a data de conclusão')),
   linha(
     1,
@@ -118,25 +127,7 @@ const registro: readonly Linha[] = [
     comum(') {}'),
   ),
   vazia(),
-];
-
-const pagina = (cursos: readonly Curso[], comRegistro: boolean): ConteudoDoEditor => [
-  vazia(),
-  ...(comRegistro
-    ? [linha(0, palavraChave('package'), comum(' dev.vinicius.portfolio.formacao;')), vazia()]
-    : []),
-  linha(0, palavraChave('import'), comum(' java.time.LocalDate;')),
-  vazia(),
-  linha(0, palavraChave('public class'), comum(' Certificacoes {')),
-  vazia(),
-  ...(comRegistro ? registro : []),
   linha(1, comentario('// Cursos concluídos, do mais recente para o mais antigo')),
-  ...cursos.flatMap(curso),
+  ...CURSOS.flatMap(curso),
   linha(0, comum('}')),
 ];
-
-/** Um item por página, três cursos em cada: `/certificacoes`, `/certificacoes/2` e `/3`. */
-export const CONTEUDOS_CERTIFICACOES: readonly ConteudoDoEditor[] = Array.from(
-  { length: Math.ceil(CURSOS.length / CURSOS_POR_PAGINA) },
-  (_, i) => pagina(CURSOS.slice(i * CURSOS_POR_PAGINA, (i + 1) * CURSOS_POR_PAGINA), i === 0),
-);

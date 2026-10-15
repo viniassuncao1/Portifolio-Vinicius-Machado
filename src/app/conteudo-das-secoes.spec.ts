@@ -1,4 +1,4 @@
-import { CONTEUDOS_CERTIFICACOES } from './features/certificacoes/certificacoes.conteudo';
+import { CONTEUDO_CERTIFICACOES } from './features/certificacoes/certificacoes.conteudo';
 import { CONTEUDO_COMO_USO_IA } from './features/como-uso-ia/como-uso-ia.conteudo';
 import { CONTEUDO_CONTATO } from './features/contato/contato.conteudo';
 import { CONTEUDO_DIFERENCIAIS } from './features/diferenciais/diferenciais.conteudo';
@@ -35,10 +35,10 @@ function problemaDeBalanceamento(codigo: string): string | null {
 }
 
 describe('conteúdo das seções em Java moderno', () => {
-  it('cobre as 17 páginas das 11 seções (Início, Skills, Experiências e Certificações paginadas)', () => {
-    expect(DOCUMENTOS).toHaveLength(17);
+  it('cobre as 15 páginas das 11 seções (Início, Skills e Experiências paginadas)', () => {
+    expect(DOCUMENTOS).toHaveLength(15);
     expect(DOCUMENTOS.map(([nome]) => nome)).toEqual(
-      expect.arrayContaining(['Skills 3/3', 'Experiências 3/3', 'Certificações 3/3']),
+      expect.arrayContaining(['Skills 3/3', 'Experiências 3/3', 'Certificações']),
     );
   });
 
@@ -154,7 +154,7 @@ describe('conteúdo das seções em Java moderno', () => {
         ['Eventos', CONTEUDO_EVENTOS],
         ['Formação', CONTEUDO_FORMACAO],
         ['Contato', CONTEUDO_CONTATO],
-        ['Certificações 1', CONTEUDOS_CERTIFICACOES[0]],
+        ['Certificações', CONTEUDO_CERTIFICACOES],
       ];
 
       for (const [nome, c] of comRecord) {
