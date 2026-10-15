@@ -22,7 +22,7 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
   (que se aciona sozinho em 5 s), o build das classes do portfólio (uma por seção) e o log do Spring subindo, e então a IDE
   aparece. Só na página inicial e uma vez por sessão, com o conteúdo sempre no HTML
   ([ADR-0017](docs/adr/0017-abertura-com-run.md)).
-- **Projeto 5, "Este portfólio":** uma seção em quatro páginas conta o estudo de desenvolvimento com
+- **Projeto 5, "Este portfólio":** uma seção conta o estudo de desenvolvimento com
   IA por trás do site: o processo, specs antes do código com o OpenSpec (SDD), o ECC e a equipe de
   agentes no Maestri.
 - **Página do repositório:** o `master` da barra e o ícone Commit abrem, numa aba, uma página no

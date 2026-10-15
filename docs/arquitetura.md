@@ -38,7 +38,8 @@ O raciocínio completo, com alternativas descartadas, está no design da change 
 
 `app.routes.ts` tem uma rota-pai `''` com o componente `Casca` (`layout/`) e as rotas filhas:
 o Início (`''`) e as 16 seções de `core/secoes.ts` (`sobre-mim`, `skills`, `contato` etc.), mais
-uma rota por página extra das seções que declaram `paginas` (`/skills/2`). A casca
+redirecionamentos dos endereços antigos de página (`/skills/2` leva a `/skills`), porque cada seção é um
+arquivo só, sem paginação ([ADR-0018](adr/0018-secoes-num-arquivo-so.md)). A casca
 (barra superior, faixa de ferramentas, painel do projeto, faixa de abas, editor e barra de status) é montada uma vez e não recarrega entre
 seções: só o conteúdo do `<router-outlet>` troca, e a View Transitions API anima apenas ele.
 
@@ -293,7 +294,7 @@ pré-renderização e já está no HTML de cada rota.
   `EstrategiaDeTitulo.tituloDaJanela`, o mesmo cálculo que grava o título da janela.
 - **Domínio:** a constante `URL_DO_SITE` é o único lugar a trocar quando o site ganhar domínio próprio.
 - **Descrições:** cada `Secao` (`core/secoes.ts`) tem um campo `descricao` em pt-BR, de até 160
-  caracteres. As páginas internas (`/skills/2`) usam a da seção, e o Início usa
+  caracteres. Os endereços antigos de página (`/skills/2`) redirecionam para a seção, e o Início usa
   `DESCRICAO_DO_INICIO`.
 - **JSON-LD:** o `<script type="application/ld+json">` com o `Person` (nome, cargo, LinkedIn, GitHub
   e stack) existe só no Início e é removido nas outras rotas.
@@ -301,7 +302,7 @@ pré-renderização e já está no HTML de cada rota.
   gerada por `scripts/gerar-imagem-de-compartilhamento.mjs` (Playwright, com movimento reduzido).
 - **Sitemap e robots:** `scripts/gerar-sitemap.mjs` roda no script `build`, depois do `ng build`,
   percorre os `index.html` pré-renderizados em `dist/` e escreve o `sitemap.xml`, então ele
-  acompanha as rotas sozinho. O `public/robots.txt` é estático e aponta para o sitemap.
+  acompanha as rotas sozinho (só os endereços das seções, sem os de página, que redirecionam). O `public/robots.txt` é estático e aponta para o sitemap.
 
 ## Diário de desenvolvimento
 

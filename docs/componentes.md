@@ -8,44 +8,43 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 
 ## Inventário das telas
 
-| Elemento da tela                                               | Telas            | Componente                        | Pasta                          |
-| -------------------------------------------------------------- | ---------------- | --------------------------------- | ------------------------------ |
-| Barra de ferramentas do design (ícones, branch, Buscar)        | todas            | `BarraDeFerramentas`              | `layout/barra-de-ferramentas/` |
-| Faixa de ferramentas à esquerda (Projeto, Commit, Estrutura)   | desktop (nossa)  | `FaixaDeFerramentas`              | `layout/faixa-de-ferramentas/` |
-| Página do repositório (estilo do GitHub, numa aba)             | (nossa)          | `Repositorio`                     | `features/repositorio/`        |
-| Abertura com Run (splash, ▶, build e log do Spring)            | (nossa)          | `Abertura`                        | `layout/abertura/`             |
-| Próximo arquivo e code vision                                  | (nossos)         | `ProximoArquivo`, `VisaoDeCodigo` | `shared/`                      |
-| Janela de Run (log de inicialização do Spring)                 | (nosso)          | `JanelaDeRunComponente`           | `layout/janela-de-run/`        |
-| Painel do projeto (cabeçalho "Projeto", árvore, rodapé)        | todas            | `PainelLateral`                   | `layout/painel-lateral/`       |
-| Árvore de seções com ícones                                    | todas            | `ArvoreDeSecoes`                  | `layout/arvore-de-secoes/`     |
-| Faixa de abas dos arquivos abertos                             | todas (nossa)    | `FaixaDeAbas`                     | `layout/faixa-de-abas/`        |
-| Barra de status no rodapé                                      | (nossa)          | `BarraDeStatus`                   | `layout/barra-de-status/`      |
-| Busca de seções (Ctrl/Cmd+P)                                   | (nossa)          | `BuscaDeSecoes`                   | `layout/busca-de-secoes/`      |
-| Casca (junta tudo e hospeda as rotas)                          | todas            | `Casca`                           | `layout/casca/`                |
-| Editor com numeração e sintaxe                                 | todas            | `EditorDeCodigo`                  | `shared/editor-de-codigo/`     |
-| Bloco de comentário com `*`                                    | 02-04, 07-18, 29 | parte do `EditorDeCodigo`         | `shared/editor-de-codigo/`     |
-| Ícones (arquivo, pasta, ferramenta, IA...)                     | todas            | `Icone`                           | `shared/icone/`                |
-| "×" fino                                                       | todas            | `GlifoFechar`                     | `shared/glifo-fechar/`         |
-| Início                                                         | 01               | `Inicio`                          | `features/inicio/`             |
-| Sobre Mim                                                      | 02               | `SobreMim`                        | `features/sobre-mim/`          |
-| Diferenciais                                                   | 03               | `Diferenciais`                    | `features/diferenciais/`       |
-| Como uso a IA                                                  | 04               | `ComoUsoIa`                       | `features/como-uso-ia/`        |
-| Skills / STACK (3 páginas, a 3ª com os níveis de conhecimento) | 05, 06 e níveis  | `Skills`                          | `features/skills/`             |
-| Controle de páginas (1/2, setas SVG)                           | 05, 06 (nosso)   | `PaginasDaSecao`                  | `shared/paginas-da-secao/`     |
-| Experiências (3 páginas)                                       | 07-09            | `Experiencias`                    | `features/experiencias/`       |
-| Eventos                                                        | 22               | `Eventos`                         | `features/eventos/`            |
-| Projeto 1: Ana, agente de IA no WhatsApp                       | 10               | `Projeto1`                        | `features/projeto-1/`          |
-| Projeto 2: landing page da Dra. Juliana (com preview)          | 11-13            | `Projeto2`                        | `features/projeto-2/`          |
-| Projeto 3: landing page da Watts Company (com preview)         | 14, 15           | `Projeto3`                        | `features/projeto-3/`          |
-| Projeto 4: cases da Memora (3 páginas)                         | 16-18            | `Projeto4`                        | `features/projeto-4/`          |
-| Projeto 5: este portfólio, um estudo com IA (4 páginas)        | (nosso)          | `Projeto5`                        | `features/projeto-5/`          |
-| Certificações (3 páginas, 9 cursos)                            | (nossa)          | `Certificacoes`                   | `features/certificacoes/`      |
-| Formação                                                       | 28               | `Formacao`                        | `features/formacao/`           |
-| Idiomas                                                        | 28               | `Idiomas`                         | `features/idiomas/`            |
-| Contato (links com cara de link e Copiar e-mail)               | 30               | `Contato`                         | `features/contato/`            |
-| Seção sem conteúdo ainda                                       | 10-21, 23-27, 29 | `SecaoEmConstrucao`               | `shared/secao-em-construcao/`  |
-| Janela de preview de site                                      | 11-15            | `JanelaDePreviewComponente`       | `shared/janela-de-preview/`    |
-| ▶ Executar na calha (abre o preview)                           | (nosso)          | `BotaoExecutar`                   | `shared/botao-executar/`       |
+| Elemento da tela                                             | Telas            | Componente                        | Pasta                          |
+| ------------------------------------------------------------ | ---------------- | --------------------------------- | ------------------------------ |
+| Barra de ferramentas do design (ícones, branch, Buscar)      | todas            | `BarraDeFerramentas`              | `layout/barra-de-ferramentas/` |
+| Faixa de ferramentas à esquerda (Projeto, Commit, Estrutura) | desktop (nossa)  | `FaixaDeFerramentas`              | `layout/faixa-de-ferramentas/` |
+| Página do repositório (estilo do GitHub, numa aba)           | (nossa)          | `Repositorio`                     | `features/repositorio/`        |
+| Abertura com Run (splash, ▶, build e log do Spring)          | (nossa)          | `Abertura`                        | `layout/abertura/`             |
+| Próximo arquivo e code vision                                | (nossos)         | `ProximoArquivo`, `VisaoDeCodigo` | `shared/`                      |
+| Janela de Run (log de inicialização do Spring)               | (nosso)          | `JanelaDeRunComponente`           | `layout/janela-de-run/`        |
+| Painel do projeto (cabeçalho "Projeto", árvore, rodapé)      | todas            | `PainelLateral`                   | `layout/painel-lateral/`       |
+| Árvore de seções com ícones                                  | todas            | `ArvoreDeSecoes`                  | `layout/arvore-de-secoes/`     |
+| Faixa de abas dos arquivos abertos                           | todas (nossa)    | `FaixaDeAbas`                     | `layout/faixa-de-abas/`        |
+| Barra de status no rodapé                                    | (nossa)          | `BarraDeStatus`                   | `layout/barra-de-status/`      |
+| Busca de seções (Ctrl/Cmd+P)                                 | (nossa)          | `BuscaDeSecoes`                   | `layout/busca-de-secoes/`      |
+| Casca (junta tudo e hospeda as rotas)                        | todas            | `Casca`                           | `layout/casca/`                |
+| Editor com numeração e sintaxe                               | todas            | `EditorDeCodigo`                  | `shared/editor-de-codigo/`     |
+| Bloco de comentário com `*`                                  | 02-04, 07-18, 29 | parte do `EditorDeCodigo`         | `shared/editor-de-codigo/`     |
+| Ícones (arquivo, pasta, ferramenta, IA...)                   | todas            | `Icone`                           | `shared/icone/`                |
+| "×" fino                                                     | todas            | `GlifoFechar`                     | `shared/glifo-fechar/`         |
+| Início                                                       | 01               | `Inicio`                          | `features/inicio/`             |
+| Sobre Mim                                                    | 02               | `SobreMim`                        | `features/sobre-mim/`          |
+| Diferenciais                                                 | 03               | `Diferenciais`                    | `features/diferenciais/`       |
+| Como uso a IA                                                | 04               | `ComoUsoIa`                       | `features/como-uso-ia/`        |
+| Skills / STACK (com os níveis de conhecimento)               | 05, 06 e níveis  | `Skills`                          | `features/skills/`             |
+| Experiências                                                 | 07-09            | `Experiencias`                    | `features/experiencias/`       |
+| Eventos                                                      | 22               | `Eventos`                         | `features/eventos/`            |
+| Projeto 1: Ana, agente de IA no WhatsApp                     | 10               | `Projeto1`                        | `features/projeto-1/`          |
+| Projeto 2: landing page da Dra. Juliana (com preview)        | 11-13            | `Projeto2`                        | `features/projeto-2/`          |
+| Projeto 3: landing page da Watts Company (com preview)       | 14, 15           | `Projeto3`                        | `features/projeto-3/`          |
+| Projeto 4: cases da Memora                                   | 16-18            | `Projeto4`                        | `features/projeto-4/`          |
+| Projeto 5: este portfólio, um estudo com IA                  | (nosso)          | `Projeto5`                        | `features/projeto-5/`          |
+| Certificações (9 cursos)                                     | (nossa)          | `Certificacoes`                   | `features/certificacoes/`      |
+| Formação                                                     | 28               | `Formacao`                        | `features/formacao/`           |
+| Idiomas                                                      | 28               | `Idiomas`                         | `features/idiomas/`            |
+| Contato (links com cara de link e Copiar e-mail)             | 30               | `Contato`                         | `features/contato/`            |
+| Seção sem conteúdo ainda                                     | 10-21, 23-27, 29 | `SecaoEmConstrucao`               | `shared/secao-em-construcao/`  |
+| Janela de preview de site                                    | 11-15            | `JanelaDePreviewComponente`       | `shared/janela-de-preview/`    |
+| ▶ Executar na calha (abre o preview)                         | (nosso)          | `BotaoExecutar`                   | `shared/botao-executar/`       |
 
 O design é **referência de identidade visual** ([ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md)).
 Por isso o site tem o que as telas, estáticas, não mostram: a faixa de abas, a barra de status, a
@@ -311,24 +310,6 @@ projetos →` e `// Fale comigo →`) nem na última seção.
 - **O que faz:** o "×" fino, em SVG, decorativo. Herda a cor do texto; o tamanho vem do
   token `--tamanho-glifo`.
 - **Entradas e saídas:** nenhuma.
-
-### `PaginasDaSecao`
-
-- **Onde:** `shared/paginas-da-secao/paginas-da-secao.ts`, seletor `app-paginas-da-secao`.
-- **O que faz:** o controle de páginas de uma seção com mais de uma tela do design (hoje, Skills):
-  setas em SVG para anterior e próxima e o texto `1/2` entre elas, num
-  `<nav aria-label="Páginas da seção">`. Os links são `routerLink` para `/<slug>` (página 1) e
-  `/<slug>/N`. As setas têm `aria-label` "Página anterior" e "Próxima página"; o número tem o
-  rótulo "página X de N" e `aria-current="page"`. Na primeira e na última página, o lado sem
-  destino fica como espaço vazio decorativo. **Não aparece quando `total` é 1.** Esse controle
-  não existe no design (as telas são estáticas): é o mínimo para navegar entre as páginas de uma
-  mesma seção, só com tokens.
-- **Entradas:** `slug = input.required<string>()`, `pagina = input.required<number>()` e
-  `total = input.required<number>()`.
-
-```html
-<app-paginas-da-secao slug="skills" [pagina]="pagina()" [total]="totalDePaginas()" />
-```
 
 ### `JanelaDePreviewComponente`
 
@@ -626,12 +607,11 @@ Em TypeScript, o arquivo de conteúdo monta as linhas com as construtoras, por e
 
 Todas as seções publicadas foram feitas assim e servem de exemplo real: o Início
 (`features/inicio/`), **Sobre Mim**, **Diferenciais**, **Como uso a IA**, **Skills / STACK**,
-**Experiências** (3 páginas), **Eventos**, **Formação**, **Idiomas** e **Contato**. As demais
+**Experiências**, **Eventos**, **Formação**, **Idiomas** e **Contato**. As demais
 seções (projetos, certificações e depoimentos) ainda mostram `SecaoEmConstrucao`. Para dar conteúdo a uma delas não é preciso criar componente de editor,
 estilo nem item de árvore.
 
-1. **Confirme a seção em `core/secoes.ts`.** A lista `SECOES` (`slug`, `titulo`, `icone`, `arquivo` e,
-   opcionalmente, `paginas`) é a fonte única: dela saem os itens da árvore, as rotas e os títulos. Para uma seção nova, acrescente um
+1. **Confirme a seção em `core/secoes.ts`.** A lista `SECOES` (`slug`, `titulo`, `icone`, `arquivo` e `pacote`) é a fonte única: dela saem os itens da árvore, as rotas e os títulos. Para uma seção nova, acrescente um
    item na posição em que ela deve aparecer, com o `arquivo` `.java` dela (por exemplo,
    `Eventos.java`). O `icone` precisa estar em `NOMES_DE_ICONE`.
 2. **Crie o conteúdo em `features/<slug>/<slug>.conteudo.ts`**, exportando um `ConteudoDoEditor`
@@ -708,56 +688,31 @@ estilo nem item de árvore.
 5. **Teste.** Um `<slug>.spec.ts` ao lado do componente e um cenário no E2E. O teste de
    acessibilidade (`e2e/acessibilidade.spec.ts`) já percorre as rotas geradas da lista.
 
-### Seção com várias páginas
+### Seção longa: um arquivo só
 
-Algumas seções têm mais de uma tela no design (Skills tem as telas 05 e 06). Em vez de uma rota
-com parâmetro, cada página é uma rota estática pré-renderizada, e o mecanismo é todo dados:
+Algumas seções têm várias partes (Skills, Experiências, Certificações, Projeto 4 e Projeto 5). Elas
+**não são paginadas**: o controle `◂ n/N ▸` saiu do site, junto com o campo `paginas` de
+`core/secoes.ts` e as rotas por página ([ADR-0018](adr/0018-secoes-num-arquivo-so.md)). Cada seção é
+um **único `ConteudoDoEditor`**, que se rola.
 
-1. **Declare `paginas` em `core/secoes.ts`.** É o único lugar:
-
-   ```ts
-   { slug: 'skills', titulo: 'Skills / STACK', icone: 'ferramenta', paginas: 2 },
-   ```
-
-   A função `totalDePaginas(secao)` devolve `paginas ?? 1`.
-
-2. **Rotas e título saem sozinhos.** `rotasDaSecao` gera `/<slug>` (página 1) e `/<slug>/2` até
-   `/<slug>/N`, cada uma com `data: { pagina, totalDePaginas }` (tipo `DadosDePagina`). A
-   `EstrategiaDeTitulo` acrescenta `(X/N)` ao título a partir da página 2, como em
-   `Skills / STACK (2/2) | Vinicius Machado`. A árvore mantém a seção como atual em qualquer página.
-   Uma página fora do intervalo cai no `**` e volta ao Início.
-3. **O conteúdo é um array, um item por página.** Em `features/skills/skills.conteudo.ts`:
-
-   ```ts
-   export const CONTEUDOS_SKILLS: readonly ConteudoDoEditor[] = [
-     [vazia(), CABECALHO, ...arrayDeTextos('linguagens', ['Java', 'TypeScript'])],
-     [vazia(), CABECALHO, ...arrayDeTextos('cloudAndInfra', ['Docker', 'Kubernetes'])],
-   ];
-   ```
-
-4. **A feature recebe a página como `input()`.** O roteador entrega o `data` da rota aos inputs
-   do componente (`withComponentInputBinding`, em `app.config.ts`), e o componente escolhe o
-   conteúdo e mostra o controle:
+1. **O cabeçalho aparece uma vez.** `package`, `import` e a declaração da classe abrem o arquivo.
+2. **Cada parte vira um bloco da mesma classe,** com um comentário de cabeçalho (`// Memora`,
+   `// Watts Company`), o Javadoc (no modo de leitura) e a instância do `record`, sem repetir o resto.
+3. **A feature só desenha o conteúdo.** Sem `input()` de página nem controle:
 
    ```ts
    @Component({
      selector: 'app-skills',
-     imports: [EditorDeCodigo, PaginasDaSecao],
-     template: `
-       <app-editor-de-codigo [conteudo]="conteudo()" />
-       <app-paginas-da-secao slug="skills" [pagina]="pagina()" [total]="totalDePaginas()" />
-     `,
+     imports: [EditorDeCodigo],
+     template: `<app-editor-de-codigo [conteudo]="conteudo" />`,
    })
    export class Skills {
-     readonly pagina = input(1);
-     readonly totalDePaginas = input(CONTEUDOS_SKILLS.length);
-
-     protected readonly conteudo = computed(() => CONTEUDOS_SKILLS[this.pagina() - 1]);
+     protected readonly conteudo = CONTEUDO_SKILLS;
    }
    ```
 
-Seções de uma página só (como `ComoUsoIa`) não precisam de nada disso. A mesma estrutura serve às
-próximas seções com várias telas, só declarando quantas páginas têm.
+4. **Links antigos.** `/<slug>/<n>` redireciona para `/<slug>`, e o sitemap lista só as seções.
+   O "Próximo arquivo" fica no fim do arquivo e leva à seção seguinte da árvore.
 
 Uma feature não importa de outra feature: o editor e as construtoras vêm de `shared/`, e a lista
 de seções vem de `core/`.
