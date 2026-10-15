@@ -105,6 +105,16 @@ export const SECOES: readonly Secao[] = [
     paginas: 3,
   },
   {
+    slug: 'projeto-5',
+    titulo: 'Projeto 5',
+    icone: 'design-arquivo',
+    arquivo: 'Projeto5.java',
+    pacote: 'projetos',
+    descricao:
+      'Este portfólio: um estudo de desenvolvimento com IA, com SDD no OpenSpec, as skills do ECC e uma equipe de agentes no Maestri.',
+    paginas: 4,
+  },
+  {
     slug: 'certificacoes',
     titulo: 'Certificações',
     icone: 'design-arquivo',
