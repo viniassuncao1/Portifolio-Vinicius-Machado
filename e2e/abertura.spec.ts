@@ -254,8 +254,16 @@ test.describe('Abertura: pronto para executar', () => {
   }) => {
     await abrirComRelogio(page);
     await ateOPronto(page);
-
+    // O foco vai ao ▶ depois do próximo render e a entrada do widget anima em tempo real: dá
+    // quadros ao relógio até o foco chegar e espera os keyframes acabarem antes de medir.
+    await expect
+      .poll(async () => {
+        await page.clock.runFor(16);
+        return focado(page);
+      })
+      .toBe('BUTTON (abertura)');
     await expect(botaoRun(page)).toBeFocused();
+    await semAnimacoes(page);
     await expect(botaoRun(page)).toHaveAttribute('aria-keyshortcuts', /^(Control\+R|Shift\+F10)$/);
     const mac = await page.evaluate(() => /mac|iphone|ipad/i.test(navigator.platform));
     await expect(dialogo(page).locator('kbd.atalho')).toHaveText(mac ? '⌃R' : '⇧F10');
