@@ -16,6 +16,15 @@
   --curva-padrao: cubic-bezier(0.4, 0, 0.2, 1);
   // Cursor: alterna de uma vez, sem esmaecer.
   --curva-cursor: steps(1, end);
+
+  // Abertura (único momento de "storytelling" do site): entradas que assentam e o recolher da
+  // janela de Run até a barra de status, com um intervalo entre os painéis que entram.
+  --duracao-entrada-abertura: 280ms;
+  --duracao-recolher: 360ms;
+  --intervalo-escalonado: 60ms;
+  --curva-suave: cubic-bezier(0.22, 1, 0.36, 1);
+  // Movimento reduzido: só opacidade, curta.
+  --duracao-reduzida-abertura: 150ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -23,6 +32,9 @@
     --duracao-rapida: 0ms;
     --duracao-media: 0ms;
     --duracao-lenta: 0ms;
+    --duracao-entrada-abertura: 0ms;
+    --duracao-recolher: 0ms;
+    --intervalo-escalonado: 0ms;
   }
 }
 
@@ -88,5 +100,23 @@ html.transicao-de-tema {
 @keyframes movimento-aparecer {
   from {
     opacity: 0;
+  }
+}
+
+// Abertura: a janela de Run recolhe até o item da barra de status (View Transition com o nome
+// `console-de-run`, posto na janela só no instante da troca e no item durante a revelação).
+::view-transition-group(console-de-run) {
+  animation-duration: var(--duracao-recolher);
+  animation-timing-function: var(--curva-padrao);
+}
+
+::view-transition-old(console-de-run),
+::view-transition-new(console-de-run) {
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(console-de-run) {
+    animation: none;
   }
 }
