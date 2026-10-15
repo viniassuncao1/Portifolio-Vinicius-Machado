@@ -1,6 +1,6 @@
 import { expect, test } from './fixtures';
 
-import { SECOES, totalDePaginas } from '../src/app/core/secoes';
+import { SECOES } from '../src/app/core/secoes';
 import { codigoSemTextos, comentariosDoCodigo, listasDe, textoDoCodigo } from './apoio';
 
 const LIMITE_DA_LISTA_CURTA = 5;
@@ -10,15 +10,12 @@ const LIMITE_DE_CARACTERES_DO_ITEM_CURTO = 24;
 const PORTUGUES =
   /[áàâãéêíóôõúç]|\b(de|do|da|dos|das|que|cada|e|eu|em|os|as|um|uma|para|tem|uso|meu)\b/i;
 
-const paginasDe = (slug: string, total: number): string[] =>
-  Array.from({ length: total }, (_, i) => (i === 0 ? `/${slug}` : `/${slug}/${i + 1}`));
-
-/** O Início e cada seção com todas as suas páginas: o visitante lê a seção como um todo. */
+/** O Início e cada seção, que é um arquivo só: o visitante lê a seção como um todo. */
 const GRUPOS: readonly { nome: string; rotas: string[] }[] = [
   { nome: 'Início', rotas: ['/'] },
   ...SECOES.map((secao) => ({
     nome: secao.titulo,
-    rotas: paginasDe(secao.slug, totalDePaginas(secao)),
+    rotas: [`/${secao.slug}`],
   })),
 ];
 

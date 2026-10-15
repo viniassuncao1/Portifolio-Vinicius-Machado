@@ -1,7 +1,7 @@
 import { expect, test } from './fixtures';
 import type { Locator } from '@playwright/test';
 
-import { SECOES, totalDePaginas } from '../src/app/core/secoes';
+import { SECOES } from '../src/app/core/secoes';
 import { arquivoDaArvore, linhasDoCodigo, normalizar } from './apoio';
 
 const COR_VALOR = 'rgb(42, 172, 184)';
@@ -244,12 +244,8 @@ test.describe('Seções sem JavaScript', () => {
     await expect(arquivoDaArvore(page, 'Diferenciais')).toHaveAttribute('aria-current', 'page');
   });
 
-  test('nenhuma seção, em nenhuma página, mostra o aviso de em construção', async ({ page }) => {
-    const rotas = SECOES.flatMap((secao) =>
-      Array.from({ length: totalDePaginas(secao) }, (_, i) =>
-        i === 0 ? `/${secao.slug}` : `/${secao.slug}/${i + 1}`,
-      ),
-    );
+  test('nenhuma seção mostra o aviso de em construção', async ({ page }) => {
+    const rotas = SECOES.map((secao) => `/${secao.slug}`);
 
     for (const rota of ['/', ...rotas]) {
       await page.goto(rota);

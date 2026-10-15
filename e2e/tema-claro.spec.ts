@@ -2,20 +2,13 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from './fixtures';
 import type { Page, Route } from '@playwright/test';
 
-import { SECOES, totalDePaginas } from '../src/app/core/secoes';
+import { SECOES } from '../src/app/core/secoes';
 import { abrirHidratada, abrirPastas, arquivoDaArvore, contraste, esperarLogDoRun } from './apoio';
 
 const DESKTOP = { width: 1920, height: 1080 };
 const CELULAR = { width: 390, height: 844 };
 const TAGS = ['wcag2a', 'wcag2aa'];
-const ROTAS = [
-  '/',
-  ...SECOES.flatMap((secao) =>
-    Array.from({ length: totalDePaginas(secao) }, (_, i) =>
-      i === 0 ? `/${secao.slug}` : `/${secao.slug}/${i + 1}`,
-    ),
-  ),
-];
+const ROTAS = ['/', ...SECOES.map((secao) => `/${secao.slug}`)];
 
 const FUNDO_DA_PAGINA = { escuro: 'rgb(28, 28, 28)', claro: 'rgb(217, 217, 217)' };
 const FUNDO_DO_EDITOR = { escuro: 'rgb(43, 43, 43)', claro: 'rgb(247, 247, 247)' };

@@ -1,28 +1,20 @@
 import { expect, test } from './fixtures';
 import type { Page } from '@playwright/test';
 
-import { SECOES, totalDePaginas } from '../src/app/core/secoes';
+import { SECOES } from '../src/app/core/secoes';
 import { abrirHidratada, abrirPastas, arquivoDaArvore } from './apoio';
 
 const ORIGEM = 'https://portfolio-vinicius-machado.vercel.app';
 const SITE = 'Vinicius Machado';
 const IMAGEM = `${ORIGEM}/compartilhamento/portfolio.png`;
 const LIMITE_DA_DESCRICAO = 160;
-const TOTAL_DE_PAGINAS = 25;
+const TOTAL_DE_PAGINAS = 18;
 
 /**
- * O Início, cada página de cada seção (`/`, `/skills`, `/skills/2`) e a página do repositório, que
+ * O Início, cada seção (um arquivo só: `/`, `/skills`) e a página do repositório, que
  * não é uma seção da árvore mas tem rota e aba próprias.
  */
-const ROTAS = [
-  '/',
-  ...SECOES.flatMap((secao) =>
-    Array.from({ length: totalDePaginas(secao) }, (_, i) =>
-      i === 0 ? `/${secao.slug}` : `/${secao.slug}/${i + 1}`,
-    ),
-  ),
-  '/repositorio',
-];
+const ROTAS = ['/', ...SECOES.map((secao) => `/${secao.slug}`), '/repositorio'];
 
 /** Endereço absoluto esperado de uma rota: o Início termina na barra, as demais não. */
 const enderecoDe = (rota: string): string => (rota === '/' ? `${ORIGEM}/` : `${ORIGEM}${rota}`);
@@ -55,7 +47,7 @@ async function metadados(page: Page) {
   };
 }
 
-test('a lista de rotas tem as 25 páginas, sem repetir nenhuma', () => {
+test('a lista de rotas tem as 18 páginas, sem repetir nenhuma', () => {
   expect(ROTAS).toHaveLength(TOTAL_DE_PAGINAS);
   expect(new Set(ROTAS).size).toBe(ROTAS.length);
 });
@@ -113,19 +105,17 @@ test.describe('Metadados no HTML pré-renderizado (sem JavaScript)', () => {
     expect(new Set(descricoes.values()).size).toBe(SECOES.length);
   });
 
-  test('as páginas de uma seção indicam a página no título e têm canônico próprio', async ({
-    page,
-  }) => {
-    await page.goto('/skills/2');
+  test('o título e o canônico de uma seção não indicam página', async ({ page }) => {
+    await page.goto('/skills');
     const m = await metadados(page);
 
-    expect(m.titulo).toBe('Skills / STACK (2/3) | Vinicius Machado');
-    expect(m.canonico).toBe(`${ORIGEM}/skills/2`);
-    expect(m.ogUrl).toBe(`${ORIGEM}/skills/2`);
+    expect(m.titulo).toBe('Skills / STACK | Vinicius Machado');
+    expect(m.canonico).toBe(`${ORIGEM}/skills`);
+    expect(m.ogUrl).toBe(`${ORIGEM}/skills`);
   });
 
   test('cada página tem um só canônico e um só título', async ({ page }) => {
-    for (const rota of ['/', '/skills', '/projeto-4/3']) {
+    for (const rota of ['/', '/skills', '/projeto-4']) {
       await page.goto(rota);
 
       await expect(page.locator('head link[rel="canonical"]'), rota).toHaveCount(1);
@@ -176,7 +166,7 @@ test.describe('Arquivos de SEO servidos pelo site', () => {
     expect(texto).toMatch(new RegExp(`^Sitemap: ${ORIGEM}/sitemap\\.xml$`, 'm'));
   });
 
-  test('/sitemap.xml é XML e lista as 25 páginas em endereços absolutos', async ({ request }) => {
+  test('/sitemap.xml é XML e lista as 18 páginas em endereços absolutos', async ({ request }) => {
     const resposta = await request.get('/sitemap.xml');
     const xml = await resposta.text();
     const enderecos = Array.from(xml.matchAll(/<loc>([^<]+)<\/loc>/g), (m) => m[1]);
@@ -187,7 +177,16 @@ test.describe('Arquivos de SEO servidos pelo site', () => {
     expect(enderecos).toHaveLength(TOTAL_DE_PAGINAS);
     expect(new Set(enderecos).size).toBe(TOTAL_DE_PAGINAS);
     expect([...enderecos].sort()).toEqual(ROTAS.map(enderecoDe).sort());
-    expect(enderecos).toContain(`${ORIGEM}/skills/2`);
+    for (const antigo of [
+      '/skills/2',
+      '/skills/3',
+      '/experiencias/2',
+      '/projeto-4/3',
+      '/projeto-5/4',
+    ]) {
+      expect(enderecos, `${antigo} não entra no sitemap`).not.toContain(`${ORIGEM}${antigo}`);
+    }
+    expect(enderecos.filter((endereco) => /\/\d+$/.test(endereco))).toEqual([]);
     enderecos.forEach((endereco) => expect(endereco).toMatch(/^https:\/\//));
   });
 
@@ -195,7 +194,7 @@ test.describe('Arquivos de SEO servidos pelo site', () => {
     const xml = await (await request.get('/sitemap.xml')).text();
     const doSitemap = new Set(Array.from(xml.matchAll(/<loc>([^<]+)<\/loc>/g), (m) => m[1]));
 
-    for (const rota of ['/', '/skills/3', '/certificacoes/2', '/projeto-4/3', '/depoimentos']) {
+    for (const rota of ['/', '/skills', '/certificacoes', '/projeto-4', '/depoimentos']) {
       await page.goto(rota);
 
       expect(doSitemap.has((await metadados(page)).canonico ?? ''), rota).toBe(true);
@@ -255,18 +254,14 @@ test.describe('Metadados ao navegar com JavaScript', () => {
     await semJs.close();
   });
 
-  test('ao paginar, o título e o canônico passam para a página nova', async ({ page }) => {
-    await abrirHidratada(page, '/skills');
+  test('um endereço antigo de página redireciona e o canônico é o da seção', async ({ page }) => {
+    await page.goto('/skills/2');
 
-    await page
-      .getByRole('navigation', { name: 'Páginas da seção' })
-      .getByRole('link', { name: 'Próxima página' })
-      .click();
-
-    await expect.poll(async () => (await metadados(page)).canonico).toBe(`${ORIGEM}/skills/2`);
+    await expect(page).toHaveURL(/\/skills$/);
+    await expect.poll(async () => (await metadados(page)).canonico).toBe(`${ORIGEM}/skills`);
     const m = await metadados(page);
-    expect(m.titulo).toBe('Skills / STACK (2/3) | Vinicius Machado');
-    expect(m.ogUrl).toBe(`${ORIGEM}/skills/2`);
+    expect(m.titulo).toBe('Skills / STACK | Vinicius Machado');
+    expect(m.ogUrl).toBe(`${ORIGEM}/skills`);
   });
 
   test('ao voltar para o Início, os dados estruturados Person continuam só nele', async ({

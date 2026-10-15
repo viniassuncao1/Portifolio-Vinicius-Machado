@@ -1,18 +1,11 @@
 import { expect, test } from './fixtures';
 import type { Page } from '@playwright/test';
 
-import { SECOES, totalDePaginas } from '../src/app/core/secoes';
+import { SECOES } from '../src/app/core/secoes';
 import { linhasDoCodigo } from './apoio';
 
-/** Início e todas as páginas de todas as seções, geradas de SECOES. */
-const ROTAS = [
-  '/',
-  ...SECOES.flatMap((secao) =>
-    Array.from({ length: totalDePaginas(secao) }, (_, i) =>
-      i === 0 ? `/${secao.slug}` : `/${secao.slug}/${i + 1}`,
-    ),
-  ),
-];
+/** Início e cada seção (um arquivo só, sem páginas), geradas de SECOES. */
+const ROTAS = ['/', ...SECOES.map((secao) => `/${secao.slug}`)];
 
 const PARES: Record<string, string> = { ')': '(', '}': '{', ']': '[' };
 
@@ -46,18 +39,16 @@ const codigoQueOCompiladorLe = (page: Page): Promise<string> =>
   );
 
 test.describe('Java plausível no que o visitante vê', () => {
-  test('a lista de rotas cobre o Início, as seções e as páginas extras, sem repetir nenhuma', () => {
+  test('a lista de rotas cobre o Início e cada seção (um arquivo só), sem repetir nenhuma', () => {
     expect(new Set(ROTAS).size).toBe(ROTAS.length);
     expect(ROTAS).toEqual(
       expect.arrayContaining([
         '/',
-        '/skills/2',
-        '/skills/3',
-        '/experiencias/2',
-        '/experiencias/3',
+        '/skills',
+        '/experiencias',
         '/certificacoes',
-        '/certificacoes/2',
-        '/certificacoes/3',
+        '/projeto-4',
+        '/projeto-5',
       ]),
     );
   });

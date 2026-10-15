@@ -108,7 +108,7 @@ test.describe('Escala da tipografia no desktop (1920x1080)', () => {
   test('numa seção longa, 20 linhas do código aparecem inteiras dentro da janela', async ({
     page,
   }) => {
-    await page.goto('/skills/3');
+    await page.goto('/skills');
 
     const visiveis = await page.evaluate(() => {
       const limite = document
@@ -142,7 +142,7 @@ test.describe('Escala no celular (390x844)', () => {
   });
 
   test('a página não rola na horizontal', async ({ page }) => {
-    await page.goto('/skills/3');
+    await page.goto('/skills');
 
     const transborda = await page.evaluate(
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth,

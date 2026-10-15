@@ -201,9 +201,9 @@ test.describe('Anel de foco rosa de 2px', () => {
     }
   });
 
-  test('os links do controle de páginas focados mostram o anel rosa de 2px', async ({ page }) => {
+  test('o link "Próximo arquivo" focado mostra o anel rosa de 2px', async ({ page }) => {
     await abrirHidratada(page, '/skills');
-    await page.getByRole('link', { name: 'Próxima página' }).focus();
+    await page.getByRole('link', { name: /^\/\/ Próximo:/ }).focus();
 
     expect(await anel(page)).toMatchObject({ estilo: 'solid', largura: '2px', cor: COR_DO_FOCO });
   });
@@ -335,7 +335,7 @@ test.describe('Ajustes nativos do navegador', () => {
     const contexto = await browser.newContext({ javaScriptEnabled: false });
     const pagina = await contexto.newPage();
 
-    for (const rota of ['/', '/sobre-mim', '/skills/3', '/depoimentos']) {
+    for (const rota of ['/', '/sobre-mim', '/skills', '/depoimentos']) {
       await pagina.goto(rota);
 
       await expect(pagina.locator('main pre'), rota).toHaveAttribute('translate', 'no');

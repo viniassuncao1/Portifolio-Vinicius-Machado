@@ -1,7 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import type { Locator, Page } from '@playwright/test';
 
-import { SECOES, totalDePaginas } from '../src/app/core/secoes';
 import { abrirHidratada, abrirPastas, arquivoDaArvore, arvoreDeSecoes } from './apoio';
 import { expect, test } from './fixtures';
 
@@ -323,10 +322,7 @@ test.describe('Próximo arquivo', () => {
     expect(ordem.length).toBeGreaterThan(10);
 
     for (const [i, rota] of ordem.entries()) {
-      // Nas seções com várias páginas o fim do arquivo é a última página.
-      const secao = SECOES.find((candidata) => `/${candidata.slug}` === rota);
-      const total = secao ? totalDePaginas(secao) : 1;
-      await page.goto(total > 1 ? `${rota}/${total}` : rota);
+      await page.goto(rota);
       const proximo = page.locator('app-proximo-arquivo a');
       if (i === ordem.length - 1) {
         await expect(proximo, `${rota} é a última`).toHaveCount(0);

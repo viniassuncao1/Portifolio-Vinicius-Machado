@@ -12,15 +12,6 @@ const cor = (alvo: Locator) => alvo.evaluate((el) => getComputedStyle(el).color)
 const codigo = (page: Page) => page.locator('main code');
 const controle = (page: Page) => page.getByRole('navigation', { name: 'Páginas da seção' });
 
-/** Aperta Tab até o alvo receber o foco (o controle vem depois da árvore e do editor). */
-async function focarComTab(page: Page, alvo: Locator) {
-  for (let i = 0; i < 40; i++) {
-    if (await alvo.evaluate((el) => el === document.activeElement)) return;
-    await page.keyboard.press('Tab');
-  }
-  await expect(alvo).toBeFocused();
-}
-
 test.describe('Como uso a IA (/como-uso-ia)', () => {
   test('exibe a classe InteligenciaArtificial com os campos em Java moderno', async ({ page }) => {
     await page.goto('/como-uso-ia');
@@ -104,149 +95,7 @@ test.describe('Como uso a IA (/como-uso-ia)', () => {
   });
 });
 
-test.describe('Skills / STACK (/skills)', () => {
-  test('exibe as três listas imutáveis do record Tecnologias (tela 05)', async ({ page }) => {
-    await page.goto('/skills');
-
-    expect(await linhasDoCodigo(page)).toEqual([
-      'package dev.vinicius.portfolio.skills;',
-      'import java.util.List;',
-      '// Linguagens, frameworks e bancos de dados que uso',
-      'public class Skills {',
-      'record Tecnologias(',
-      'List<String> linguagens,',
-      'List<String> frameworks,',
-      'List<String> bancosDeDados) {}',
-      'Tecnologias minhas = new Tecnologias(',
-      'List.of("Java", "TypeScript", "JavaScript", "PHP", "SQL"),',
-      'List.of("Spring Boot", "Spring Data JPA", "Angular"),',
-      'List.of("Oracle", "PostgreSQL", "MySQL")',
-      ');',
-      '}',
-    ]);
-  });
-
-  test('colore os textos das listas como literais, sem papel de valor', async ({ page }) => {
-    await page.goto('/skills');
-    const literais = page.locator('main .papel-literal');
-
-    await expect(literais).toHaveCount(11);
-    expect(await cor(literais.first())).toBe(COR_LITERAL);
-    await expect(page.locator('main .papel-valor')).toHaveCount(0);
-  });
-
-  test('mostra o controle 1/3 só com a próxima página', async ({ page }) => {
-    await page.goto('/skills');
-
-    await expect(controle(page)).toContainText('1/3');
-    await expect(controle(page).locator('[aria-current="page"]')).toHaveAccessibleName(
-      'página 1 de 3',
-    );
-    await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveAttribute(
-      'href',
-      '/skills/2',
-    );
-    await expect(controle(page).getByRole('link', { name: 'Página anterior' })).toHaveCount(0);
-  });
-
-  test('vai para a página 2 pelo link e o controle passa a mostrar 2/3', async ({ page }) => {
-    await page.goto('/skills');
-
-    await controle(page).getByRole('link', { name: 'Próxima página' }).click();
-
-    await expect(page).toHaveURL(/\/skills\/2$/);
-    await expect(controle(page)).toContainText('2/3');
-    await expect(page.locator('main code')).toContainText('nuvemEInfra');
-  });
-
-  test('uma seção de uma página só não tem controle', async ({ page }) => {
-    await page.goto('/sobre-mim');
-
-    await expect(controle(page)).toHaveCount(0);
-  });
-
-  test('tem título e h1 de Skills / STACK e a árvore com a seção atual', async ({ page }) => {
-    await page.goto('/skills');
-
-    const item = arquivoDaArvore(page, 'Skills / STACK');
-
-    await expect(page).toHaveTitle('Skills / STACK | Vinicius Machado');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK');
-    await expect(item).toHaveAttribute('aria-current', 'page');
-  });
-});
-
-test.describe('Skills / STACK, página 2 (/skills/2)', () => {
-  test('abre direto pelo endereço com as duas listas do record Ferramentas (tela 06)', async ({
-    page,
-  }) => {
-    await page.goto('/skills/2');
-
-    expect(await linhasDoCodigo(page)).toEqual([
-      'import java.util.List;',
-      '// Nuvem, infraestrutura e ferramentas do dia a dia',
-      'class Infraestrutura {',
-      'record Ferramentas(',
-      'List<String> nuvemEInfra,',
-      'List<String> ferramentas) {}',
-      'Ferramentas minhas = new Ferramentas(',
-      'List.of("Docker", "Kubernetes", "Nginx", "AWS", "Azure"),',
-      'List.of("Git", "GitLab CI/CD", "Grafana", "Scrum")',
-      ');',
-      '}',
-    ]);
-    await expect(controle(page)).toContainText('2/3');
-  });
-
-  test('mostra a página anterior (/skills) e a próxima (/skills/3)', async ({ page }) => {
-    await page.goto('/skills/2');
-
-    await expect(controle(page).getByRole('link', { name: 'Página anterior' })).toHaveAttribute(
-      'href',
-      '/skills',
-    );
-    await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveAttribute(
-      'href',
-      '/skills/3',
-    );
-    await expect(controle(page).locator('[aria-current="page"]')).toHaveAccessibleName(
-      'página 2 de 3',
-    );
-  });
-
-  test('indica a página no título da janela e no h1', async ({ page }) => {
-    await page.goto('/skills/2');
-
-    await expect(page).toHaveTitle('Skills / STACK (2/3) | Vinicius Machado');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK (2/3)');
-  });
-
-  test('mantém "Skills / STACK" como página atual, com a seta para baixo', async ({ page }) => {
-    await page.goto('/skills/2');
-
-    const item = arquivoDaArvore(page, 'Skills / STACK');
-
-    await expect(item).toHaveAttribute('aria-current', 'page');
-    await expect(page.locator('nav [aria-current="page"]').first()).toHaveCount(1);
-  });
-
-  test('leva uma página inexistente (/skills/9) ao Início', async ({ page }) => {
-    await page.goto('/skills/9');
-
-    await expect(page).toHaveURL('/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-      'Vinicius Machado, Desenvolvedor Full Stack',
-    );
-  });
-
-  test('/skills/4 não existe e leva ao Início', async ({ page }) => {
-    await page.goto('/skills/4');
-
-    await expect(page).toHaveURL('/');
-  });
-});
-
-test.describe('Skills / STACK, página 3: níveis de conhecimento (/skills/3)', () => {
+test.describe('Skills / STACK (/skills): tudo num arquivo só', () => {
   const NIVEIS = [
     {
       nome: 'Domínio diário',
@@ -270,104 +119,141 @@ test.describe('Skills / STACK, página 3: níveis de conhecimento (/skills/3)', 
     },
   ];
 
-  test('mostra os quatro níveis, cada um com a sua explicação em pt-BR', async ({ page }) => {
-    await page.goto('/skills/3');
+  test('exibe as listas imutáveis das telas 05 e 06 e os níveis, no mesmo arquivo', async ({
+    page,
+  }) => {
+    await page.goto('/skills');
 
-    for (const { nome, descricao } of NIVEIS) {
-      await expect(codigo(page)).toContainText(`${nome}: ${descricao}`);
-    }
+    expect(await linhasDoCodigo(page)).toEqual([
+      'package dev.vinicius.portfolio.skills;',
+      'import java.util.List;',
+      'public class Skills {',
+      '// Linguagens, frameworks e bancos de dados que uso',
+      'record Tecnologias(',
+      'List<String> linguagens,',
+      'List<String> frameworks,',
+      'List<String> bancosDeDados) {}',
+      'Tecnologias principais = new Tecnologias(',
+      'List.of("Java", "TypeScript", "JavaScript", "PHP", "SQL"),',
+      'List.of("Spring Boot", "Spring Data JPA", "Angular"),',
+      'List.of("Oracle", "PostgreSQL", "MySQL")',
+      ');',
+      '// Nuvem, infraestrutura e ferramentas do dia a dia',
+      'record Ferramentas(',
+      'List<String> nuvemEInfra,',
+      'List<String> ferramentas) {}',
+      'Ferramentas doDiaADia = new Ferramentas(',
+      'List.of("Docker", "Kubernetes", "Nginx", "AWS", "Azure"),',
+      'List.of("Git", "GitLab CI/CD", "Grafana", "Scrum")',
+      ');',
+      '// Quanto conheço cada tecnologia',
+      'enum NivelDeConhecimento {',
+      'DominioDiario("Domínio diário: uso todo dia no trabalho"),',
+      'ProjetoCompleto("Projeto completo: já entreguei um projeto inteiro com ela"),',
+      'UsoPontual("Uso pontual: usei em tarefas isoladas"),',
+      'ConhecimentoTeorico("Conhecimento teórico: estudei, mas ainda não usei em produção");',
+      'String descricao;',
+      'NivelDeConhecimento(String descricao) {',
+      'this.descricao = descricao;',
+      '}',
+      '}',
+      '// Tecnologias de cada nível',
+      'record Habilidades(NivelDeConhecimento nivel, List<String> tecnologias) {}',
+      'List<Habilidades> porNivel = List.of(',
+      'new Habilidades(NivelDeConhecimento.DominioDiario,',
+      'List.of("Java", "Spring Boot", "Angular", "PostgreSQL",',
+      '"Oracle", "TypeScript", "Git")),',
+      'new Habilidades(NivelDeConhecimento.ProjetoCompleto, List.of("PHP")),',
+      'new Habilidades(NivelDeConhecimento.UsoPontual, List.of("React Native", "CI/CD")),',
+      'new Habilidades(NivelDeConhecimento.ConhecimentoTeorico,',
+      'List.of("Python", "AWS", "Azure", "Docker", "Kubernetes")));',
+      '}',
+    ]);
   });
 
-  test('mostra as tecnologias de cada nível, na ordem da spec', async ({ page }) => {
-    await page.goto('/skills/3');
+  test('não tem controle de páginas nem links de próxima/anterior', async ({ page }) => {
+    await page.goto('/skills');
+
+    await expect(controle(page)).toHaveCount(0);
+    await expect(page.getByRole('link', { name: /Próxima página|Página anterior/ })).toHaveCount(0);
+    await expect(page.locator('main')).not.toContainText(/\b\d\/3\b/);
+  });
+
+  test('colore os textos das listas como literais, sem papel de valor', async ({ page }) => {
+    await page.goto('/skills');
+    const literais = page.locator('main .papel-literal');
+
+    expect(await literais.count()).toBeGreaterThanOrEqual(11);
+    expect(await cor(literais.first())).toBe(COR_LITERAL);
+    await expect(page.locator('main .papel-valor')).toHaveCount(0);
+  });
+
+  test('mostra os quatro níveis, cada um com a sua explicação em pt-BR e as tecnologias', async ({
+    page,
+  }) => {
+    await page.goto('/skills');
     const texto = (await linhasDoCodigo(page)).join(' ');
 
-    for (const { tecnologias } of NIVEIS) {
+    for (const { nome, descricao, tecnologias } of NIVEIS) {
+      await expect(codigo(page)).toContainText(`${nome}: ${descricao}`);
       const lista = tecnologias.map((t) => `"${t}"`).join(', ');
-
-      expect(texto, tecnologias[0]).toContain(`List.of(${lista})`);
+      expect(texto, nome).toContain(`List.of(${lista}`);
     }
   });
 
-  test('mostra o controle 3/3 só com a página anterior, que volta para /skills/2', async ({
-    page,
-  }) => {
-    await page.goto('/skills/3');
-
-    await expect(controle(page)).toContainText('3/3');
-    await expect(controle(page).locator('[aria-current="page"]')).toHaveAccessibleName(
-      'página 3 de 3',
-    );
-    await expect(controle(page).getByRole('link', { name: 'Página anterior' })).toHaveAttribute(
-      'href',
-      '/skills/2',
-    );
-    await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveCount(0);
-  });
-
-  test('indica a página 3 no título da janela e no h1', async ({ page }) => {
-    await page.goto('/skills/3');
-
-    await expect(page).toHaveTitle('Skills / STACK (3/3) | Vinicius Machado');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK (3/3)');
-  });
-
-  test('começa com um comentário em pt-BR e não usa Optional nem genérico aninhado', async ({
-    page,
-  }) => {
-    await page.goto('/skills/3');
-
-    await expect(page.locator('main .papel-comentario').first()).toContainText(
-      'Quanto conheço cada tecnologia',
-    );
+  test('não usa Optional nem genérico aninhado', async ({ page }) => {
+    await page.goto('/skills');
     const texto = (await codigo(page).textContent()) ?? '';
 
     expect(texto).not.toContain('Optional');
     expect(texto).not.toMatch(/<[^<>\n]*<[^<>\n]*>/);
   });
 
-  test('o botão voltar do navegador volta da página 3 para a 2', async ({ page }) => {
-    await page.goto('/skills/2');
-    await controle(page).getByRole('link', { name: 'Próxima página' }).click();
-    await expect(page).toHaveURL(/\/skills\/3$/);
+  test('tem título e h1 de Skills / STACK, sem (n/N), e a árvore com a seção atual', async ({
+    page,
+  }) => {
+    await page.goto('/skills');
 
-    await page.goBack();
+    await expect(page).toHaveTitle('Skills / STACK | Vinicius Machado');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK');
+    await expect(arquivoDaArvore(page, 'Skills / STACK')).toHaveAttribute('aria-current', 'page');
+  });
 
-    await expect(page).toHaveURL(/\/skills\/2$/);
-    await expect(controle(page)).toContainText('2/3');
+  test('o fim do arquivo termina com o "Próximo" da seção seguinte', async ({ page }) => {
+    await page.goto('/skills');
+
+    await expect(page.locator('app-proximo-arquivo a')).toHaveAttribute('href', '/experiencias');
   });
 });
 
-test.describe('Controle de páginas pelo teclado', () => {
-  test('vai e volta com Tab e Enter, com o foco visível', async ({ page }) => {
-    await page.goto('/skills');
-    const proxima = controle(page).getByRole('link', { name: 'Próxima página' });
+test.describe('Skills: endereços antigos das páginas', () => {
+  for (const antigo of ['/skills/2', '/skills/3']) {
+    test(`${antigo} leva a /skills, com tudo no mesmo arquivo`, async ({ page }) => {
+      await page.goto(antigo);
 
-    await focarComTab(page, proxima);
-    await expect(proxima).toHaveCSS('outline-style', 'solid');
-    await expect(proxima).not.toHaveCSS('outline-width', '0px');
-    await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(/\/skills$/);
+      await expect(page).toHaveTitle('Skills / STACK | Vinicius Machado');
+      await expect(codigo(page)).toContainText('record Ferramentas(');
+      await expect(codigo(page)).toContainText('Conhecimento teórico');
+    });
+  }
 
-    await expect(page).toHaveURL(/\/skills\/2$/);
-    await expect(controle(page)).toContainText('2/3');
-
-    const anterior = controle(page).getByRole('link', { name: 'Página anterior' });
-    await focarComTab(page, anterior);
-    await page.keyboard.press('Enter');
-
+  test('o botão voltar do navegador sai do site antigo sem ficar preso no redirecionamento', async ({
+    page,
+  }) => {
+    await page.goto('/sobre-mim');
+    await page.goto('/skills/3');
     await expect(page).toHaveURL(/\/skills$/);
-    await expect(controle(page)).toContainText('1/3');
-  });
-
-  test('o botão voltar do navegador volta da página 2 para a 1', async ({ page }) => {
-    await page.goto('/skills');
-    await controle(page).getByRole('link', { name: 'Próxima página' }).click();
-    await expect(page).toHaveURL(/\/skills\/2$/);
 
     await page.goBack();
 
+    await expect(page).toHaveURL(/\/sobre-mim$/);
+  });
+
+  test('uma página inexistente (/skills/9) também chega a /skills', async ({ page }) => {
+    await page.goto('/skills/9');
+
     await expect(page).toHaveURL(/\/skills$/);
-    await expect(controle(page)).toContainText('1/3');
   });
 });
 
@@ -383,35 +269,15 @@ test.describe('Sem JavaScript', () => {
     await expect(arquivoDaArvore(page, 'Como uso a IA')).toHaveAttribute('aria-current', 'page');
   });
 
-  test('/skills entrega o código e o controle 1/3 no HTML', async ({ page }) => {
+  test('/skills entrega as listas e os níveis no HTML, sem controle de páginas', async ({
+    page,
+  }) => {
     await page.goto('/skills');
 
     await expect(page.locator('main code')).toContainText('record Tecnologias(');
-    await expect(controle(page)).toContainText('1/3');
-    await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveAttribute(
-      'href',
-      '/skills/2',
-    );
-  });
-
-  test('/skills/2 entrega a segunda página, o título e o controle 2/3 no HTML', async ({
-    page,
-  }) => {
-    await page.goto('/skills/2');
-
-    await expect(page).toHaveTitle('Skills / STACK (2/3) | Vinicius Machado');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Skills / STACK (2/3)');
     await expect(page.locator('main code')).toContainText('record Ferramentas(');
-    await expect(controle(page)).toContainText('2/3');
-    await expect(arquivoDaArvore(page, 'Skills / STACK')).toHaveAttribute('aria-current', 'page');
-  });
-
-  test('/skills/3 entrega os níveis de conhecimento e o controle 3/3 no HTML', async ({ page }) => {
-    await page.goto('/skills/3');
-
-    await expect(page).toHaveTitle('Skills / STACK (3/3) | Vinicius Machado');
     await expect(page.locator('main code')).toContainText('Domínio diário');
-    await expect(page.locator('main code')).toContainText('Conhecimento teórico');
-    await expect(controle(page)).toContainText('3/3');
+    await expect(controle(page)).toHaveCount(0);
+    await expect(page).toHaveTitle('Skills / STACK | Vinicius Machado');
   });
 });
