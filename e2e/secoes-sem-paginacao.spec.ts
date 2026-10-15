@@ -67,7 +67,11 @@ test.describe('Endereços antigos das páginas', () => {
     await page.goto('/skills/3');
     await expect(page).toHaveURL(/\/skills$/);
 
-    await expect(page.getByRole('tab')).toHaveText(['Skills.java']);
+    await expect(page.getByRole('tab', { name: 'Skills.java' })).toHaveCount(1);
+    await expect(page.getByRole('tab', { name: 'Skills.java' })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    );
     await page.goBack();
 
     await expect(page).toHaveURL(/\/sobre-mim$/);
