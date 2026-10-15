@@ -3,11 +3,11 @@ import { CONTEUDO_COMO_USO_IA } from './features/como-uso-ia/como-uso-ia.conteud
 import { CONTEUDO_CONTATO } from './features/contato/contato.conteudo';
 import { CONTEUDO_DIFERENCIAIS } from './features/diferenciais/diferenciais.conteudo';
 import { CONTEUDO_EVENTOS } from './features/eventos/eventos.conteudo';
-import { CONTEUDOS_EXPERIENCIAS } from './features/experiencias/experiencias.conteudo';
+import { CONTEUDO_EXPERIENCIAS } from './features/experiencias/experiencias.conteudo';
 import { CONTEUDO_FORMACAO } from './features/formacao/formacao.conteudo';
 import { CONTEUDO_IDIOMAS } from './features/idiomas/idiomas.conteudo';
 import { CONTEUDO_INICIO } from './features/inicio/inicio.conteudo';
-import { CONTEUDOS_SKILLS } from './features/skills/skills.conteudo';
+import { CONTEUDO_SKILLS } from './features/skills/skills.conteudo';
 import { CONTEUDO_SOBRE_MIM } from './features/sobre-mim/sobre-mim.conteudo';
 import type { ConteudoDoEditor, Linha } from './shared/editor-de-codigo/conteudo';
 
@@ -17,14 +17,8 @@ export const DOCUMENTOS: readonly (readonly [string, ConteudoDoEditor])[] = [
   ['Sobre Mim', CONTEUDO_SOBRE_MIM],
   ['Diferenciais', CONTEUDO_DIFERENCIAIS],
   ['Como uso a IA', CONTEUDO_COMO_USO_IA],
-  ...CONTEUDOS_SKILLS.map((c, i): [string, ConteudoDoEditor] => [
-    `Skills ${i + 1}/${CONTEUDOS_SKILLS.length}`,
-    c,
-  ]),
-  ...CONTEUDOS_EXPERIENCIAS.map((c, i): [string, ConteudoDoEditor] => [
-    `Experiências ${i + 1}/${CONTEUDOS_EXPERIENCIAS.length}`,
-    c,
-  ]),
+  ['Skills', CONTEUDO_SKILLS],
+  ['Experiências', CONTEUDO_EXPERIENCIAS],
   ['Eventos', CONTEUDO_EVENTOS],
   ['Formação', CONTEUDO_FORMACAO],
   ['Idiomas', CONTEUDO_IDIOMAS],

@@ -41,10 +41,10 @@ describe('ProximoArquivo', () => {
     expect((await abrir('/contato')).querySelector('a')).toBeNull();
   });
 
-  it('numa seção paginada, só na última página', async () => {
-    expect((await abrir('/skills/2')).querySelector('a')).toBeNull();
-    expect((await abrir('/skills/3')).querySelector('a')?.getAttribute('href')).toBe(
-      '/experiencias',
+  it('em seções que já foram paginadas, aponta sempre para a seção seguinte', async () => {
+    expect((await abrir('/skills')).querySelector('a')?.getAttribute('href')).toBe('/experiencias');
+    expect((await abrir('/experiencias')).querySelector('a')?.getAttribute('href')).toBe(
+      '/projeto-1',
     );
   });
 });
