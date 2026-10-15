@@ -10,7 +10,7 @@ branch do Git e as ações de executar e buscar.
 ### Requirement: Barra de ferramentas do design com Git
 A barra superior SHALL ter fundo escuro nos cinzas do design (sem o degradê claro), ícones do
 design à esquerda, controles de janela à direita e um indicador de branch com o ícone de branch e
-o nome `master`, que é um botão real e abre o painel do Git.
+o nome `master`, que é um botão real e abre a página do repositório.
 
 #### Scenario: Abertura do site
 - **WHEN** o visitante abre qualquer página no desktop
@@ -18,7 +18,7 @@ o nome `master`, que é um botão real e abre o painel do Git.
 
 #### Scenario: Abrir o Git pela branch
 - **WHEN** o visitante ativa o indicador `master`
-- **THEN** o painel do Git abre com o commit mais recente em foco
+- **THEN** a aba `Portfolio-Vinicius-Machado` abre com a página do repositório
 
 ### Requirement: Ações da barra superior
 Buscar MUST abrir a busca de seções; Executar MUST abrir o preview nos projetos com site e, nas

@@ -49,3 +49,11 @@ páginas da seção, e o título da janela SHALL indicar a página a partir da s
 - **WHEN** o visitante está em `/skills/2`
 - **THEN** "Skills / STACK" está marcado como página atual e o título da janela é
   "Skills / STACK (2/2) | Vinicius Machado"
+
+### Requirement: Próximo arquivo
+O fim do editor de cada seção SHALL ter o link `Próximo: <arquivo> →` para a seção seguinte na
+ordem da árvore; a última seção MUST NOT ter o link.
+
+#### Scenario: Depois de Sobre Mim
+- **WHEN** o visitante chega ao fim de "Sobre Mim" e ativa o próximo arquivo
+- **THEN** a seção seguinte da árvore abre

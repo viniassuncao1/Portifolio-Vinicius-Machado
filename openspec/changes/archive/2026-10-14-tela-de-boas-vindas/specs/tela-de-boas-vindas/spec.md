@@ -1,5 +1,10 @@
 # Spec Delta
 
+## Purpose
+
+Receber o visitante na abertura do portfólio com a foto, o nome e o cargo do Vinicius numa tela
+no estilo da splash do IntelliJ, com um carregamento curto que nunca esconde o conteúdo.
+
 ## ADDED Requirements
 
 ### Requirement: Boas-vindas na abertura

@@ -1,8 +1,8 @@
 # 0016: Boas-vindas, repositório no estilo do GitHub e melhorias de UX
 
 - **Data:** 2026-10-14
-- **Changes:** [tela-de-boas-vindas](../../openspec/changes/tela-de-boas-vindas/), [repositorio-no-estilo-do-github](../../openspec/changes/repositorio-no-estilo-do-github/) e [melhorias-de-ux](../../openspec/changes/melhorias-de-ux/)
-- **PR:** [#32](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/32)
+- **Changes:** [tela-de-boas-vindas](../../openspec/changes/archive/2026-10-14-tela-de-boas-vindas/), [repositorio-no-estilo-do-github](../../openspec/changes/archive/2026-10-14-repositorio-no-estilo-do-github/) e [melhorias-de-ux](../../openspec/changes/archive/2026-10-14-melhorias-de-ux/)
+- **PR:** [#34](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/34)
 - **ADRs:** [0015](../adr/0015-tela-de-boas-vindas.md) e [0016](../adr/0016-repositorio-no-estilo-do-github.md)
 
 ![A tela de boas-vindas no estilo da splash do IntelliJ](imagens/0016-boas-vindas.png)
@@ -71,15 +71,15 @@ Três changes, um PR.
   sessão mantêm a primeira impressão pessoal sem custar SEO nem paciência.
 - **Três changes num PR exigiram donos de arquivo.** Com seis agentes na mesma branch, cada um só
   editou os arquivos da sua faixa e o `git add` foi sempre com o caminho exato.
-- **Números finais.** Testes unitários: a definir. Testes E2E: a definir.
+- **Números finais.** 820 testes unitários (97,42% de cobertura de instruções) e 847 testes E2E.
 
 ![O código quebrando em vez de cortar, no celular](imagens/0016-celular-quebra.png)
 
 ## Links
 
-- Changes: [`tela-de-boas-vindas`](../../openspec/changes/tela-de-boas-vindas/),
-  [`repositorio-no-estilo-do-github`](../../openspec/changes/repositorio-no-estilo-do-github/) e
-  [`melhorias-de-ux`](../../openspec/changes/melhorias-de-ux/)
+- Changes: [`tela-de-boas-vindas`](../../openspec/changes/archive/2026-10-14-tela-de-boas-vindas/),
+  [`repositorio-no-estilo-do-github`](../../openspec/changes/archive/2026-10-14-repositorio-no-estilo-do-github/) e
+  [`melhorias-de-ux`](../../openspec/changes/archive/2026-10-14-melhorias-de-ux/)
 - ADRs: [0015 tela de boas-vindas](../adr/0015-tela-de-boas-vindas.md) e
   [0016 repositório no estilo do GitHub](../adr/0016-repositorio-no-estilo-do-github.md)
 - Documentação: [componentes](../componentes.md) e [arquitetura](../arquitetura.md)

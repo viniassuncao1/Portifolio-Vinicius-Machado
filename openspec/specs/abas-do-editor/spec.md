@@ -8,8 +8,9 @@ visitante alterna e fecha abas como no Eclipse ou no IntelliJ.
 
 ### Requirement: Uma aba por seção aberta
 Ao abrir uma seção, a faixa de abas SHALL mostrar uma aba com o nome do arquivo da seção (por
-exemplo, `SobreMim.java`), com o ícone de arquivo Java, e marcá-la como ativa. Abrir uma seção
-que já tem aba apenas a ativa.
+exemplo, `SobreMim.java`), com o ícone de arquivo Java, e marcá-la como ativa. A página do
+repositório SHALL abrir como a aba `Portfolio-Vinicius-Machado`, com o ícone do GitHub. Abrir
+uma seção que já tem aba apenas a ativa.
 
 #### Scenario: Abrir duas seções
 - **WHEN** o visitante abre "Sobre Mim" e depois "Skills / STACK"
@@ -17,7 +18,11 @@ que já tem aba apenas a ativa.
 
 #### Scenario: Início
 - **WHEN** o visitante abre a página inicial
-- **THEN** a aba ativa é `ViniciusMachado.java`
+- **THEN** a aba ativa é `PortfolioApplication.java`
+
+#### Scenario: Repositório
+- **WHEN** o visitante ativa o botão Commit
+- **THEN** a aba `Portfolio-Vinicius-Machado` abre e fica ativa
 
 ### Requirement: Alternar entre abas
 Clicar numa aba SHALL abrir a seção correspondente, e o endereço da página SHALL mudar para a
@@ -50,3 +55,11 @@ página pré-renderizada SHALL exibir pelo menos a aba da rota atual.
 #### Scenario: Recarregar a página
 - **WHEN** o visitante tem três abas abertas e recarrega a página
 - **THEN** as três abas continuam abertas
+
+### Requirement: Limite de abas
+A faixa de abas SHALL ter no máximo 5 abas: abrir uma sexta seção MUST fechar a aba usada há
+mais tempo, nunca a ativa.
+
+#### Scenario: Sexta aba
+- **WHEN** o visitante tem 5 abas e abre outra seção
+- **THEN** a aba usada há mais tempo fecha e a nova fica ativa
