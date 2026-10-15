@@ -47,7 +47,7 @@
     "@playwright/test": "^1.64.0",
     "@types/node": "^24.19.2",
     "@vitest/coverage-v8": "^5.0.3",
-    "angular-eslint": "22.5.0",
+    "angular-eslint": "22.6.0",
     "eslint": "^10.9.1",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
