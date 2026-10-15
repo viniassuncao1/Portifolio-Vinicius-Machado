@@ -7,7 +7,7 @@
 
 ## 2. Casca [Pincel]
 
-- [ ] 2.1 Remover o controle de páginas e `paginas` de `core/secoes.ts`, redirecionar `/<seção>/<n>` para `/<seção>`, ajustar título da janela, sitemap e busca — verificar com `npm run build` (sitemap) e capturas
+- [x] 2.1 Remover o controle de páginas e `paginas` de `core/secoes.ts`, redirecionar `/<seção>/<n>` para `/<seção>`, ajustar título da janela, sitemap e busca — verificar com `npm run build` (sitemap) e capturas
 
 ## 3. Testes [Sentinela]
 
