@@ -16,12 +16,15 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 - **Angular 22 moderno:** componentes standalone, signals, zoneless e o novo control flow.
 - **Pré-renderização (SSG):** cada rota é gerada como HTML estático no build, o que garante
   carregamento rápido e SEO.
-- **Casca de IDE como rota-pai:** a barra, o painel e a aba são montados uma vez; as 15 seções
+- **Casca de IDE como rota-pai:** a barra, o painel e a aba são montados uma vez; as 16 seções
   são rotas filhas pré-renderizadas, com o conteúdo definido como dados tipados.
 - **Abertura com Run:** o site abre como a IDE rodando o projeto: uma splash de 3 s, o ▶ do Run
-  (que se aciona sozinho em 5 s), o build das 16 classes e o log do Spring subindo, e então a IDE
+  (que se aciona sozinho em 5 s), o build das classes do portfólio (uma por seção) e o log do Spring subindo, e então a IDE
   aparece. Só na página inicial e uma vez por sessão, com o conteúdo sempre no HTML
   ([ADR-0017](docs/adr/0017-abertura-com-run.md)).
+- **Projeto 5, "Este portfólio":** uma seção em quatro páginas conta o estudo de desenvolvimento com
+  IA por trás do site: o processo, specs antes do código com o OpenSpec (SDD), o ECC e a equipe de
+  agentes no Maestri.
 - **Página do repositório:** o `master` da barra e o ícone Commit abrem, numa aba, uma página no
   estilo do GitHub com os números do projeto, a proporção de commits por tipo e os últimos pull
   requests. O histórico é gerado no build, sem token e sem e-mails

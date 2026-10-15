@@ -38,6 +38,7 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 | Projeto 2: landing page da Dra. Juliana (com preview)          | 11-13            | `Projeto2`                        | `features/projeto-2/`          |
 | Projeto 3: landing page da Watts Company (com preview)         | 14, 15           | `Projeto3`                        | `features/projeto-3/`          |
 | Projeto 4: cases da Memora (3 páginas)                         | 16-18            | `Projeto4`                        | `features/projeto-4/`          |
+| Projeto 5: este portfólio, um estudo com IA (4 páginas)        | (nosso)          | `Projeto5`                        | `features/projeto-5/`          |
 | Certificações (3 páginas, 9 cursos)                            | (nossa)          | `Certificacoes`                   | `features/certificacoes/`      |
 | Formação                                                       | 28               | `Formacao`                        | `features/formacao/`           |
 | Idiomas                                                        | 28               | `Idiomas`                         | `features/idiomas/`            |
@@ -166,17 +167,21 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 - **O que faz:** a abertura do site como a IDE rodando o projeto, em fases: o **cartão da splash**
   (foto, nome, cargo, "Seja bem-vindo ao meu portfólio" e as etapas "Opening Portfolio_Vinicius…" até
   "Project ready", 3 s); o **widget de Run** do IntelliJ (`PortfolioApplication ▾`, ▶ verde, debug
-  apagado) com o foco no ▶; a **janela Build/Run**, que compila as 16 classes reais e mostra o log
+  apagado) com o foco no ▶; a **janela Build/Run**, que compila as classes reais (uma por seção, hoje 17) e mostra o log
   do Spring; e a **entrada da IDE**, em que a janela recolhe para a barra de status e os painéis
   aparecem em sequência. A linha do tempo completa está em
   [arquitetura](arquitetura.md#abertura-com-run).
 - **Executar.** Enter, clique no ▶ ou o atalho (⌃R no Mac, ⇧F10 nos demais, em `aria-keyshortcuts`)
   executam; se ninguém executar, o ▶ é acionado sozinho 5 s depois de pronto. **Não há Pular**:
-  nem botão nem Esc.
-- **Quando aparece.** Só em `/` e uma vez por sessão. Em link direto de uma seção, não aparece, e a
+  nem botão nem Esc (Esc não faz nada).
+- **Quando aparece.** Só em `/` e uma vez por sessão (`sessionStorage['abertura-exibida']`; um script inline em `index.html` liga `data-abertura` no `<html>`). Em link direto de uma seção, não aparece, e a
   barra de status mostra só `PortfolioApplication started in 1.8 s`.
 - **Log compartilhado.** O texto do log do Spring vem de `core/log-do-spring.ts`, o mesmo que a janela
-  de Run usa; a linha do tempo e a lista de classes ficam em `core/linha-do-tempo-da-abertura.ts`.
+  de Run usa; a linha do tempo e a lista de classes (derivada de `core/secoes.ts`) ficam em
+  `core/linha-do-tempo-da-abertura.ts`. O componente é `layout/abertura/abertura.ts`, com os estilos
+  separados em `abertura.scss`, `widget-de-run.scss` e `janela-de-build.scss`; os tokens de movimento
+  (`--duracao-entrada-abertura`, `--duracao-reduzida-abertura`…) e de cor (`--cor-fundo-abertura`,
+  `--sombra-abertura`) estão nos arquivos de tokens.
 - **Acessibilidade e movimento.** `role="dialog"` modal com o resto da casca `inert`; o foco vai ao ▶ e
   depois ao editor; uma região `aria-live` anuncia só os marcos. Com `prefers-reduced-motion`, as
   mesmas etapas sem animação.
@@ -263,7 +268,10 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 - **Onde:** `shared/visao-de-codigo/visao-de-codigo.ts`, seletor `app-visao-de-codigo`.
 - **O que faz:** a linha de _code vision_ do IntelliJ acima da declaração da classe, só nos projetos
   com site: o botão `▶ Executar · Ver o site ao vivo`, menor e em cinza. Abre a janela de preview,
-  com o mesmo efeito do ▶ da calha, para o visitante achar o site sem procurar.
+  com o mesmo efeito do ▶ da calha, para o visitante achar o site sem procurar. Nos projetos que não
+  têm site para a janela mas têm um endereço externo, ele vira um **link** (nova aba, com o aviso
+  "abre em nova aba" para leitores de tela): hoje só o Projeto 5, `▶ Executar · Ver no GitHub`,
+  definido em `LINKS_EXTERNOS_DE_PROJETO` (`core/previews.ts`).
 
 ### `ProximoArquivo`
 
