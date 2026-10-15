@@ -6,7 +6,7 @@
 
 ## 2. Visual [Pincel]
 
-- [ ] 2.1 Cartão, widget de Run e janela Build/Run (layout `layout/abertura/`), nos dois temas e no celular — verificar com capturas `abertura-*.png` em cada fase
+- [x] 2.1 Cartão, widget de Run e janela Build/Run (layout `layout/abertura/`), nos dois temas e no celular — verificar com capturas `abertura-*.png` em cada fase
 
 ## 3. Movimento [Compasso]
 
