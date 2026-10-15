@@ -9,7 +9,7 @@ repositório. O Vinicius quer um projeto dedicado a esse estudo.
 
 ## What Changes
 
-- **Projeto 5, "Este portfólio"** (`Projeto5.java`, rota `/projeto-5`), com 4 páginas:
+- **Projeto 5, "Este portfólio"** (`Projeto5.java`, rota `/projeto-5`), em 4 partes num arquivo só:
   1. **O estudo:** o portfólio como estudo de desenvolvimento com IA (Angular 22 pré-renderizado,
      o Vinicius decide e revisa, os agentes implementam), com links para o repositório no GitHub e
      para a página `/repositorio`.
