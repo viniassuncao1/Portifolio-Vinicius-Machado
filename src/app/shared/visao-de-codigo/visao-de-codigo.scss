@@ -4,6 +4,7 @@
 
 .visao {
   padding: 0;
+  text-decoration: none;
   border: 0;
   background: transparent;
   color: var(--cor-texto-esmaecido);
@@ -20,4 +21,14 @@
     outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: 2px;
   }
+}
+
+// Só para leitores de tela: o link abre em outra aba.
+.aviso-nova-aba {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

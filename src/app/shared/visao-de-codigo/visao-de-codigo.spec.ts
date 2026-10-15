@@ -37,4 +37,37 @@ describe('VisaoDeCodigo', () => {
     pagina.querySelector<HTMLButtonElement>('button.visao')?.click();
     expect(TestBed.inject(JanelaDePreview).preview()).toBe(PREVIEWS['projeto-2']);
   });
+
+  describe('com link externo (Projeto 5)', () => {
+    const link = (pagina: HTMLElement) => pagina.querySelector<HTMLAnchorElement>('a.visao');
+
+    it('mostra "▶ Executar · Ver no GitHub" como link para o repositório em nova aba', async () => {
+      const pagina = await abrirRota('/projeto-5');
+      const a = link(pagina);
+
+      expect(a?.textContent?.replace(/\s+/g, ' ').trim()).toBe(
+        '▶ Executar · Ver no GitHub (abre em nova aba)',
+      );
+      expect(a?.getAttribute('href')).toBe(
+        'https://github.com/viniassuncao1/Portifolio-Vinicius-Machado',
+      );
+      expect(a?.getAttribute('target')).toBe('_blank');
+      expect(a?.getAttribute('rel')).toBe('noopener noreferrer');
+      expect(pagina.querySelector('button.visao')).toBeNull();
+    });
+
+    it('vale nas outras páginas do Projeto 5, mas não nas demais seções', async () => {
+      expect(link(await abrirRota('/projeto-5/3'))).not.toBeNull();
+      TestBed.resetTestingModule();
+      expect(link(await abrirRota('/projeto-4'))).toBeNull();
+    });
+
+    it('não abre a janela de preview', async () => {
+      const pagina = await abrirRota('/projeto-5');
+      link(pagina)?.addEventListener('click', (e) => e.preventDefault());
+      link(pagina)?.click();
+
+      expect(TestBed.inject(JanelaDePreview).preview()).toBeNull();
+    });
+  });
 });

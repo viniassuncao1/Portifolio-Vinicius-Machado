@@ -41,3 +41,18 @@ export const PREVIEWS: Readonly<Record<string, PreviewDeProjeto>> = {
     },
   },
 };
+
+/** Code vision com link externo (nova aba), nos projetos sem site para abrir na janela de preview. */
+export interface LinkExternoDeProjeto {
+  /** Texto depois de "▶ Executar · ". */
+  readonly rotulo: string;
+  readonly url: string;
+}
+
+/** Projetos cujo `▶ Executar` leva a um endereço externo, por slug da seção. */
+export const LINKS_EXTERNOS_DE_PROJETO: Readonly<Record<string, LinkExternoDeProjeto>> = {
+  'projeto-5': {
+    rotulo: 'Ver no GitHub',
+    url: 'https://github.com/viniassuncao1/Portifolio-Vinicius-Machado',
+  },
+};
