@@ -115,6 +115,8 @@ export class Abertura {
   /** Marca o fim da revelação: a abertura sai do DOM e o aviso passa a valer. */
   encerrar(): void {
     this.cancelar();
+    // Os 6 s do aviso contam do fim da abertura (a revelação o põe na tela antes, como destino da janela).
+    this.avisar();
     this.fase.set('encerrada');
     this.dispensada.set(true);
     this.documento.documentElement.removeAttribute(ATRIBUTO_DA_ABERTURA);
@@ -266,8 +268,10 @@ export class Abertura {
     if (this.fase() !== 'compilando' && this.fase() !== 'iniciando') return;
     this.cancelar();
     const entrar = (): void => {
+      // Em aba oculta o callback da View Transition pode chegar depois do fim: não reabre nada.
+      if (this.fase() === 'encerrada') return;
       this.fase.set('revelando');
-      this.avisar();
+      this.aviso.set(AVISO_DE_INICIALIZACAO);
     };
     const transicao = this.transicaoDeRevelacao();
     if (transicao && !this.reduzidoNaExecucao) transicao(entrar);

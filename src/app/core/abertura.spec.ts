@@ -293,9 +293,9 @@ describe('Abertura', () => {
       const abertura = await executar();
       await avancar(INICIO_DA_REVELACAO_MS + LINHA_DO_TEMPO.fimDaRevelacao);
 
-      await avancar(LINHA_DO_TEMPO.tetoDoAviso - LINHA_DO_TEMPO.fimDaRevelacao - 1);
+      await avancar(LINHA_DO_TEMPO.tetoDoAviso - 1);
       expect(abertura.aviso()).toBe(AVISO_DE_INICIALIZACAO);
-      await avancar(LINHA_DO_TEMPO.fimDaRevelacao + 1);
+      await avancar(1);
       expect(abertura.aviso()).toBe('');
     });
 
@@ -359,6 +359,21 @@ describe('Abertura', () => {
       expect(abertura.fase()).toBe('encerrada');
       expect(transicao).not.toHaveBeenCalled();
     });
+  });
+
+  it('o callback atrasado da View Transition não reabre a revelação depois de encerrar', async () => {
+    const abertura = comecar();
+    await ateOPronto(abertura);
+    abertura.executar();
+    let atrasado: (() => void) | undefined;
+    abertura.transicaoDeRevelacao.set((entrar) => (atrasado = entrar));
+
+    await avancar(INICIO_DA_REVELACAO_MS + LINHA_DO_TEMPO.fimDaRevelacao);
+    expect(abertura.fase()).toBe('encerrada');
+    atrasado?.();
+
+    expect(abertura.fase()).toBe('encerrada');
+    expect(abertura.aviso()).toBe(AVISO_DE_INICIALIZACAO);
   });
 
   it('o atalho da plataforma é ⌃R no Mac e ⇧F10 nos outros', () => {
