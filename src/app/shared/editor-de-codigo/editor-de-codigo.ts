@@ -225,7 +225,7 @@ export class EditorDeCodigo {
       : 0;
     const lente = this.host.querySelector<HTMLElement>('.visao-de-codigo');
     const antesDoItem = itens.findIndex((item) => item.tipo === 'codigo' && item.executavel);
-    const comLente = lente?.querySelector('button') && antesDoItem !== -1;
+    const comLente = lente?.querySelector('button, a') && antesDoItem !== -1;
     return faixasDeNumeracao(itens, {
       alturas,
       alturaDaLinhaDoJavadoc: alturaDaLinhaDoJavadoc || alturas[0],

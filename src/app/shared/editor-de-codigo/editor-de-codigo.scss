@@ -118,7 +118,7 @@
   font-size: var(--texto-status);
   line-height: var(--altura-visao-de-codigo);
 
-  &:not(:has(button)) {
+  &:not(:has(button, a)) {
     display: none;
   }
 }
