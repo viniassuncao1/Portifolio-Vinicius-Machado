@@ -1,8 +1,7 @@
 import type { Route } from '@angular/router';
 
-import { routes } from './app.routes';
-import { SECOES, totalDePaginas } from './core/secoes';
-import type { Secao } from './core/secoes';
+import { SECOES_COM_ENDERECO_ANTIGO, routes } from './app.routes';
+import { SECOES } from './core/secoes';
 import { TITULO_INICIO, TITULO_REPOSITORIO } from './core/titulos';
 import { ComoUsoIa } from './features/como-uso-ia/como-uso-ia';
 import { Diferenciais } from './features/diferenciais/diferenciais';
@@ -17,12 +16,6 @@ const carregar = async (caminho: string) => {
   return carregador?.();
 };
 
-/** Caminhos de uma seção: `<slug>` (página 1) e `<slug>/2` até `<slug>/N`. */
-const caminhosDe = (secao: Secao): readonly string[] =>
-  Array.from({ length: totalDePaginas(secao) }, (_, i) =>
-    i === 0 ? secao.slug : `${secao.slug}/${i + 1}`,
-  );
-
 /**
  * Seções que já têm feature. Uma seção nova com feature acrescenta uma entrada aqui; as que não
  * estão no mapa só precisam carregar algum componente (o aviso de em construção ou a feature).
@@ -35,30 +28,28 @@ const FEATURES: Readonly<Record<string, unknown>> = {
 };
 
 describe('rotas', () => {
-  it('têm o Início e as rotas de cada seção (uma por página), na ordem de SECOES', () => {
+  it('têm o Início, uma rota por seção, o redirecionamento dos endereços antigos e o repositório', () => {
     expect(filhas.map((rota) => rota.path)).toEqual([
       '',
-      ...SECOES.flatMap(caminhosDe),
+      ...SECOES.map((secao) => secao.slug),
+      ...SECOES_COM_ENDERECO_ANTIGO.map((slug) => `${slug}/:pagina`),
       'repositorio',
     ]);
   });
 
-  it('dão a cada página de cada seção o título da árvore e ao Início o título do Início', () => {
+  it('dão a cada seção o título da árvore e ao Início o título do Início', () => {
     expect(rotaDe('')?.title).toBe(TITULO_INICIO);
-    SECOES.flatMap((secao) => caminhosDe(secao).map((caminho) => ({ caminho, secao }))).forEach(
-      ({ caminho, secao }) => expect(rotaDe(caminho)?.title).toBe(secao.titulo),
-    );
+    SECOES.forEach((secao) => expect(rotaDe(secao.slug)?.title).toBe(secao.titulo));
   });
 
-  it('numeram as páginas no data de cada rota', () => {
-    for (const secao of SECOES) {
-      caminhosDe(secao).forEach((caminho, i) => {
-        expect(rotaDe(caminho)?.data).toEqual({
-          pagina: i + 1,
-          totalDePaginas: totalDePaginas(secao),
-        });
-      });
-    }
+  it('não guardam número de página no data das rotas', () => {
+    SECOES.forEach((secao) => expect(rotaDe(secao.slug)?.data).toBeUndefined());
+  });
+
+  it('redirecionam /<seção>/<n> para /<seção>, que mantém os links antigos funcionando', () => {
+    SECOES_COM_ENDERECO_ANTIGO.forEach((slug) =>
+      expect(rotaDe(`${slug}/:pagina`)).toMatchObject({ redirectTo: `/${slug}` }),
+    );
   });
 
   it('carregam a página do repositório, com o título que dá nome à aba', async () => {
@@ -70,20 +61,15 @@ describe('rotas', () => {
     expect(await carregar('')).toBe(Inicio);
   });
 
-  it('carregam a feature de cada seção que a tem, em todas as páginas', async () => {
+  it('carregam a feature de cada seção que a tem', async () => {
     for (const secao of SECOES.filter((s) => s.slug in FEATURES)) {
-      for (const caminho of caminhosDe(secao)) {
-        expect(await carregar(caminho)).toBe(FEATURES[secao.slug]);
-      }
+      expect(await carregar(secao.slug)).toBe(FEATURES[secao.slug]);
     }
   });
 
-  it('carregam um componente em toda rota, o mesmo em todas as páginas da seção', async () => {
+  it('carregam um componente em toda rota de seção', async () => {
     for (const secao of SECOES) {
-      const carregados = await Promise.all(caminhosDe(secao).map(carregar));
-
-      expect(carregados.every((componente) => typeof componente === 'function')).toBe(true);
-      expect(new Set(carregados).size).toBe(1);
+      expect(typeof (await carregar(secao.slug))).toBe('function');
     }
   });
 

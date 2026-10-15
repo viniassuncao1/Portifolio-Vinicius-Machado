@@ -16,10 +16,13 @@ describe('proximaSecao', () => {
     expect(proximaSecao(`/${SECOES.at(-1)?.slug}`)).toBeNull();
   });
 
-  it('numa seção paginada, só aparece na última página', () => {
-    expect(proximaSecao('/skills')).toBeNull();
-    expect(proximaSecao('/skills/2')).toBeNull();
-    expect(proximaSecao('/skills/3')?.arquivo).toBe('Experiencias.java');
+  it('aparece em toda seção que tem outra depois, inclusive nas que eram paginadas', () => {
+    expect(proximaSecao('/skills')?.arquivo).toBe('Experiencias.java');
+    expect(proximaSecao('/experiencias')?.slug).toBe('projeto-1');
+  });
+
+  it('um endereço antigo de página leva à mesma seguinte da seção', () => {
+    expect(proximaSecao('/skills/2')?.arquivo).toBe('Experiencias.java');
   });
 
   it('ignora a query e o fragmento', () => {
@@ -28,9 +31,7 @@ describe('proximaSecao', () => {
 
   it('segue a ordem da árvore para todas as seções', () => {
     SECOES.slice(0, -1).forEach((secao, i) => {
-      const ultima =
-        secao.paginas && secao.paginas > 1 ? `/${secao.slug}/${secao.paginas}` : `/${secao.slug}`;
-      expect(proximaSecao(ultima)?.slug).toBe(SECOES[i + 1].slug);
+      expect(proximaSecao(`/${secao.slug}`)?.slug).toBe(SECOES[i + 1].slug);
     });
   });
 });
