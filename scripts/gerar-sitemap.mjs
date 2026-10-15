@@ -1,4 +1,5 @@
-// Gera o sitemap.xml a partir das páginas pré-renderizadas do build.
+// Gera o sitemap.xml a partir das páginas pré-renderizadas do build (uma por seção: os endereços antigos
+// de página, como /skills/2, só redirecionam e não são pré-renderizados).
 // Uso: node scripts/gerar-sitemap.mjs (roda depois do `ng build`, pelo script `build`).
 import { readdir, writeFile } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
@@ -7,7 +8,7 @@ const DOMINIO = 'https://portfolio-vinicius-machado.vercel.app';
 const RAIZ = join(process.cwd(), 'dist/portfolio/browser');
 const PAGINA = 'index.html';
 
-/** Caminhos (como `skills/2`, ou vazio para a raiz) das pastas que têm um `index.html`. */
+/** Caminhos (como `skills`, ou vazio para a raiz) das pastas que têm um `index.html`. */
 async function caminhosDasPaginas(pasta) {
   const itens = await readdir(pasta, { withFileTypes: true });
   const aqui = itens.some((item) => item.isFile() && item.name === PAGINA)
