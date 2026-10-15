@@ -1,15 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
 
-import { CONTEUDOS_SKILLS } from './skills.conteudo';
 import { Skills } from './skills';
 
 describe('Skills', () => {
-  beforeEach(() => TestBed.configureTestingModule({ providers: [provideRouter([])] }));
-
-  async function renderizar(pagina?: number): Promise<HTMLElement> {
+  async function renderizar(): Promise<HTMLElement> {
     const fixture = TestBed.createComponent(Skills);
-    if (pagina) fixture.componentRef.setInput('pagina', pagina);
     await fixture.whenStable();
     return fixture.nativeElement as HTMLElement;
   }
@@ -22,85 +17,99 @@ describe('Skills', () => {
       .map((linha) => linha.textContent?.replace(/\s+/g, ' ').trim())
       .filter((texto) => texto);
 
-  it('tem uma página de conteúdo para cada página da seção', () => {
-    expect(CONTEUDOS_SKILLS).toHaveLength(3);
-  });
-
-  it('página 1 mostra linguagens, frameworks e bancos de dados e o controle 1/3', async () => {
+  it('mostra tudo num arquivo só, sem controle de páginas', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelector('code')?.textContent).toContain('List<String> linguagens,');
-    expect(raiz.querySelector('code')?.textContent).toContain('List<String> bancosDeDados) {}');
-    expect(literais(raiz)).toHaveLength(11);
-    expect(raiz.querySelector('[aria-current="page"]')?.textContent?.trim()).toBe('1/3');
+    expect(raiz.querySelectorAll('app-editor-de-codigo')).toHaveLength(1);
+    expect(raiz.querySelector('app-paginas-da-secao')).toBeNull();
+    expect(raiz.querySelector('[aria-current="page"]')).toBeNull();
   });
 
-  it('página 1 declara o record Tecnologias e lista cada coleção numa linha', async () => {
+  it('declara o package, o import e a classe uma vez só', async () => {
+    const texto = (await renderizar()).querySelector('code')?.textContent ?? '';
+
+    expect(texto.match(/package /g)).toHaveLength(1);
+    expect(texto.match(/import java\.util\.List;/g)).toHaveLength(1);
+    expect(texto.match(/public class Skills \{/g)).toHaveLength(1);
+    expect(texto).toContain('package dev.vinicius.portfolio.skills;');
+    expect(texto).not.toContain('static final');
+  });
+
+  it('mostra linguagens, frameworks e bancos, cada coleção numa linha', async () => {
+    const todas = linhas(await renderizar());
+
+    expect(todas).toEqual(
+      expect.arrayContaining([
+        'record Tecnologias(',
+        'List<String> linguagens,',
+        'List<String> frameworks,',
+        'List<String> bancosDeDados) {}',
+        'Tecnologias principais = new Tecnologias(',
+        'List.of("Java", "TypeScript", "JavaScript", "PHP", "SQL"),',
+        'List.of("Spring Boot", "Spring Data JPA", "Angular"),',
+        'List.of("Oracle", "PostgreSQL", "MySQL")',
+      ]),
+    );
+  });
+
+  it('mostra nuvem, infraestrutura e ferramentas, sem repetir os campos das tecnologias', async () => {
+    const todas = linhas(await renderizar());
+
+    expect(todas).toEqual(
+      expect.arrayContaining([
+        'record Ferramentas(',
+        'List<String> nuvemEInfra,',
+        'List<String> ferramentas) {}',
+        'Ferramentas doDiaADia = new Ferramentas(',
+        'List.of("Docker", "Kubernetes", "Nginx", "AWS", "Azure"),',
+        'List.of("Git", "GitLab CI/CD", "Grafana", "Scrum")',
+      ]),
+    );
+  });
+
+  it('mostra as 20 tecnologias das duas primeiras partes, em ordem', async () => {
     const raiz = await renderizar();
 
-    expect(linhas(raiz)).toEqual([
-      'package dev.vinicius.portfolio.skills;',
-      'import java.util.List;',
-      '// Linguagens, frameworks e bancos de dados que uso',
-      'public class Skills {',
-      'record Tecnologias(',
-      'List<String> linguagens,',
-      'List<String> frameworks,',
-      'List<String> bancosDeDados) {}',
-      'Tecnologias minhas = new Tecnologias(',
-      'List.of("Java", "TypeScript", "JavaScript", "PHP", "SQL"),',
-      'List.of("Spring Boot", "Spring Data JPA", "Angular"),',
-      'List.of("Oracle", "PostgreSQL", "MySQL")',
-      ');',
-      '}',
-    ]);
-  });
-
-  it('página 2 mostra nuvemEInfra e ferramentas e o controle 2/3', async () => {
-    const raiz = await renderizar(2);
-
-    expect(raiz.querySelector('code')?.textContent).toContain('List<String> nuvemEInfra,');
-    expect(literais(raiz)).toEqual([
-      '"Docker"',
-      '"Kubernetes"',
-      '"Nginx"',
-      '"AWS"',
-      '"Azure"',
-      '"Git"',
-      '"GitLab CI/CD"',
-      '"Grafana"',
-      '"Scrum"',
-    ]);
-    expect(raiz.querySelector('[aria-current="page"]')?.textContent?.trim()).toBe('2/3');
-  });
-
-  it('página 2 declara o record Ferramentas e não repete os da página 1', async () => {
-    const raiz = await renderizar(2);
-    const texto = raiz.querySelector('code')?.textContent ?? '';
-
-    expect(linhas(raiz).filter((l) => l?.startsWith('List<String>'))).toEqual([
-      'List<String> nuvemEInfra,',
-      'List<String> ferramentas) {}',
-    ]);
-    expect(linhas(raiz)).toContain('record Ferramentas(');
-    expect(texto).not.toContain('linguagens');
-    expect(texto).not.toContain('bancosDeDados');
-  });
-
-  it('páginas 1 e 2 importam java.util.List e declaram um record; só a 1ª tem o package', async () => {
-    expect(linhas(await renderizar())[1]).toBe('import java.util.List;');
-    expect(linhas(await renderizar(2))[0]).toBe('import java.util.List;');
-    expect(linhas(await renderizar())).toContain('record Tecnologias(');
-    expect(linhas(await renderizar(2))).toContain('record Ferramentas(');
+    expect(literais(raiz).slice(0, 20)).toEqual(
+      [
+        'Java',
+        'TypeScript',
+        'JavaScript',
+        'PHP',
+        'SQL',
+        'Spring Boot',
+        'Spring Data JPA',
+        'Angular',
+        'Oracle',
+        'PostgreSQL',
+        'MySQL',
+        'Docker',
+        'Kubernetes',
+        'Nginx',
+        'AWS',
+        'Azure',
+        'Git',
+        'GitLab CI/CD',
+        'Grafana',
+        'Scrum',
+      ].map((nome) => `"${nome}"`),
+    );
   });
 
   it('cada bloco começa com um comentário curto em pt-BR', async () => {
-    for (const pagina of [1, 2, 3]) {
-      expect((await renderizar(pagina)).querySelector('.papel-comentario')).not.toBeNull();
+    const texto = (await renderizar()).querySelector('code')?.textContent ?? '';
+
+    for (const comentario of [
+      '// Linguagens, frameworks e bancos de dados que uso',
+      '// Nuvem, infraestrutura e ferramentas do dia a dia',
+      '// Quanto conheço cada tecnologia',
+      '// Tecnologias de cada nível',
+    ]) {
+      expect(texto).toContain(comentario);
     }
   });
 
-  it('indenta as listas e os componentes três níveis', async () => {
+  it('indenta as listas e os componentes três níveis e a classe zero', async () => {
     const raiz = await renderizar();
     const linha = (texto: string) =>
       Array.from(raiz.querySelectorAll<HTMLElement>('code > span')).find(
@@ -118,8 +127,8 @@ describe('Skills', () => {
     expect((await renderizar()).querySelector('.papel-valor')).toBeNull();
   });
 
-  it('página 3 declara o enum NivelDeConhecimento com os quatro níveis explicados', async () => {
-    const raiz = await renderizar(3);
+  it('declara o enum NivelDeConhecimento com os quatro níveis explicados', async () => {
+    const raiz = await renderizar();
     const texto = raiz.querySelector('code')?.textContent ?? '';
 
     expect(linhas(raiz)).toContain('enum NivelDeConhecimento {');
@@ -128,11 +137,10 @@ describe('Skills', () => {
     }
     expect(texto).toContain('Domínio diário: uso todo dia no trabalho');
     expect(texto).toContain('Projeto completo: já entreguei um projeto inteiro com ela');
-    expect(raiz.querySelector('[aria-current="page"]')?.textContent?.trim()).toBe('3/3');
   });
 
-  it('página 3 liga cada nível às tecnologias da spec', async () => {
-    const texto = linhas(await renderizar(3)).join(' ');
+  it('liga cada nível às tecnologias da spec', async () => {
+    const texto = linhas(await renderizar()).join(' ');
 
     expect(texto).toContain(
       'NivelDeConhecimento.DominioDiario, List.of("Java", "Spring Boot", "Angular", "PostgreSQL", "Oracle", "TypeScript", "Git")),',
@@ -141,30 +149,6 @@ describe('Skills', () => {
     expect(texto).toContain('NivelDeConhecimento.UsoPontual, List.of("React Native", "CI/CD")),');
     expect(texto).toContain(
       'NivelDeConhecimento.ConhecimentoTeorico, List.of("Python", "AWS", "Azure", "Docker", "Kubernetes")));',
-    );
-  });
-
-  it('aponta o controle para /skills/2 na página 1 e para /skills na página 2', async () => {
-    const primeira = await renderizar();
-    const segunda = await renderizar(2);
-
-    expect(primeira.querySelector('[aria-label="Próxima página"]')?.getAttribute('href')).toBe(
-      '/skills/2',
-    );
-    expect(segunda.querySelector('[aria-label="Página anterior"]')?.getAttribute('href')).toBe(
-      '/skills',
-    );
-  });
-
-  it('troca o conteúdo quando a página muda', async () => {
-    const fixture = TestBed.createComponent(Skills);
-    await fixture.whenStable();
-
-    fixture.componentRef.setInput('pagina', 2);
-    await fixture.whenStable();
-
-    expect((fixture.nativeElement as HTMLElement).querySelector('code')?.textContent).toContain(
-      'nuvemEInfra',
     );
   });
 
