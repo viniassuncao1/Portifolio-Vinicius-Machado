@@ -1,11 +1,11 @@
 # 0018: Projeto 5, o próprio portfólio
 
 - **Data:** 2026-10-15
-- **Change:** [projeto-5-o-proprio-portfolio](../../openspec/changes/projeto-5-o-proprio-portfolio/)
-- **PR:** a definir
+- **Change:** [projeto-5-o-proprio-portfolio](../../openspec/changes/archive/2026-10-15-projeto-5-o-proprio-portfolio/)
+- **PR:** [#35](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/35)
 - **ADRs:** nenhum novo.
 
-Capturas desta entrada: a definir.
+![O Projeto 5 num arquivo só, com o code vision Ver no GitHub](imagens/0018-projeto-5.png)
 
 ## Problema
 
@@ -46,11 +46,11 @@ repositório. Faltava um projeto dedicado a contar esse estudo.
   fonte, ou mudava toda hora, não entrou.
 - **Derivar listas da fonte única.** A lista de classes da abertura vir de `secoes.ts` evitou um
   número fixo que quebraria na primeira seção nova.
-- **Números finais.** Testes unitários: a definir. Testes E2E: a definir.
+- **Números finais.** 784 testes unitários (95,45% de cobertura de instruções) e 851 testes E2E.
 
 ## Links
 
-- Change: [`openspec/changes/projeto-5-o-proprio-portfolio`](../../openspec/changes/projeto-5-o-proprio-portfolio/)
+- Change: [`openspec/changes/projeto-5-o-proprio-portfolio`](../../openspec/changes/archive/2026-10-15-projeto-5-o-proprio-portfolio/)
 - Documentação: [componentes](../componentes.md)
 - Entrada anterior: [0017 abertura com Run](0017-abertura-com-run.md)
 

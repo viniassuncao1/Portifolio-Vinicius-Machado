@@ -20,5 +20,5 @@ Git e GitHub (8h, 25/03/2025).
   recente para o mais antigo
 
 #### Scenario: Muitos cursos
-- **WHEN** a lista não cabe numa página
-- **THEN** ela se divide em páginas da seção, sem perder nenhum curso
+- **WHEN** a lista não cabe na tela
+- **THEN** ela continua no mesmo arquivo, rolando, sem controle de páginas

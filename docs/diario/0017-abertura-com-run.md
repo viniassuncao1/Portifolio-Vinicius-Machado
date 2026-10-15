@@ -1,11 +1,13 @@
 # 0017: Abertura com Run
 
 - **Data:** 2026-10-15
-- **Change:** [abertura-com-run](../../openspec/changes/abertura-com-run/)
-- **PR:** a definir
+- **Change:** [abertura-com-run](../../openspec/changes/archive/2026-10-15-abertura-com-run/)
+- **PR:** [#35](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/35)
 - **ADRs:** [0017](../adr/0017-abertura-com-run.md), que substitui o [0015](../adr/0015-tela-de-boas-vindas.md)
 
-Capturas desta entrada: a definir.
+![O Run pronto para executar, com o foco no ▶](imagens/0017-abertura-pronto.png)
+
+![O build compilando as classes do portfólio](imagens/0017-abertura-build.png)
 
 ## Problema
 
@@ -46,11 +48,11 @@ quadro a quadro está na change.
   vai ao ▶ e depois ao editor, e uma região `aria-live` anuncia só os marcos, não o log linha a linha.
 - **O atalho certo depende do sistema.** ⌃R recarregaria a página fora do Mac, então ele usa ⇧F10, o
   atalho do IntelliJ nesses sistemas.
-- **Números finais.** Testes unitários: a definir. Testes E2E: a definir.
+- **Números finais.** 784 testes unitários (95,45% de cobertura de instruções) e 851 testes E2E.
 
 ## Links
 
-- Change: [`openspec/changes/abertura-com-run`](../../openspec/changes/abertura-com-run/)
+- Change: [`openspec/changes/abertura-com-run`](../../openspec/changes/archive/2026-10-15-abertura-com-run/)
 - ADR: [0017 abertura com Run](../adr/0017-abertura-com-run.md)
 - Documentação: [arquitetura](../arquitetura.md#abertura-com-run) e [componentes](../componentes.md)
 - Entrada anterior: [0016 boas-vindas, repositório e UX](0016-boas-vindas-repositorio-e-ux.md)

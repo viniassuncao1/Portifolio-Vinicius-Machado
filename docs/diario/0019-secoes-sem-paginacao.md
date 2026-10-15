@@ -1,11 +1,11 @@
 # 0019: Seções num arquivo só, sem paginação
 
 - **Data:** 2026-10-15
-- **Change:** [secoes-sem-paginacao](../../openspec/changes/secoes-sem-paginacao/)
-- **PR:** a definir
+- **Change:** [secoes-sem-paginacao](../../openspec/changes/archive/2026-10-15-secoes-sem-paginacao/)
+- **PR:** [#35](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/35)
 - **ADRs:** [0018](../adr/0018-secoes-num-arquivo-so.md), que refina o [0011](../adr/0011-identidade-visual-intellij-new-ui.md)
 
-Capturas desta entrada: a definir.
+![Experiências inteira num arquivo só, sem controle de páginas](imagens/0019-experiencias.png)
 
 ## Problema
 
@@ -36,11 +36,11 @@ Ele quer cada seção inteira na mesma tela, **como um arquivo Java que se rola*
   confortáveis de rolar.
 - **Quem compartilhou um link antigo não pode pagar pela mudança.** Redirecionar os endereços de
   página custa pouco e evita links quebrados.
-- **Números finais.** Testes unitários: a definir. Testes E2E: a definir.
+- **Números finais.** 784 testes unitários (95,45% de cobertura de instruções) e 851 testes E2E.
 
 ## Links
 
-- Change: [`openspec/changes/secoes-sem-paginacao`](../../openspec/changes/secoes-sem-paginacao/)
+- Change: [`openspec/changes/secoes-sem-paginacao`](../../openspec/changes/archive/2026-10-15-secoes-sem-paginacao/)
 - ADR: [0018 seções num arquivo só](../adr/0018-secoes-num-arquivo-so.md)
 - Documentação: [componentes](../componentes.md#seção-longa-um-arquivo-só)
 - Entrada anterior: [0018 Projeto 5, o próprio portfólio](0018-projeto-5-o-proprio-portfolio.md)

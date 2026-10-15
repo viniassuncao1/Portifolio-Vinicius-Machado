@@ -36,11 +36,30 @@ com o link https://wattscompany.com.br/ e preview.
 - **THEN** ele vê a descrição, o link do site e o botão "▶ Executar"
 
 ### Requirement: Projeto 4, cases da Memora
-A seção Projeto 4 SHALL ter três páginas com os cases da Memora: migração de APIs e
+A seção Projeto 4 SHALL mostrar num arquivo só os três cases da Memora: migração de APIs e
 microsserviços de Oracle para PostgreSQL em produção, scrapers de licitações em Java com
 Playwright (Coren e Sanesul) e o AyoForms (PHP e MySQL, login via Google Workspace e Microsoft
 Azure, upload de vídeo, insights de acesso e votação com conteúdo do SharePoint).
 
 #### Scenario: Três cases
-- **WHEN** o visitante percorre as três páginas do Projeto 4
-- **THEN** cada página mostra um case com o que foi feito
+- **WHEN** o visitante abre o Projeto 4
+- **THEN** os três cases aparecem no mesmo arquivo, cada um com o que foi feito
+
+### Requirement: Projeto 5, este portfólio
+A rota `/projeto-5` SHALL apresentar, em `Projeto5.java`, num arquivo só e em 4 partes, o próprio portfólio
+como estudo de desenvolvimento com IA: o estudo, SDD com OpenSpec, o ECC de Affaan Mustafa
+(vencedor do hackathon Anthropic x Forum Ventures em setembro de 2025) e o Maestri de Evert
+Junior, desenvolvedor brasileiro, com links externos para o repositório, o ECC e o Maestri.
+
+#### Scenario: Abrir o Projeto 5
+- **WHEN** o visitante abre "Projeto 5" na árvore
+- **THEN** o arquivo começa pelo estudo, com o link para o repositório no GitHub
+
+#### Scenario: Página do Maestri
+- **WHEN** o visitante chega à parte do Maestri no Projeto 5
+- **THEN** o texto apresenta o Maestri, de Evert Junior, e a equipe de agentes do portfólio, com
+  link para o Maestri em nova aba
+
+#### Scenario: Code vision
+- **WHEN** o visitante ativa `▶ Executar · Ver no GitHub` no Projeto 5
+- **THEN** o repositório abre em nova aba com `rel="noopener noreferrer"`
