@@ -6,7 +6,7 @@
 
 ## 2. Code vision [Nanquim]
 
-- [ ] 2.1 Variante `▶ Executar · Ver no GitHub` com link externo no Projeto 5 — verificar com `npm run test:ci`
+- [x] 2.1 Variante `▶ Executar · Ver no GitHub` com link externo no Projeto 5 — verificar com `npm run test:ci`
 
 ## 3. Testes [Sentinela]
 
