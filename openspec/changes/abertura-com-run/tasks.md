@@ -2,7 +2,7 @@
 
 ## 1. Base [Nanquim]
 
-- [ ] 1.1 Mover o log do Spring para `core/log-do-spring.ts` (usado pela abertura e pela janela de Run) e criar a linha do tempo da abertura com a lista de classes derivada de `secoes.ts`, com testes — verificar com `npm run test:ci`
+- [x] 1.1 Mover o log do Spring para `core/log-do-spring.ts` (usado pela abertura e pela janela de Run) e criar a linha do tempo da abertura com a lista de classes derivada de `secoes.ts`, com testes — verificar com `npm run test:ci`
 
 ## 2. Visual [Pincel]
 
