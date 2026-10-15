@@ -1,44 +1,50 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
 
-import { CONTEUDOS_PROJETO_4 } from './projeto-4.conteudo';
 import { Projeto4 } from './projeto-4';
 
 describe('Projeto4', () => {
-  beforeEach(() => TestBed.configureTestingModule({ providers: [provideRouter([])] }));
-
-  async function renderizar(pagina?: number): Promise<HTMLElement> {
+  async function renderizar(): Promise<HTMLElement> {
     const fixture = TestBed.createComponent(Projeto4);
-    if (pagina) fixture.componentRef.setInput('pagina', pagina);
     await fixture.whenStable();
     return fixture.nativeElement as HTMLElement;
   }
 
-  it('tem uma página de conteúdo para cada case', () => {
-    expect(CONTEUDOS_PROJETO_4).toHaveLength(3);
-  });
+  it('mostra os 3 cases num arquivo só, sem controle de páginas', async () => {
+    const raiz = await renderizar();
+    const codigo = raiz.querySelector('code')?.textContent ?? '';
 
-  it.each([
-    [1, '1/3', 'Oracle → PostgreSQL', 'migração de APIs e microsserviços'],
-    [2, '2/3', 'Scraper de licitações', 'Coren e Sanesul'],
-    [3, '3/3', 'AyoForms', 'SharePoint'],
-  ])('página %i mostra o case e o controle %s', async (pagina, controle, titulo, trecho) => {
-    const raiz = await renderizar(pagina);
-
-    expect(raiz.querySelector('code')?.textContent).toContain(`"${titulo}"`);
-    expect(raiz.querySelector('.javadoc')?.textContent).toContain(trecho);
-    expect(raiz.querySelector('[aria-current="page"]')?.textContent?.trim()).toBe(controle);
-  });
-
-  it('declara o record Caso e as tecnologias numa linha em cada página', async () => {
-    for (const pagina of [1, 2, 3]) {
-      const codigo = (await renderizar(pagina)).querySelector('code')?.textContent ?? '';
-
-      expect(codigo).toContain('package dev.vinicius.portfolio.projetos;');
-      expect(codigo).toContain('record Caso(String titulo, List<String> tecnologias) {}');
-      expect(codigo).not.toContain('static final');
-      expect(codigo).toMatch(/List\.of\("[^\n]*"\)/);
+    for (const titulo of ['Oracle → PostgreSQL', 'Scraper de licitações', 'AyoForms']) {
+      expect(codigo).toContain(`"${titulo}"`);
+      expect(codigo).toContain(`// ${titulo}`);
     }
+    expect(raiz.querySelector('nav, [aria-current="page"]')).toBeNull();
+  });
+
+  it('mantém o texto e as tecnologias de cada case', async () => {
+    const raiz = await renderizar();
+    const javadocs = Array.from(raiz.querySelectorAll('.javadoc')).map((j) => j.textContent ?? '');
+    const codigo = raiz.querySelector('code')?.textContent ?? '';
+
+    expect(javadocs).toHaveLength(3);
+    expect(javadocs[0]).toContain('migração de APIs e microsserviços');
+    expect(javadocs[1]).toContain('Coren e Sanesul');
+    expect(javadocs[2]).toContain('SharePoint');
+    expect(codigo).toContain('List.of("Java", "Oracle", "PostgreSQL", "SQL")');
+    expect(codigo).toContain('List.of("Java", "Playwright", "Coren", "Sanesul")');
+    expect(codigo).toContain(
+      'List.of("PHP", "MySQL", "Google Workspace", "Microsoft Azure", "SharePoint")',
+    );
+  });
+
+  it('declara o pacote, o import e o record uma vez só', async () => {
+    const codigo = (await renderizar()).querySelector('code')?.textContent ?? '';
+    const vezes = (trecho: string): number => codigo.split(trecho).length - 1;
+
+    expect(vezes('package dev.vinicius.portfolio.projetos;')).toBe(1);
+    expect(vezes('import java.util.List;')).toBe(1);
+    expect(vezes('public class CasosDaMemora {')).toBe(1);
+    expect(vezes('record Caso(String titulo, List<String> tecnologias) {}')).toBe(1);
+    expect(codigo).not.toContain('static final');
   });
 
   it('não tem h1 próprio', async () => {
