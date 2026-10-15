@@ -25,6 +25,7 @@ Um ADR aceito não é editado. Se a decisão mudar, um novo ADR o substitui e o 
 | [0015](0015-tela-de-boas-vindas.md)                       | Tela de boas-vindas no lugar da abertura com a janela de Run | Aceito, substituído pelo 0017                  |
 | [0016](0016-repositorio-no-estilo-do-github.md)           | Página do repositório no estilo do GitHub                    | Aceito                                         |
 | [0017](0017-abertura-com-run.md)                          | Abertura com Run                                             | Aceito                                         |
+| [0018](0018-secoes-num-arquivo-so.md)                     | Seções num arquivo só, sem paginação                         | Aceito                                         |
 
 ## Modelo
 
