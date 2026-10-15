@@ -2,7 +2,7 @@
 
 ## 1. Conteúdo [Grafite]
 
-- [ ] 1.1 Projeto 5 com as 4 páginas (estudo, SDD, ECC, Maestri), textos revisados com a skill `li-human`, registro em `core/secoes.ts` e rota — verificar com `npm run test:ci` e capturas `projeto-5-*.png`
+- [x] 1.1 Projeto 5 com as 4 páginas (estudo, SDD, ECC, Maestri), textos revisados com a skill `li-human`, registro em `core/secoes.ts` e rota — verificar com `npm run test:ci` e capturas `projeto-5-*.png`
 
 ## 2. Code vision [Nanquim]
 
