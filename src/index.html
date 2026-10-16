@@ -33,6 +33,26 @@
         } catch (e) {}
       })();
     </script>
+    <!-- Liga a abertura (cartão no primeiro quadro) só na página inicial, com JavaScript e sem a chave
+         na sessão. O serviço Abertura (core/abertura.ts) marca a sessão e desliga o atributo no fim;
+         sem este script (ou sem JavaScript) o portfólio aparece direto. -->
+    <script>
+      (function () {
+        try {
+          var visto = false;
+          try {
+            visto = sessionStorage.getItem('abertura-exibida') !== null;
+          } catch (e) {}
+          if (location.pathname === '/' && !visto) {
+            document.documentElement.setAttribute('data-abertura', '');
+            // Rede de segurança: se o app nunca assumir, a abertura não fica cobrindo a página.
+            setTimeout(function () {
+              document.documentElement.removeAttribute('data-abertura');
+            }, 20000);
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
   </head>
   <body>

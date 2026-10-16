@@ -46,10 +46,11 @@ test.describe('Abas dos arquivos', () => {
     await expect(aba(page, 'SobreMim.java')).toHaveAttribute('aria-selected', 'true');
   });
 
-  test('uma página interna da seção mantém a mesma aba', async ({ page }) => {
+  test('um endereço antigo de página (/skills/2) cai na mesma aba da seção', async ({ page }) => {
     await abrirHidratada(page, '/skills');
 
     await abrirHidratada(page, '/skills/2');
+    await expect(page).toHaveURL(/\/skills$/);
 
     await expect(faixa(page).getByRole('tab')).toHaveText(['Skills.java']);
     await expect(aba(page, 'Skills.java')).toHaveAttribute('aria-selected', 'true');

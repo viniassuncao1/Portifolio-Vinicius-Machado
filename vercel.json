@@ -4,5 +4,17 @@
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
   "outputDirectory": "dist/portfolio/browser",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.csr.html" }]
+  "redirects": [
+    {
+      "source": "/:secao(skills|experiencias|projeto-4|projeto-5|certificacoes)/:pagina(\\d+)",
+      "destination": "/:secao",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.csr.html"
+    }
+  ]
 }

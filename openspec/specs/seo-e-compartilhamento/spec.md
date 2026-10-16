@@ -34,9 +34,10 @@ LinkedIn e do GitHub em `sameAs` e a stack principal em `knowsAbout`.
 - **THEN** ele é JSON válido do tipo `Person` com nome "Vinicius Machado"
 
 ### Requirement: Sitemap e robots
-O site SHALL servir `/sitemap.xml` com todas as páginas pré-renderizadas, em endereços absolutos,
-e `/robots.txt` permitindo a indexação e apontando para o sitemap.
+O site SHALL servir `/sitemap.xml` com todas as páginas pré-renderizadas das seções, em endereços
+absolutos e sem os endereços antigos de páginas (`/<seção>/<n>`), e `/robots.txt` permitindo a
+indexação e apontando para o sitemap.
 
 #### Scenario: Sitemap completo
 - **WHEN** o sitemap é lido depois do build
-- **THEN** ele lista as 24 páginas, incluindo as páginas internas como `/skills/2`
+- **THEN** ele lista a página inicial, cada seção e `/repositorio`, e nenhum endereço como `/skills/2`

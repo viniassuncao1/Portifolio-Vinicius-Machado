@@ -1,0 +1,228 @@
+// Widget de Run (IntelliJ New UI), a dica e a barra de etapas do splash. Mesmo componente da
+// abertura: os seletores e os keyframes valem para os três arquivos de estilo.
+.widget {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.abertura[data-fase='splash'] .widget,
+.abertura[data-fase='splash'] .dica {
+  visibility: hidden;
+}
+
+.abertura[data-fase='pronto'] .widget {
+  animation: widget-entra 200ms var(--curva-saida) 60ms backwards;
+}
+
+.config {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  min-inline-size: 0;
+  block-size: 2rem;
+  padding-inline: var(--espaco-3);
+  overflow: hidden;
+  border-radius: var(--raio-controle);
+  background: var(--cor-linha-selecionada);
+  color: var(--cor-texto-forte);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  .seta {
+    color: var(--cor-texto-esmaecido);
+  }
+}
+
+.icone-spring {
+  flex: none;
+  inline-size: 0.875rem;
+  block-size: 0.875rem;
+  color: var(--cor-run);
+}
+
+.botao-run,
+.botao-debug {
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-controle);
+  background: transparent;
+}
+
+.botao-run {
+  cursor: pointer;
+  transition:
+    background-color var(--duracao-rapida) var(--curva-saida),
+    transform var(--duracao-rapida) var(--curva-saida);
+
+  // Área de toque de 44 px: o botão tem 36 e o pseudo-elemento cobre o resto.
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -0.25rem;
+  }
+
+  &:hover {
+    background: var(--cor-linha-selecionada);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: 2px;
+  }
+
+  svg {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+  }
+
+  // Centragem óptica: o triângulo parece mais à esquerda do que está.
+  .play {
+    color: var(--cor-run);
+    transform: translateX(1px);
+  }
+
+  .stop {
+    position: absolute;
+    color: var(--cor-stop);
+    opacity: 0;
+  }
+}
+
+// Pronto: um pulso no ▶ aos 0,3 s e outro quando a dica avisa que vai executar sozinho.
+.abertura[data-fase='pronto'] .botao-run .play {
+  animation: pulso 480ms var(--curva-padrao) 300ms;
+}
+
+.abertura[data-fase='pronto']:has(.destaque) .botao-run .play {
+  animation: pulso-final 480ms var(--curva-padrao);
+}
+
+// Ao executar o ▶ vira ■, como no IntelliJ.
+.abertura:not([data-fase='splash'], [data-fase='pronto']) .botao-run {
+  .play {
+    opacity: 0;
+    animation: sumir var(--duracao-rapida) var(--curva-saida) backwards;
+  }
+
+  .stop {
+    opacity: 1;
+    animation: stop-entra var(--duracao-rapida) var(--curva-saida) backwards;
+  }
+}
+
+.botao-debug {
+  opacity: 0.45;
+
+  svg {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+    color: var(--cor-texto-esmaecido);
+  }
+}
+
+.atalho {
+  margin-inline-start: var(--espaco-2);
+  color: var(--cor-texto-esmaecido);
+  font-family: inherit;
+  font-size: var(--texto-status);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.dica {
+  min-block-size: 1.2em;
+  margin: var(--espaco-3) 0 0;
+  color: var(--cor-texto-esmaecido);
+  font-size: var(--texto-status);
+  transition: color var(--duracao-lenta) var(--curva-padrao);
+}
+
+.abertura[data-fase='pronto'] .dica {
+  animation: sumir-ao-contrario 200ms var(--curva-saida) 120ms backwards;
+}
+
+.dica .destaque {
+  color: var(--cor-texto-forte);
+}
+
+.so-toque {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  .config {
+    max-inline-size: 11rem;
+  }
+
+  .botao-run {
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+  }
+
+  .atalho,
+  .so-teclado {
+    display: none;
+  }
+
+  .so-toque {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .botao-run,
+  .dica {
+    transition: none;
+  }
+
+  .botao-run:active {
+    transform: none;
+  }
+
+  .abertura[data-fase='pronto'] .botao-run .play,
+  .abertura[data-fase='pronto']:has(.destaque) .botao-run .play,
+  .abertura:not([data-fase='splash'], [data-fase='pronto']) .botao-run .stop {
+    animation: none;
+  }
+
+  .abertura[data-fase='pronto'] .widget {
+    animation: sumir-ao-contrario var(--duracao-reduzida-abertura, 150ms) linear backwards;
+  }
+}
+
+@keyframes widget-entra {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@keyframes pulso {
+  50% {
+    transform: translateX(1px) scale(1.12);
+  }
+}
+
+@keyframes pulso-final {
+  50% {
+    transform: translateX(1px) scale(1.12);
+  }
+}
+
+@keyframes stop-entra {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}

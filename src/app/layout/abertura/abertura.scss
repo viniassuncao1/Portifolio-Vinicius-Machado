@@ -1,0 +1,239 @@
+// A abertura é uma camada por cima da casca: o conteúdo continua no DOM por baixo, opaco. Ela só
+// aparece em `html[data-abertura]` (ligado pelo script inline do `index.html`, só em `/` e uma vez
+// por sessão); sem JavaScript, nada muda. Só `transform`, `opacity` e `clip-path` animam, com os
+// tokens de movimento. Os tempos das fases são do serviço `Abertura`; aqui cada fase só diz o que
+// aparece (`data-fase`) e as entradas nascem com a inserção do elemento (keyframes), então não
+// há temporizador nem estilo inline de movimento. Com movimento reduzido: as mesmas telas, sem
+// `transform`, só opacidade de até 150 ms.
+:host {
+  display: contents;
+}
+
+.abertura {
+  position: fixed;
+  inset: 0;
+  z-index: var(--camada-boas-vindas, 100);
+  display: none;
+  place-items: center;
+  padding: var(--espaco-4);
+  font-family: var(--fonte-interface);
+  color: var(--cor-texto);
+}
+
+:host-context(html[data-abertura]) .abertura {
+  display: grid;
+}
+
+.abertura[data-fase='revelando'],
+.abertura[data-fase='encerrada'] {
+  pointer-events: none;
+}
+
+.fundo {
+  position: absolute;
+  inset: 0;
+  background: var(--cor-fundo-abertura);
+  backdrop-filter: blur(6px);
+}
+
+.abertura[data-fase='revelando'] .fundo {
+  animation: sumir var(--duracao-fundo-abertura, 280ms) var(--curva-entrada) forwards;
+}
+
+// Cartão e janela dividem a mesma célula: um sai quando o outro entra.
+.palco {
+  position: relative;
+  display: grid;
+  inline-size: 100%;
+  place-items: center;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+}
+
+// ---------- Cartão ----------
+.cartao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  inline-size: min(100%, 26rem);
+  padding: var(--espaco-6) var(--espaco-5) var(--espaco-5);
+  border: var(--borda-painel);
+  border-radius: var(--raio-aba);
+  background: var(--cor-painel);
+  box-shadow: var(--sombra-abertura);
+  text-align: center;
+}
+
+.abertura:is([data-fase='compilando'], [data-fase='iniciando'], [data-fase='revelando']) .cartao {
+  pointer-events: none;
+  animation: cartao-sai var(--duracao-saida-cartao, 160ms) var(--curva-entrada) forwards;
+}
+
+.abertura[data-fase='encerrada'] .cartao {
+  visibility: hidden;
+}
+
+.foto {
+  inline-size: 6rem;
+  block-size: 6rem;
+  border-radius: 50%;
+  object-fit: cover;
+  // Contorno neutro de 1 px: a foto não se mistura com o cartão em nenhum tema.
+  outline: 1px solid var(--cor-contorno-foto);
+  outline-offset: -1px;
+  // Só escala: a foto é o maior elemento do primeiro quadro e não pode nascer invisível (LCP).
+  animation: foto-entra var(--duracao-entrada-abertura, 280ms)
+    var(--curva-suave, var(--curva-saida)) backwards;
+}
+
+// O nome não anima: é texto pintado no primeiro quadro.
+.nome {
+  margin: var(--espaco-4) 0 0;
+  color: var(--cor-texto-forte);
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.cargo,
+.frase {
+  margin: var(--espaco-1) 0 0;
+  text-wrap: balance;
+  animation: texto-entra var(--duracao-entrada-abertura, 280ms)
+    var(--curva-suave, var(--curva-saida)) backwards;
+}
+
+.cargo {
+  color: var(--cor-texto-esmaecido);
+  animation-delay: var(--intervalo-escalonado, 60ms);
+}
+
+.frase {
+  animation-delay: calc(2 * var(--intervalo-escalonado, 60ms));
+}
+
+// Barra de etapas (splash) e widget de Run (pronto) ocupam o mesmo lugar: o cartão não cresce.
+.zona {
+  display: grid;
+  align-items: center;
+  inline-size: 100%;
+  min-block-size: 3rem;
+  margin-block-start: var(--espaco-5);
+
+  > * {
+    grid-area: 1 / 1;
+  }
+}
+
+.barra {
+  inline-size: 100%;
+  block-size: 0.25rem;
+  overflow: hidden;
+  border-radius: 0.125rem;
+  background: var(--cor-linha-selecionada);
+}
+
+.preenchimento {
+  display: block;
+  block-size: 100%;
+  background: var(--cor-acento);
+  transform: scaleX(var(--p, 0));
+  transform-origin: left;
+  transition: transform 500ms var(--curva-saida);
+}
+
+.etapa {
+  min-block-size: 1.2em;
+  margin: var(--espaco-2) 0 0;
+  color: var(--cor-texto-esmaecido);
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-status);
+  line-height: 1.2;
+}
+
+.abertura:not([data-fase='splash']) .carregando {
+  visibility: hidden;
+  animation: sumir var(--duracao-rapida) var(--curva-entrada) backwards;
+}
+
+.somente-leitores {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+// ---------- Celular (390x844) ----------
+@media (max-width: 767.98px) {
+  .cartao {
+    padding: var(--espaco-5) var(--espaco-4) var(--espaco-4);
+  }
+
+  .foto {
+    inline-size: 4.5rem;
+    block-size: 4.5rem;
+  }
+
+  .nome {
+    font-size: 1.25rem;
+  }
+}
+
+// ---------- Movimento reduzido: sem transform, só opacidade de até 150 ms ----------
+@media (prefers-reduced-motion: reduce) {
+  .preenchimento {
+    transition: none;
+  }
+
+  .foto,
+  .cargo,
+  .frase {
+    animation: none;
+  }
+
+  .abertura:is([data-fase='compilando'], [data-fase='iniciando'], [data-fase='revelando']) .cartao {
+    animation: sumir var(--duracao-reduzida-abertura, 150ms) linear forwards;
+  }
+}
+
+// ---------- Keyframes ----------
+@keyframes sumir {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes sumir-ao-contrario {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes foto-entra {
+  from {
+    transform: scale(0.96);
+  }
+}
+
+@keyframes texto-entra {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes cartao-sai {
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}

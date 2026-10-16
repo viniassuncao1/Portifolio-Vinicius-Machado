@@ -51,12 +51,12 @@ describe('BuscaDeSecoes', () => {
     return { fixture, raiz, campo, digitar, tecla, opcoes };
   }
 
-  it('abre com o foco no campo e lista as 16 opções (Início e 15 seções)', async () => {
+  it('abre com o foco no campo e lista as 17 opções (Início e 16 seções)', async () => {
     const { raiz, campo, opcoes } = await montar();
 
     expect(raiz.querySelector('dialog')?.hasAttribute('open')).toBe(true);
     expect(document.activeElement).toBe(campo);
-    expect(opcoes()).toHaveLength(16);
+    expect(opcoes()).toHaveLength(17);
     raiz.remove();
   });
 
@@ -119,7 +119,7 @@ describe('BuscaDeSecoes', () => {
     const { raiz, campo, tecla } = await montar();
 
     tecla('ArrowUp');
-    expect(campo.getAttribute('aria-activedescendant')).toBe('opcao-busca-15');
+    expect(campo.getAttribute('aria-activedescendant')).toBe('opcao-busca-16');
     tecla('ArrowDown');
     expect(campo.getAttribute('aria-activedescendant')).toBe('opcao-busca-0');
     raiz.remove();
@@ -143,9 +143,9 @@ describe('BuscaDeSecoes', () => {
     const { raiz, digitar } = await montar();
     const contagem = () => raiz.querySelector('.contagem')?.textContent?.trim();
 
-    expect(contagem()).toBe('16 resultados');
+    expect(contagem()).toBe('17 resultados');
     await digitar('projeto');
-    expect(contagem()).toBe('4 resultados');
+    expect(contagem()).toBe('5 resultados');
     await digitar('formacao');
     expect(contagem()).toBe('1 resultado');
     await digitar('zzzz');

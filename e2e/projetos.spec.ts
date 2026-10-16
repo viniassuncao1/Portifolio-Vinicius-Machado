@@ -6,8 +6,6 @@ import { linhasDoCodigo, normalizar, textoDoCodigo } from './apoio';
 const controle = (page: Page) => page.getByRole('navigation', { name: 'Páginas da seção' });
 const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
 const codigo = (page: Page) => page.locator('main code');
-const textoDoJavadoc = async (page: Page) =>
-  normalizar(await page.locator('main .javadoc').textContent());
 
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -162,8 +160,6 @@ test.describe('Projeto 3: Watts Company (/projeto-3)', () => {
 
 const CASES = [
   {
-    rota: '/projeto-4',
-    pagina: 1,
     titulo: 'Oracle → PostgreSQL',
     stack: ['Java', 'Oracle', 'PostgreSQL', 'SQL'],
     javadoc: [
@@ -174,15 +170,11 @@ const CASES = [
     ],
   },
   {
-    rota: '/projeto-4/2',
-    pagina: 2,
     titulo: 'Scraper de licitações',
     stack: ['Java', 'Playwright', 'Coren', 'Sanesul'],
     javadoc: ['scrapers em Java com Playwright', 'Coren e Sanesul', 'sem usar APIs'],
   },
   {
-    rota: '/projeto-4/3',
-    pagina: 3,
     titulo: 'AyoForms',
     stack: ['PHP', 'MySQL', 'Google Workspace', 'Microsoft Azure', 'SharePoint'],
     javadoc: [
@@ -196,77 +188,70 @@ const CASES = [
   },
 ] as const;
 
-test.describe('Projeto 4: cases da Memora (/projeto-4)', () => {
-  for (const { rota, pagina, titulo, stack, javadoc } of CASES) {
-    test(`página ${pagina}: ${titulo}, com a stack e o que foi feito`, async ({ page }) => {
-      await page.goto(rota);
-      const texto = await textoDoCodigo(page);
+test.describe('Projeto 4: os três cases da Memora num arquivo só (/projeto-4)', () => {
+  test('mostra os três cases, cada um com a stack e o que foi feito', async ({ page }) => {
+    await page.goto('/projeto-4');
+    const texto = await textoDoCodigo(page);
+    const javadocs = normalizar((await page.locator('main .javadoc').allTextContents()).join(' '));
+
+    for (const { titulo, stack, javadoc } of CASES) {
       const lista = stack.map((item) => `"${item}"`).join(', ');
 
-      expect(texto).toContain(`"${titulo}"`);
-      expect(texto).toContain(`List.of(${lista})`);
-      for (const trecho of javadoc) {
-        expect(await textoDoJavadoc(page), trecho).toContain(trecho);
-      }
-      await expect(controle(page)).toContainText(`${pagina}/3`);
-      await expect(page.getByRole('button', { name: /^Executar Projeto \d$/ })).toHaveCount(0);
-    });
-  }
-
-  test('cada página tem um comentário em pt-BR e o record do case', async ({ page }) => {
-    for (const { rota } of CASES) {
-      await page.goto(rota);
-
-      await expect(page.locator('main .papel-comentario').first()).toContainText(
-        'Um case que entreguei na Memora',
-      );
-      await expect(codigo(page)).toContainText(
-        'record Caso(String titulo, List<String> tecnologias)',
-      );
+      expect(texto, titulo).toContain(`"${titulo}"`);
+      expect(texto, titulo).toContain(`List.of(${lista})`);
+      for (const trecho of javadoc) expect(javadocs, trecho).toContain(trecho);
     }
+    await expect(page.getByRole('button', { name: /^Executar Projeto \d$/ })).toHaveCount(0);
   });
 
-  test('o controle percorre as três páginas e a árvore mantém o Projeto 4 como atual', async ({
+  test('os cases vêm na ordem da spec, um comentário em pt-BR por case e o record uma vez só', async ({
     page,
   }) => {
     await page.goto('/projeto-4');
-    await expect(controle(page).getByRole('link', { name: 'Página anterior' })).toHaveCount(0);
+    const texto = await textoDoCodigo(page);
 
-    await controle(page).getByRole('link', { name: 'Próxima página' }).click();
-    await expect(page).toHaveURL(/\/projeto-4\/2$/);
-    await controle(page).getByRole('link', { name: 'Próxima página' }).click();
-    await expect(page).toHaveURL(/\/projeto-4\/3$/);
-
-    await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveCount(0);
-    await expect(controle(page).getByRole('link', { name: 'Página anterior' })).toHaveAttribute(
-      'href',
-      '/projeto-4/2',
+    expect(CASES.map(({ titulo }) => texto.indexOf(`"${titulo}"`))).toEqual(
+      [...CASES.map(({ titulo }) => texto.indexOf(`"${titulo}"`))].sort((a, b) => a - b),
     );
+    await expect(page.locator('main .papel-comentario').first()).toContainText(
+      'Cases que entreguei na Memora',
+    );
+    expect(texto.split('record Caso(String titulo, List<String> tecnologias)').length - 1).toBe(1);
+  });
+
+  test('não tem controle de páginas, tem título sem (n/N) e a árvore mantém o Projeto 4 atual', async ({
+    page,
+  }) => {
+    await page.goto('/projeto-4');
+
+    await expect(controle(page)).toHaveCount(0);
+    await expect(page.locator('main')).not.toContainText(/\b\d\/3\b/);
     await expect(arvore(page).getByRole('treeitem', { name: 'Projeto 4' })).toHaveAttribute(
       'aria-current',
       'page',
     );
-    await expect(page).toHaveTitle('Projeto 4 (3/3) | Vinicius Machado');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 4 (3/3)');
+    await expect(page).toHaveTitle('Projeto 4 | Vinicius Machado');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 4');
   });
 
-  test('/projeto-4/4 não existe e leva ao Início', async ({ page }) => {
-    await page.goto('/projeto-4/4');
+  test('os endereços antigos (/projeto-4/2, /3 e /4) levam a /projeto-4', async ({ page }) => {
+    for (const antigo of ['/projeto-4/2', '/projeto-4/3', '/projeto-4/4']) {
+      await page.goto(antigo);
 
-    await expect(page).toHaveURL('/');
+      await expect(page, antigo).toHaveURL(/\/projeto-4$/);
+      await expect(codigo(page), antigo).toContainText('AyoForms');
+    }
   });
 
   test('o código tem Java plausível: chaves e parênteses balanceados e sem Optional', async ({
     page,
   }) => {
-    for (const { rota } of CASES) {
-      await page.goto(rota);
-      const linhas = (await linhasDoCodigo(page)).join('\n');
+    await page.goto('/projeto-4');
+    const linhas = (await linhasDoCodigo(page)).join('\n');
 
-      expect(linhas.split('(').length, rota).toBe(linhas.split(')').length);
-      expect(linhas.split('{').length, rota).toBe(linhas.split('}').length);
-      expect(linhas).not.toContain('Optional');
-    }
+    expect(linhas.split('(').length).toBe(linhas.split(')').length);
+    expect(linhas.split('{').length).toBe(linhas.split('}').length);
+    expect(linhas).not.toContain('Optional');
   });
 });
 
@@ -278,8 +263,6 @@ test.describe('Projetos sem JavaScript', () => {
     ['/projeto-2', 'HTML + JavaScript'],
     ['/projeto-3', 'React'],
     ['/projeto-4', 'Oracle → PostgreSQL'],
-    ['/projeto-4/2', 'Scraper de licitações'],
-    ['/projeto-4/3', 'AyoForms'],
   ] as const) {
     test(`${rota} entrega o conteúdo no HTML`, async ({ page }) => {
       await page.goto(rota);

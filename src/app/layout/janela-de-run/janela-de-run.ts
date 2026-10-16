@@ -14,7 +14,7 @@ import {
 
 import { JanelaDeRun } from '../../core/janela-de-run';
 import { GlifoFechar } from '../../shared/glifo-fechar/glifo-fechar';
-import { montarLog } from './log';
+import { montarLogCompleto } from '../../core/log-do-spring';
 
 /** Linhas reveladas de uma vez: o banner do Spring, a versão e a linha em branco. */
 const LINHAS_DO_BANNER = 8;
@@ -50,7 +50,7 @@ export class JanelaDeRunComponente {
   /** O log desta execução: a data e a hora vêm do relógio do navegador, na abertura. */
   protected readonly linhas = computed(() => {
     const inicio = this.run.inicio();
-    return inicio ? montarLog(inicio) : [];
+    return inicio ? montarLogCompleto(inicio) : [];
   });
   protected readonly anuncio = signal('');
   /** Quantas linhas já foram reveladas nesta execução. */

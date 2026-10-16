@@ -14,8 +14,6 @@ export interface Secao {
   readonly pacote: Pacote;
   /** Descrição da seção para quem recruta, com 80 a 160 caracteres: alimenta a meta description. */
   readonly descricao: string;
-  /** Quantas páginas a seção tem (padrão 1): `/<slug>` e `/<slug>/2` até `/<slug>/N`. */
-  readonly paginas?: number;
 }
 
 /** Fonte única das seções: dela saem os itens da árvore e as rotas, na ordem do design. */
@@ -55,7 +53,6 @@ export const SECOES: readonly Secao[] = [
     pacote: 'skills',
     descricao:
       'Stack de Vinicius Machado: Java, Spring Boot, Angular, TypeScript e SQL, com níveis de conhecimento por tecnologia.',
-    paginas: 3,
   },
   {
     slug: 'experiencias',
@@ -65,7 +62,6 @@ export const SECOES: readonly Secao[] = [
     pacote: 'experiencias',
     descricao:
       'Experiências de Vinicius: dev Full Stack e líder de squad na Memora, estagiário na Memora e co-fundador da Watts Company, agência de IA.',
-    paginas: 3,
   },
   {
     slug: 'projeto-1',
@@ -102,7 +98,15 @@ export const SECOES: readonly Secao[] = [
     pacote: 'projetos',
     descricao:
       'Cases da Memora: migração de Oracle para PostgreSQL, scrapers em Java com Playwright (Coren e Sanesul) e o AyoForms em PHP e MySQL.',
-    paginas: 3,
+  },
+  {
+    slug: 'projeto-5',
+    titulo: 'Projeto 5',
+    icone: 'design-arquivo',
+    arquivo: 'Projeto5.java',
+    pacote: 'projetos',
+    descricao:
+      'Este portfólio: um estudo de desenvolvimento com IA, com SDD no OpenSpec, as skills do ECC e uma equipe de agentes no Maestri.',
   },
   {
     slug: 'certificacoes',
@@ -112,7 +116,6 @@ export const SECOES: readonly Secao[] = [
     pacote: 'formacao',
     descricao:
       'Certificações de Vinicius em Spring Boot, Spring Data JPA, Angular, TypeScript, HTTP, Git, GitHub e Python, com horas e data de conclusão.',
-    paginas: 3,
   },
   {
     slug: 'eventos',
@@ -163,14 +166,6 @@ export const SECOES: readonly Secao[] = [
 
 /** Chave do `data` da rota que pede a árvore com a primeira seção destacada, sem página atual. */
 export const DADO_ARVORE_NO_INICIO = 'arvoreNoInicio';
-
-/** Chaves do `data` das rotas de seção: o nome é o dos inputs que a feature recebe da rota. */
-export interface DadosDePagina {
-  readonly pagina: number;
-  readonly totalDePaginas: number;
-}
-
-export const totalDePaginas = (secao: Secao): number => secao.paginas ?? 1;
 
 /** Arquivo da página inicial (rota `/`), que não é uma das seções da árvore. */
 export const ARQUIVO_INICIO = 'PortfolioApplication.java';

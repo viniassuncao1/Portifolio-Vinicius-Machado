@@ -9,8 +9,8 @@ const controle = (page: Page) => page.getByRole('navigation', { name: 'Páginas 
 const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
 const codigo = (page: Page) => page.locator('main code');
 
-test.describe('Experiências (/experiencias)', () => {
-  test('página 1: Memora, Desenvolvedor Full Stack Júnior, desde 08/2026 e o controle 1/3', async ({
+test.describe('Experiências (/experiencias): as três num arquivo só', () => {
+  test('mostra Memora, o estágio na Memora e a Watts Company no mesmo arquivo, cada uma com empresa, cargo e período', async ({
     page,
   }) => {
     await page.goto('/experiencias');
@@ -22,51 +22,59 @@ test.describe('Experiências (/experiencias)', () => {
         'public class Experiencias {',
         'record Experiencia(',
         'String empresa,',
+        'String cargo,',
         'String periodo,',
         'Experiencia memora = new Experiencia(',
-        '"Memora",',
         '"Desenvolvedor Full Stack Júnior",',
         '"08/2026 - Presente",',
+        'Experiencia estagioNaMemora = new Experiencia(',
+        '"Estagiário de Desenvolvimento",',
+        '"08/2025 - 07/2026",',
+        'Experiencia wattsCompany = new Experiencia(',
+        '"Watts Company",',
+        '"Co-fundador & Desenvolvedor Full Stack",',
+        '"02/2025 - Presente",',
       ]),
     );
-    await expect(controle(page)).toContainText('1/3');
+    expect(linhas.filter((l) => l.startsWith('record Experiencia('))).toHaveLength(1);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Experiências');
+    await expect(page).toHaveTitle('Experiências | Vinicius Machado');
   });
 
-  test('página 1: liderança de squad e Scrum nos destaques e no Javadoc', async ({ page }) => {
+  test('não tem controle de páginas nem indicação n/N', async ({ page }) => {
+    await page.goto('/experiencias');
+
+    await expect(controle(page)).toHaveCount(0);
+    await expect(page.locator('main')).not.toContainText(/\b\d\/3\b/);
+  });
+
+  test('cada experiência tem o seu bloco de comentário, em ordem', async ({ page }) => {
+    await page.goto('/experiencias');
+
+    await expect(page.locator('main .papel-comentario')).toContainText([
+      'Cada experiência tem empresa, cargo, período e destaques',
+      'Memora',
+      'Estágio na Memora',
+      'Watts Company',
+    ]);
+  });
+
+  test('liderança de squad e Scrum nos destaques e no Javadoc da Memora', async ({ page }) => {
     await page.goto('/experiencias');
 
     await expect(codigo(page)).toContainText('"Liderança de squad"');
-    await expect(page.locator('main .javadoc')).toContainText(
+    await expect(page.locator('main .javadoc').first()).toContainText(
       'Lidero um squad, orientando o time nas demandas',
     );
-    await expect(page.locator('main .javadoc')).toContainText(
+    await expect(page.locator('main .javadoc').first()).toContainText(
       'Scrum, com dailies, previsões de conclusão e reviews',
     );
   });
 
-  test('página 2: estágio na Memora, 08/2025 a 07/2026, sem declarar o record de novo', async ({
+  test('o estágio cita Oracle para PostgreSQL, scrapers com Playwright, AyoForms e Sankhya', async ({
     page,
   }) => {
-    await page.goto('/experiencias/2');
-    const linhas = await linhasDoCodigo(page);
-
-    expect(linhas).toEqual(
-      expect.arrayContaining([
-        'Experiencia estagioNaMemora = new Experiencia(',
-        '"Memora",',
-        '"Estagiário de Desenvolvimento",',
-        '"08/2025 - 07/2026",',
-      ]),
-    );
-    expect(linhas).not.toContain('record Experiencia(');
-    await expect(controle(page)).toContainText('2/3');
-  });
-
-  test('página 2: Oracle para PostgreSQL, scrapers com Playwright, AyoForms e Sankhya', async ({
-    page,
-  }) => {
-    await page.goto('/experiencias/2');
+    await page.goto('/experiencias');
 
     for (const trecho of [
       '"Migração de APIs de Oracle para PostgreSQL"',
@@ -77,64 +85,50 @@ test.describe('Experiências (/experiencias)', () => {
       await expect(codigo(page)).toContainText(trecho);
     }
     for (const trecho of ['Coren e Sanesul', 'Google Workspace e Microsoft Azure']) {
-      await expect(page.locator('main .javadoc')).toContainText(trecho);
+      await expect(page.locator('main .javadoc').nth(1)).toContainText(trecho);
     }
   });
 
-  test('página 3: Watts Company, Co-fundador & Desenvolvedor Full Stack, desde 02/2025', async ({
-    page,
-  }) => {
-    await page.goto('/experiencias/3');
-    const linhas = await linhasDoCodigo(page);
+  test('a Watts Company aparece com o Javadoc e os destaques', async ({ page }) => {
+    await page.goto('/experiencias');
 
-    expect(linhas).toEqual(
-      expect.arrayContaining([
-        'Experiencia wattsCompany = new Experiencia(',
-        '"Watts Company",',
-        '"Co-fundador & Desenvolvedor Full Stack",',
-        '"02/2025 - Presente",',
-      ]),
+    await expect(page.locator('main .javadoc').nth(2)).toContainText(
+      'integrei modelos de IA via n8n',
     );
-    await expect(controle(page)).toContainText('3/3');
-    await expect(page.locator('main .javadoc')).toContainText('integrei modelos de IA via n8n');
+    await expect(codigo(page)).toContainText('"Modelos de IA integrados via n8n"');
   });
 
-  test('o controle percorre as três páginas e a árvore mantém Experiências como atual', async ({
+  test('a árvore mantém Experiências como atual e o próximo arquivo é o seguinte da árvore', async ({
     page,
   }) => {
     await page.goto('/experiencias');
 
-    await controle(page).getByRole('link', { name: 'Próxima página' }).click();
-    await expect(page).toHaveURL(/\/experiencias\/2$/);
-    await controle(page).getByRole('link', { name: 'Próxima página' }).click();
-    await expect(page).toHaveURL(/\/experiencias\/3$/);
-
-    await expect(controle(page).getByRole('link', { name: 'Próxima página' })).toHaveCount(0);
     await expect(arvore(page).getByRole('treeitem', { name: 'Experiências' })).toHaveAttribute(
       'aria-current',
       'page',
     );
-    await expect(page).toHaveTitle('Experiências (3/3) | Vinicius Machado');
+    await expect(page.locator('app-proximo-arquivo a')).toHaveText(/^\/\/ Próximo: \S+\.java →$/);
   });
 
-  test('/experiencias/4 não existe e leva ao Início', async ({ page }) => {
-    await page.goto('/experiencias/4');
+  test('os endereços antigos (/experiencias/2, /3 e /4) levam a /experiencias', async ({
+    page,
+  }) => {
+    for (const antigo of ['/experiencias/2', '/experiencias/3', '/experiencias/4']) {
+      await page.goto(antigo);
 
-    await expect(page).toHaveURL('/');
-  });
-
-  test('as três páginas mostram o período como texto simples, sem java.time', async ({ page }) => {
-    for (const [rota, periodo] of [
-      ['/experiencias', '08/2026 - Presente'],
-      ['/experiencias/2', '08/2025 - 07/2026'],
-      ['/experiencias/3', '02/2025 - Presente'],
-    ]) {
-      await page.goto(rota);
-
-      await expect(codigo(page)).toContainText(`"${periodo}"`);
-      await expect(codigo(page)).not.toContainText('YearMonth');
-      await expect(codigo(page)).not.toContainText('Optional');
+      await expect(page, antigo).toHaveURL(/\/experiencias$/);
+      await expect(codigo(page), antigo).toContainText('"Watts Company"');
     }
+  });
+
+  test('os três períodos são texto simples, sem java.time', async ({ page }) => {
+    await page.goto('/experiencias');
+
+    for (const periodo of ['08/2026 - Presente', '08/2025 - 07/2026', '02/2025 - Presente']) {
+      await expect(codigo(page)).toContainText(`"${periodo}"`);
+    }
+    await expect(codigo(page)).not.toContainText('YearMonth');
+    await expect(codigo(page)).not.toContainText('Optional');
   });
 });
 
@@ -327,8 +321,6 @@ test.describe('Cinco seções novas sem JavaScript', () => {
 
   for (const [rota, trecho] of [
     ['/experiencias', '"Desenvolvedor Full Stack Júnior"'],
-    ['/experiencias/2', '"Estagiário de Desenvolvimento"'],
-    ['/experiencias/3', '"Watts Company"'],
     ['/eventos', 'Campus Party Brasília'],
     ['/formacao', 'UniCEUB'],
     ['/idiomas', '"Básico"'],
@@ -346,9 +338,12 @@ test.describe('Cinco seções novas sem JavaScript', () => {
     });
   }
 
-  test('/experiencias entrega o controle 1/3 no HTML', async ({ page }) => {
+  test('/experiencias entrega as três experiências no HTML, sem controle de páginas', async ({
+    page,
+  }) => {
     await page.goto('/experiencias');
 
-    await expect(controle(page)).toContainText('1/3');
+    await expect(controle(page)).toHaveCount(0);
+    await expect(codigo(page)).toContainText('Experiencia wattsCompany');
   });
 });

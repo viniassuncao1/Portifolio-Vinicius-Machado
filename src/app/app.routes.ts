@@ -1,7 +1,7 @@
 import { Route, Routes } from '@angular/router';
 
-import { DADO_ARVORE_NO_INICIO, SECOES, totalDePaginas } from './core/secoes';
-import type { DadosDePagina, Secao } from './core/secoes';
+import { DADO_ARVORE_NO_INICIO, SECOES } from './core/secoes';
+import type { Secao } from './core/secoes';
 import { TITULO_INICIO, TITULO_REPOSITORIO } from './core/titulos';
 import { Casca } from './layout/casca/casca';
 
@@ -23,6 +23,7 @@ const FEATURES_DAS_SECOES: Readonly<Record<string, CarregadorDeSecao>> = {
   'projeto-2': () => import('./features/projeto-2/projeto-2').then((m) => m.Projeto2),
   'projeto-3': () => import('./features/projeto-3/projeto-3').then((m) => m.Projeto3),
   'projeto-4': () => import('./features/projeto-4/projeto-4').then((m) => m.Projeto4),
+  'projeto-5': () => import('./features/projeto-5/projeto-5').then((m) => m.Projeto5),
   eventos: () => import('./features/eventos/eventos').then((m) => m.Eventos),
   formacao: () => import('./features/formacao/formacao').then((m) => m.Formacao),
   idiomas: () => import('./features/idiomas/idiomas').then((m) => m.Idiomas),
@@ -33,20 +34,31 @@ const FEATURES_DAS_SECOES: Readonly<Record<string, CarregadorDeSecao>> = {
 const EM_CONSTRUCAO: CarregadorDeSecao = () =>
   import('./shared/secao-em-construcao/secao-em-construcao').then((m) => m.SecaoEmConstrucao);
 
-/** Rotas de uma seção: `<slug>` (página 1) e `<slug>/2` ... `<slug>/N`, cada uma com sua página. */
-function rotasDaSecao(secao: Secao): Routes {
-  const total = totalDePaginas(secao);
-  return Array.from({ length: total }, (_, i) => {
-    const pagina = i + 1;
-    const dados: DadosDePagina = { pagina, totalDePaginas: total };
-    return {
-      path: pagina === 1 ? secao.slug : `${secao.slug}/${pagina}`,
-      title: secao.titulo,
-      data: { ...dados },
-      loadComponent: FEATURES_DAS_SECOES[secao.slug] ?? EM_CONSTRUCAO,
-    };
-  });
+/**
+ * Seções que já tiveram várias páginas (`/skills/2`, `/projeto-5/4`...) e podem estar em links já
+ * compartilhados: esses endereços redirecionam para a seção.
+ */
+export const SECOES_COM_ENDERECO_ANTIGO: readonly string[] = [
+  'skills',
+  'experiencias',
+  'projeto-4',
+  'projeto-5',
+  'certificacoes',
+];
+
+/** Rotas de uma seção: `<slug>`, com o arquivo inteiro. */
+function rotaDaSecao(secao: Secao): Route {
+  return {
+    path: secao.slug,
+    title: secao.titulo,
+    loadComponent: FEATURES_DAS_SECOES[secao.slug] ?? EM_CONSTRUCAO,
+  };
 }
+
+const redirecionamentosDeEnderecosAntigos: Routes = SECOES_COM_ENDERECO_ANTIGO.map((slug) => ({
+  path: `${slug}/:pagina`,
+  redirectTo: `/${slug}`,
+}));
 
 export const routes: Routes = [
   {
@@ -59,7 +71,8 @@ export const routes: Routes = [
         data: { [DADO_ARVORE_NO_INICIO]: true },
         loadComponent: () => import('./features/inicio/inicio').then((m) => m.Inicio),
       },
-      ...SECOES.flatMap(rotasDaSecao),
+      ...SECOES.map(rotaDaSecao),
+      ...redirecionamentosDeEnderecosAntigos,
       {
         path: 'repositorio',
         title: TITULO_REPOSITORIO,

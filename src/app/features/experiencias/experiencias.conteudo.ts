@@ -10,7 +10,7 @@ import {
 } from '../../shared/editor-de-codigo/conteudo';
 import type { ConteudoDoEditor, Linha, Trecho } from '../../shared/editor-de-codigo/conteudo';
 
-/** Dados de uma página: as telas 07 a 09 (design/telas), uma experiência por página. */
+/** Dados de um bloco: as telas 07 a 09 (design/telas), uma experiência por bloco. */
 interface Experiencia {
   /** Nome da variável Java da experiência. */
   readonly variavel: string;
@@ -33,7 +33,7 @@ const destaques = (itens: readonly string[]): readonly Linha[] => [
 
 const importacoes: readonly Linha[] = [linha(0, palavraChave('import'), comum(' java.util.List;'))];
 
-/** O record vem só na página 1; as outras duas páginas o usam na mesma classe `Experiencias`. */
+/** O record que as três experiências usam. */
 const registro: readonly Linha[] = [
   linha(1, comentario('// Cada experiência tem empresa, cargo, período e destaques')),
   linha(1, palavraChave('record'), comum(' Experiencia(')),
@@ -44,18 +44,9 @@ const registro: readonly Linha[] = [
   vazia(),
 ];
 
-const pagina = (experiencia: Experiencia, comRegistro: boolean): ConteudoDoEditor => [
-  vazia(),
-  ...(comRegistro
-    ? [linha(0, palavraChave('package'), comum(' dev.vinicius.portfolio.experiencias;')), vazia()]
-    : []),
-  ...importacoes,
-  vazia(),
-  linha(0, palavraChave('public class'), comum(' Experiencias {')),
-  vazia(),
-  ...(comRegistro
-    ? registro
-    : [linha(1, comentario('// Outra experiência, no mesmo formato da primeira página'))]),
+/** Um bloco da seção: comentário de título, Javadoc com o texto e a instância da experiência. */
+const bloco = (titulo: string, experiencia: Experiencia): readonly Linha[] => [
+  linha(1, comentario(`// ${titulo}`)),
   javadoc(1, experiencia.descricao),
   linha(
     1,
@@ -70,7 +61,6 @@ const pagina = (experiencia: Experiencia, comRegistro: boolean): ConteudoDoEdito
   ...destaques(experiencia.destaques),
   linha(1, comum(');')),
   vazia(),
-  linha(0, comum('}')),
 ];
 
 const MEMORA: Experiencia = {
@@ -117,9 +107,18 @@ const WATTS_COMPANY: Experiencia = {
     'Co-fundei uma agência de automação e IA do zero. Desenvolvo sistemas de CRM e agentes de IA que atendem clientes de ponta a ponta, da criação do agente até o painel que a empresa usa no dia a dia. Entreguei um painel de gestão completo para uma clínica (agenda, pacientes, financeiro), com deploy contínuo via Vercel, e integrei modelos de IA via n8n para automatizar atendimento e qualificação de leads.',
 };
 
-/** Um item por página: `/experiencias`, `/experiencias/2` e `/experiencias/3`. */
-export const CONTEUDOS_EXPERIENCIAS: readonly ConteudoDoEditor[] = [
-  pagina(MEMORA, true),
-  pagina(MEMORA_ESTAGIO, false),
-  pagina(WATTS_COMPANY, false),
+/** O arquivo `Experiencias.java` inteiro: o record e uma experiência por bloco, da mais recente à mais antiga. */
+export const CONTEUDO_EXPERIENCIAS: ConteudoDoEditor = [
+  vazia(),
+  linha(0, palavraChave('package'), comum(' dev.vinicius.portfolio.experiencias;')),
+  vazia(),
+  ...importacoes,
+  vazia(),
+  linha(0, palavraChave('public class'), comum(' Experiencias {')),
+  vazia(),
+  ...registro,
+  ...bloco('Memora', MEMORA),
+  ...bloco('Estágio na Memora', MEMORA_ESTAGIO),
+  ...bloco('Watts Company', WATTS_COMPANY),
+  linha(0, comum('}')),
 ];

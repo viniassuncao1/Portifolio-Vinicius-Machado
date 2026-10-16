@@ -172,10 +172,10 @@ export function contraste(a: string, b: string): number {
  * Pede a primeira visita de verdade: desfaz a marca de sessão que `fixtures.ts` semeia, uma vez por
  * aba (`window.name` sobrevive às navegações da aba, então recarregar já conta como mesma sessão).
  */
-export async function verBoasVindas(page: Page): Promise<void> {
+export async function verAbertura(page: Page): Promise<void> {
   await page.addInitScript((chave) => {
     if (window.name.includes('sem-semente')) return;
     window.name += ' sem-semente';
     sessionStorage.removeItem(chave);
-  }, 'boas-vindas-exibida');
+  }, 'abertura-exibida');
 }

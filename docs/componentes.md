@@ -8,43 +8,43 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 
 ## Inventário das telas
 
-| Elemento da tela                                               | Telas            | Componente                        | Pasta                          |
-| -------------------------------------------------------------- | ---------------- | --------------------------------- | ------------------------------ |
-| Barra de ferramentas do design (ícones, branch, Buscar)        | todas            | `BarraDeFerramentas`              | `layout/barra-de-ferramentas/` |
-| Faixa de ferramentas à esquerda (Projeto, Commit, Estrutura)   | desktop (nossa)  | `FaixaDeFerramentas`              | `layout/faixa-de-ferramentas/` |
-| Página do repositório (estilo do GitHub, numa aba)             | (nossa)          | `Repositorio`                     | `features/repositorio/`        |
-| Tela de boas-vindas (splash)                                   | (nossa)          | `TelaDeBoasVindas`                | `layout/tela-de-boas-vindas/`  |
-| Próximo arquivo e code vision                                  | (nossos)         | `ProximoArquivo`, `VisaoDeCodigo` | `shared/`                      |
-| Janela de Run (log de inicialização do Spring)                 | (nosso)          | `JanelaDeRunComponente`           | `layout/janela-de-run/`        |
-| Painel do projeto (cabeçalho "Projeto", árvore, rodapé)        | todas            | `PainelLateral`                   | `layout/painel-lateral/`       |
-| Árvore de seções com ícones                                    | todas            | `ArvoreDeSecoes`                  | `layout/arvore-de-secoes/`     |
-| Faixa de abas dos arquivos abertos                             | todas (nossa)    | `FaixaDeAbas`                     | `layout/faixa-de-abas/`        |
-| Barra de status no rodapé                                      | (nossa)          | `BarraDeStatus`                   | `layout/barra-de-status/`      |
-| Busca de seções (Ctrl/Cmd+P)                                   | (nossa)          | `BuscaDeSecoes`                   | `layout/busca-de-secoes/`      |
-| Casca (junta tudo e hospeda as rotas)                          | todas            | `Casca`                           | `layout/casca/`                |
-| Editor com numeração e sintaxe                                 | todas            | `EditorDeCodigo`                  | `shared/editor-de-codigo/`     |
-| Bloco de comentário com `*`                                    | 02-04, 07-18, 29 | parte do `EditorDeCodigo`         | `shared/editor-de-codigo/`     |
-| Ícones (arquivo, pasta, ferramenta, IA...)                     | todas            | `Icone`                           | `shared/icone/`                |
-| "×" fino                                                       | todas            | `GlifoFechar`                     | `shared/glifo-fechar/`         |
-| Início                                                         | 01               | `Inicio`                          | `features/inicio/`             |
-| Sobre Mim                                                      | 02               | `SobreMim`                        | `features/sobre-mim/`          |
-| Diferenciais                                                   | 03               | `Diferenciais`                    | `features/diferenciais/`       |
-| Como uso a IA                                                  | 04               | `ComoUsoIa`                       | `features/como-uso-ia/`        |
-| Skills / STACK (3 páginas, a 3ª com os níveis de conhecimento) | 05, 06 e níveis  | `Skills`                          | `features/skills/`             |
-| Controle de páginas (1/2, setas SVG)                           | 05, 06 (nosso)   | `PaginasDaSecao`                  | `shared/paginas-da-secao/`     |
-| Experiências (3 páginas)                                       | 07-09            | `Experiencias`                    | `features/experiencias/`       |
-| Eventos                                                        | 22               | `Eventos`                         | `features/eventos/`            |
-| Projeto 1: Ana, agente de IA no WhatsApp                       | 10               | `Projeto1`                        | `features/projeto-1/`          |
-| Projeto 2: landing page da Dra. Juliana (com preview)          | 11-13            | `Projeto2`                        | `features/projeto-2/`          |
-| Projeto 3: landing page da Watts Company (com preview)         | 14, 15           | `Projeto3`                        | `features/projeto-3/`          |
-| Projeto 4: cases da Memora (3 páginas)                         | 16-18            | `Projeto4`                        | `features/projeto-4/`          |
-| Certificações (3 páginas, 9 cursos)                            | (nossa)          | `Certificacoes`                   | `features/certificacoes/`      |
-| Formação                                                       | 28               | `Formacao`                        | `features/formacao/`           |
-| Idiomas                                                        | 28               | `Idiomas`                         | `features/idiomas/`            |
-| Contato (links com cara de link e Copiar e-mail)               | 30               | `Contato`                         | `features/contato/`            |
-| Seção sem conteúdo ainda                                       | 10-21, 23-27, 29 | `SecaoEmConstrucao`               | `shared/secao-em-construcao/`  |
-| Janela de preview de site                                      | 11-15            | `JanelaDePreviewComponente`       | `shared/janela-de-preview/`    |
-| ▶ Executar na calha (abre o preview)                           | (nosso)          | `BotaoExecutar`                   | `shared/botao-executar/`       |
+| Elemento da tela                                             | Telas            | Componente                        | Pasta                          |
+| ------------------------------------------------------------ | ---------------- | --------------------------------- | ------------------------------ |
+| Barra de ferramentas do design (ícones, branch, Buscar)      | todas            | `BarraDeFerramentas`              | `layout/barra-de-ferramentas/` |
+| Faixa de ferramentas à esquerda (Projeto, Commit, Estrutura) | desktop (nossa)  | `FaixaDeFerramentas`              | `layout/faixa-de-ferramentas/` |
+| Página do repositório (estilo do GitHub, numa aba)           | (nossa)          | `Repositorio`                     | `features/repositorio/`        |
+| Abertura com Run (splash, ▶, build e log do Spring)          | (nossa)          | `Abertura`                        | `layout/abertura/`             |
+| Próximo arquivo e code vision                                | (nossos)         | `ProximoArquivo`, `VisaoDeCodigo` | `shared/`                      |
+| Janela de Run (log de inicialização do Spring)               | (nosso)          | `JanelaDeRunComponente`           | `layout/janela-de-run/`        |
+| Painel do projeto (cabeçalho "Projeto", árvore, rodapé)      | todas            | `PainelLateral`                   | `layout/painel-lateral/`       |
+| Árvore de seções com ícones                                  | todas            | `ArvoreDeSecoes`                  | `layout/arvore-de-secoes/`     |
+| Faixa de abas dos arquivos abertos                           | todas (nossa)    | `FaixaDeAbas`                     | `layout/faixa-de-abas/`        |
+| Barra de status no rodapé                                    | (nossa)          | `BarraDeStatus`                   | `layout/barra-de-status/`      |
+| Busca de seções (Ctrl/Cmd+P)                                 | (nossa)          | `BuscaDeSecoes`                   | `layout/busca-de-secoes/`      |
+| Casca (junta tudo e hospeda as rotas)                        | todas            | `Casca`                           | `layout/casca/`                |
+| Editor com numeração e sintaxe                               | todas            | `EditorDeCodigo`                  | `shared/editor-de-codigo/`     |
+| Bloco de comentário com `*`                                  | 02-04, 07-18, 29 | parte do `EditorDeCodigo`         | `shared/editor-de-codigo/`     |
+| Ícones (arquivo, pasta, ferramenta, IA...)                   | todas            | `Icone`                           | `shared/icone/`                |
+| "×" fino                                                     | todas            | `GlifoFechar`                     | `shared/glifo-fechar/`         |
+| Início                                                       | 01               | `Inicio`                          | `features/inicio/`             |
+| Sobre Mim                                                    | 02               | `SobreMim`                        | `features/sobre-mim/`          |
+| Diferenciais                                                 | 03               | `Diferenciais`                    | `features/diferenciais/`       |
+| Como uso a IA                                                | 04               | `ComoUsoIa`                       | `features/como-uso-ia/`        |
+| Skills / STACK (com os níveis de conhecimento)               | 05, 06 e níveis  | `Skills`                          | `features/skills/`             |
+| Experiências                                                 | 07-09            | `Experiencias`                    | `features/experiencias/`       |
+| Eventos                                                      | 22               | `Eventos`                         | `features/eventos/`            |
+| Projeto 1: Ana, agente de IA no WhatsApp                     | 10               | `Projeto1`                        | `features/projeto-1/`          |
+| Projeto 2: landing page da Dra. Juliana (com preview)        | 11-13            | `Projeto2`                        | `features/projeto-2/`          |
+| Projeto 3: landing page da Watts Company (com preview)       | 14, 15           | `Projeto3`                        | `features/projeto-3/`          |
+| Projeto 4: cases da Memora                                   | 16-18            | `Projeto4`                        | `features/projeto-4/`          |
+| Projeto 5: este portfólio, um estudo com IA                  | (nosso)          | `Projeto5`                        | `features/projeto-5/`          |
+| Certificações (9 cursos)                                     | (nossa)          | `Certificacoes`                   | `features/certificacoes/`      |
+| Formação                                                     | 28               | `Formacao`                        | `features/formacao/`           |
+| Idiomas                                                      | 28               | `Idiomas`                         | `features/idiomas/`            |
+| Contato (links com cara de link e Copiar e-mail)             | 30               | `Contato`                         | `features/contato/`            |
+| Seção sem conteúdo ainda                                     | 10-21, 23-27, 29 | `SecaoEmConstrucao`               | `shared/secao-em-construcao/`  |
+| Janela de preview de site                                    | 11-15            | `JanelaDePreviewComponente`       | `shared/janela-de-preview/`    |
+| ▶ Executar na calha (abre o preview)                         | (nosso)          | `BotaoExecutar`                   | `shared/botao-executar/`       |
 
 O design é **referência de identidade visual** ([ADR-0010](adr/0010-design-como-referencia-e-java-moderno.md)).
 Por isso o site tem o que as telas, estáticas, não mostram: a faixa de abas, a barra de status, a
@@ -159,22 +159,31 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   agora guarda também o título de cada PR.
 - **Entradas e saídas:** nenhuma.
 
-### `TelaDeBoasVindas`
+### `Abertura`
 
-- **Onde:** `layout/tela-de-boas-vindas/tela-de-boas-vindas.ts`, seletor `app-tela-de-boas-vindas`,
-  montada na `Casca` ([ADR-0015](adr/0015-tela-de-boas-vindas.md)).
-- **O que faz:** a abertura no estilo da splash do IntelliJ: um cartão com a foto do Vinicius, o
-  nome, o cargo, "Seja bem-vindo" e a barra "Carregando Portfolio_Vinicius…", com uma linha de status
-  que passa pelas etapas do log do Spring (`Starting PortfolioApplication…`, `Tomcat started on port
-8080`).
-- **Tempo e sessão.** Fica no mínimo 0,6 s e no máximo 2 s e fecha, com um fade de ~200 ms, quando as
-  fontes e a página estão prontas. Aparece uma vez por sessão (`sessionStorage['boas-vindas-exibida']`,
-  serviço `core/boas-vindas.ts`) e só na primeira página aberta. Não tem botão de pular.
-- **Não bloqueia.** É só do navegador e fica por cima do HTML pré-renderizado, que não sai do DOM. É
-  uma região `role="status"` ("Carregando o portfólio de Vinicius Machado") e o resto fica `inert`
-  nesses 2 s. Com `prefers-reduced-motion`, não há barra animada nem fade e o teto cai para 1 s.
-- **Depois dela**, a barra de status mostra por alguns segundos
-  `PortfolioApplication started in 1.8 s`, anunciado de forma educada (`aria-live="polite"`).
+- **Onde:** `layout/abertura/`, montada na `Casca`, com o serviço `core/abertura.ts`
+  ([ADR-0017](adr/0017-abertura-com-run.md), que substituiu a `TelaDeBoasVindas` do ADR-0015).
+- **O que faz:** a abertura do site como a IDE rodando o projeto, em fases: o **cartão da splash**
+  (foto, nome, cargo, "Seja bem-vindo ao meu portfólio" e as etapas "Opening Portfolio_Vinicius…" até
+  "Project ready", 3 s); o **widget de Run** do IntelliJ (`PortfolioApplication ▾`, ▶ verde, debug
+  apagado) com o foco no ▶; a **janela Build/Run**, que compila as classes reais (uma por seção, hoje 17) e mostra o log
+  do Spring; e a **entrada da IDE**, em que a janela recolhe para a barra de status e os painéis
+  aparecem em sequência. A linha do tempo completa está em
+  [arquitetura](arquitetura.md#abertura-com-run).
+- **Executar.** Enter, clique no ▶ ou o atalho (⌃R no Mac, ⇧F10 nos demais, em `aria-keyshortcuts`)
+  executam; se ninguém executar, o ▶ é acionado sozinho 5 s depois de pronto. **Não há Pular**:
+  nem botão nem Esc (Esc não faz nada).
+- **Quando aparece.** Só em `/` e uma vez por sessão (`sessionStorage['abertura-exibida']`; um script inline em `index.html` liga `data-abertura` no `<html>`). Em link direto de uma seção, não aparece, e a
+  barra de status mostra só `PortfolioApplication started in 1.8 s`.
+- **Log compartilhado.** O texto do log do Spring vem de `core/log-do-spring.ts`, o mesmo que a janela
+  de Run usa; a linha do tempo e a lista de classes (derivada de `core/secoes.ts`) ficam em
+  `core/linha-do-tempo-da-abertura.ts`. O componente é `layout/abertura/abertura.ts`, com os estilos
+  separados em `abertura.scss`, `widget-de-run.scss` e `janela-de-build.scss`; os tokens de movimento
+  (`--duracao-entrada-abertura`, `--duracao-reduzida-abertura`…) e de cor (`--cor-fundo-abertura`,
+  `--sombra-abertura`) estão nos arquivos de tokens.
+- **Acessibilidade e movimento.** `role="dialog"` modal com o resto da casca `inert`; o foco vai ao ▶ e
+  depois ao editor; uma região `aria-live` anuncia só os marcos. Com `prefers-reduced-motion`, as
+  mesmas etapas sem animação.
 
 ### `FaixaDeAbas`
 
@@ -258,7 +267,10 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 - **Onde:** `shared/visao-de-codigo/visao-de-codigo.ts`, seletor `app-visao-de-codigo`.
 - **O que faz:** a linha de _code vision_ do IntelliJ acima da declaração da classe, só nos projetos
   com site: o botão `▶ Executar · Ver o site ao vivo`, menor e em cinza. Abre a janela de preview,
-  com o mesmo efeito do ▶ da calha, para o visitante achar o site sem procurar.
+  com o mesmo efeito do ▶ da calha, para o visitante achar o site sem procurar. Nos projetos que não
+  têm site para a janela mas têm um endereço externo, ele vira um **link** (nova aba, com o aviso
+  "abre em nova aba" para leitores de tela): hoje só o Projeto 5, `▶ Executar · Ver no GitHub`,
+  definido em `LINKS_EXTERNOS_DE_PROJETO` (`core/previews.ts`).
 
 ### `ProximoArquivo`
 
@@ -299,24 +311,6 @@ projetos →` e `// Fale comigo →`) nem na última seção.
   token `--tamanho-glifo`.
 - **Entradas e saídas:** nenhuma.
 
-### `PaginasDaSecao`
-
-- **Onde:** `shared/paginas-da-secao/paginas-da-secao.ts`, seletor `app-paginas-da-secao`.
-- **O que faz:** o controle de páginas de uma seção com mais de uma tela do design (hoje, Skills):
-  setas em SVG para anterior e próxima e o texto `1/2` entre elas, num
-  `<nav aria-label="Páginas da seção">`. Os links são `routerLink` para `/<slug>` (página 1) e
-  `/<slug>/N`. As setas têm `aria-label` "Página anterior" e "Próxima página"; o número tem o
-  rótulo "página X de N" e `aria-current="page"`. Na primeira e na última página, o lado sem
-  destino fica como espaço vazio decorativo. **Não aparece quando `total` é 1.** Esse controle
-  não existe no design (as telas são estáticas): é o mínimo para navegar entre as páginas de uma
-  mesma seção, só com tokens.
-- **Entradas:** `slug = input.required<string>()`, `pagina = input.required<number>()` e
-  `total = input.required<number>()`.
-
-```html
-<app-paginas-da-secao slug="skills" [pagina]="pagina()" [total]="totalDePaginas()" />
-```
-
 ### `JanelaDePreviewComponente`
 
 - **Onde:** `shared/janela-de-preview/janela-de-preview.ts`, seletor `app-janela-de-preview`,
@@ -345,7 +339,7 @@ reduce` não há animação e a janela fecha direto.
 - **O que faz:** a janela de Run na parte de baixo da IDE, sozinha nessa área (o Git virou a página do
   repositório). Mostra o **log de inicialização** do `PortfolioApplication`: o banner do Spring
   Boot, `Starting PortfolioApplication using Java 21`, `Tomcat started on port 8080` e `Started
-PortfolioApplication in 1.8 seconds`. O texto vem de `log.ts` (`montarLog`); a data e a hora vêm
+PortfolioApplication in 1.8 seconds`. O texto vem de `core/log-do-spring.ts`, o mesmo da abertura; a data e a hora vêm
   do relógio do navegador, na abertura, e nunca entram no pré-render. O log é texto, nunca imagem.
 - **Revelação do log.** O banner aparece de uma vez e as demais linhas uma a cada ~200 ms, com teto
   de **2,5 s** para o log completo. O texto completo fica sempre no DOM; as linhas ainda não
@@ -353,7 +347,7 @@ PortfolioApplication in 1.8 seconds`. O texto vem de `log.ts` (`montarLog`); a d
   a linha final uma vez, quando o log termina.
 - **Quando abre.** **Só pelo Executar** da barra: abre (ou reexecuta o log) e leva o foco para a
   janela. Ela **não abre mais sozinha** na primeira visita: a abertura agora é a
-  [tela de boas-vindas](adr/0015-tela-de-boas-vindas.md). Com `prefers-reduced-motion: reduce` o log
+  [abertura com Run](adr/0017-abertura-com-run.md). Com `prefers-reduced-motion: reduce` o log
   nasce completo.
 - **Teclado.** Esc, o "×" e o foco devolvido ao botão que abriu fecham a janela.
 - **Entradas e saídas:** nenhuma; o estado vem do serviço `JanelaDeRun`.
@@ -613,12 +607,11 @@ Em TypeScript, o arquivo de conteúdo monta as linhas com as construtoras, por e
 
 Todas as seções publicadas foram feitas assim e servem de exemplo real: o Início
 (`features/inicio/`), **Sobre Mim**, **Diferenciais**, **Como uso a IA**, **Skills / STACK**,
-**Experiências** (3 páginas), **Eventos**, **Formação**, **Idiomas** e **Contato**. As demais
+**Experiências**, **Eventos**, **Formação**, **Idiomas** e **Contato**. As demais
 seções (projetos, certificações e depoimentos) ainda mostram `SecaoEmConstrucao`. Para dar conteúdo a uma delas não é preciso criar componente de editor,
 estilo nem item de árvore.
 
-1. **Confirme a seção em `core/secoes.ts`.** A lista `SECOES` (`slug`, `titulo`, `icone`, `arquivo` e,
-   opcionalmente, `paginas`) é a fonte única: dela saem os itens da árvore, as rotas e os títulos. Para uma seção nova, acrescente um
+1. **Confirme a seção em `core/secoes.ts`.** A lista `SECOES` (`slug`, `titulo`, `icone`, `arquivo` e `pacote`) é a fonte única: dela saem os itens da árvore, as rotas e os títulos. Para uma seção nova, acrescente um
    item na posição em que ela deve aparecer, com o `arquivo` `.java` dela (por exemplo,
    `Eventos.java`). O `icone` precisa estar em `NOMES_DE_ICONE`.
 2. **Crie o conteúdo em `features/<slug>/<slug>.conteudo.ts`**, exportando um `ConteudoDoEditor`
@@ -695,56 +688,31 @@ estilo nem item de árvore.
 5. **Teste.** Um `<slug>.spec.ts` ao lado do componente e um cenário no E2E. O teste de
    acessibilidade (`e2e/acessibilidade.spec.ts`) já percorre as rotas geradas da lista.
 
-### Seção com várias páginas
+### Seção longa: um arquivo só
 
-Algumas seções têm mais de uma tela no design (Skills tem as telas 05 e 06). Em vez de uma rota
-com parâmetro, cada página é uma rota estática pré-renderizada, e o mecanismo é todo dados:
+Algumas seções têm várias partes (Skills, Experiências, Certificações, Projeto 4 e Projeto 5). Elas
+**não são paginadas**: o controle `◂ n/N ▸` saiu do site, junto com o campo `paginas` de
+`core/secoes.ts` e as rotas por página ([ADR-0018](adr/0018-secoes-num-arquivo-so.md)). Cada seção é
+um **único `ConteudoDoEditor`**, que se rola.
 
-1. **Declare `paginas` em `core/secoes.ts`.** É o único lugar:
-
-   ```ts
-   { slug: 'skills', titulo: 'Skills / STACK', icone: 'ferramenta', paginas: 2 },
-   ```
-
-   A função `totalDePaginas(secao)` devolve `paginas ?? 1`.
-
-2. **Rotas e título saem sozinhos.** `rotasDaSecao` gera `/<slug>` (página 1) e `/<slug>/2` até
-   `/<slug>/N`, cada uma com `data: { pagina, totalDePaginas }` (tipo `DadosDePagina`). A
-   `EstrategiaDeTitulo` acrescenta `(X/N)` ao título a partir da página 2, como em
-   `Skills / STACK (2/2) | Vinicius Machado`. A árvore mantém a seção como atual em qualquer página.
-   Uma página fora do intervalo cai no `**` e volta ao Início.
-3. **O conteúdo é um array, um item por página.** Em `features/skills/skills.conteudo.ts`:
-
-   ```ts
-   export const CONTEUDOS_SKILLS: readonly ConteudoDoEditor[] = [
-     [vazia(), CABECALHO, ...arrayDeTextos('linguagens', ['Java', 'TypeScript'])],
-     [vazia(), CABECALHO, ...arrayDeTextos('cloudAndInfra', ['Docker', 'Kubernetes'])],
-   ];
-   ```
-
-4. **A feature recebe a página como `input()`.** O roteador entrega o `data` da rota aos inputs
-   do componente (`withComponentInputBinding`, em `app.config.ts`), e o componente escolhe o
-   conteúdo e mostra o controle:
+1. **O cabeçalho aparece uma vez.** `package`, `import` e a declaração da classe abrem o arquivo.
+2. **Cada parte vira um bloco da mesma classe,** com um comentário de cabeçalho (`// Memora`,
+   `// Watts Company`), o Javadoc (no modo de leitura) e a instância do `record`, sem repetir o resto.
+3. **A feature só desenha o conteúdo.** Sem `input()` de página nem controle:
 
    ```ts
    @Component({
      selector: 'app-skills',
-     imports: [EditorDeCodigo, PaginasDaSecao],
-     template: `
-       <app-editor-de-codigo [conteudo]="conteudo()" />
-       <app-paginas-da-secao slug="skills" [pagina]="pagina()" [total]="totalDePaginas()" />
-     `,
+     imports: [EditorDeCodigo],
+     template: `<app-editor-de-codigo [conteudo]="conteudo" />`,
    })
    export class Skills {
-     readonly pagina = input(1);
-     readonly totalDePaginas = input(CONTEUDOS_SKILLS.length);
-
-     protected readonly conteudo = computed(() => CONTEUDOS_SKILLS[this.pagina() - 1]);
+     protected readonly conteudo = CONTEUDO_SKILLS;
    }
    ```
 
-Seções de uma página só (como `ComoUsoIa`) não precisam de nada disso. A mesma estrutura serve às
-próximas seções com várias telas, só declarando quantas páginas têm.
+4. **Links antigos.** `/<slug>/<n>` redireciona para `/<slug>`, e o sitemap lista só as seções.
+   O "Próximo arquivo" fica no fim do arquivo e leva à seção seguinte da árvore.
 
 Uma feature não importa de outra feature: o editor e as construtoras vêm de `shared/`, e a lista
 de seções vem de `core/`.

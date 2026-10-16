@@ -29,7 +29,7 @@ const PROJETOS: readonly Projeto[] = [
   },
 ];
 
-const SEM_PLAY = ['/', '/sobre-mim', '/skills', '/projeto-1', '/projeto-4', '/projeto-4/2'];
+const SEM_PLAY = ['/', '/sobre-mim', '/skills', '/projeto-1', '/projeto-4', '/projeto-5'];
 
 const DOMINIOS_DOS_PROJETOS = /drajulianamaluhy\.com|wattscompany\.com\.br/;
 

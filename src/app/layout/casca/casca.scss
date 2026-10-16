@@ -160,3 +160,88 @@
     display: none;
   }
 }
+
+// Revelação da abertura: os painéis entram em sequência, um a cada `--intervalo-escalonado`. São
+// keyframes com `fill-mode: backwards` aplicados só enquanto `data-revelando`: em repouso tudo é
+// opaco, então o pré-render, o SEO e quem não tem JavaScript nunca veem a casca transparente.
+:host([data-revelando='true']) {
+  app-barra-de-ferramentas {
+    --ordem: 1;
+    --entra-de: translateY(-6px);
+  }
+
+  app-faixa-de-ferramentas {
+    --ordem: 2;
+    --entra-de: translateX(-6px);
+  }
+
+  app-painel-lateral {
+    --ordem: 3;
+    --entra-de: translateX(-12px);
+  }
+
+  .faixa {
+    --ordem: 4;
+    --entra-de: translateY(-4px);
+  }
+
+  .editor {
+    --ordem: 5;
+    --entra-de: translateY(8px);
+  }
+
+  app-barra-de-ferramentas,
+  app-faixa-de-ferramentas,
+  app-painel-lateral,
+  .faixa,
+  .editor {
+    animation: casca-entra var(--duracao-entrada-abertura) var(--curva-suave)
+      calc(var(--ordem) * var(--intervalo-escalonado)) backwards;
+  }
+
+  // O código do Início se revela de cima para baixo junto com o editor.
+  .conteudo {
+    animation: casca-revela var(--duracao-recolher) var(--curva-suave)
+      calc(5 * var(--intervalo-escalonado)) backwards;
+  }
+}
+
+@keyframes casca-entra {
+  from {
+    opacity: 0;
+    transform: var(--entra-de);
+  }
+}
+
+@keyframes casca-revela {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+// Movimento reduzido: as mesmas telas, sem deslocamento nem atraso, só um fade curto.
+@media (prefers-reduced-motion: reduce) {
+  :host([data-revelando='true']) {
+    app-barra-de-ferramentas,
+    app-faixa-de-ferramentas,
+    app-painel-lateral,
+    .faixa,
+    .editor {
+      animation: casca-aparece var(--duracao-reduzida-abertura) linear backwards;
+    }
+
+    .conteudo {
+      animation: none;
+    }
+  }
+}
+
+@keyframes casca-aparece {
+  from {
+    opacity: 0;
+  }
+}
+
+.editor:focus {
+  outline: none;
+}

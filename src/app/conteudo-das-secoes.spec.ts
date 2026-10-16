@@ -1,13 +1,13 @@
-import { CONTEUDOS_CERTIFICACOES } from './features/certificacoes/certificacoes.conteudo';
+import { CONTEUDO_CERTIFICACOES } from './features/certificacoes/certificacoes.conteudo';
 import { CONTEUDO_COMO_USO_IA } from './features/como-uso-ia/como-uso-ia.conteudo';
 import { CONTEUDO_CONTATO } from './features/contato/contato.conteudo';
 import { CONTEUDO_DIFERENCIAIS } from './features/diferenciais/diferenciais.conteudo';
 import { CONTEUDO_EVENTOS } from './features/eventos/eventos.conteudo';
-import { CONTEUDOS_EXPERIENCIAS } from './features/experiencias/experiencias.conteudo';
+import { CONTEUDO_EXPERIENCIAS } from './features/experiencias/experiencias.conteudo';
 import { CONTEUDO_FORMACAO } from './features/formacao/formacao.conteudo';
 import { CONTEUDO_IDIOMAS } from './features/idiomas/idiomas.conteudo';
 import { CONTEUDO_INICIO } from './features/inicio/inicio.conteudo';
-import { CONTEUDOS_SKILLS } from './features/skills/skills.conteudo';
+import { CONTEUDO_SKILLS } from './features/skills/skills.conteudo';
 import { CONTEUDO_SOBRE_MIM } from './features/sobre-mim/sobre-mim.conteudo';
 import type { ConteudoDoEditor } from './shared/editor-de-codigo/conteudo';
 import {
@@ -35,10 +35,10 @@ function problemaDeBalanceamento(codigo: string): string | null {
 }
 
 describe('conteúdo das seções em Java moderno', () => {
-  it('cobre as 17 páginas das 11 seções (Início, Skills, Experiências e Certificações paginadas)', () => {
-    expect(DOCUMENTOS).toHaveLength(17);
+  it('cobre os 11 arquivos de seção, cada um com o conteúdo inteiro', () => {
+    expect(DOCUMENTOS).toHaveLength(11);
     expect(DOCUMENTOS.map(([nome]) => nome)).toEqual(
-      expect.arrayContaining(['Skills 3/3', 'Experiências 3/3', 'Certificações 3/3']),
+      expect.arrayContaining(['Skills', 'Experiências', 'Certificações']),
     );
   });
 
@@ -132,7 +132,7 @@ describe('conteúdo das seções em Java moderno', () => {
 
   describe('Java moderno', () => {
     it('listas de tecnologias usam List.of, no Início e em Skills', () => {
-      for (const c of [CONTEUDO_INICIO, ...CONTEUDOS_SKILLS]) {
+      for (const c of [CONTEUDO_INICIO, CONTEUDO_SKILLS]) {
         expect(textoDe(c)).toContain('List.of(');
       }
     });
@@ -141,20 +141,19 @@ describe('conteúdo das seções em Java moderno', () => {
       for (const [nome, c] of DOCUMENTOS) {
         expect(codigoDe(c), nome).not.toMatch(/\b(YearMonth|Year|Period)\b/);
       }
-      expect(textoDe(CONTEUDOS_EXPERIENCIAS[0])).toContain('"08/2026 - Presente"');
+      expect(textoDe(CONTEUDO_EXPERIENCIAS)).toContain('"08/2026 - Presente"');
       expect(textoDe(CONTEUDO_FORMACAO)).toMatch(/\b2027\b/);
     });
 
     it('usa records para dados em todas as seções que guardam um registro', () => {
       const comRecord: readonly (readonly [string, ConteudoDoEditor])[] = [
         ['Início', CONTEUDO_INICIO],
-        ['Skills 1', CONTEUDOS_SKILLS[0]],
-        ['Skills 3', CONTEUDOS_SKILLS[2]],
-        ['Experiências 1', CONTEUDOS_EXPERIENCIAS[0]],
+        ['Skills', CONTEUDO_SKILLS],
+        ['Experiências', CONTEUDO_EXPERIENCIAS],
         ['Eventos', CONTEUDO_EVENTOS],
         ['Formação', CONTEUDO_FORMACAO],
         ['Contato', CONTEUDO_CONTATO],
-        ['Certificações 1', CONTEUDOS_CERTIFICACOES[0]],
+        ['Certificações', CONTEUDO_CERTIFICACOES],
       ];
 
       for (const [nome, c] of comRecord) {
@@ -171,14 +170,10 @@ describe('conteúdo das seções em Java moderno', () => {
     });
 
     it('textos longos vão em Javadoc (Sobre Mim, Diferenciais, IA, Experiências)', () => {
-      for (const c of [
-        CONTEUDO_SOBRE_MIM,
-        CONTEUDO_DIFERENCIAIS,
-        CONTEUDO_COMO_USO_IA,
-        ...CONTEUDOS_EXPERIENCIAS,
-      ]) {
+      for (const c of [CONTEUDO_SOBRE_MIM, CONTEUDO_DIFERENCIAIS, CONTEUDO_COMO_USO_IA]) {
         expect(c.filter((item) => item.tipo === 'javadoc')).toHaveLength(1);
       }
+      expect(CONTEUDO_EXPERIENCIAS.filter((item) => item.tipo === 'javadoc')).toHaveLength(3);
     });
   });
 
@@ -249,8 +244,8 @@ describe('conteúdo das seções em Java moderno', () => {
       expect(texto).toMatch(/boolean\s+\w+\s*=\s*true;/);
     });
 
-    it('Skills página 1: as 11 tecnologias das linguagens, frameworks e bancos', () => {
-      expect(literaisDe(CONTEUDOS_SKILLS[0]).map(aspasRetas)).toEqual([
+    it('Skills, linguagens, frameworks e bancos: as 11 tecnologias das linguagens, frameworks e bancos', () => {
+      expect(literaisDe(CONTEUDO_SKILLS).map(aspasRetas).slice(0, 11)).toEqual([
         'Java',
         'TypeScript',
         'JavaScript',
@@ -265,8 +260,8 @@ describe('conteúdo das seções em Java moderno', () => {
       ]);
     });
 
-    it('Skills página 2: as 9 tecnologias de cloud, infraestrutura e ferramentas', () => {
-      expect(literaisDe(CONTEUDOS_SKILLS[1]).map(aspasRetas)).toEqual([
+    it('Skills, cloud e ferramentas: as 9 tecnologias de cloud, infraestrutura e ferramentas', () => {
+      expect(literaisDe(CONTEUDO_SKILLS).map(aspasRetas).slice(11, 20)).toEqual([
         'Docker',
         'Kubernetes',
         'Nginx',
@@ -279,8 +274,8 @@ describe('conteúdo das seções em Java moderno', () => {
       ]);
     });
 
-    it('Skills página 3: os quatro níveis com descrição e as 15 tecnologias', () => {
-      const texto = textoDe(CONTEUDOS_SKILLS[2]);
+    it('Skills, níveis: os quatro níveis com descrição e as 15 tecnologias', () => {
+      const texto = textoDe(CONTEUDO_SKILLS);
 
       for (const nivel of [
         'Domínio diário',
@@ -290,7 +285,7 @@ describe('conteúdo das seções em Java moderno', () => {
       ]) {
         expect(texto, nivel).toContain(nivel);
       }
-      expect(literaisDe(CONTEUDOS_SKILLS[2]).map(aspasRetas)).toEqual(
+      expect(literaisDe(CONTEUDO_SKILLS).map(aspasRetas)).toEqual(
         expect.arrayContaining([
           ...['Java', 'Spring Boot', 'Angular', 'PostgreSQL', 'Oracle', 'TypeScript', 'Git'],
           'PHP',
@@ -301,7 +296,9 @@ describe('conteúdo das seções em Java moderno', () => {
     });
 
     it('Experiências: empresa, cargo e período de cada página', () => {
-      const [memora, estagio, watts] = CONTEUDOS_EXPERIENCIAS.map(textoDe);
+      const memora = textoDe(CONTEUDO_EXPERIENCIAS);
+      const estagio = memora;
+      const watts = memora;
 
       expect(memora).toContain('"Memora"');
       expect(memora).toContain('"Desenvolvedor Full Stack Júnior"');
@@ -315,7 +312,7 @@ describe('conteúdo das seções em Java moderno', () => {
     });
 
     it('Experiências 1: liderança de squad e Scrum', () => {
-      const texto = textoDe(CONTEUDOS_EXPERIENCIAS[0]);
+      const texto = textoDe(CONTEUDO_EXPERIENCIAS);
 
       for (const trecho of [
         'Liderança de squad',
@@ -327,7 +324,7 @@ describe('conteúdo das seções em Java moderno', () => {
     });
 
     it('Experiências 2: Sankhya, Oracle para PostgreSQL, Playwright, Coren, Sanesul e AyoForms', () => {
-      const texto = textoDe(CONTEUDOS_EXPERIENCIAS[1]);
+      const texto = textoDe(CONTEUDO_EXPERIENCIAS);
 
       for (const trecho of [
         'Sankhya',
@@ -344,7 +341,7 @@ describe('conteúdo das seções em Java moderno', () => {
     });
 
     it('Experiências 3: agência, CRM, agentes de IA, painel da clínica, Vercel e n8n', () => {
-      const texto = textoDe(CONTEUDOS_EXPERIENCIAS[2]);
+      const texto = textoDe(CONTEUDO_EXPERIENCIAS);
 
       for (const trecho of [
         'agência de automação e IA',

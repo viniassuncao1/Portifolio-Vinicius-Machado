@@ -52,12 +52,13 @@ pipeline e só acontece com tudo verde.
 
 ### Configuração versionada (`vercel.json`)
 
-| Campo             | Valor                       | Motivo                                                            |
-| ----------------- | --------------------------- | ----------------------------------------------------------------- |
-| `installCommand`  | `npm ci`                    | Instala exatamente as versões do `package-lock.json`              |
-| `buildCommand`    | `npm run build`             | O mesmo build testado no E2E                                      |
-| `outputDirectory` | `dist/portfolio/browser`    | Pasta gerada pelo Angular                                         |
-| `rewrites`        | `/(.*)` → `/index.csr.html` | Rotas inexistentes abrem a aplicação, que redireciona para a home |
+| Campo             | Valor                               | Motivo                                                                                                        |
+| ----------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `installCommand`  | `npm ci`                            | Instala exatamente as versões do `package-lock.json`                                                          |
+| `buildCommand`    | `npm run build`                     | O mesmo build testado no E2E                                                                                  |
+| `outputDirectory` | `dist/portfolio/browser`            | Pasta gerada pelo Angular                                                                                     |
+| `rewrites`        | `/(.*)` → `/index.csr.html`         | Rotas inexistentes abrem a aplicação, que redireciona para a home                                             |
+| `redirects`       | `/:secao/:pagina` → `/:secao` (301) | Endereços antigos de página (`/skills/2`, `/projeto-5/4`) levam à seção, que agora é um arquivo só (ADR-0018) |
 
 ### Secrets necessários
 

@@ -2,18 +2,11 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from './fixtures';
 import type { Result } from 'axe-core';
 
-import { SECOES, totalDePaginas } from '../src/app/core/secoes';
+import { SECOES } from '../src/app/core/secoes';
 import { esperarLogDoRun } from './apoio';
 
-/** Início e todas as páginas de todas as seções, geradas de SECOES (uma seção nova entra sozinha). */
-const ROTAS = [
-  '/',
-  ...SECOES.flatMap((secao) =>
-    Array.from({ length: totalDePaginas(secao) }, (_, i) =>
-      i === 0 ? `/${secao.slug}` : `/${secao.slug}/${i + 1}`,
-    ),
-  ),
-];
+/** Início e cada seção (um arquivo só, sem páginas), geradas de SECOES (uma seção nova entra sozinha). */
+const ROTAS = ['/', ...SECOES.map((secao) => `/${secao.slug}`)];
 
 const TELAS = [
   { nome: 'desktop', viewport: { width: 1920, height: 1080 } },
@@ -35,25 +28,19 @@ function descrever(violacoes: readonly Result[]): string {
     .join('\n');
 }
 
-test('a varredura inclui o Início, as seções e as páginas de Skills, Experiências e Certificações', () => {
+test('a varredura inclui o Início e cada seção, que é um arquivo só', () => {
   expect(new Set(ROTAS).size).toBe(ROTAS.length);
   expect(ROTAS).toEqual(
     expect.arrayContaining([
       '/',
       '/experiencias',
-      '/skills/2',
-      '/skills/3',
-      '/experiencias/2',
-      '/experiencias/3',
+      '/skills',
       '/certificacoes',
-      '/certificacoes/2',
-      '/certificacoes/3',
+      '/projeto-5',
       '/projeto-1',
       '/projeto-2',
       '/projeto-3',
       '/projeto-4',
-      '/projeto-4/2',
-      '/projeto-4/3',
       '/depoimentos',
     ]),
   );
