@@ -1,8 +1,8 @@
 # 0020: Domínio próprio
 
 - **Data:** 2026-10-16
-- **Change:** [dominio-proprio](../../openspec/changes/dominio-proprio/)
-- **PR:** a definir
+- **Change:** [dominio-proprio](../../openspec/changes/archive/2026-10-16-dominio-proprio/)
+- **PR:** [#36](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/36)
 - **ADRs:** nenhum novo.
 
 ## Problema
@@ -33,11 +33,11 @@ README e no cartão de compartilhamento. Buscadores e o LinkedIn seguiriam usand
 - **Prévias ficam em cache.** Depois do deploy é preciso revalidar a prévia no Post Inspector do
   LinkedIn e registrar o domínio no Google Search Console.
 - **Uma constante para o endereço, e um teste quando não dá para ter só uma.**
-- **Números finais.** Testes unitários: a definir. Testes E2E: a definir.
+- **Números finais.** 786 testes unitários (95,45% de cobertura de instruções) e 852 testes E2E.
 
 ## Links
 
-- Change: [`openspec/changes/dominio-proprio`](../../openspec/changes/dominio-proprio/)
+- Change: [`openspec/changes/dominio-proprio`](../../openspec/changes/archive/2026-10-16-dominio-proprio/)
 - Documentação: [deploy](../deploy.md#domínio-próprio) e [arquitetura](../arquitetura.md#seo-e-compartilhamento)
 - Entrada anterior: [0019 seções sem paginação](0019-secoes-sem-paginacao.md)
 
