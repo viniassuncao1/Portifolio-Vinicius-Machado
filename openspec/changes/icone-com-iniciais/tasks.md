@@ -10,5 +10,5 @@
 
 ## 3. Documentação e integração
 
-- [ ] 3.1 [Escriba] README, `docs/` e a entrada do diário — verificar com `npm run format:check`
+- [x] 3.1 [Escriba] README, `docs/` e a entrada do diário — verificar com `npm run format:check`
 - [ ] 3.2 [Regente] Revisar, abrir o PR, arquivar a change e fazer o merge — verificar pelo PR mesclado e pelo deploy

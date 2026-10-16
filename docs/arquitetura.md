@@ -307,6 +307,20 @@ pré-renderização e já está no HTML de cada rota.
   percorre os `index.html` pré-renderizados em `dist/` e escreve o `sitemap.xml`, então ele
   acompanha as rotas sozinho (só os endereços das seções, sem os de página, que redirecionam). O `public/robots.txt` é estático e aponta para o sitemap.
 
+## Ícone do site
+
+O site tinha o favicon padrão do Angular. Ele passou a ser um "VM" num quadrado arredondado, como o
+ícone de projeto do IntelliJ New UI, para reforçar a identidade de IDE já na aba do navegador.
+
+- **Desenho:** quadrado com raio de cerca de 22% do lado, preenchido com o acento `#9A2A8C` (contraste
+  melhor com letras brancas e legível sobre abas claras e escuras). "VM" em branco, Inter 600
+  convertida em contornos no SVG, ocupando cerca de 55% da largura. Sem borda nem sombra.
+- **Arquivos:** `public/favicon.svg` é a fonte. `scripts/gerar-icones.mjs` (Playwright, como o do
+  cartão) renderiza PNG de 16, 32, 48 e 180 px, e o `favicon.ico` reúne 16, 32 e 48.
+- **HTML:** `src/index.html` declara o SVG (`rel="icon"`, `image/svg+xml`), o `favicon.ico`
+  (`sizes="any"`, para navegadores que pedem esse caminho direto) e o `apple-touch-icon.png`.
+- **Fora do escopo:** manifesto de PWA e ícones por tema do sistema.
+
 ## Diário de desenvolvimento
 
 Cada change do OpenSpec ganha uma entrada em [`docs/diario/`](diario/README.md), com o problema, o

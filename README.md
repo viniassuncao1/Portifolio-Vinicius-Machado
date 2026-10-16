@@ -109,6 +109,19 @@ node scripts/gerar-imagem-de-compartilhamento.mjs
 Confira a imagem antes de commitar. Os metadados vêm do serviço `Seo`; veja a seção
 [SEO e compartilhamento](docs/arquitetura.md#seo-e-compartilhamento).
 
+## Ícone do site
+
+O favicon é um "VM" branco num quadrado arredondado roxo, no estilo do ícone de projeto do IntelliJ
+New UI. A fonte é `public/favicon.svg` (letras em contornos, sem depender de fonte instalada). Para
+regenerar os PNG (16, 32, 48 e 180 px) e o `favicon.ico` depois de mexer no SVG:
+
+```bash
+node scripts/gerar-icones.mjs
+```
+
+Confira os arquivos antes de commitar. Detalhes em
+[Ícone do site](docs/arquitetura.md#ícone-do-site).
+
 ## Estrutura
 
 ```
