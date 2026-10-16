@@ -2,7 +2,7 @@
 
 ## 1. Código [Nanquim]
 
-- [ ] 1.1 Domínio novo em `core/seo.ts`, `scripts/gerar-sitemap.mjs` (com teste que compara as duas URLs), `public/robots.txt` e no cartão de compartilhamento, gerando a imagem de novo — verificar com `npm run build` (sitemap e HTML com o canônico novo) e `npm run test:ci`
+- [x] 1.1 Domínio novo em `core/seo.ts`, `scripts/gerar-sitemap.mjs` (com teste que compara as duas URLs), `public/robots.txt` e no cartão de compartilhamento, gerando a imagem de novo — verificar com `npm run build` (sitemap e HTML com o canônico novo) e `npm run test:ci`
 
 ## 2. Testes [Sentinela]
 
