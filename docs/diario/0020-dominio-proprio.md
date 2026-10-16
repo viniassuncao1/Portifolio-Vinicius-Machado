@@ -35,6 +35,14 @@ README e no cartão de compartilhamento. Buscadores e o LinkedIn seguiriam usand
 - **Uma constante para o endereço, e um teste quando não dá para ter só uma.**
 - **Números finais.** 786 testes unitários (95,45% de cobertura de instruções) e 852 testes E2E.
 
+## Depois do merge: cartão borrado no LinkedIn
+
+No Post Inspector a prévia apareceu borrada, embora o arquivo de 1200x630 estivesse nítido: o
+LinkedIn comprime a imagem e, em telas de alta densidade, ainda a amplia. O cartão passou a ser
+gerado em resolução dupla, 2400x1260, com o mesmo layout
+([cartao-em-alta-resolucao](../../openspec/changes/archive/2026-10-16-cartao-em-alta-resolucao/),
+[#37](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/37)).
+
 ## Links
 
 - Change: [`openspec/changes/dominio-proprio`](../../openspec/changes/archive/2026-10-16-dominio-proprio/)
