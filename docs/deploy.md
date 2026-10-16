@@ -60,6 +60,20 @@ pipeline e só acontece com tudo verde.
 | `rewrites`        | `/(.*)` → `/index.csr.html`         | Rotas inexistentes abrem a aplicação, que redireciona para a home                                             |
 | `redirects`       | `/:secao/:pagina` → `/:secao` (301) | Endereços antigos de página (`/skills/2`, `/projeto-5/4`) levam à seção, que agora é um arquivo só (ADR-0018) |
 
+### Domínio próprio
+
+O site responde em `https://vinimachado.wattscompany.com.br`, um subdomínio do domínio da Watts
+Company. O DNS fica na Hostinger, com um registro **CNAME** do subdomínio `vinimachado` apontando
+para a Vercel, e o domínio é adicionado ao projeto na Vercel (que emite o certificado HTTPS
+sozinha). O endereço antigo, `portfolio-vinicius-machado.vercel.app`, **redireciona (308) para o
+domínio novo**, mantendo o caminho, por uma configuração do projeto na Vercel, fora do código. Os
+deploys de preview continuam nos endereços próprios deles.
+
+Como o endereço mudou, o canônico, o `og:url`, o sitemap, o `robots.txt` e o cartão de
+compartilhamento usam o domínio novo. Depois de um deploy que mude isso, revalide a prévia no
+[Post Inspector do LinkedIn](https://www.linkedin.com/post-inspector/) e registre o domínio no
+Google Search Console.
+
 ### Secrets necessários
 
 Cadastrados em **Settings → Secrets and variables → Actions**:

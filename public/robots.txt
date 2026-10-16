@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://portfolio-vinicius-machado.vercel.app/sitemap.xml
+Sitemap: https://vinimachado.wattscompany.com.br/sitemap.xml

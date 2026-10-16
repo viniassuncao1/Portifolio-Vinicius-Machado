@@ -4,7 +4,7 @@ import { SECOES } from '../src/app/core/secoes';
 import { linhasDoCodigo } from './apoio';
 import { expect, test } from './fixtures';
 
-const ORIGEM = 'https://portfolio-vinicius-machado.vercel.app';
+const ORIGEM = 'https://vinimachado.wattscompany.com.br';
 /** As cinco seções que já tiveram páginas (`/<seção>/<n>`). */
 const COM_ENDERECO_ANTIGO = [
   { slug: 'skills', titulo: 'Skills / STACK', antigos: [2, 3], ultimo: 'Conhecimento teórico' },

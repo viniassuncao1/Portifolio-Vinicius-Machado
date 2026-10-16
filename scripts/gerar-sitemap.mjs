@@ -4,7 +4,8 @@
 import { readdir, writeFile } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 
-const DOMINIO = 'https://portfolio-vinicius-machado.vercel.app';
+// Mesmo domínio de URL_DO_SITE em src/app/core/seo.ts (src/app/core/seo-dominio.spec.ts confere).
+const DOMINIO = 'https://vinimachado.wattscompany.com.br';
 const RAIZ = join(process.cwd(), 'dist/portfolio/browser');
 const PAGINA = 'index.html';
 

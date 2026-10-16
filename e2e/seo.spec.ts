@@ -4,7 +4,7 @@ import type { Page } from '@playwright/test';
 import { SECOES } from '../src/app/core/secoes';
 import { abrirHidratada, abrirPastas, arquivoDaArvore } from './apoio';
 
-const ORIGEM = 'https://portfolio-vinicius-machado.vercel.app';
+const ORIGEM = 'https://vinimachado.wattscompany.com.br';
 const SITE = 'Vinicius Machado';
 const IMAGEM = `${ORIGEM}/compartilhamento/portfolio.png`;
 const LIMITE_DA_DESCRICAO = 160;
@@ -91,7 +91,7 @@ test.describe('Metadados no HTML pré-renderizado (sem JavaScript)', () => {
 
     expect(m.titulo).toBe('Skills / STACK | Vinicius Machado');
     expect(m.descricao).toContain('Java, Spring Boot, Angular');
-    expect(m.canonico).toBe('https://portfolio-vinicius-machado.vercel.app/skills');
+    expect(m.canonico).toBe(`${ORIGEM}/skills`);
   });
 
   test('cada seção tem a sua descrição, diferente das outras', async ({ page }) => {
@@ -188,6 +188,15 @@ test.describe('Arquivos de SEO servidos pelo site', () => {
     }
     expect(enderecos.filter((endereco) => /\/\d+$/.test(endereco))).toEqual([]);
     enderecos.forEach((endereco) => expect(endereco).toMatch(/^https:\/\//));
+  });
+
+  test('nenhum arquivo de SEO cita mais o domínio antigo da Vercel', async ({ request }) => {
+    for (const arquivo of ['/', '/skills', '/sitemap.xml', '/robots.txt']) {
+      const texto = await (await request.get(arquivo)).text();
+
+      expect(texto, arquivo).not.toContain('portfolio-vinicius-machado.vercel.app');
+      expect(texto, arquivo).toContain('vinimachado.wattscompany.com.br');
+    }
   });
 
   test('o sitemap e os canônicos listam os mesmos endereços', async ({ page, request }) => {
