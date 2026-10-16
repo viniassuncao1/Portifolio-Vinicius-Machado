@@ -1,10 +1,12 @@
 # 0021: Ícone com as iniciais
 
 - **Data:** 2026-10-16
-- **Change:** [icone-com-iniciais](../../openspec/changes/icone-com-iniciais/)
-- **PR:** a definir
-- **Testes:** a definir
+- **Change:** [icone-com-iniciais](../../openspec/changes/archive/2026-10-16-icone-com-iniciais/)
+- **PR:** [#39](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/39)
+- **Testes:** 786 testes unitários e 876 testes E2E (24 novos para o ícone)
 - **ADRs:** nenhum novo.
+
+![O ícone VM em 16, 32 e 180 px sobre fundo escuro](imagens/0021-icone.png)
 
 ## Problema
 
@@ -31,7 +33,7 @@ primeiro pixel que a pessoa vê estava com a identidade de outro projeto.
 
 ## Links
 
-- Change: [`openspec/changes/icone-com-iniciais`](../../openspec/changes/icone-com-iniciais/)
+- Change: [`openspec/changes/icone-com-iniciais`](../../openspec/changes/archive/2026-10-16-icone-com-iniciais/)
 - Documentação: [ícone do site](../arquitetura.md#ícone-do-site)
 - Entrada anterior: [0020 domínio próprio](0020-dominio-proprio.md)
 
