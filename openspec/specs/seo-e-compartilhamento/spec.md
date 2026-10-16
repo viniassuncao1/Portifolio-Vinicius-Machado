@@ -21,6 +21,8 @@ Cada página SHALL ter as marcações Open Graph (`og:title`, `og:description`, 
 `og:image` com largura e altura, `og:type`, `og:locale` = `pt_BR`, `og:site_name`) e Twitter/X
 (`twitter:card` = `summary_large_image`), com uma imagem de 2400x1260 (proporção 1,91:1, resolução dupla para continuar nítida depois da
 compressão das redes) servida pelo próprio site
+num endereço com versão (`/compartilhamento/portfolio-v2.png`), trocado a cada mudança da imagem
+para as redes não reaproveitarem a versão antiga do cache,
 e com texto alternativo.
 
 #### Scenario: Link compartilhado no LinkedIn
