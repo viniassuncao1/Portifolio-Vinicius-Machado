@@ -38,6 +38,7 @@ e eu quero mostrar o processo, não só o resultado.
 | [0018](0018-projeto-5-o-proprio-portfolio.md)       | 2026-10-15 | Projeto 5, "Este portfólio": o estudo com IA, SDD no OpenSpec, ECC e Maestri, com fatos conferidos.                   |
 | [0019](0019-secoes-sem-paginacao.md)                | 2026-10-15 | Cada seção vira um arquivo só, sem paginação, e os links antigos redirecionam (ADR-0018).                             |
 | [0020](0020-dominio-proprio.md)                     | 2026-10-16 | O portfólio passa a usar vinimachado.wattscompany.com.br no SEO, no sitemap e no cartão, e o .vercel.app redireciona. |
+| [0021](0021-icone-com-iniciais.md)                  | 2026-10-16 | O favicon do Angular vira um "VM" num quadrado arredondado, no estilo do ícone de projeto do IntelliJ.                |
 
 ## Modelo de entrada
 
