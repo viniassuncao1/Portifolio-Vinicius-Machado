@@ -29,7 +29,9 @@ try {
   const imagem = await pagina.screenshot({ type: 'png' });
   await mkdir(new URL('./', ARQUIVO_DE_SAIDA), { recursive: true });
   await writeFile(ARQUIVO_DE_SAIDA, imagem);
-  console.log(`portfolio.png: ${Math.round(imagem.length / 1024)} KB, ${LARGURA * ESCALA}x${ALTURA * ESCALA}`);
+  console.log(
+    `portfolio.png: ${Math.round(imagem.length / 1024)} KB, ${LARGURA * ESCALA}x${ALTURA * ESCALA}`,
+  );
 } finally {
   await navegador.close();
 }
