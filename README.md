@@ -98,7 +98,7 @@ O LinkedIn guarda a prévia do link em cache. Depois de um deploy que mude títu
 imagem, abra o [Post Inspector](https://www.linkedin.com/post-inspector/), cole o endereço do
 portfólio e clique em inspecionar para atualizar a prévia.
 
-Para regenerar a imagem do cartão (`public/compartilhamento/portfolio.png`, 2400x1260) quando o
+Para regenerar a imagem do cartão (`public/compartilhamento/portfolio-v2.png`, 2400x1260) quando o
 visual do Início mudar:
 
 ```bash

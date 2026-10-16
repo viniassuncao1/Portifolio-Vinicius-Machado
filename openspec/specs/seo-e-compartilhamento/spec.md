@@ -19,13 +19,22 @@ domínio próprio `https://vinimachado.wattscompany.com.br`.
 ### Requirement: Cartão de compartilhamento
 Cada página SHALL ter as marcações Open Graph (`og:title`, `og:description`, `og:url`,
 `og:image` com largura e altura, `og:type`, `og:locale` = `pt_BR`, `og:site_name`) e Twitter/X
-(`twitter:card` = `summary_large_image`), com uma imagem de 2400x1260 (proporção 1,91:1, resolução dupla para continuar nítida depois da
-compressão das redes) servida pelo próprio site
+(`twitter:card` = `summary_large_image`), com uma imagem de 2400x1260 (proporção 1,91:1,
+resolução dupla para continuar nítida depois da compressão das redes) servida pelo próprio site
 e com texto alternativo.
 
 #### Scenario: Link compartilhado no LinkedIn
 - **WHEN** o link da página inicial é colado no LinkedIn
 - **THEN** a prévia mostra a imagem de compartilhamento, o título e a descrição do portfólio
+
+### Requirement: Imagem com versão no endereço
+A imagem de compartilhamento SHALL ficar num endereço com versão
+(`/compartilhamento/portfolio-v2.png`), e a versão MUST subir a cada mudança da imagem, para as
+redes não reaproveitarem a versão antiga do cache.
+
+#### Scenario: Imagem nova
+- **WHEN** o cartão muda
+- **THEN** a imagem é publicada com a versão seguinte no nome e `og:image` aponta para ela
 
 ### Requirement: Dados estruturados
 A página inicial SHALL trazer um JSON-LD `Person` com nome, cargo, endereço do site, os perfis do

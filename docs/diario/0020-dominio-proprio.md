@@ -43,6 +43,12 @@ gerado em resolução dupla, 2400x1260, com o mesmo layout
 ([cartao-em-alta-resolucao](../../openspec/changes/archive/2026-10-16-cartao-em-alta-resolucao/),
 [#37](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/37)).
 
+Mesmo assim a prévia continuou borrada: a imagem nova estava no mesmo endereço e o LinkedIn
+reaproveitava a versão antiga pelo endereço. A imagem passou a ter versão no nome,
+`portfolio-v2.png`, que sobe a cada mudança
+([nome-novo-do-cartao](../../openspec/changes/archive/2026-10-16-nome-novo-do-cartao/),
+[#38](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/38)).
+
 ## Links
 
 - Change: [`openspec/changes/dominio-proprio`](../../openspec/changes/archive/2026-10-16-dominio-proprio/)

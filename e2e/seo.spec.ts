@@ -6,7 +6,7 @@ import { abrirHidratada, abrirPastas, arquivoDaArvore } from './apoio';
 
 const ORIGEM = 'https://vinimachado.wattscompany.com.br';
 const SITE = 'Vinicius Machado';
-const IMAGEM = `${ORIGEM}/compartilhamento/portfolio.png`;
+const IMAGEM = `${ORIGEM}/compartilhamento/portfolio-v2.png`;
 const LIMITE_DA_DESCRICAO = 160;
 const TOTAL_DE_PAGINAS = 18;
 
@@ -211,7 +211,7 @@ test.describe('Arquivos de SEO servidos pelo site', () => {
   });
 
   test('a imagem de compartilhamento responde 200, é PNG e tem 2400x1260', async ({ request }) => {
-    const resposta = await request.get('/compartilhamento/portfolio.png');
+    const resposta = await request.get('/compartilhamento/portfolio-v2.png');
     const bytes = await resposta.body();
 
     expect(resposta.status()).toBe(200);
