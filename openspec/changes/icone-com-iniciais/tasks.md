@@ -6,7 +6,7 @@
 
 ## 2. Testes [Sentinela]
 
-- [ ] 2.1 E2E: links de ícone no HTML pré-renderizado, arquivos servidos com o tipo certo, sem o ícone do Angular — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
+- [x] 2.1 E2E: links de ícone no HTML pré-renderizado, arquivos servidos com o tipo certo, sem o ícone do Angular — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
 
 ## 3. Documentação e integração
 
