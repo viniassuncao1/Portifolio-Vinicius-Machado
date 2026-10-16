@@ -9,7 +9,7 @@ O site imita uma IDE, em tema **claro ou escuro**, com o design autoral do portf
 conteúdo é apresentado como código. Além de portfólio, este repositório é um exemplo de como eu
 desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 
-**Acesse:** https://portfolio-vinicius-machado.vercel.app
+**Acesse:** https://vinimachado.wattscompany.com.br
 
 ## Destaques
 

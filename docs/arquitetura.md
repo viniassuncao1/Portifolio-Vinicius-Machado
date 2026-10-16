@@ -292,7 +292,10 @@ pré-renderização e já está no HTML de cada rota.
   `DOCUMENT` (sem `window`, por isso funciona no servidor), a `description`, o
   `link[rel=canonical]`, as tags Open Graph (`og:*`) e as do Twitter/X (`twitter:*`). O título vem de
   `EstrategiaDeTitulo.tituloDaJanela`, o mesmo cálculo que grava o título da janela.
-- **Domínio:** a constante `URL_DO_SITE` é o único lugar a trocar quando o site ganhar domínio próprio.
+- **Domínio:** o site usa o domínio próprio `https://vinimachado.wattscompany.com.br`. A constante
+  `URL_DO_SITE` (`core/seo.ts`) é a fonte para o canônico, o `og:url` e os dados estruturados; o
+  sitemap e o `robots.txt` repetem o endereço (o script do sitemap é Node e roda antes do build, e um
+  teste confere se as duas constantes batem).
 - **Descrições:** cada `Secao` (`core/secoes.ts`) tem um campo `descricao` em pt-BR, de até 160
   caracteres. Os endereços antigos de página (`/skills/2`) redirecionam para a seção, e o Início usa
   `DESCRICAO_DO_INICIO`.
