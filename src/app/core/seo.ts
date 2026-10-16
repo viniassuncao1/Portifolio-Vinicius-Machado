@@ -7,8 +7,11 @@ import { filter } from 'rxjs';
 import { EstrategiaDeTitulo } from './estrategia-de-titulo';
 import { SECOES } from './secoes';
 
-/** Domínio público: o único lugar a trocar quando o site ganhar um domínio próprio. */
-export const URL_DO_SITE = 'https://portfolio-vinicius-machado.vercel.app';
+/**
+ * Domínio público do site. Também está em `scripts/gerar-sitemap.mjs` (DOMINIO) e em
+ * `public/robots.txt`; `seo-dominio.spec.ts` garante que os três são iguais.
+ */
+export const URL_DO_SITE = 'https://vinimachado.wattscompany.com.br';
 
 export const DESCRICAO_DO_INICIO =
   'Vinicius Machado, desenvolvedor Full Stack em Java, Spring Boot, Angular e SQL. Veja projetos, experiências e certificações.';
