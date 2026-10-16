@@ -4,6 +4,9 @@
 // grandes do LinkedIn e dos outros apps.
 // Uso: node scripts/gerar-imagem-de-compartilhamento.mjs
 // Rode de novo quando o cartão mudar e confira a imagem antes de commitar.
+// Suba a versão do nome (portfolio-v2.png -> portfolio-v3.png) a cada mudança da imagem, e também em
+// src/app/core/seo.ts, no e2e/seo.spec.ts e na documentação: as redes (LinkedIn, WhatsApp) guardam a
+// imagem pelo endereço e não pegam a nova se o nome não mudar.
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from '@playwright/test';
 
@@ -11,7 +14,7 @@ const LARGURA = 1200;
 const ALTURA = 630;
 const ESCALA = 2;
 const CARTAO = new URL('./compartilhamento/cartao.html', import.meta.url);
-const ARQUIVO_DE_SAIDA = new URL('../public/compartilhamento/portfolio.png', import.meta.url);
+const ARQUIVO_DE_SAIDA = new URL('../public/compartilhamento/portfolio-v2.png', import.meta.url);
 
 const navegador = await chromium.launch();
 try {
@@ -30,7 +33,7 @@ try {
   await mkdir(new URL('./', ARQUIVO_DE_SAIDA), { recursive: true });
   await writeFile(ARQUIVO_DE_SAIDA, imagem);
   console.log(
-    `portfolio.png: ${Math.round(imagem.length / 1024)} KB, ${LARGURA * ESCALA}x${ALTURA * ESCALA}`,
+    `portfolio-v2.png: ${Math.round(imagem.length / 1024)} KB, ${LARGURA * ESCALA}x${ALTURA * ESCALA}`,
   );
 } finally {
   await navegador.close();

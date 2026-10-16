@@ -16,7 +16,7 @@ export const URL_DO_SITE = 'https://vinimachado.wattscompany.com.br';
 export const DESCRICAO_DO_INICIO =
   'Vinicius Machado, desenvolvedor Full Stack em Java, Spring Boot, Angular e SQL. Veja projetos, experiências e certificações.';
 
-export const IMAGEM_DE_COMPARTILHAMENTO = `${URL_DO_SITE}/compartilhamento/portfolio.png`;
+export const IMAGEM_DE_COMPARTILHAMENTO = `${URL_DO_SITE}/compartilhamento/portfolio-v2.png`;
 const LARGURA_DA_IMAGEM = '2400';
 const ALTURA_DA_IMAGEM = '1260';
 const TEXTO_ALTERNATIVO_DA_IMAGEM =

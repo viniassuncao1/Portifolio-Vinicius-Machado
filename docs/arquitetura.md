@@ -301,7 +301,7 @@ pré-renderização e já está no HTML de cada rota.
   `DESCRICAO_DO_INICIO`.
 - **JSON-LD:** o `<script type="application/ld+json">` com o `Person` (nome, cargo, LinkedIn, GitHub
   e stack) existe só no Início e é removido nas outras rotas.
-- **Imagem de compartilhamento:** `public/compartilhamento/portfolio.png`, 2400x1260 (layout de 1200x630 com `deviceScaleFactor` 2), versionada e
+- **Imagem de compartilhamento:** `public/compartilhamento/portfolio-v2.png`, 2400x1260 (layout de 1200x630 com `deviceScaleFactor` 2), versionada e
   gerada por `scripts/gerar-imagem-de-compartilhamento.mjs` (Playwright, com movimento reduzido).
 - **Sitemap e robots:** `scripts/gerar-sitemap.mjs` roda no script `build`, depois do `ng build`,
   percorre os `index.html` pré-renderizados em `dist/` e escreve o `sitemap.xml`, então ele
