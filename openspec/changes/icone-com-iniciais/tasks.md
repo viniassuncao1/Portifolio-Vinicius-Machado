@@ -2,7 +2,7 @@
 
 ## 1. Ícone [Pincel]
 
-- [ ] 1.1 `favicon.svg` com "VM" em contornos, script de geração, `favicon.ico` (16/32/48), `apple-touch-icon.png` (180) e os links em `src/index.html` — verificar com capturas do ícone em 16, 32 e 180 px sobre fundo claro e escuro e `npm run build`
+- [x] 1.1 `favicon.svg` com "VM" em contornos, script de geração, `favicon.ico` (16/32/48), `apple-touch-icon.png` (180) e os links em `src/index.html` — verificar com capturas do ícone em 16, 32 e 180 px sobre fundo claro e escuro e `npm run build`
 
 ## 2. Testes [Sentinela]
 
