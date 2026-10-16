@@ -314,7 +314,7 @@ O site tinha o favicon padrão do Angular. Ele passou a ser um "VM" num quadrado
 
 - **Desenho:** quadrado com raio de cerca de 22% do lado, preenchido com o acento `#9A2A8C` (contraste
   melhor com letras brancas e legível sobre abas claras e escuras). "VM" em branco, Inter 600
-  convertida em contornos no SVG, ocupando cerca de 55% da largura. Sem borda nem sombra.
+  convertida em contornos no SVG, ocupando cerca de 70% da largura (a 55% o "VM" ficava com 4 px de altura em 16 px e não lia). Sem borda nem sombra.
 - **Arquivos:** `public/favicon.svg` é a fonte. `scripts/gerar-icones.mjs` (Playwright, como o do
   cartão) renderiza PNG de 16, 32, 48 e 180 px, e o `favicon.ico` reúne 16, 32 e 48.
 - **HTML:** `src/index.html` declara o SVG (`rel="icon"`, `image/svg+xml`), o `favicon.ico`

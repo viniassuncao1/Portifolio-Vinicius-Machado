@@ -23,7 +23,7 @@ superior). O acento do site é `#DE60D2` (escuro) e `#9A2A8C` (claro).
 Quadrado arredondado (raio de ~22% do lado, como os ícones de projeto do IntelliJ) preenchido com
 o acento `#9A2A8C` (contraste melhor com letras brancas e legível sobre abas claras e escuras),
 "VM" em branco, Inter 600 convertida em contornos no SVG (não depende de fonte instalada), letras
-ocupando ~55% da largura, levemente apertadas. Sem borda nem sombra.
+ocupando ~70% da largura (a 55% ficavam com 4 px de altura em 16 px e não liam), levemente apertadas. Sem borda nem sombra.
 
 ### 2. Arquivos
 
