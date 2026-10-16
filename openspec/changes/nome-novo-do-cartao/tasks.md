@@ -2,7 +2,7 @@
 
 ## 1. Cartão [Nanquim]
 
-- [ ] 1.1 Renomear a imagem para `portfolio-v2.png` (com `git mv`), atualizar `core/seo.ts`, o script de geração, `e2e/seo.spec.ts`, README e `docs/arquitetura.md`, com um comentário no script dizendo para subir a versão a cada mudança da imagem — verificar com `npm run test:ci`, `npm run build` e `npm run e2e -- seo`
+- [x] 1.1 Renomear a imagem para `portfolio-v2.png` (com `git mv`), atualizar `core/seo.ts`, o script de geração, `e2e/seo.spec.ts`, README e `docs/arquitetura.md`, com um comentário no script dizendo para subir a versão a cada mudança da imagem — verificar com `npm run test:ci`, `npm run build` e `npm run e2e -- seo`
 
 ## 2. Integração [Regente]
 
