@@ -71,8 +71,8 @@ test.describe('Metadados no HTML pré-renderizado (sem JavaScript)', () => {
       expect(m.ogDescricao, 'og:description').toBe(m.descricao);
       expect(m.ogUrl, 'og:url').toBe(m.canonico);
       expect(m.ogImagem, 'og:image').toBe(IMAGEM);
-      expect(m.ogLargura, 'og:image:width').toBe('1200');
-      expect(m.ogAltura, 'og:image:height').toBe('630');
+      expect(m.ogLargura, 'og:image:width').toBe('2400');
+      expect(m.ogAltura, 'og:image:height').toBe('1260');
       expect(m.ogAlt?.trim(), 'og:image:alt').toBeTruthy();
       expect(m.ogTipo, 'og:type').toBe('website');
       expect(m.ogLocale, 'og:locale').toBe('pt_BR');
@@ -210,7 +210,7 @@ test.describe('Arquivos de SEO servidos pelo site', () => {
     }
   });
 
-  test('a imagem de compartilhamento responde 200, é PNG e tem 1200x630', async ({ request }) => {
+  test('a imagem de compartilhamento responde 200, é PNG e tem 2400x1260', async ({ request }) => {
     const resposta = await request.get('/compartilhamento/portfolio.png');
     const bytes = await resposta.body();
 
@@ -218,8 +218,8 @@ test.describe('Arquivos de SEO servidos pelo site', () => {
     expect(resposta.headers()['content-type']).toContain('image/png');
     expect(bytes.subarray(1, 4).toString('latin1')).toBe('PNG');
     // O cabeçalho IHDR do PNG guarda largura e altura nos bytes 16 a 23.
-    expect(bytes.readUInt32BE(16)).toBe(1200);
-    expect(bytes.readUInt32BE(20)).toBe(630);
+    expect(bytes.readUInt32BE(16)).toBe(2400);
+    expect(bytes.readUInt32BE(20)).toBe(1260);
   });
 });
 

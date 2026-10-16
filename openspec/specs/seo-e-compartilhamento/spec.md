@@ -19,7 +19,8 @@ domínio próprio `https://vinimachado.wattscompany.com.br`.
 ### Requirement: Cartão de compartilhamento
 Cada página SHALL ter as marcações Open Graph (`og:title`, `og:description`, `og:url`,
 `og:image` com largura e altura, `og:type`, `og:locale` = `pt_BR`, `og:site_name`) e Twitter/X
-(`twitter:card` = `summary_large_image`), com uma imagem de 1200x630 servida pelo próprio site
+(`twitter:card` = `summary_large_image`), com uma imagem de 2400x1260 (proporção 1,91:1, resolução dupla para continuar nítida depois da
+compressão das redes) servida pelo próprio site
 e com texto alternativo.
 
 #### Scenario: Link compartilhado no LinkedIn

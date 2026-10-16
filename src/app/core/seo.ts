@@ -17,8 +17,8 @@ export const DESCRICAO_DO_INICIO =
   'Vinicius Machado, desenvolvedor Full Stack em Java, Spring Boot, Angular e SQL. Veja projetos, experiências e certificações.';
 
 export const IMAGEM_DE_COMPARTILHAMENTO = `${URL_DO_SITE}/compartilhamento/portfolio.png`;
-const LARGURA_DA_IMAGEM = '1200';
-const ALTURA_DA_IMAGEM = '630';
+const LARGURA_DA_IMAGEM = '2400';
+const ALTURA_DA_IMAGEM = '1260';
 const TEXTO_ALTERNATIVO_DA_IMAGEM =
   'Portfólio de Vinicius Machado, desenvolvedor Full Stack, numa janela de IDE escura.';
 const NOME_DO_SITE = 'Vinicius Machado';
