@@ -2,7 +2,7 @@
 
 - **Data:** 2026-10-19
 - **Change:** [copy-para-vagas-java](../../openspec/changes/copy-para-vagas-java/)
-- **PR:** (a abrir)
+- **PR:** [#40](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/40)
 - **Testes:** 790 testes unitários e 887 testes E2E
 - **ADRs:** nenhum novo.
 
