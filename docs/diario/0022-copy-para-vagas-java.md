@@ -1,7 +1,7 @@
 # 0022: Textos para vagas Java
 
 - **Data:** 2026-10-19
-- **Change:** [copy-para-vagas-java](../../openspec/changes/copy-para-vagas-java/)
+- **Change:** [copy-para-vagas-java](../../openspec/changes/archive/2026-10-20-copy-para-vagas-java/)
 - **PR:** [#40](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/40)
 - **Testes:** 790 testes unitários e 887 testes E2E
 - **ADRs:** nenhum novo.
@@ -36,7 +36,7 @@ dois projetos mais próximos dessas vagas estavam em 4º e 5º, atrás de duas l
 
 ## Links
 
-- Change: [`openspec/changes/copy-para-vagas-java`](../../openspec/changes/copy-para-vagas-java/)
+- Change: [`openspec/changes/copy-para-vagas-java`](../../openspec/changes/archive/2026-10-20-copy-para-vagas-java/)
 - Entrada anterior: [0021 ícone com iniciais](0021-icone-com-iniciais.md)
 
 ## Rascunho de post para o LinkedIn

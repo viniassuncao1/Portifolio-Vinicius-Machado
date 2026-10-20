@@ -15,17 +15,18 @@ anunciado como página atual.
 - **THEN** "Sobre Mim" tem `aria-current="page"` e a seta para baixo
 
 ### Requirement: Apresentação em Java moderno
-A rota `/sobre-mim` SHALL apresentar o Vinicius em Java moderno, preservando todas as
-informações do parágrafo da tela 02: cerca de 2 anos de experiência como Full Stack com Java,
-Spring Boot, Angular e SQL em sistemas críticos, a liderança de squad na Memora Processos
-Inovadores com Scrum, a cofundação da Watts Company com CRM e agentes de IA, e o curso de Ciência
-da Computação no UniCEUB com foco em Engenharia de Software, Sistemas Distribuídos e Arquitetura
-de Software.
+A rota `/sobre-mim` SHALL apresentar o Vinicius em Java moderno, com um resumo de quatro frases
+nesta ordem: (1) a stack, Java 21 e Spring Boot no back-end e Angular no front-end, com cerca de
+2 anos em sistemas de produção sobre Oracle, PostgreSQL e MySQL; (2) a efetivação de estágio para
+Desenvolvedor Full Stack na Memora, com APIs REST em microsserviços e a liderança de squad no
+Scrum; (3) a Watts Company, que ele co-fundou, com agentes de IA e CRM, e o uso de Claude Code
+com SDD; (4) o curso de Ciência da Computação no UniCEUB, com foco em Engenharia de Software,
+Sistemas Distribuídos e Arquitetura de Software.
 
 #### Scenario: Abertura da seção
 - **WHEN** o visitante abre a seção "Sobre Mim"
-- **THEN** o editor mostra a apresentação em Java moderno, com todas as informações do parágrafo da tela
-  02
+- **THEN** o resumo começa pela stack Java e Spring Boot e cita a Memora, a Watts Company e o
+  UniCEUB, nessa ordem
 
 ### Requirement: Foto no Sobre Mim
 O Javadoc da classe que apresenta o Vinicius SHALL mostrar a foto dele com o `alt` "Foto de
