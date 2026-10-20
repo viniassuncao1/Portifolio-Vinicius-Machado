@@ -33,11 +33,12 @@ Todas as seções seguem o mesmo esqueleto: muda só o conteúdo do editor e o i
 | Skills / STACK (com os níveis de conhecimento)               | 05, 06 e níveis  | `Skills`                          | `features/skills/`             |
 | Experiências                                                 | 07-09            | `Experiencias`                    | `features/experiencias/`       |
 | Eventos                                                      | 22               | `Eventos`                         | `features/eventos/`            |
-| Projeto 1: Ana, agente de IA no WhatsApp                     | 10               | `Projeto1`                        | `features/projeto-1/`          |
-| Projeto 2: landing page da Dra. Juliana (com preview)        | 11-13            | `Projeto2`                        | `features/projeto-2/`          |
-| Projeto 3: landing page da Watts Company (com preview)       | 14, 15           | `Projeto3`                        | `features/projeto-3/`          |
-| Projeto 4: cases da Memora                                   | 16-18            | `Projeto4`                        | `features/projeto-4/`          |
-| Projeto 5: este portfólio, um estudo com IA                  | (nosso)          | `Projeto5`                        | `features/projeto-5/`          |
+| Projeto 1: cases da Memora                                   | 16-18            | `Projeto1`                        | `features/projeto-1/`          |
+| Projeto 2: este portfólio, um estudo com IA                  | (nosso)          | `Projeto2`                        | `features/projeto-2/`          |
+| Projeto 3: launcher de TV para Android 4.4                   | (nosso)          | `Projeto3`                        | `features/projeto-3/`          |
+| Projeto 4: Ana, agente de IA no WhatsApp                     | 10               | `Projeto4`                        | `features/projeto-4/`          |
+| Projeto 5: landing page da Dra. Juliana (com preview)        | 11-13            | `Projeto5`                        | `features/projeto-5/`          |
+| Projeto 6: landing page da Watts Company (com preview)       | 14, 15           | `Projeto6`                        | `features/projeto-6/`          |
 | Certificações (9 cursos)                                     | (nossa)          | `Certificacoes`                   | `features/certificacoes/`      |
 | Formação                                                     | 28               | `Formacao`                        | `features/formacao/`           |
 | Idiomas                                                      | 28               | `Idiomas`                         | `features/idiomas/`            |
@@ -269,7 +270,7 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
   com site: o botão `▶ Executar · Ver o site ao vivo`, menor e em cinza. Abre a janela de preview,
   com o mesmo efeito do ▶ da calha, para o visitante achar o site sem procurar. Nos projetos que não
   têm site para a janela mas têm um endereço externo, ele vira um **link** (nova aba, com o aviso
-  "abre em nova aba" para leitores de tela): hoje só o Projeto 5, `▶ Executar · Ver no GitHub`,
+  "abre em nova aba" para leitores de tela): hoje o Projeto 2 e o Projeto 3, `▶ Executar · Ver no GitHub`,
   definido em `LINKS_EXTERNOS_DE_PROJETO` (`core/previews.ts`).
 
 ### `ProximoArquivo`
@@ -690,7 +691,7 @@ estilo nem item de árvore.
 
 ### Seção longa: um arquivo só
 
-Algumas seções têm várias partes (Skills, Experiências, Certificações, Projeto 4 e Projeto 5). Elas
+Algumas seções têm várias partes (Skills, Experiências, Certificações, Projeto 1 e Projeto 2). Elas
 **não são paginadas**: o controle `◂ n/N ▸` saiu do site, junto com o campo `paginas` de
 `core/secoes.ts` e as rotas por página ([ADR-0018](adr/0018-secoes-num-arquivo-so.md)). Cada seção é
 um **único `ConteudoDoEditor`**, que se rola.
