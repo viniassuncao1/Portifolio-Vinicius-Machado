@@ -134,7 +134,7 @@ test.describe('Modo de leitura do Javadoc', () => {
     const cru = normal(await page.locator('main .javadoc-corpo').first().textContent());
 
     expect(cru).toBe(leitura);
-    expect(leitura.startsWith('Sou desenvolvedor Full Stack com cerca de 2 anos')).toBe(true);
+    expect(leitura.startsWith('Sou desenvolvedor Full Stack com foco em Java 21')).toBe(true);
   });
 
   test('Depoimentos no modo de leitura mantém a foto da Luana e o @author com o link', async ({
@@ -213,7 +213,7 @@ test.describe('Numeração por linha lógica no celular (390x844)', () => {
   test.use({ viewport: CELULAR });
 
   test('uma linha de código que quebra continua com um número só', async ({ page }) => {
-    await abrir(page, '/projeto-2');
+    await abrir(page, '/projeto-5');
 
     const quebradas = await page.evaluate(() => {
       const faixas = [...document.querySelectorAll('main .numeros span')].map((el) => ({
@@ -244,7 +244,7 @@ test.describe('Numeração por linha lógica no celular (390x844)', () => {
   test('os números das linhas de código só crescem, sem repetir (o Javadoc em leitura pula o intervalo do comentário)', async ({
     page,
   }) => {
-    await abrir(page, '/projeto-2');
+    await abrir(page, '/projeto-5');
 
     const numeros = (
       await page
@@ -272,7 +272,7 @@ test.describe('Início: nome, cargo e atalhos', () => {
       'Vinicius Machado, Desenvolvedor Full Stack',
     );
     await expect(javadoc(page)).toContainText('Vinicius Machado');
-    await expect(javadoc(page)).toContainText('Desenvolvedor Full Stack Júnior');
+    await expect(javadoc(page)).toContainText('Desenvolvedor Full Stack:');
     const autor = javadoc(page).getByRole('link', { name: /Vinicius Machado/ });
     await expect(autor).toHaveAttribute('href', 'https://linkedin.com/in/viniassuncao');
     await expect(autor).toHaveAttribute('target', '_blank');
@@ -359,7 +359,7 @@ test.describe('Próximo arquivo', () => {
 test.describe('Code vision nos projetos com site', () => {
   test.use({ viewport: DESKTOP });
 
-  for (const projeto of ['projeto-2', 'projeto-3']) {
+  for (const projeto of ['projeto-5', 'projeto-6']) {
     test(`/${projeto}: o botão "▶ Executar · Ver o site ao vivo" fica acima da classe e abre o preview`, async ({
       page,
     }) => {
@@ -381,7 +381,7 @@ test.describe('Code vision nos projetos com site', () => {
   }
 
   test('as seções sem site não têm o code vision', async ({ page }) => {
-    for (const rota of ['/projeto-1', '/projeto-4', '/sobre-mim']) {
+    for (const rota of ['/projeto-4', '/projeto-1', '/sobre-mim']) {
       await abrir(page, rota);
       await expect(page.getByRole('button', { name: /Ver o site ao vivo/ }), rota).toHaveCount(0);
     }
@@ -390,7 +390,7 @@ test.describe('Code vision nos projetos com site', () => {
   test('o code vision não tem número de linha e tem o foco visível no teclado', async ({
     page,
   }) => {
-    await abrir(page, '/projeto-2');
+    await abrir(page, '/projeto-5');
     const botao = page.getByRole('button', { name: /Ver o site ao vivo/ });
 
     await botao.focus();
@@ -505,10 +505,10 @@ test.describe('Contato: cara de link, alvo de toque e Copiar e-mail', () => {
 test.describe('Celular sem corte horizontal (390x844)', () => {
   test.use({ viewport: CELULAR });
 
-  test('o Projeto 2 mostra o endereço do site e as descrições inteiros, sem rolagem horizontal', async ({
+  test('o Projeto 5 mostra o endereço do site e as descrições inteiros, sem rolagem horizontal', async ({
     page,
   }) => {
-    await abrir(page, '/projeto-2');
+    await abrir(page, '/projeto-5');
 
     const site = page.locator('main code a', { hasText: 'https://www.drajulianamaluhy.com/' });
     await expect(site).toBeVisible();
@@ -527,7 +527,7 @@ test.describe('Celular sem corte horizontal (390x844)', () => {
   });
 
   test('o código quebra linha com recuo pendurado em vez de cortar', async ({ page }) => {
-    await abrir(page, '/projeto-1');
+    await abrir(page, '/projeto-4');
 
     const estilo = await page
       .locator('main code > .linha', { hasText: 'tarefas' })
@@ -549,10 +549,10 @@ test.describe('Celular sem corte horizontal (390x844)', () => {
       '/skills/3',
       '/experiencias',
       '/certificacoes',
-      '/projeto-1',
-      '/projeto-2',
-      '/projeto-3',
       '/projeto-4',
+      '/projeto-5',
+      '/projeto-6',
+      '/projeto-1',
       '/depoimentos',
       '/contato',
       '/repositorio',
@@ -653,7 +653,7 @@ for (const [nomeDaTela, viewport] of [
     test.use({ viewport });
 
     for (const tema of ['dark', 'light'] as const) {
-      for (const rota of ['/', '/sobre-mim', '/depoimentos', '/projeto-2', '/contato']) {
+      for (const rota of ['/', '/sobre-mim', '/depoimentos', '/projeto-5', '/contato']) {
         test(`${rota} passa no axe sem exclusões (${tema}, modo de leitura)`, async ({ page }) => {
           await page.emulateMedia({ colorScheme: tema, reducedMotion: 'reduce' });
           await abrir(page, rota);

@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { CONTEUDO_SOBRE_MIM } from './sobre-mim.conteudo';
 import { SobreMim } from './sobre-mim';
 
-const INICIO_DO_PARAGRAFO = 'Sou desenvolvedor Full Stack com cerca de 2 anos de experiência';
+const INICIO_DO_PARAGRAFO = 'Sou desenvolvedor Full Stack com foco em Java 21 e Spring Boot';
 const FIM_DO_PARAGRAFO = 'Sistemas Distribuídos e Arquitetura de Software.';
 
 describe('SobreMim', () => {
@@ -85,7 +85,9 @@ describe('SobreMim', () => {
     const texto = (await renderizar()).querySelector('.javadoc')?.textContent ?? '';
 
     for (const termo of [
-      'Java, Spring Boot, Angular e SQL',
+      'Java 21 e Spring Boot',
+      'Angular',
+      'Spring Security',
       'Memora Processos Inovadores',
       'Watts Company',
       'UniCEUB',

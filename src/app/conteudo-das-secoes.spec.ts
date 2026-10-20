@@ -180,7 +180,7 @@ describe('conteúdo das seções em Java moderno', () => {
   describe('informações preservadas', () => {
     it('Início: cargo e a stack Java, Spring Boot, Angular e SQL', () => {
       expect(literaisDe(CONTEUDO_INICIO).map(aspasRetas)).toEqual([
-        'Full Stack Júnior',
+        'Full Stack',
         'Java',
         'Spring Boot',
         'Angular',
@@ -192,13 +192,13 @@ describe('conteúdo das seções em Java moderno', () => {
       const texto = textoDe(CONTEUDO_SOBRE_MIM);
 
       for (const trecho of [
-        'cerca de 2 anos de experiência',
-        'Java, Spring Boot, Angular e SQL',
-        'sistemas críticos de produção',
-        'Lidero um squad na Memora Processos Inovadores',
-        'Scrum, com dailies, previsões de conclusão e reviews',
-        'co-fundador da Watts Company, agência de automação e IA',
-        'sistemas de CRM e agentes de IA para atendimento',
+        'Java 21 e Spring Boot no back-end e Angular no front-end',
+        'cerca de 2 anos em sistemas de produção',
+        'Oracle, PostgreSQL e MySQL',
+        'Desenvolvedor Full Stack na Memora Processos Inovadores',
+        'APIs REST em microsserviços com Spring Data JPA e Spring Security',
+        'lidero um squad no Scrum, com dailies, previsões de conclusão e reviews',
+        'agentes de IA e sistemas de CRM na Watts Company',
         'Ciência da Computação no UniCEUB',
         'Engenharia de Software, Sistemas Distribuídos e Arquitetura de Software.',
       ]) {
@@ -244,8 +244,8 @@ describe('conteúdo das seções em Java moderno', () => {
       expect(texto).toMatch(/boolean\s+\w+\s*=\s*true;/);
     });
 
-    it('Skills, linguagens, frameworks e bancos: as 11 tecnologias das linguagens, frameworks e bancos', () => {
-      expect(literaisDe(CONTEUDO_SKILLS).map(aspasRetas).slice(0, 11)).toEqual([
+    it('Skills, linguagens, frameworks e bancos: as 13 tecnologias das linguagens, frameworks e bancos', () => {
+      expect(literaisDe(CONTEUDO_SKILLS).map(aspasRetas).slice(0, 13)).toEqual([
         'Java',
         'TypeScript',
         'JavaScript',
@@ -253,7 +253,9 @@ describe('conteúdo das seções em Java moderno', () => {
         'SQL',
         'Spring Boot',
         'Spring Data JPA',
+        'Spring Security',
         'Angular',
+        'JUnit',
         'Oracle',
         'PostgreSQL',
         'MySQL',
@@ -261,7 +263,7 @@ describe('conteúdo das seções em Java moderno', () => {
     });
 
     it('Skills, cloud e ferramentas: as 9 tecnologias de cloud, infraestrutura e ferramentas', () => {
-      expect(literaisDe(CONTEUDO_SKILLS).map(aspasRetas).slice(11, 20)).toEqual([
+      expect(literaisDe(CONTEUDO_SKILLS).map(aspasRetas).slice(13, 22)).toEqual([
         'Docker',
         'Kubernetes',
         'Nginx',
@@ -274,7 +276,7 @@ describe('conteúdo das seções em Java moderno', () => {
       ]);
     });
 
-    it('Skills, níveis: os quatro níveis com descrição e as 15 tecnologias', () => {
+    it('Skills, níveis: os quatro níveis com descrição e as 17 tecnologias', () => {
       const texto = textoDe(CONTEUDO_SKILLS);
 
       for (const nivel of [
@@ -287,9 +289,10 @@ describe('conteúdo das seções em Java moderno', () => {
       }
       expect(literaisDe(CONTEUDO_SKILLS).map(aspasRetas)).toEqual(
         expect.arrayContaining([
-          ...['Java', 'Spring Boot', 'Angular', 'PostgreSQL', 'Oracle', 'TypeScript', 'Git'],
+          ...['Java', 'Spring Boot', 'Spring Security', 'Angular', 'PostgreSQL'],
+          ...['Oracle', 'TypeScript', 'Git'],
           'PHP',
-          ...['React Native', 'CI/CD'],
+          ...['React Native', 'CI/CD', 'JUnit'],
           ...['Python', 'AWS', 'Azure', 'Docker', 'Kubernetes'],
         ]),
       );
@@ -311,13 +314,17 @@ describe('conteúdo das seções em Java moderno', () => {
       expect(watts).toContain('"02/2025 - Presente"');
     });
 
-    it('Experiências 1: liderança de squad e Scrum', () => {
+    it('Experiências 1: stack do dia a dia e liderança de squad', () => {
       const texto = textoDe(CONTEUDO_EXPERIENCIAS);
 
       for (const trecho of [
-        'Liderança de squad',
-        'dailies, previsões de conclusão e reviews',
-        'próprias demandas do squad',
+        'APIs REST em Java 21 e Spring Boot',
+        'Microsserviços de login, gateway, financeiro e RH',
+        'Componentes em Angular 17',
+        'GitLab CI/CD',
+        'Liderança de squad no Scrum',
+        'trainees e estagiários',
+        'minhas próprias demandas',
       ]) {
         expect(texto, trecho).toContain(trecho);
       }
@@ -333,7 +340,7 @@ describe('conteúdo das seções em Java moderno', () => {
         'scrapers em Java com Playwright',
         'Coren e Sanesul',
         'AyoForms',
-        'PHP e MySQL',
+        'PHP 8 puro, JavaScript e MySQL',
         'Google Workspace e Microsoft Azure',
       ]) {
         expect(texto, trecho).toContain(trecho);

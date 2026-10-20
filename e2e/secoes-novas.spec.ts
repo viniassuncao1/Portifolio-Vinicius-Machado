@@ -59,16 +59,21 @@ test.describe('Experiências (/experiencias): as três num arquivo só', () => {
     ]);
   });
 
-  test('liderança de squad e Scrum nos destaques e no Javadoc da Memora', async ({ page }) => {
+  test('stack do dia a dia e liderança de squad nos destaques e no Javadoc da Memora', async ({
+    page,
+  }) => {
     await page.goto('/experiencias');
 
-    await expect(codigo(page)).toContainText('"Liderança de squad"');
-    await expect(page.locator('main .javadoc').first()).toContainText(
-      'Lidero um squad, orientando o time nas demandas',
+    await expect(codigo(page)).toContainText(
+      '"APIs REST em Java 21 e Spring Boot, com Spring Data JPA e Spring Security"',
+    );
+    await expect(codigo(page)).toContainText(
+      '"Liderança de squad no Scrum: dúvidas, planejamento e merge requests"',
     );
     await expect(page.locator('main .javadoc').first()).toContainText(
-      'Scrum, com dailies, previsões de conclusão e reviews',
+      'numa arquitetura de microsserviços (login, gateway, financeiro, RH, entre outros)',
     );
+    await expect(page.locator('main .javadoc').first()).toContainText('componentes em Angular 17');
   });
 
   test('o estágio cita Oracle para PostgreSQL, scrapers com Playwright, AyoForms e Sankhya', async ({
@@ -77,9 +82,10 @@ test.describe('Experiências (/experiencias): as três num arquivo só', () => {
     await page.goto('/experiencias');
 
     for (const trecho of [
-      '"Migração de APIs de Oracle para PostgreSQL"',
+      '"Migração de APIs e microsserviços de Oracle para PostgreSQL"',
+      '"Entidades JPA, DTOs e SQL nativo adaptados na migração"',
       '"Scrapers em Java + Playwright"',
-      '"AyoForms em PHP + MySQL"',
+      '"AyoForms em PHP 8, JavaScript e MySQL"',
       '"Correção de bug crítico no faturamento (Sankhya)"',
     ]) {
       await expect(codigo(page)).toContainText(trecho);

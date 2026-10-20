@@ -87,7 +87,9 @@ test.describe('Legibilidade: exemplos concretos', () => {
     const texto = await textoDoCodigo(page);
 
     expect(texto).toContain('List.of("Java", "TypeScript", "JavaScript", "PHP", "SQL"),');
-    expect(texto).toContain('List.of("Spring Boot", "Spring Data JPA", "Angular"),');
+    expect(texto).toContain(
+      'List.of("Spring Boot", "Spring Data JPA", "Spring Security", "Angular", "JUnit"),',
+    );
     expect(texto).toContain('List.of("Oracle", "PostgreSQL", "MySQL")');
   });
 });

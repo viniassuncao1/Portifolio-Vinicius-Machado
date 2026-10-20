@@ -100,7 +100,16 @@ test.describe('Skills / STACK (/skills): tudo num arquivo só', () => {
     {
       nome: 'Domínio diário',
       descricao: 'uso todo dia no trabalho',
-      tecnologias: ['Java', 'Spring Boot', 'Angular', 'PostgreSQL', 'Oracle', 'TypeScript', 'Git'],
+      tecnologias: [
+        'Java',
+        'Spring Boot',
+        'Spring Security',
+        'Angular',
+        'PostgreSQL',
+        'Oracle',
+        'TypeScript',
+        'Git',
+      ],
     },
     {
       nome: 'Projeto completo',
@@ -110,7 +119,7 @@ test.describe('Skills / STACK (/skills): tudo num arquivo só', () => {
     {
       nome: 'Uso pontual',
       descricao: 'usei em tarefas isoladas',
-      tecnologias: ['React Native', 'CI/CD'],
+      tecnologias: ['React Native', 'CI/CD', 'JUnit'],
     },
     {
       nome: 'Conhecimento teórico',
@@ -135,7 +144,7 @@ test.describe('Skills / STACK (/skills): tudo num arquivo só', () => {
       'List<String> bancosDeDados) {}',
       'Tecnologias principais = new Tecnologias(',
       'List.of("Java", "TypeScript", "JavaScript", "PHP", "SQL"),',
-      'List.of("Spring Boot", "Spring Data JPA", "Angular"),',
+      'List.of("Spring Boot", "Spring Data JPA", "Spring Security", "Angular", "JUnit"),',
       'List.of("Oracle", "PostgreSQL", "MySQL")',
       ');',
       '// Nuvem, infraestrutura e ferramentas do dia a dia',
@@ -161,10 +170,10 @@ test.describe('Skills / STACK (/skills): tudo num arquivo só', () => {
       'record Habilidades(NivelDeConhecimento nivel, List<String> tecnologias) {}',
       'List<Habilidades> porNivel = List.of(',
       'new Habilidades(NivelDeConhecimento.DominioDiario,',
-      'List.of("Java", "Spring Boot", "Angular", "PostgreSQL",',
+      'List.of("Java", "Spring Boot", "Spring Security", "Angular", "PostgreSQL",',
       '"Oracle", "TypeScript", "Git")),',
       'new Habilidades(NivelDeConhecimento.ProjetoCompleto, List.of("PHP")),',
-      'new Habilidades(NivelDeConhecimento.UsoPontual, List.of("React Native", "CI/CD")),',
+      'new Habilidades(NivelDeConhecimento.UsoPontual, List.of("React Native", "CI/CD", "JUnit")),',
       'new Habilidades(NivelDeConhecimento.ConhecimentoTeorico,',
       'List.of("Python", "AWS", "Azure", "Docker", "Kubernetes")));',
       '}',
