@@ -11,9 +11,9 @@ test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
 });
 
-test.describe('Projeto 1: a Ana (/projeto-1)', () => {
+test.describe('Projeto 4: a Ana (/projeto-4)', () => {
   test('mostra a Ana, o WhatsApp, o n8n, as integrações e o painel em React', async ({ page }) => {
-    await page.goto('/projeto-1');
+    await page.goto('/projeto-4');
     const texto = await textoDoCodigo(page);
 
     expect(texto).toMatch(/class Ana\b/);
@@ -29,7 +29,7 @@ test.describe('Projeto 1: a Ana (/projeto-1)', () => {
   });
 
   test('lista o que a Ana faz pela fisioterapeuta', async ({ page }) => {
-    await page.goto('/projeto-1');
+    await page.goto('/projeto-4');
     const texto = await textoDoCodigo(page);
 
     for (const tarefa of [
@@ -48,7 +48,7 @@ test.describe('Projeto 1: a Ana (/projeto-1)', () => {
   test('o texto da tela 10 fala da fisioterapeuta, do Claude Code, do SDD e dos feedbacks', async ({
     page,
   }) => {
-    await page.goto('/projeto-1');
+    await page.goto('/projeto-4');
     const javadoc = page.locator('main .javadoc');
 
     for (const trecho of [
@@ -68,11 +68,11 @@ test.describe('Projeto 1: a Ana (/projeto-1)', () => {
   });
 
   test('tem título, h1, árvore e uma só página, sem Executar', async ({ page }) => {
-    await page.goto('/projeto-1');
+    await page.goto('/projeto-4');
 
-    await expect(page).toHaveTitle('Projeto 1 | Vinicius Machado');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 1');
-    await expect(arvore(page).getByRole('treeitem', { name: 'Projeto 1' })).toHaveAttribute(
+    await expect(page).toHaveTitle('Projeto 4 | Vinicius Machado');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 4');
+    await expect(arvore(page).getByRole('treeitem', { name: 'Projeto 4' })).toHaveAttribute(
       'aria-current',
       'page',
     );
@@ -81,9 +81,9 @@ test.describe('Projeto 1: a Ana (/projeto-1)', () => {
   });
 });
 
-test.describe('Projeto 2: Dra. Juliana (/projeto-2)', () => {
+test.describe('Projeto 5: Dra. Juliana (/projeto-5)', () => {
   test('mostra a tecnologia, o tipo, o CTA e o link do site', async ({ page }) => {
-    await page.goto('/projeto-2');
+    await page.goto('/projeto-5');
     const texto = await textoDoCodigo(page);
 
     expect(texto).toContain('"HTML + JavaScript"');
@@ -97,7 +97,7 @@ test.describe('Projeto 2: Dra. Juliana (/projeto-2)', () => {
   test('descreve o foco em conversão, a avaliação 5.0, as especialidades e o caminho ao WhatsApp', async ({
     page,
   }) => {
-    await page.goto('/projeto-2');
+    await page.goto('/projeto-5');
     const javadoc = page.locator('main .javadoc');
 
     for (const trecho of [
@@ -115,17 +115,17 @@ test.describe('Projeto 2: Dra. Juliana (/projeto-2)', () => {
   });
 
   test('mostra o ▶ de executar na calha, na linha public class', async ({ page }) => {
-    await page.goto('/projeto-2');
+    await page.goto('/projeto-5');
 
     await expect(page.getByRole('button', { name: /^Executar Projeto \d$/ })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 2');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 5');
     await expect(controle(page)).toHaveCount(0);
   });
 });
 
-test.describe('Projeto 3: Watts Company (/projeto-3)', () => {
+test.describe('Projeto 6: Watts Company (/projeto-6)', () => {
   test('mostra a tecnologia React, o tipo e o link do site', async ({ page }) => {
-    await page.goto('/projeto-3');
+    await page.goto('/projeto-6');
     const texto = await textoDoCodigo(page);
 
     expect(texto).toContain('"React"');
@@ -136,7 +136,7 @@ test.describe('Projeto 3: Watts Company (/projeto-3)', () => {
   });
 
   test('descreve a proposta, a conversão de leads e o diagnóstico gratuito', async ({ page }) => {
-    await page.goto('/projeto-3');
+    await page.goto('/projeto-6');
     const javadoc = page.locator('main .javadoc');
 
     for (const trecho of [
@@ -151,10 +151,10 @@ test.describe('Projeto 3: Watts Company (/projeto-3)', () => {
   });
 
   test('mostra o ▶ de executar na calha, na linha public class', async ({ page }) => {
-    await page.goto('/projeto-3');
+    await page.goto('/projeto-6');
 
     await expect(page.getByRole('button', { name: /^Executar Projeto \d$/ })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 3');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 6');
   });
 });
 
@@ -176,9 +176,9 @@ const CASES = [
   },
   {
     titulo: 'AyoForms',
-    stack: ['PHP', 'MySQL', 'Google Workspace', 'Microsoft Azure', 'SharePoint'],
+    stack: ['PHP 8', 'JavaScript', 'MySQL', 'Google Workspace', 'Microsoft Azure', 'SharePoint'],
     javadoc: [
-      'PHP puro e MySQL',
+      'PHP 8 puro, JavaScript e MySQL',
       'Google Workspace e Microsoft Azure',
       'upload de vídeo',
       'insights de origem de acesso',
@@ -188,9 +188,9 @@ const CASES = [
   },
 ] as const;
 
-test.describe('Projeto 4: os três cases da Memora num arquivo só (/projeto-4)', () => {
+test.describe('Projeto 1: os três cases da Memora num arquivo só (/projeto-1)', () => {
   test('mostra os três cases, cada um com a stack e o que foi feito', async ({ page }) => {
-    await page.goto('/projeto-4');
+    await page.goto('/projeto-1');
     const texto = await textoDoCodigo(page);
     const javadocs = normalizar((await page.locator('main .javadoc').allTextContents()).join(' '));
 
@@ -207,7 +207,7 @@ test.describe('Projeto 4: os três cases da Memora num arquivo só (/projeto-4)'
   test('os cases vêm na ordem da spec, um comentário em pt-BR por case e o record uma vez só', async ({
     page,
   }) => {
-    await page.goto('/projeto-4');
+    await page.goto('/projeto-1');
     const texto = await textoDoCodigo(page);
 
     expect(CASES.map(({ titulo }) => texto.indexOf(`"${titulo}"`))).toEqual(
@@ -219,34 +219,25 @@ test.describe('Projeto 4: os três cases da Memora num arquivo só (/projeto-4)'
     expect(texto.split('record Caso(String titulo, List<String> tecnologias)').length - 1).toBe(1);
   });
 
-  test('não tem controle de páginas, tem título sem (n/N) e a árvore mantém o Projeto 4 atual', async ({
+  test('não tem controle de páginas, tem título sem (n/N) e a árvore mantém o Projeto 1 atual', async ({
     page,
   }) => {
-    await page.goto('/projeto-4');
+    await page.goto('/projeto-1');
 
     await expect(controle(page)).toHaveCount(0);
     await expect(page.locator('main')).not.toContainText(/\b\d\/3\b/);
-    await expect(arvore(page).getByRole('treeitem', { name: 'Projeto 4' })).toHaveAttribute(
+    await expect(arvore(page).getByRole('treeitem', { name: 'Projeto 1' })).toHaveAttribute(
       'aria-current',
       'page',
     );
-    await expect(page).toHaveTitle('Projeto 4 | Vinicius Machado');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 4');
-  });
-
-  test('os endereços antigos (/projeto-4/2, /3 e /4) levam a /projeto-4', async ({ page }) => {
-    for (const antigo of ['/projeto-4/2', '/projeto-4/3', '/projeto-4/4']) {
-      await page.goto(antigo);
-
-      await expect(page, antigo).toHaveURL(/\/projeto-4$/);
-      await expect(codigo(page), antigo).toContainText('AyoForms');
-    }
+    await expect(page).toHaveTitle('Projeto 1 | Vinicius Machado');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 1');
   });
 
   test('o código tem Java plausível: chaves e parênteses balanceados e sem Optional', async ({
     page,
   }) => {
-    await page.goto('/projeto-4');
+    await page.goto('/projeto-1');
     const linhas = (await linhasDoCodigo(page)).join('\n');
 
     expect(linhas.split('(').length).toBe(linhas.split(')').length);
@@ -259,10 +250,10 @@ test.describe('Projetos sem JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
   for (const [rota, trecho] of [
-    ['/projeto-1', 'WhatsApp'],
-    ['/projeto-2', 'HTML + JavaScript'],
-    ['/projeto-3', 'React'],
-    ['/projeto-4', 'Oracle → PostgreSQL'],
+    ['/projeto-4', 'WhatsApp'],
+    ['/projeto-5', 'HTML + JavaScript'],
+    ['/projeto-6', 'React'],
+    ['/projeto-1', 'Oracle → PostgreSQL'],
   ] as const) {
     test(`${rota} entrega o conteúdo no HTML`, async ({ page }) => {
       await page.goto(rota);
@@ -277,8 +268,8 @@ test.describe('Executar na calha', () => {
   test.use({ viewport: { width: 1920, height: 1080 } });
 
   for (const [rota, nome] of [
-    ['/projeto-2', 'Executar Projeto 2'],
-    ['/projeto-3', 'Executar Projeto 3'],
+    ['/projeto-5', 'Executar Projeto 5'],
+    ['/projeto-6', 'Executar Projeto 6'],
   ] as const) {
     test(`${rota}: o ▶ fica na calha, na linha public class, sem cobrir o número`, async ({
       page,
@@ -319,7 +310,7 @@ test.describe('Executar na calha', () => {
   }
 
   test('seções sem site não têm ▶ na calha', async ({ page }) => {
-    for (const rota of ['/', '/sobre-mim', '/projeto-1', '/projeto-4']) {
+    for (const rota of ['/', '/sobre-mim', '/projeto-4', '/projeto-1']) {
       await page.goto(rota);
 
       await expect(page.getByRole('button', { name: /^Executar Projeto/ })).toHaveCount(0);

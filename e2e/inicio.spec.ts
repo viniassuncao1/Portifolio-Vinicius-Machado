@@ -43,7 +43,7 @@ const CODIGO_DO_INICIO = [
   'List<String> stack) {}',
   'public static void main(String... args) {',
   'var vinicius = new Desenvolvedor(',
-  '"Full Stack Júnior",',
+  '"Full Stack",',
   'List.of("Java", "Spring Boot", "Angular", "SQL")',
   ');',
   'SpringApplication.run(PortfolioApplication.class, args);',
@@ -85,7 +85,7 @@ test.describe('Código do Início em Java moderno', () => {
     await page.goto('/');
 
     await expect(page.locator('main .papel-literal')).toHaveText([
-      '"Full Stack Júnior"',
+      '"Full Stack"',
       '"Java"',
       '"Spring Boot"',
       '"Angular"',
@@ -107,7 +107,7 @@ test.describe('Código do Início em Java moderno', () => {
 
     await expect(page.getByRole('tab', { name: /PortfolioApplication\.java/ })).toBeVisible();
     await expect(page.locator('main code')).toContainText('@SpringBootApplication');
-    await expect(page.locator('main code')).toContainText('"Full Stack Júnior"');
+    await expect(page.locator('main code')).toContainText('"Full Stack"');
   });
 });
 

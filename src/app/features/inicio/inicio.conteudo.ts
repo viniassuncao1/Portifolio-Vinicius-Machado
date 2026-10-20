@@ -27,7 +27,7 @@ export const CONTEUDO_INICIO: ConteudoDoEditor = [
   vazia(),
   javadocComRetrato(
     0,
-    'Vinicius Machado, Desenvolvedor Full Stack Júnior: Java, Spring Boot, Angular e SQL.',
+    'Vinicius Machado, Desenvolvedor Full Stack: Java, Spring Boot, Angular e SQL.',
     {
       src: 'fotos/vinicius.webp',
       alt: 'Foto de Vinicius Machado',
@@ -63,7 +63,7 @@ export const CONTEUDO_INICIO: ConteudoDoEditor = [
     palavraChave('new'),
     comum(' Desenvolvedor('),
   ),
-  linha(4, literal('"Full Stack Júnior"'), comum(',')),
+  linha(4, literal('"Full Stack"'), comum(',')),
   linha(
     4,
     comum('List.of('),

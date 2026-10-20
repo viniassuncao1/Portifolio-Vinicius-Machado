@@ -37,7 +37,7 @@ O raciocínio completo, com alternativas descartadas, está no design da change 
 ## Rotas e casca da IDE
 
 `app.routes.ts` tem uma rota-pai `''` com o componente `Casca` (`layout/`) e as rotas filhas:
-o Início (`''`) e as 16 seções de `core/secoes.ts` (`sobre-mim`, `skills`, `contato` etc.), mais
+o Início (`''`) e as 17 seções de `core/secoes.ts` (`sobre-mim`, `skills`, `contato` etc.), mais
 redirecionamentos dos endereços antigos de página (`/skills/2` leva a `/skills`), porque cada seção é um
 arquivo só, sem paginação ([ADR-0018](adr/0018-secoes-num-arquivo-so.md)). A casca
 (barra superior, faixa de ferramentas, painel do projeto, faixa de abas, editor e barra de status) é montada uma vez e não recarrega entre
@@ -45,7 +45,7 @@ seções: só o conteúdo do `<router-outlet>` troca, e a View Transitions API a
 
 `core/secoes.ts` é a fonte única da lista de seções: dela saem os itens da árvore, as rotas e os
 títulos. Enquanto uma seção não tem feature própria, a rota dela carrega `SecaoEmConstrucao`
-(`shared/`). O Início e as 16 seções são todos pré-renderizados (`RenderMode.Prerender` em `**`),
+(`shared/`). O Início e as 17 seções são todos pré-renderizados (`RenderMode.Prerender` em `**`),
 então cada um vira um HTML estático com o conteúdo já desenhado.
 
 O título da janela segue o formato `<seção> | Vinicius Machado` (`EstrategiaDeTitulo`) e o mesmo
@@ -131,7 +131,7 @@ substituiu a tela de boas-vindas do ADR-0015). A sequência tem fases, cada uma 
 | Log do Spring | banner + 9 linhas a cada 150 ms, pausa 0,5 s | O log até `Started PortfolioApplication`, o mesmo da janela de Run                       |
 | A IDE aparece | ~0,7 s                                       | A janela recolhe para a barra de status e os painéis entram em sequência                 |
 
-Do clique ao portfólio leva cerca de 4,2 s (teto de 5 s); sem clique, o pior caso é cerca de 12 s.
+Do clique ao portfólio leva cerca de 4,3 s (teto de 5 s); sem clique, o pior caso é cerca de 12 s.
 
 - **Quando aparece.** Só em `/`, com JavaScript e uma vez por sessão (`sessionStorage['abertura-exibida']`).
   Quem chega por link direto de uma seção vai ao conteúdo, só com o aviso na barra de status

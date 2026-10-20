@@ -22,27 +22,27 @@ const abrirRota = async (rota: string): Promise<HTMLElement> => {
 
 describe('VisaoDeCodigo', () => {
   it('mostra "▶ Executar · Ver o site ao vivo" nos projetos com site', async () => {
-    const pagina = await abrirRota('/projeto-2');
+    const pagina = await abrirRota('/projeto-5');
     const botao = pagina.querySelector<HTMLButtonElement>('button.visao');
     expect(botao?.textContent?.replace(/\s+/g, ' ').trim()).toBe('▶ Executar · Ver o site ao vivo');
   });
 
   it('não aparece nas seções sem site', async () => {
-    const pagina = await abrirRota('/projeto-1');
+    const pagina = await abrirRota('/projeto-4');
     expect(pagina.querySelector('button.visao')).toBeNull();
   });
 
   it('abre a janela de preview do projeto ao ativar', async () => {
-    const pagina = await abrirRota('/projeto-2');
+    const pagina = await abrirRota('/projeto-5');
     pagina.querySelector<HTMLButtonElement>('button.visao')?.click();
-    expect(TestBed.inject(JanelaDePreview).preview()).toBe(PREVIEWS['projeto-2']);
+    expect(TestBed.inject(JanelaDePreview).preview()).toBe(PREVIEWS['projeto-5']);
   });
 
-  describe('com link externo (Projeto 5)', () => {
+  describe('com link externo (Projeto 2)', () => {
     const link = (pagina: HTMLElement) => pagina.querySelector<HTMLAnchorElement>('a.visao');
 
     it('mostra "▶ Executar · Ver no GitHub" como link para o repositório em nova aba', async () => {
-      const pagina = await abrirRota('/projeto-5');
+      const pagina = await abrirRota('/projeto-2');
       const a = link(pagina);
 
       expect(a?.textContent?.replace(/\s+/g, ' ').trim()).toBe(
@@ -56,14 +56,14 @@ describe('VisaoDeCodigo', () => {
       expect(pagina.querySelector('button.visao')).toBeNull();
     });
 
-    it('vale nas outras páginas do Projeto 5, mas não nas demais seções', async () => {
-      expect(link(await abrirRota('/projeto-5/3'))).not.toBeNull();
+    it('vale nas outras páginas do Projeto 2, mas não nas demais seções', async () => {
+      expect(link(await abrirRota('/projeto-2/3'))).not.toBeNull();
       TestBed.resetTestingModule();
-      expect(link(await abrirRota('/projeto-4'))).toBeNull();
+      expect(link(await abrirRota('/projeto-1'))).toBeNull();
     });
 
     it('não abre a janela de preview', async () => {
-      const pagina = await abrirRota('/projeto-5');
+      const pagina = await abrirRota('/projeto-2');
       link(pagina)?.addEventListener('click', (e) => e.preventDefault());
       link(pagina)?.click();
 

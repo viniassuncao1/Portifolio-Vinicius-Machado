@@ -14,14 +14,14 @@ interface Projeto {
 
 const PROJETOS: readonly Projeto[] = [
   {
-    rota: '/projeto-2',
+    rota: '/projeto-5',
     nome: 'Dra. Juliana Maluhy',
     url: 'https://www.drajulianamaluhy.com/',
     dominio: /drajulianamaluhy\.com/,
     textoAlternativo: /Landing page da fisioterapeuta/,
   },
   {
-    rota: '/projeto-3',
+    rota: '/projeto-6',
     nome: 'Watts Company',
     url: 'https://wattscompany.com.br/',
     dominio: /wattscompany\.com\.br/,
@@ -29,7 +29,7 @@ const PROJETOS: readonly Projeto[] = [
   },
 ];
 
-const SEM_PLAY = ['/', '/sobre-mim', '/skills', '/projeto-1', '/projeto-4', '/projeto-5'];
+const SEM_PLAY = ['/', '/sobre-mim', '/skills', '/projeto-4', '/projeto-1', '/projeto-2'];
 
 const DOMINIOS_DOS_PROJETOS = /drajulianamaluhy\.com|wattscompany\.com\.br/;
 
@@ -299,7 +299,7 @@ test.describe('Janela de preview com animação', () => {
   test('abre e fecha com animação quando o movimento não está reduzido', async ({ page }) => {
     await simularSites(page);
     await page.emulateMedia({ reducedMotion: 'no-preference' });
-    await abrirHidratada(page, '/projeto-2');
+    await abrirHidratada(page, '/projeto-5');
     await botaoDoCodigo(page).click();
 
     const animacao = await janela(page).evaluate((el) => getComputedStyle(el).animationName);
@@ -316,7 +316,7 @@ test.describe('Play da barra de ferramentas', () => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
   });
 
-  for (const rota of ['/projeto-2', '/projeto-3']) {
+  for (const rota of ['/projeto-5', '/projeto-6']) {
     test(`é um botão com nome e recebe foco em ${rota}`, async ({ page }) => {
       await abrirHidratada(page, rota);
 
@@ -351,7 +351,7 @@ test.describe('Play da barra de ferramentas', () => {
   });
 
   test('o play some ao sair do projeto e volta ao entrar noutro', async ({ page }) => {
-    await abrirHidratada(page, '/projeto-2');
+    await abrirHidratada(page, '/projeto-5');
     await expect(botaoDaBarra(page)).toBeVisible();
 
     await abrirPastas(page);
@@ -359,7 +359,7 @@ test.describe('Play da barra de ferramentas', () => {
     await expect(botaoDaBarra(page)).toHaveCount(0);
 
     await abrirPastas(page);
-    await arquivoDaArvore(page, 'Projeto 3').click();
+    await arquivoDaArvore(page, 'Projeto 6').click();
     await expect(botaoDaBarra(page)).toBeVisible();
   });
 });

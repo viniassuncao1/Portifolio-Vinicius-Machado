@@ -39,7 +39,13 @@ export const CONTEUDO_SKILLS: ConteudoDoEditor = [
   vazia(),
   linha(1, comum('Tecnologias principais = '), palavraChave('new'), comum(' Tecnologias(')),
   linha(3, ...listaDeTextos(['Java', 'TypeScript', 'JavaScript', 'PHP', 'SQL'], ',')),
-  linha(3, ...listaDeTextos(['Spring Boot', 'Spring Data JPA', 'Angular'], ',')),
+  linha(
+    3,
+    ...listaDeTextos(
+      ['Spring Boot', 'Spring Data JPA', 'Spring Security', 'Angular', 'JUnit'],
+      ',',
+    ),
+  ),
   linha(3, ...listaDeTextos(['Oracle', 'PostgreSQL', 'MySQL'], '')),
   linha(1, comum(');')),
   vazia(),
@@ -94,7 +100,7 @@ export const CONTEUDO_SKILLS: ConteudoDoEditor = [
   linha(
     5,
     comum('List.of('),
-    ...textos(['Java', 'Spring Boot', 'Angular', 'PostgreSQL']),
+    ...textos(['Java', 'Spring Boot', 'Spring Security', 'Angular', 'PostgreSQL']),
     comum(','),
   ),
   linha(7, ...textos(['Oracle', 'TypeScript', 'Git']), comum(')),')),
@@ -108,7 +114,7 @@ export const CONTEUDO_SKILLS: ConteudoDoEditor = [
     3,
     palavraChave('new'),
     comum(' Habilidades(NivelDeConhecimento.UsoPontual, '),
-    ...listaDeTextos(['React Native', 'CI/CD'], '),'),
+    ...listaDeTextos(['React Native', 'CI/CD', 'JUnit'], '),'),
   ),
   linha(3, palavraChave('new'), comum(' Habilidades(NivelDeConhecimento.ConhecimentoTeorico,')),
   linha(5, ...listaDeTextos(['Python', 'AWS', 'Azure', 'Docker', 'Kubernetes'], '));')),

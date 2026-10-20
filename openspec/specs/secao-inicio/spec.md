@@ -9,12 +9,13 @@ principal escritos como uma classe Java.
 ### Requirement: Apresentação como classe Java
 A página inicial SHALL ser o arquivo `PortfolioApplication.java`, no pacote raiz
 `dev.vinicius.portfolio`, com `@SpringBootApplication` e um `main` que apresenta o Vinicius:
-desenvolvedor Full Stack Júnior com a stack principal Java, Spring Boot, Angular e SQL.
+desenvolvedor Full Stack, sem "Júnior" no cargo, com a stack principal Java, Spring Boot,
+Angular e SQL.
 
 #### Scenario: Abertura da página inicial
 - **WHEN** o visitante abre a página inicial
 - **THEN** a aba mostra `PortfolioApplication.java` e o editor mostra o pacote, a anotação
-  `@SpringBootApplication`, o cargo "Full Stack Júnior" e a stack principal
+  `@SpringBootApplication`, o cargo "Full Stack" e a stack principal
 
 ### Requirement: Título da página
 A página inicial SHALL ter um único título principal (`h1`) com o texto `Portfolio_Vinicius` e o

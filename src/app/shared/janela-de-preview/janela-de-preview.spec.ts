@@ -23,7 +23,7 @@ describe('JanelaDePreviewComponente', () => {
     const fixture = TestBed.createComponent(JanelaDePreviewComponente);
     const origem = document.createElement('button');
     document.body.append(origem);
-    TestBed.inject(JanelaDePreview).abrir(PREVIEWS['projeto-2'], origem);
+    TestBed.inject(JanelaDePreview).abrir(PREVIEWS['projeto-5'], origem);
     await fixture.whenStable();
     return { fixture, elemento: fixture.nativeElement as HTMLElement, origem };
   }
@@ -45,7 +45,7 @@ describe('JanelaDePreviewComponente', () => {
     expect(dialogo.getAttribute('data-estado')).toBe('aberto');
     expect(elemento.querySelector('#titulo-da-janela')?.textContent).toContain('Dra. Juliana');
     expect(elemento.querySelector('img')?.getAttribute('alt')).toBe(
-      PREVIEWS['projeto-2'].captura.alt,
+      PREVIEWS['projeto-5'].captura.alt,
     );
     expect(elemento.querySelector('iframe')).toBeNull();
   });
@@ -72,7 +72,7 @@ describe('JanelaDePreviewComponente', () => {
     const { elemento } = await abrir();
     const link = elemento.querySelector<HTMLAnchorElement>('a.acao')!;
 
-    expect(link.getAttribute('href')).toBe(PREVIEWS['projeto-2'].url);
+    expect(link.getAttribute('href')).toBe(PREVIEWS['projeto-5'].url);
     expect(link.getAttribute('target')).toBe('_blank');
     expect(link.getAttribute('rel')).toBe('noopener noreferrer');
   });

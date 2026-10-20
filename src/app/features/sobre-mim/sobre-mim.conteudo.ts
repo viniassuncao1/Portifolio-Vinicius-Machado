@@ -30,7 +30,7 @@ export const CONTEUDO_SOBRE_MIM: ConteudoDoEditor = [
   ),
   javadocComRetrato(
     1,
-    'Sou desenvolvedor Full Stack com cerca de 2 anos de experiência, atuando com Java, Spring Boot, Angular e SQL em sistemas críticos de produção. Lidero um squad na Memora Processos Inovadores, atuando à frente de projetos, orientando o time nas demandas, tirando dúvidas técnicas e garantindo que sigamos Scrum, com dailies, previsões de conclusão e reviews. Também sou co-fundador da Watts Company, agência de automação e IA, onde desenvolvo sistemas de CRM e agentes de IA para atendimento. Curso Ciência da Computação no UniCEUB, com foco em Engenharia de Software, Sistemas Distribuídos e Arquitetura de Software.',
+    'Sou desenvolvedor Full Stack com foco em Java 21 e Spring Boot no back-end e Angular no front-end, com cerca de 2 anos em sistemas de produção sobre Oracle, PostgreSQL e MySQL. Fui efetivado de estágio para Desenvolvedor Full Stack na Memora Processos Inovadores, onde desenvolvo APIs REST em microsserviços com Spring Data JPA e Spring Security, integro essas APIs a componentes em Angular e lidero um squad no Scrum, com dailies, previsões de conclusão e reviews. Também desenvolvo agentes de IA e sistemas de CRM na Watts Company, empresa de automação que co-fundei, e uso Claude Code com SDD (Spec-Driven Development) no dia a dia. Curso Ciência da Computação no UniCEUB, com foco em Engenharia de Software, Sistemas Distribuídos e Arquitetura de Software.',
     { src: 'fotos/vinicius.webp', alt: 'Foto de Vinicius Machado', tamanho: 'grande' },
   ),
   linha(1, anotacao('@Override')),

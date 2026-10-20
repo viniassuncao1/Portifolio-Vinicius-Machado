@@ -1,8 +1,8 @@
 import { PREVIEWS } from './previews';
 
 describe('previews dos projetos', () => {
-  it('tem preview só nos projetos 2 e 3', () => {
-    expect(Object.keys(PREVIEWS)).toEqual(['projeto-2', 'projeto-3']);
+  it('tem preview só nos projetos 5 e 6', () => {
+    expect(Object.keys(PREVIEWS)).toEqual(['projeto-5', 'projeto-6']);
   });
 
   it.each(Object.entries(PREVIEWS))(

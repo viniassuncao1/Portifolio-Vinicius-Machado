@@ -46,7 +46,7 @@ describe('Skills', () => {
         'List<String> bancosDeDados) {}',
         'Tecnologias principais = new Tecnologias(',
         'List.of("Java", "TypeScript", "JavaScript", "PHP", "SQL"),',
-        'List.of("Spring Boot", "Spring Data JPA", "Angular"),',
+        'List.of("Spring Boot", "Spring Data JPA", "Spring Security", "Angular", "JUnit"),',
         'List.of("Oracle", "PostgreSQL", "MySQL")',
       ]),
     );
@@ -67,10 +67,10 @@ describe('Skills', () => {
     );
   });
 
-  it('mostra as 20 tecnologias das duas primeiras partes, em ordem', async () => {
+  it('mostra as 22 tecnologias das duas primeiras partes, em ordem', async () => {
     const raiz = await renderizar();
 
-    expect(literais(raiz).slice(0, 20)).toEqual(
+    expect(literais(raiz).slice(0, 22)).toEqual(
       [
         'Java',
         'TypeScript',
@@ -79,7 +79,9 @@ describe('Skills', () => {
         'SQL',
         'Spring Boot',
         'Spring Data JPA',
+        'Spring Security',
         'Angular',
+        'JUnit',
         'Oracle',
         'PostgreSQL',
         'MySQL',
@@ -143,10 +145,12 @@ describe('Skills', () => {
     const texto = linhas(await renderizar()).join(' ');
 
     expect(texto).toContain(
-      'NivelDeConhecimento.DominioDiario, List.of("Java", "Spring Boot", "Angular", "PostgreSQL", "Oracle", "TypeScript", "Git")),',
+      'NivelDeConhecimento.DominioDiario, List.of("Java", "Spring Boot", "Spring Security", "Angular", "PostgreSQL", "Oracle", "TypeScript", "Git")),',
     );
     expect(texto).toContain('NivelDeConhecimento.ProjetoCompleto, List.of("PHP")),');
-    expect(texto).toContain('NivelDeConhecimento.UsoPontual, List.of("React Native", "CI/CD")),');
+    expect(texto).toContain(
+      'NivelDeConhecimento.UsoPontual, List.of("React Native", "CI/CD", "JUnit")),',
+    );
     expect(texto).toContain(
       'NivelDeConhecimento.ConhecimentoTeorico, List.of("Python", "AWS", "Azure", "Docker", "Kubernetes")));',
     );

@@ -51,9 +51,9 @@ test.describe('Sobre Mim (/sobre-mim)', () => {
 
     const texto = normalizar(await page.locator('main .javadoc').textContent());
 
-    expect(
-      texto.startsWith('Sou desenvolvedor Full Stack com cerca de 2 anos de experiência'),
-    ).toBe(true);
+    expect(texto.startsWith('Sou desenvolvedor Full Stack com foco em Java 21 e Spring Boot')).toBe(
+      true,
+    );
     expect(texto.endsWith('Sistemas Distribuídos e Arquitetura de Software.')).toBe(true);
   });
 
@@ -64,11 +64,11 @@ test.describe('Sobre Mim (/sobre-mim)', () => {
     const bloco = page.locator('main .javadoc');
 
     for (const trecho of [
-      'Java, Spring Boot, Angular e SQL em sistemas críticos de produção',
+      'Java 21 e Spring Boot no back-end e Angular no front-end',
       'Memora Processos Inovadores',
+      'APIs REST em microsserviços com Spring Data JPA e Spring Security',
       'Scrum, com dailies, previsões de conclusão e reviews',
-      'Watts Company, agência de automação e IA',
-      'sistemas de CRM e agentes de IA para atendimento',
+      'agentes de IA e sistemas de CRM na Watts Company',
       'Ciência da Computação no UniCEUB',
     ]) {
       await expect(bloco).toContainText(trecho);

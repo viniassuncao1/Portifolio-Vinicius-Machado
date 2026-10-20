@@ -27,6 +27,7 @@ describe('linha do tempo da abertura', () => {
       'projetos/Projeto3',
       'projetos/Projeto4',
       'projetos/Projeto5',
+      'projetos/Projeto6',
       'formacao/Certificacoes',
       'formacao/Eventos',
       'formacao/Formacao',
@@ -86,9 +87,9 @@ describe('linha do tempo da abertura', () => {
     expect(INICIO_DA_REVELACAO_MS).toBe(3440 + EXTRA_MS);
   });
 
-  it('do clique ao portfólio leva cerca de 4,2 s, abaixo do teto de 5 s', () => {
+  it('do clique ao portfólio leva cerca de 4,3 s, abaixo do teto de 5 s', () => {
     expect(CLIQUE_ATE_O_PORTFOLIO_MS).toBe(3440 + EXTRA_MS + LINHA_DO_TEMPO.fimDaRevelacao);
-    expect(CLIQUE_ATE_O_PORTFOLIO_MS).toBeCloseTo(4200, -2);
+    expect(CLIQUE_ATE_O_PORTFOLIO_MS).toBeCloseTo(4300, -2);
     expect(CLIQUE_ATE_O_PORTFOLIO_MS).toBeLessThanOrEqual(LINHA_DO_TEMPO.tetoDaExecucao);
   });
 

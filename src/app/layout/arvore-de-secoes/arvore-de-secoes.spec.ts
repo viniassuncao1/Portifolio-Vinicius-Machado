@@ -85,10 +85,10 @@ describe('ArvoreDeSecoes', () => {
     const abertas = Array.from(raiz.querySelectorAll('[data-tipo=pasta][aria-expanded=true]'));
 
     expect(abertas.map((p) => p.getAttribute('data-pacote'))).toEqual(['projetos']);
-    expect(raiz.querySelectorAll('.grupo:not([hidden]) a')).toHaveLength(5);
+    expect(raiz.querySelectorAll('.grupo:not([hidden]) a')).toHaveLength(6);
   });
 
-  it('clicar numa pasta recolhida expande e mostra Projeto1.java a Projeto5.java', async () => {
+  it('clicar numa pasta recolhida expande e mostra Projeto1.java a Projeto6.java', async () => {
     const { fixture, raiz } = await abrir('/');
 
     await clicar(fixture, pasta(raiz, 'projetos'));
@@ -104,6 +104,7 @@ describe('ArvoreDeSecoes', () => {
       'Projeto3.java',
       'Projeto4.java',
       'Projeto5.java',
+      'Projeto6.java',
     ]);
   });
 
@@ -114,7 +115,7 @@ describe('ArvoreDeSecoes', () => {
 
     expect(pasta(raiz, 'projetos').getAttribute('aria-expanded')).toBe('false');
     expect(raiz.querySelector('#grupo-projetos')?.hasAttribute('hidden')).toBe(true);
-    expect(raiz.querySelectorAll('#grupo-projetos a')).toHaveLength(5);
+    expect(raiz.querySelectorAll('#grupo-projetos a')).toHaveLength(6);
   });
 
   it('renderiza sempre os 16 links, com os grupos recolhidos escondidos por hidden', async () => {

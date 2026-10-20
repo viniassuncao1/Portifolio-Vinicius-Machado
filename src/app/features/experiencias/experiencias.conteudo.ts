@@ -69,12 +69,14 @@ const MEMORA: Experiencia = {
   cargo: 'Desenvolvedor Full Stack Júnior',
   periodo: '08/2026 - Presente',
   destaques: [
-    'Liderança de squad',
-    'Scrum: dailies, previsões de conclusão e reviews',
-    'Desenvolvimento das demandas do squad',
+    'APIs REST em Java 21 e Spring Boot, com Spring Data JPA e Spring Security',
+    'Microsserviços de login, gateway, financeiro e RH',
+    'Componentes em Angular 17 integrados às APIs por services',
+    'Entregas pelo GitLab CI/CD, com Docker e Kubernetes',
+    'Liderança de squad no Scrum: dúvidas, planejamento e merge requests',
   ],
   descricao:
-    'Lidero um squad, orientando o time nas demandas, tirando dúvidas técnicas e garantindo que sigamos Scrum, com dailies, previsões de conclusão e reviews, além de atuar como desenvolvedor nas próprias demandas do squad.',
+    'Desenvolvo APIs REST em Java 21 e Spring Boot, com repositórios Spring Data JPA e Spring Security, numa arquitetura de microsserviços (login, gateway, financeiro, RH, entre outros). No front-end, crio componentes em Angular 17 e integro às APIs que desenvolvo por meio de services. As entregas passam pelo pipeline do GitLab CI/CD, com Docker e Kubernetes em servidores locais. Também lidero um squad no Scrum: oriento trainees e estagiários nas dúvidas técnicas, no planejamento das demandas e na revisão de merge requests, além de desenvolver as minhas próprias demandas.',
 };
 
 const MEMORA_ESTAGIO: Experiencia = {
@@ -83,13 +85,14 @@ const MEMORA_ESTAGIO: Experiencia = {
   cargo: 'Estagiário de Desenvolvimento',
   periodo: '08/2025 - 07/2026',
   destaques: [
-    'Migração de APIs de Oracle para PostgreSQL',
+    'Migração de APIs e microsserviços de Oracle para PostgreSQL',
+    'Entidades JPA, DTOs e SQL nativo adaptados na migração',
     'Scrapers em Java + Playwright',
-    'AyoForms em PHP + MySQL',
+    'AyoForms em PHP 8, JavaScript e MySQL',
     'Correção de bug crítico no faturamento (Sankhya)',
   ],
   descricao:
-    'Corrigi bug crítico na integração de faturamento com o Sankhya que afetaria o pagamento de colaboradores. Migrei APIs de Oracle para PostgreSQL em produção. Desenvolvi scrapers em Java com Playwright para automatizar coleta de dados em sistemas de licitação como Coren e Sanesul. Criei o AyoForms, sistema de formulários em PHP e MySQL para campanha interna do grupo, com login via Google Workspace e Microsoft Azure.',
+    'Corrigi bug crítico na integração de faturamento com o Sankhya que afetaria o pagamento de colaboradores. Migrei APIs e microsserviços de Oracle para PostgreSQL em produção, adaptando entidades JPA, DTOs e SQL nativo. Desenvolvi scrapers em Java com Playwright para automatizar coleta de dados em sistemas de licitação como Coren e Sanesul. Criei o AyoForms, sistema de formulários em PHP 8 puro, JavaScript e MySQL para campanha interna do grupo, com login via Google Workspace e Microsoft Azure.',
 };
 
 const WATTS_COMPANY: Experiencia = {

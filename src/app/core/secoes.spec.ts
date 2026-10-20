@@ -2,7 +2,7 @@ import { NOMES_DE_ICONE } from '../shared/icone/icone';
 import { SECOES } from './secoes';
 
 describe('SECOES', () => {
-  it('lista as 16 seções na ordem do design', () => {
+  it('lista as 17 seções na ordem do design', () => {
     expect(SECOES.map((secao) => secao.titulo)).toEqual([
       'Sobre Mim',
       'Diferenciais',
@@ -14,6 +14,7 @@ describe('SECOES', () => {
       'Projeto 3',
       'Projeto 4',
       'Projeto 5',
+      'Projeto 6',
       'Certificações',
       'Eventos',
       'Formação',
@@ -37,6 +38,7 @@ describe('SECOES', () => {
       'projeto-3',
       'projeto-4',
       'projeto-5',
+      'projeto-6',
       'certificacoes',
       'eventos',
       'formacao',
@@ -81,6 +83,7 @@ describe('SECOES', () => {
       'projeto-3': 'projetos',
       'projeto-4': 'projetos',
       'projeto-5': 'projetos',
+      'projeto-6': 'projetos',
       certificacoes: 'formacao',
       eventos: 'formacao',
       formacao: 'formacao',

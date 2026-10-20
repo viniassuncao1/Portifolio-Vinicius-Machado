@@ -20,7 +20,7 @@ export interface PreviewDeProjeto {
  * As capturas são geradas por `scripts/capturar-previews.mjs`.
  */
 export const PREVIEWS: Readonly<Record<string, PreviewDeProjeto>> = {
-  'projeto-2': {
+  'projeto-5': {
     titulo: 'Dra. Juliana Maluhy',
     url: 'https://www.drajulianamaluhy.com/',
     captura: {
@@ -30,7 +30,7 @@ export const PREVIEWS: Readonly<Record<string, PreviewDeProjeto>> = {
       alt: 'Landing page da fisioterapeuta Dra. Juliana Maluhy, com fundo claro, as especialidades, os convênios, os depoimentos e o botão para o WhatsApp.',
     },
   },
-  'projeto-3': {
+  'projeto-6': {
     titulo: 'Watts Company',
     url: 'https://wattscompany.com.br/',
     captura: {
@@ -51,8 +51,12 @@ export interface LinkExternoDeProjeto {
 
 /** Projetos cujo `▶ Executar` leva a um endereço externo, por slug da seção. */
 export const LINKS_EXTERNOS_DE_PROJETO: Readonly<Record<string, LinkExternoDeProjeto>> = {
-  'projeto-5': {
+  'projeto-2': {
     rotulo: 'Ver no GitHub',
     url: 'https://github.com/viniassuncao1/Portifolio-Vinicius-Machado',
+  },
+  'projeto-3': {
+    rotulo: 'Ver no GitHub',
+    url: 'https://github.com/viniassuncao1/cleanyourtv',
   },
 };

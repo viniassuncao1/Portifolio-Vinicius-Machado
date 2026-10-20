@@ -25,7 +25,7 @@ export const SECOES: readonly Secao[] = [
     arquivo: 'SobreMim.java',
     pacote: 'sobre',
     descricao:
-      'Vinicius Machado, desenvolvedor Full Stack com cerca de 2 anos de experiência em Java, Spring Boot, Angular e SQL, líder de squad na Memora.',
+      'Vinicius Machado, desenvolvedor Full Stack com cerca de 2 anos em Java 21, Spring Boot e Angular, com APIs em microsserviços e liderança de squad.',
   },
   {
     slug: 'diferenciais',
@@ -70,7 +70,7 @@ export const SECOES: readonly Secao[] = [
     arquivo: 'Projeto1.java',
     pacote: 'projetos',
     descricao:
-      'Ana, agente de IA em n8n que atende pacientes de uma fisioterapeuta pelo WhatsApp, e o painel CRM em React feito com Claude Code e SDD.',
+      'Cases da Memora: migração de Oracle para PostgreSQL, scrapers em Java com Playwright (Coren e Sanesul) e o AyoForms em PHP e MySQL.',
   },
   {
     slug: 'projeto-2',
@@ -79,7 +79,7 @@ export const SECOES: readonly Secao[] = [
     arquivo: 'Projeto2.java',
     pacote: 'projetos',
     descricao:
-      'Landing page em HTML e JavaScript da Dra. Juliana Maluhy, com design autoral e foco em conversão, levando o visitante ao WhatsApp.',
+      'Este portfólio: um estudo de desenvolvimento com IA, com SDD no OpenSpec, as skills do ECC e uma equipe de agentes no Maestri.',
   },
   {
     slug: 'projeto-3',
@@ -88,7 +88,7 @@ export const SECOES: readonly Secao[] = [
     arquivo: 'Projeto3.java',
     pacote: 'projetos',
     descricao:
-      'Landing page em React da Watts Company, agência de automação e IA, com foco em conversão de leads e diagnóstico gratuito.',
+      'Launcher de TV em Java: fork do CleanYourTV levado do Android 8 para o Android 4.4, com 42 testes passando, numa TV Philco.',
   },
   {
     slug: 'projeto-4',
@@ -97,7 +97,7 @@ export const SECOES: readonly Secao[] = [
     arquivo: 'Projeto4.java',
     pacote: 'projetos',
     descricao:
-      'Cases da Memora: migração de Oracle para PostgreSQL, scrapers em Java com Playwright (Coren e Sanesul) e o AyoForms em PHP e MySQL.',
+      'Ana, agente de IA em n8n que atende pacientes de uma fisioterapeuta pelo WhatsApp, e o painel CRM em React feito com Claude Code e SDD.',
   },
   {
     slug: 'projeto-5',
@@ -106,7 +106,16 @@ export const SECOES: readonly Secao[] = [
     arquivo: 'Projeto5.java',
     pacote: 'projetos',
     descricao:
-      'Este portfólio: um estudo de desenvolvimento com IA, com SDD no OpenSpec, as skills do ECC e uma equipe de agentes no Maestri.',
+      'Landing page em HTML e JavaScript da Dra. Juliana Maluhy, com design autoral e foco em conversão, levando o visitante ao WhatsApp.',
+  },
+  {
+    slug: 'projeto-6',
+    titulo: 'Projeto 6',
+    icone: 'design-arquivo',
+    arquivo: 'Projeto6.java',
+    pacote: 'projetos',
+    descricao:
+      'Landing page em React da Watts Company, agência de automação e IA, com foco em conversão de leads e diagnóstico gratuito.',
   },
   {
     slug: 'certificacoes',

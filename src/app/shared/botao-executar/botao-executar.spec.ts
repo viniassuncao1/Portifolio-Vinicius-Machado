@@ -15,7 +15,7 @@ describe('BotaoExecutar', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([
-          { path: 'projeto-2', component: Pagina },
+          { path: 'projeto-5', component: Pagina },
           { path: 'contato', component: Pagina },
         ]),
       ],
@@ -24,17 +24,17 @@ describe('BotaoExecutar', () => {
 
   it('aparece nos projetos com site e abre o preview ao ativar', async () => {
     const harness = await RouterTestingHarness.create();
-    await harness.navigateByUrl('/projeto-2');
+    await harness.navigateByUrl('/projeto-5');
     const botao = (harness.routeNativeElement as HTMLElement).querySelector('button')!;
 
-    expect(botao.getAttribute('aria-label')).toBe('Executar Projeto 2');
+    expect(botao.getAttribute('aria-label')).toBe('Executar Projeto 5');
     expect(botao.textContent?.trim()).toBe('');
     expect(botao.querySelector('app-icone img')?.getAttribute('src')).toContain(
       'icones/new-ui/executar.svg',
     );
     botao.click();
 
-    expect(TestBed.inject(JanelaDePreview).preview()).toBe(PREVIEWS['projeto-2']);
+    expect(TestBed.inject(JanelaDePreview).preview()).toBe(PREVIEWS['projeto-5']);
   });
 
   it('não aparece nas seções sem site', async () => {

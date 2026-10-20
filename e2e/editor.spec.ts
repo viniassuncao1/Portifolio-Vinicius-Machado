@@ -9,7 +9,7 @@ const LINHAS_MINIMAS = 15;
 
 test.describe('Editor de código', () => {
   test('reserva a altura de 15 linhas e mostra os números de 1 a 15', async ({ page }) => {
-    await page.goto('/projeto-1');
+    await page.goto('/projeto-4');
     const editor = page.locator('app-editor-de-codigo');
 
     const { altura, alturaDaLinha } = await editor.evaluate((el) => {
@@ -38,7 +38,7 @@ test.describe('Editor de código', () => {
   test('recorta a numeração pela altura: não mostra os 99 números num conteúdo curto', async ({
     page,
   }) => {
-    await page.goto('/projeto-1');
+    await page.goto('/projeto-4');
 
     const ultimo = page.locator('app-editor-de-codigo .numeros span').last();
 
@@ -46,7 +46,7 @@ test.describe('Editor de código', () => {
   });
 
   test('copiar o código não traz números de linha nem "*"', async ({ page }) => {
-    await page.goto('/projeto-1');
+    await page.goto('/projeto-4');
     await page.locator('app-editor-de-codigo code').evaluate((codigo) => {
       const intervalo = document.createRange();
       intervalo.selectNodeContents(codigo);
@@ -64,7 +64,7 @@ test.describe('Editor de código', () => {
   });
 
   test('selecionar a página inteira também deixa os números de fora', async ({ page }) => {
-    await page.goto('/projeto-1');
+    await page.goto('/projeto-4');
     await page.getByRole('main').click();
 
     await page.keyboard.press('ControlOrMeta+A');

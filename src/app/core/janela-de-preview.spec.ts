@@ -14,7 +14,7 @@ describe('JanelaDePreview (serviço)', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([
-          { path: 'projeto-2', component: Pagina },
+          { path: 'projeto-5', component: Pagina },
           { path: 'sobre-mim', component: Pagina },
         ]),
       ],
@@ -23,9 +23,9 @@ describe('JanelaDePreview (serviço)', () => {
 
   it('acha o preview da rota nos projetos com site', async () => {
     const harness = await RouterTestingHarness.create();
-    await harness.navigateByUrl('/projeto-2');
+    await harness.navigateByUrl('/projeto-5');
 
-    expect(TestBed.inject(JanelaDePreview).previewDaRota()).toBe(PREVIEWS['projeto-2']);
+    expect(TestBed.inject(JanelaDePreview).previewDaRota()).toBe(PREVIEWS['projeto-5']);
   });
 
   it('não acha preview em seções sem site', async () => {
@@ -40,8 +40,8 @@ describe('JanelaDePreview (serviço)', () => {
     const origem = document.createElement('button');
     document.body.append(origem);
 
-    janela.abrir(PREVIEWS['projeto-2'], origem);
-    expect(janela.preview()).toBe(PREVIEWS['projeto-2']);
+    janela.abrir(PREVIEWS['projeto-5'], origem);
+    expect(janela.preview()).toBe(PREVIEWS['projeto-5']);
 
     janela.fechar();
     expect(janela.preview()).toBeNull();

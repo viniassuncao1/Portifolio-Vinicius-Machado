@@ -11,8 +11,8 @@ const CELULAR = { width: 390, height: 844 };
 const codigo = (page: Page) => page.locator('main code');
 const javadocs = (page: Page) => page.locator('main .javadoc');
 
-test.describe('Projeto 5: este portfólio como estudo com IA (/projeto-5)', () => {
-  test('está na árvore, na pasta projetos, depois do Projeto 4, e abre como Projeto5.java', async ({
+test.describe('Projeto 2: este portfólio como estudo com IA (/projeto-2)', () => {
+  test('está na árvore, na pasta projetos, depois do Projeto 1, e abre como Projeto2.java', async ({
     page,
   }) => {
     await abrirHidratada(page, '/');
@@ -27,23 +27,24 @@ test.describe('Projeto 5: este portfólio como estudo com IA (/projeto-5)', () =
       'Projeto3.java',
       'Projeto4.java',
       'Projeto5.java',
+      'Projeto6.java',
     ]);
-    await arquivoDaArvore(page, 'Projeto 5').click();
+    await arquivoDaArvore(page, 'Projeto 2').click();
 
-    await expect(page).toHaveURL(/\/projeto-5$/);
-    await expect(page).toHaveTitle('Projeto 5 | Vinicius Machado');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 5');
-    await expect(page.getByRole('tab', { name: 'Projeto5.java' })).toHaveAttribute(
+    await expect(page).toHaveURL(/\/projeto-2$/);
+    await expect(page).toHaveTitle('Projeto 2 | Vinicius Machado');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Projeto 2');
+    await expect(page.getByRole('tab', { name: 'Projeto2.java' })).toHaveAttribute(
       'aria-selected',
       'true',
     );
-    await expect(arquivoDaArvore(page, 'Projeto 5')).toHaveAttribute('aria-current', 'page');
+    await expect(arquivoDaArvore(page, 'Projeto 2')).toHaveAttribute('aria-current', 'page');
   });
 
   test('é um arquivo só, rolando: o estudo, SDD com OpenSpec, ECC e Maestri, sem controle de páginas', async ({
     page,
   }) => {
-    await page.goto('/projeto-5');
+    await page.goto('/projeto-2');
 
     await expect(
       page
@@ -54,20 +55,10 @@ test.describe('Projeto 5: este portfólio como estudo com IA (/projeto-5)', () =
     await expect(page.getByRole('navigation', { name: 'Páginas da seção' })).toHaveCount(0);
     await expect(page.locator('main')).not.toContainText(/\b\d\/4\b/);
   });
-
-  test('os endereços antigos das quatro páginas levam a /projeto-5', async ({ page }) => {
-    for (const antigo of ['/projeto-5/2', '/projeto-5/3', '/projeto-5/4']) {
-      await page.goto(antigo);
-
-      await expect(page, antigo).toHaveURL(/\/projeto-5$/);
-      await expect(codigo(page), antigo).toContainText('Ferramenta maestri');
-    }
-  });
-
   test('o estudo apresenta o portfólio, a feita com IA e o código aberto no GitHub', async ({
     page,
   }) => {
-    await page.goto('/projeto-5');
+    await page.goto('/projeto-2');
 
     await expect(javadocs(page).first()).toContainText('estudo de desenvolvimento com IA');
     await expect(javadocs(page).first()).toContainText('Angular 22');
@@ -77,7 +68,7 @@ test.describe('Projeto 5: este portfólio como estudo com IA (/projeto-5)', () =
   test('o SDD com OpenSpec, o ECC de Affaan Mustafa e o Maestri de Evert Junior estão no texto', async ({
     page,
   }) => {
-    await page.goto('/projeto-5');
+    await page.goto('/projeto-2');
     const texto = (await javadocs(page).allTextContents()).join(' ');
 
     expect(texto).toContain('OpenSpec');
@@ -103,7 +94,7 @@ test.describe('Projeto 5: este portfólio como estudo com IA (/projeto-5)', () =
   test('os links externos (repositório, OpenSpec, ECC e Maestri) abrem em nova aba com rel seguro', async ({
     page,
   }) => {
-    await page.goto('/projeto-5');
+    await page.goto('/projeto-2');
     const externos = page.locator('main a[href^="https://"]');
 
     const hrefs = await externos.evaluateAll((els) => els.map((el) => el.getAttribute('href')));
@@ -122,7 +113,7 @@ test.describe('Projeto 5: este portfólio como estudo com IA (/projeto-5)', () =
   });
 
   test('a lista de skills do ECC e a equipe de agentes aparecem em List.of', async ({ page }) => {
-    await page.goto('/projeto-5');
+    await page.goto('/projeto-2');
     const linhas = (await linhasDoCodigo(page)).join(' ');
 
     for (const skill of ['accessibility', 'motion-foundations', 'li-human']) {
@@ -140,7 +131,7 @@ test.describe('Projeto 5: este portfólio como estudo com IA (/projeto-5)', () =
     await context.route('https://github.com/**', (rota) =>
       rota.fulfill({ contentType: 'text/html', body: '<title>GitHub</title>' }),
     );
-    await page.goto('/projeto-5');
+    await page.goto('/projeto-2');
     const visao = page.getByRole('link', { name: /Executar · Ver no GitHub/ });
 
     await expect(visao).toBeVisible();
@@ -158,12 +149,12 @@ test.describe('Projeto 5: este portfólio como estudo com IA (/projeto-5)', () =
 
     await expect(nova).toHaveURL(REPOSITORIO);
     expect(await nova.evaluate(() => window.opener)).toBeNull();
-    await expect(page).toHaveURL(/\/projeto-5$/);
+    await expect(page).toHaveURL(/\/projeto-2$/);
     await expect(page.getByRole('dialog')).toHaveCount(0);
   });
 
   test('não abre a janela de preview: não é um projeto com site', async ({ page }) => {
-    await abrirHidratada(page, '/projeto-5');
+    await abrirHidratada(page, '/projeto-2');
 
     await expect(
       page.getByRole('button', { name: /Executar Projeto \d|Ver o site ao vivo/ }),
@@ -172,7 +163,7 @@ test.describe('Projeto 5: este portfólio como estudo com IA (/projeto-5)', () =
   });
 
   test('"// Ver o repositório →" leva à página do repositório', async ({ page }) => {
-    await abrirHidratada(page, '/projeto-5');
+    await abrirHidratada(page, '/projeto-2');
 
     await page.getByRole('link', { name: '// Ver o repositório →' }).click();
 
@@ -182,7 +173,7 @@ test.describe('Projeto 5: este portfólio como estudo com IA (/projeto-5)', () =
   test('sem JavaScript o HTML traz o texto, a lista de agentes e os links', async ({ browser }) => {
     const contexto = await browser.newContext({ javaScriptEnabled: false });
     const pagina = await contexto.newPage();
-    await pagina.goto('/projeto-5');
+    await pagina.goto('/projeto-2');
 
     await expect(pagina.locator('main code')).toContainText('Ferramenta maestri');
     await expect(pagina.locator('main .javadoc').nth(3)).toContainText('Evert Junior');
@@ -196,13 +187,13 @@ for (const [nomeDaTela, viewport] of [
   ['desktop', DESKTOP],
   ['celular', CELULAR],
 ] as const) {
-  test.describe(`Projeto 5 no ${nomeDaTela}`, () => {
+  test.describe(`Projeto 2 no ${nomeDaTela}`, () => {
     test.use({ viewport });
 
     for (const tema of ['dark', 'light'] as const) {
       test(`passa no axe sem exclusões (${tema})`, async ({ page }) => {
         await page.emulateMedia({ colorScheme: tema, reducedMotion: 'reduce' });
-        await abrirHidratada(page, '/projeto-5');
+        await abrirHidratada(page, '/projeto-2');
 
         const { violations } = await new AxeBuilder({ page })
           .withTags(['wcag2a', 'wcag2aa', 'wcag22aa'])
@@ -215,7 +206,7 @@ for (const [nomeDaTela, viewport] of [
     }
 
     test('o texto cabe na largura, sem rolagem horizontal nem linha cortada', async ({ page }) => {
-      await abrirHidratada(page, '/projeto-5');
+      await abrirHidratada(page, '/projeto-2');
 
       const cortadas = await page
         .locator('main code > .linha')
