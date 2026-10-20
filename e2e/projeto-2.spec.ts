@@ -55,7 +55,6 @@ test.describe('Projeto 2: este portfólio como estudo com IA (/projeto-2)', () =
     await expect(page.getByRole('navigation', { name: 'Páginas da seção' })).toHaveCount(0);
     await expect(page.locator('main')).not.toContainText(/\b\d\/4\b/);
   });
-
   test('o estudo apresenta o portfólio, a feita com IA e o código aberto no GitHub', async ({
     page,
   }) => {

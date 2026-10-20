@@ -8,31 +8,74 @@ import {
   link,
   literal,
   palavraChave,
+  valor,
   vazia,
 } from '../../shared/editor-de-codigo/conteudo';
 import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
 
-/** Conteúdo da tela 14 (design/telas/tela-14.png): a landing page da Watts Company, no estilo de leitura (ADR-0011). */
+export const ENDERECO_DO_FORK = 'https://github.com/viniassuncao1/cleanyourtv';
+const ENDERECO_DO_ORIGINAL = 'https://github.com/Gathin23/cleanyourtv';
+
+/** O launcher de TV para Android 4.4, no estilo de leitura (ADR-0011). Não existe no design. */
 export const CONTEUDO_PROJETO_3: ConteudoDoEditor = [
   vazia(),
   linha(0, palavraChave('package'), comum(' dev.vinicius.portfolio.projetos;')),
   vazia(),
+  linha(0, palavraChave('import'), comum(' java.util.List;')),
+  vazia(),
   javadoc(
     0,
-    'Landing page da própria Watts Company, desenvolvida em React, com foco em conversão de leads e venda direta dos serviços de automação e IA da agência. Traz uma proposta de valor direta ("Automatize. Escale. Domine."), destacando infraestrutura de IA e bots para WhatsApp, com CTA de diagnóstico gratuito guiando o visitante para o funil comercial.',
+    'Fork do CleanYourTV, do Gathin: um launcher Android em Java que troca a tela inicial cheia de anúncios por uma tela limpa. O original só roda a partir do Android 8. Levei para o Android 4.4, isolando o que depende de versões novas em classes chamadas só depois de checar a versão do sistema. Resolvi cerca de 70 avisos de compatibilidade, com os 42 testes do projeto passando. Testei numa TV Philco com 456 MB de RAM, com backup antes de tudo e um comando para desfazer cada mudança: dez apps desativados, nenhum desinstalado.',
   ),
-  linhaExecutavel(0, palavraChave('public class'), comum(' WattsCompany {')),
+  linhaExecutavel(0, palavraChave('public class'), comum(' LauncherDeTv {')),
   vazia(),
   linha(1, comentario('// Ficha do projeto')),
-  linha(1, declaracao('String'), comum(' tecnologia = '), literal('"React"'), comum(';')),
-  linha(1, declaracao('String'), comum(' tipo = '), literal('"Landing Page"'), comum(';')),
-  vazia(),
-  linha(1, comentario('// Site no ar')),
+  linha(1, declaracao('String'), comum(' linguagem = '), literal('"Java"'), comum(';')),
   linha(
     1,
     declaracao('String'),
-    comum(' site = '),
-    link(literal('"https://wattscompany.com.br/"'), 'https://wattscompany.com.br/'),
+    comum(' plataforma = '),
+    literal('"Android 4.4 (API 19)"'),
+    comum(';'),
+  ),
+  linha(
+    1,
+    declaracao('List<String>'),
+    comum(' ferramentas = List.of('),
+    literal('"Android SDK"'),
+    comum(', '),
+    literal('"ADB"'),
+    comum(', '),
+    literal('"Claude Code"'),
+    comum(');'),
+  ),
+  vazia(),
+  linha(1, comentario('// Do Android 8 para o Android 4.4, sem quebrar os testes')),
+  linha(1, palavraChave('int'), comum(' minSdkOriginal = '), valor('26'), comum(';')),
+  linha(1, palavraChave('int'), comum(' minSdkNovo = '), valor('19'), comum(';')),
+  linha(
+    1,
+    palavraChave('int'),
+    comum(' avisosResolvidos = '),
+    valor('70'),
+    comum(';'),
+    comentario(' // cerca de'),
+  ),
+  linha(1, palavraChave('int'), comum(' testesPassando = '), valor('42'), comum(';')),
+  vazia(),
+  linha(1, comentario('// Projeto original, de Gathin, e o meu fork com o guia do Android 4.4')),
+  linha(
+    1,
+    declaracao('String'),
+    comum(' original = '),
+    link(literal(`"${ENDERECO_DO_ORIGINAL}"`), ENDERECO_DO_ORIGINAL),
+    comum(';'),
+  ),
+  linha(
+    1,
+    declaracao('String'),
+    comum(' repositorio = '),
+    link(literal(`"${ENDERECO_DO_FORK}"`), ENDERECO_DO_FORK),
     comum(';'),
   ),
   vazia(),

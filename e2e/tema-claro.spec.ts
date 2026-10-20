@@ -681,8 +681,8 @@ for (const [nome, viewport] of [
           body: '<!doctype html><html lang="pt-BR"><head><title>Site simulado</title></head><body><main><h1>Site simulado</h1></main></body></html>',
         }),
       );
-      await abrirNoClaro(page, '/projeto-2');
-      await page.getByRole('button', { name: 'Executar Projeto 2' }).click();
+      await abrirNoClaro(page, '/projeto-5');
+      await page.getByRole('button', { name: 'Executar Projeto 5' }).click();
       await expect(page.getByRole('dialog')).toBeVisible();
 
       expect(await dataTema(page)).toBe('claro');

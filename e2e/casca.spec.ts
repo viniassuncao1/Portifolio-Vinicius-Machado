@@ -19,6 +19,7 @@ const SECOES = [
   { slug: 'projeto-3', titulo: 'Projeto 3' },
   { slug: 'projeto-4', titulo: 'Projeto 4' },
   { slug: 'projeto-5', titulo: 'Projeto 5' },
+  { slug: 'projeto-6', titulo: 'Projeto 6' },
   { slug: 'certificacoes', titulo: 'Certificações' },
   { slug: 'eventos', titulo: 'Eventos' },
   { slug: 'formacao', titulo: 'Formação' },
@@ -28,7 +29,7 @@ const SECOES = [
 ];
 
 test.describe('Estrutura da IDE', () => {
-  test('lista as 16 seções na árvore, na ordem do design', async ({ page }) => {
+  test('lista as 17 seções na árvore, na ordem do design', async ({ page }) => {
     await page.goto('/');
 
     await abrirPastas(page);
@@ -212,12 +213,12 @@ test.describe('Seção de projeto', () => {
   test('mostra o código do projeto no editor, sem o aviso de em construção', async ({ page }) => {
     await page.goto('/projeto-3');
 
-    await expect(page.getByRole('main').locator('code')).toContainText('WattsCompany');
+    await expect(page.getByRole('main').locator('code')).toContainText('LauncherDeTv');
     await expect(page.getByRole('main')).not.toContainText('em construção');
   });
 });
 
-test.describe('Pré-renderização das 16 rotas', () => {
+test.describe('Pré-renderização das 17 rotas', () => {
   test.use({ javaScriptEnabled: false });
 
   for (const { slug, titulo } of SECOES) {

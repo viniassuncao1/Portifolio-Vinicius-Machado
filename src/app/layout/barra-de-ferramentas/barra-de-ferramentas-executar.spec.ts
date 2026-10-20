@@ -16,7 +16,7 @@ describe('BarraDeFerramentas: play', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([
-          { path: 'projeto-3', component: Pagina },
+          { path: 'projeto-6', component: Pagina },
           { path: 'contato', component: Pagina },
         ]),
       ],
@@ -25,7 +25,7 @@ describe('BarraDeFerramentas: play', () => {
 
   it('vira o botão "Executar o projeto" nas rotas com preview', async () => {
     const harness = await RouterTestingHarness.create();
-    await harness.navigateByUrl('/projeto-3');
+    await harness.navigateByUrl('/projeto-6');
     const barra = (harness.routeNativeElement as HTMLElement).querySelector(
       'app-barra-de-ferramentas',
     )!;
@@ -35,7 +35,7 @@ describe('BarraDeFerramentas: play', () => {
     expect(botao.hasAttribute('aria-hidden')).toBe(false);
 
     botao.click();
-    expect(TestBed.inject(JanelaDePreview).preview()).toBe(PREVIEWS['projeto-3']);
+    expect(TestBed.inject(JanelaDePreview).preview()).toBe(PREVIEWS['projeto-6']);
   });
 
   it('fora dos projetos com site, vira o botão que abre a janela de Run', async () => {

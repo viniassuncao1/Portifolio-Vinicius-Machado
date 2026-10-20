@@ -181,11 +181,11 @@ test.describe('Anel de foco rosa de 2px', () => {
   test('os botões focados mostram o anel rosa de 2px, inclusive na barra de ferramentas', async ({
     page,
   }) => {
-    await abrirHidratada(page, '/projeto-2');
+    await abrirHidratada(page, '/projeto-5');
     const esperado = [
       { nome: 'Executar o projeto', naBarra: true },
       { nome: 'Buscar seção (Ctrl+P)', naBarra: true },
-      { nome: 'Executar Projeto 2', naBarra: false },
+      { nome: 'Executar Projeto 5', naBarra: false },
       { nome: 'Projeto', naBarra: false },
     ];
 
@@ -211,7 +211,7 @@ test.describe('Anel de foco rosa de 2px', () => {
   test('todo controle alcançado por Tab tem o anel de 2px, rosa, inclusive na barra de ferramentas', async ({
     page,
   }) => {
-    await abrirHidratada(page, '/projeto-2');
+    await abrirHidratada(page, '/projeto-5');
     const vistos = new Set<string>();
 
     for (let i = 0; i < 14; i++) {
@@ -232,8 +232,8 @@ test.describe('Anel de foco rosa de 2px', () => {
   test('o rosa é o único acento: nenhum elemento usa o azul do IntelliJ (#3574F0)', async ({
     page,
   }) => {
-    await abrirHidratada(page, '/projeto-2');
-    await page.getByRole('button', { name: 'Executar Projeto 2' }).focus();
+    await abrirHidratada(page, '/projeto-5');
+    await page.getByRole('button', { name: 'Executar Projeto 5' }).focus();
 
     const comAzul = await page.evaluate((azul) => {
       const propriedades = [
@@ -362,7 +362,7 @@ test.describe('Ajustes nativos do navegador', () => {
 });
 
 test.describe('Cores de sintaxe com contraste AA', () => {
-  const ROTAS = ['/', '/sobre-mim', '/diferenciais', '/projeto-1', '/eventos', '/skills'];
+  const ROTAS = ['/', '/sobre-mim', '/diferenciais', '/projeto-4', '/eventos', '/skills'];
 
   /** Cor de cada papel de sintaxe, lida das páginas que o usam. */
   async function coresPorPapel(page: Page): Promise<Record<string, Set<string>>> {

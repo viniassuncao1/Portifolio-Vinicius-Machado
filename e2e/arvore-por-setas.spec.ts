@@ -40,7 +40,7 @@ test.describe('Árvore em pastas navegável por teclado', () => {
     const grupo = arvoreDeSecoes(page).locator('#grupo-projetos');
     await expect(grupo).toBeVisible();
     await expect(grupo).toHaveCSS('opacity', '1');
-    await expect(grupo.locator('a')).toHaveCount(5);
+    await expect(grupo.locator('a')).toHaveCount(6);
     for (const arquivo of await grupo.locator('a').all()) {
       await expect(arquivo).toBeVisible();
       await expect(arquivo).toHaveCSS('opacity', '1');
@@ -63,7 +63,7 @@ test.describe('Árvore em pastas navegável por teclado', () => {
     await contexto.close();
   });
 
-  test('clicar na pasta projetos mostra Projeto1.java a Projeto5.java', async ({ page }) => {
+  test('clicar na pasta projetos mostra Projeto1.java a Projeto6.java', async ({ page }) => {
     await abrirHidratada(page, '/');
 
     await pasta(page, 'projetos').click();
@@ -75,6 +75,7 @@ test.describe('Árvore em pastas navegável por teclado', () => {
       'Projeto3.java',
       'Projeto4.java',
       'Projeto5.java',
+      'Projeto6.java',
     ]);
   });
 
@@ -166,7 +167,7 @@ test.describe('Árvore em pastas navegável por teclado', () => {
     await expect(focado).not.toHaveCSS('outline-width', '0px');
   });
 
-  test('percorre as 7 pastas e as 16 seções de cima a baixo', async ({ page }) => {
+  test('percorre as 7 pastas e as 17 seções de cima a baixo', async ({ page }) => {
     await abrirHidratada(page, '/');
     await abrirPastas(page);
     await pasta(page, 'sobre').focus();

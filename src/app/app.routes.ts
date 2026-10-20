@@ -24,6 +24,7 @@ const FEATURES_DAS_SECOES: Readonly<Record<string, CarregadorDeSecao>> = {
   'projeto-3': () => import('./features/projeto-3/projeto-3').then((m) => m.Projeto3),
   'projeto-4': () => import('./features/projeto-4/projeto-4').then((m) => m.Projeto4),
   'projeto-5': () => import('./features/projeto-5/projeto-5').then((m) => m.Projeto5),
+  'projeto-6': () => import('./features/projeto-6/projeto-6').then((m) => m.Projeto6),
   eventos: () => import('./features/eventos/eventos').then((m) => m.Eventos),
   formacao: () => import('./features/formacao/formacao').then((m) => m.Formacao),
   idiomas: () => import('./features/idiomas/idiomas').then((m) => m.Idiomas),

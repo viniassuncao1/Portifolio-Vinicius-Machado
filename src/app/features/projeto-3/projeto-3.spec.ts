@@ -10,26 +10,32 @@ describe('Projeto3', () => {
     return (fixture.nativeElement as HTMLElement).querySelector('code')?.textContent ?? '';
   }
 
-  it('mostra a landing page e o link real do site', async () => {
-    const fixture = TestBed.createComponent(Projeto3);
-    await fixture.whenStable();
-    const el = fixture.nativeElement as HTMLElement;
+  it('descreve o launcher em pt-BR, com o crédito ao CleanYourTV', async () => {
+    const texto = await codigo();
 
-    expect(el.querySelector('code')?.textContent).toContain('Landing Page');
-    expect(el.querySelector('a[href^="https://"]')).not.toBeNull();
-  });
-
-  it('descreve o projeto em pt-BR', async () => {
-    expect(await codigo()).toContain('Automatize. Escale. Domine.');
+    expect(texto).toContain('Fork do CleanYourTV, do Gathin');
+    expect(texto).toContain('Android 4.4');
+    expect(texto).toContain('42 testes');
   });
 
   it('usa nomes em português e o pacote dos projetos, sem static final', async () => {
     const texto = await codigo();
 
     expect(texto).toContain('package dev.vinicius.portfolio.projetos;');
-    expect(texto).toContain('String tecnologia = "React";');
-    expect(texto).toContain('String site = "https://wattscompany.com.br/";');
+    expect(texto).toContain('String linguagem = "Java";');
+    expect(texto).toContain('int minSdkNovo = 19;');
     expect(texto).not.toContain('static final');
+  });
+
+  it('liga o projeto original e o fork no GitHub', async () => {
+    const fixture = TestBed.createComponent(Projeto3);
+    await fixture.whenStable();
+    const links = [...(fixture.nativeElement as HTMLElement).querySelectorAll('a')].map((a) =>
+      a.getAttribute('href'),
+    );
+
+    expect(links).toContain('https://github.com/Gathin23/cleanyourtv');
+    expect(links).toContain('https://github.com/viniassuncao1/cleanyourtv');
   });
 
   it('marca a linha da classe como executável para o ▶ da calha', () => {
@@ -38,7 +44,7 @@ describe('Projeto3', () => {
     );
 
     expect(classe?.tipo === 'codigo' && classe.trechos.map((t) => t.texto).join('')).toContain(
-      'public class WattsCompany {',
+      'public class LauncherDeTv {',
     );
   });
 });

@@ -101,7 +101,7 @@ test.describe('Janela de Run: Executar, fechar e exclusividade', () => {
   });
 
   test('nos projetos com site o Executar da barra continua abrindo o preview', async ({ page }) => {
-    await page.goto('/projeto-2');
+    await page.goto('/projeto-5');
 
     await page.getByRole('button', { name: 'Executar o projeto' }).click();
 
@@ -198,8 +198,8 @@ test.describe('Janela de Run: Executar fora dos projetos com site', () => {
     await expect(page.getByRole('dialog')).toHaveCount(0);
   });
 
-  test('em Projeto 1 (sem site) o Executar abre o Run, não o preview', async ({ page }) => {
-    await page.goto('/projeto-1');
+  test('em Projeto 4 (sem site) o Executar abre o Run, não o preview', async ({ page }) => {
+    await page.goto('/projeto-4');
 
     await page.getByRole('button', { name: 'Executar PortfolioApplication' }).click();
 

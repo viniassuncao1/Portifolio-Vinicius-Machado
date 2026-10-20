@@ -9,8 +9,13 @@ const ORIGEM = 'https://vinimachado.wattscompany.com.br';
 const COM_ENDERECO_ANTIGO = [
   { slug: 'skills', titulo: 'Skills / STACK', antigos: [2, 3], ultimo: 'Conhecimento teórico' },
   { slug: 'experiencias', titulo: 'Experiências', antigos: [2, 3], ultimo: 'wattsCompany' },
-  { slug: 'projeto-4', titulo: 'Projeto 4', antigos: [2, 3], ultimo: 'AyoForms' },
-  { slug: 'projeto-5', titulo: 'Projeto 5', antigos: [2, 3, 4], ultimo: 'Ferramenta maestri' },
+  {
+    slug: 'projeto-4',
+    titulo: 'Projeto 4',
+    antigos: [2, 3],
+    ultimo: 'sem saber que falam com uma IA',
+  },
+  { slug: 'projeto-5', titulo: 'Projeto 5', antigos: [2, 3, 4], ultimo: 'drajulianamaluhy.com' },
   { slug: 'certificacoes', titulo: 'Certificações', antigos: [2, 3], ultimo: 'Git e GitHub' },
 ] as const;
 

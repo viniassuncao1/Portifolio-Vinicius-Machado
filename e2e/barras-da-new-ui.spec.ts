@@ -47,7 +47,7 @@ test.describe('Barra superior (desktop)', () => {
   test('mostra o indicador da branch master e não tem mais os widgets do projeto', async ({
     page,
   }) => {
-    for (const rota of ['/', '/skills', '/projeto-2']) {
+    for (const rota of ['/', '/skills', '/projeto-5']) {
       await page.goto(rota);
       const barra = page.locator('app-barra-de-ferramentas');
 
@@ -81,9 +81,9 @@ test.describe('Barra superior (desktop)', () => {
     await expect(page.getByRole('combobox', { name: 'Buscar arquivo ou seção' })).toBeFocused();
   });
 
-  test('Executar abre o preview no Projeto 2 e no Projeto 3', async ({ page }) => {
+  test('Executar abre o preview no Projeto 5 e no Projeto 6', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    for (const rota of ['/projeto-2', '/projeto-3']) {
+    for (const rota of ['/projeto-5', '/projeto-6']) {
       await abrirHidratada(page, rota);
 
       await page.getByRole('button', { name: 'Executar o projeto' }).click();
@@ -98,7 +98,7 @@ test.describe('Barra superior (desktop)', () => {
     page,
   }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    for (const rota of ['/', '/skills', '/projeto-1', '/projeto-4']) {
+    for (const rota of ['/', '/skills', '/projeto-4', '/projeto-1']) {
       await page.goto(rota);
       const executar = page.getByRole('button', { name: 'Executar PortfolioApplication' });
 
@@ -151,7 +151,7 @@ test.describe('Barra superior (desktop)', () => {
   });
 
   test('nenhum Tab da página inteira cai num controle decorativo', async ({ page }) => {
-    await abrirHidratada(page, '/projeto-2');
+    await abrirHidratada(page, '/projeto-5');
 
     const focados = await focosPorTab(page, 40);
     const decorativos = await page.evaluate(
@@ -159,7 +159,7 @@ test.describe('Barra superior (desktop)', () => {
       DECORATIVOS,
     );
 
-    // No Projeto 2 o Executar da barra é um botão real, então só os demais precisam existir.
+    // No Projeto 5 o Executar da barra é um botão real, então só os demais precisam existir.
     expect(
       decorativos
         .filter((_, i) => DECORATIVOS[i] !== 'app-barra-de-ferramentas span.executar')
@@ -179,7 +179,7 @@ test.describe('Ícones da barra de ferramentas do design', () => {
   test('a barra usa os ícones do design, e só a busca e a branch são da IntelliJ Platform', async ({
     page,
   }) => {
-    await page.goto('/projeto-2');
+    await page.goto('/projeto-5');
     const origens = (seletor: string) =>
       page.locator(seletor).evaluateAll((els) => els.map((el) => el.getAttribute('src') ?? ''));
 
@@ -361,7 +361,7 @@ test.describe('Celular (390x844)', () => {
   });
 
   test('o Tab não passa por controle decorativo', async ({ page }) => {
-    await abrirHidratada(page, '/projeto-2');
+    await abrirHidratada(page, '/projeto-5');
 
     const focados = await focosPorTab(page, 40);
 
@@ -437,7 +437,7 @@ for (const [nome, viewport] of [
 
     test('com a janela de preview aberta não tem violações', async ({ page }) => {
       await page.emulateMedia({ reducedMotion: 'reduce' });
-      await abrirHidratada(page, '/projeto-2');
+      await abrirHidratada(page, '/projeto-5');
       // No celular a barra compacta esconde o Executar; o do código abre a mesma janela.
       await page.getByRole('button', { name: 'Executar' }).first().click();
       await expect(page.getByRole('dialog')).toBeVisible();
