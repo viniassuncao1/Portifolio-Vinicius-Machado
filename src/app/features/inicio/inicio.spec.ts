@@ -68,7 +68,7 @@ describe('Inicio', () => {
   it('exibe o Javadoc do perfil antes do record', async () => {
     const raiz = await renderizar();
 
-    expect(raiz.querySelector('.javadoc')?.textContent).toContain('Full Stack Júnior');
+    expect(raiz.querySelector('.javadoc')?.textContent).toContain('Full Stack');
   });
 
   it('mostra os componentes do record e os argumentos do main na cor de declaração', async () => {
@@ -84,13 +84,7 @@ describe('Inicio', () => {
 
     const literais = Array.from(raiz.querySelectorAll('.papel-literal')).map((l) => l.textContent);
 
-    expect(literais).toEqual([
-      '"Full Stack Júnior"',
-      '"Java"',
-      '"Spring Boot"',
-      '"Angular"',
-      '"SQL"',
-    ]);
+    expect(literais).toEqual(['"Full Stack"', '"Java"', '"Spring Boot"', '"Angular"', '"SQL"']);
   });
 
   it('cria a stack com List.of, em lista imutável', async () => {

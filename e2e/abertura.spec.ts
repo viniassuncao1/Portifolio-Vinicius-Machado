@@ -149,7 +149,7 @@ test.describe('Abertura: splash', () => {
     await expect(dialogo(page)).toHaveAttribute('aria-modal', 'true');
     await expect(dialogo(page).locator('img[alt="Foto de Vinicius Machado"]')).toBeVisible();
     await expect(dialogo(page)).toContainText('Vinicius Machado');
-    await expect(dialogo(page)).toContainText('Desenvolvedor Full Stack Júnior');
+    await expect(dialogo(page)).toContainText('Desenvolvedor Full Stack');
     await expect(dialogo(page)).toContainText('Seja bem-vindo ao meu portfólio');
     await expect(dialogo(page).locator('.barra .preenchimento')).toBeAttached();
   });
