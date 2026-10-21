@@ -18,6 +18,7 @@ import { Abertura } from '../../core/abertura';
 import { JanelaDePreviewComponente } from '../../shared/janela-de-preview/janela-de-preview';
 import { BuscaDeSecoes } from '../busca-de-secoes/busca-de-secoes';
 import { BarraDeStatus } from '../barra-de-status/barra-de-status';
+import { CursorDoSite } from '../cursor-do-site/cursor-do-site';
 import { BarraDeCarregamento } from '../barra-de-carregamento/barra-de-carregamento';
 import { BarraDeFerramentas } from '../barra-de-ferramentas/barra-de-ferramentas';
 import { FaixaDeAbas } from '../faixa-de-abas/faixa-de-abas';
@@ -37,6 +38,7 @@ import { AberturaComponente } from '../abertura/abertura';
   imports: [
     RouterOutlet,
     BarraDeCarregamento,
+    CursorDoSite,
     BarraDeFerramentas,
     FaixaDeFerramentas,
     PainelLateral,
