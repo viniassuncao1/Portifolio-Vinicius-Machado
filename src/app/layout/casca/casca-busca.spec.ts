@@ -34,7 +34,7 @@ describe('Casca: busca de seções', () => {
     const raiz = await abrir();
     const botao = raiz.querySelector('.botao-busca') as HTMLButtonElement;
 
-    expect(botao.getAttribute('aria-label')).toBe('Buscar seção (Ctrl+P)');
+    expect(botao.getAttribute('aria-label')).toBe('Buscar seção (Ctrl+K)');
     botao.click();
 
     expect(aberta(raiz)).toBe(true);
@@ -47,6 +47,24 @@ describe('Casca: busca de seções', () => {
     const raiz = await abrir();
     const evento = new KeyboardEvent('keydown', {
       key: 'p',
+      bubbles: true,
+      cancelable: true,
+      ...modificador,
+    });
+
+    raiz.dispatchEvent(evento);
+
+    expect(evento.defaultPrevented).toBe(true);
+    expect(aberta(raiz)).toBe(true);
+  });
+
+  it.each([
+    ['ctrlKey', { ctrlKey: true }],
+    ['metaKey', { metaKey: true }],
+  ])('abre também com Ctrl/Cmd+K (%s)', async (_nome, modificador) => {
+    const raiz = await abrir();
+    const evento = new KeyboardEvent('keydown', {
+      key: 'k',
       bubbles: true,
       cancelable: true,
       ...modificador,

@@ -1,0 +1,21 @@
+<nav class="acoes-celular" aria-label="Ações">
+  <button
+    #botaoSecoes
+    type="button"
+    class="acao"
+    aria-controls="painel-lateral"
+    [attr.aria-expanded]="gavetaAberta()"
+    (click)="alternarGaveta.emit()"
+  >
+    <app-icone nome="design-pasta" />
+    <span class="rotulo">Seções</span>
+  </button>
+  <a class="acao" routerLink="/projetos" routerLinkActive="atual" ariaCurrentWhenActive="page">
+    <app-icone nome="design-projeto" />
+    <span class="rotulo">Projetos</span>
+  </a>
+  <a class="acao" routerLink="/contato" routerLinkActive="atual" ariaCurrentWhenActive="page">
+    <app-icone nome="design-arquivo" />
+    <span class="rotulo">Contato</span>
+  </a>
+</nav>
