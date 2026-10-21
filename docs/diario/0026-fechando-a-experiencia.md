@@ -30,6 +30,9 @@ equipe, e revisar no `localhost:4200`.
   diverge do que o navegador monta.
 - **Celular com barra de ações.** Seções, Projetos e Contato ficam embaixo, e a gaveta do painel
   abre pelo botão Seções.
+- **Movimento só em `transform` e `opacity`.** O painel entra com um deslize curto, os controles
+  afundam no `:active` (`scale(0.96)`) e o ponto "Disponível" respira. O foco fica sem animação, de
+  propósito, e o movimento reduzido remove tudo.
 - **Galeria de revisão.** `node scripts/capturar-revisao.mjs` captura todas as rotas em 320, 768,
   1024 e 1440 px, nos dois temas, e escreve `.maestri/capturas/revisao/index.html`.
 

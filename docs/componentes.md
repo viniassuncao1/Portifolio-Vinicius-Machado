@@ -761,6 +761,22 @@ de seções vem de `core/`.
   pré-renderizado já é o estado final: elas só animam elementos que ainda estão fora da janela,
   depois da hidratação, e não fazem nada com movimento reduzido.
 
+### Movimento da casca (`src/styles/_movimento.scss`)
+
+Só `transform` e `opacity`, com os tokens de duração, e nada com movimento reduzido:
+
+- **Painel do projeto:** no desktop a coluna do grid troca **sem transição** (o editor não
+  "estica"); só o painel entra com `opacity` e `translateX(-0.5rem)` em `--duracao-media`. No
+  celular o painel é a gaveta, animada pela casca por `data-aberta`.
+- **Pressionado:** `:active` com `scale(0.96)` na barra superior, na faixa de ferramentas, nas abas,
+  na branch e na barra de ações do celular. Os links do rodapé ficam com `opacity: 0.7`.
+- **Barra de status viva:** o ponto "Disponível" respira só em `opacity`, num ciclo de
+  `--duracao-pulso` (2400 ms, token novo).
+- **Foco sem animação, de propósito:** o anel de foco aparece na hora, para quem navega pelo teclado
+  nunca esperar para ver onde está.
+- **Movimento reduzido:** o bloco `prefers-reduced-motion: reduce` remove `transition` e `animation`
+  de tudo isso.
+
 ## Vitrine de projetos (ADR-0019)
 
 Rota `/projetos` (e `/projetos/:slug`), na árvore como `Vitrine.java`. Dados em
