@@ -1,4 +1,4 @@
-# 0025: Fechando a experiência
+# 0026: Fechando a experiência
 
 - **Data:** 2026-10-21
 - **Change:** [refatorar-experiencia-do-usuario](../../openspec/changes/refatorar-experiencia-do-usuario/) (grupo 9, fechamento)
@@ -6,7 +6,7 @@
 - **Testes:** a definir
 - **ADRs:** [0019](../adr/0019-experiencia-focada-em-recrutadores.md) e o ADR-0020 (deploy de produção manual, na branch `ci/deploy-manual-de-producao`)
 
-![Casca nova no desktop, tema escuro](imagens/0025/casca-1440-escuro.png)
+![Casca nova no desktop, tema escuro](imagens/0026/casca-1440-escuro.png)
 
 ## Problema
 
@@ -33,7 +33,7 @@ equipe, e revisar no `localhost:4200`.
 - **Galeria de revisão.** `node scripts/capturar-revisao.mjs` captura todas as rotas em 320, 768,
   1024 e 1440 px, nos dois temas, e escreve `.maestri/capturas/revisao/index.html`.
 
-![Casca nova no celular, tema escuro](imagens/0025/casca-390-escuro.png)
+![Casca nova no celular, tema escuro](imagens/0026/casca-390-escuro.png)
 
 ## Aprendizado
 

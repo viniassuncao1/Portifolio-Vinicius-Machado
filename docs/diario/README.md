@@ -42,7 +42,7 @@ e eu quero mostrar o processo, não só o resultado.
 | [0022](0022-copy-para-vagas-java.md)                | 2026-10-19 | Os textos e a ordem dos projetos passam a falar com vagas Java, e entra o launcher de TV em Java.                                |
 | [0023](0023-experiencia-focada-em-recrutadores.md)  | 2026-10-20 | A experiência passa a ser pensada para recrutadores: visão geral, cartões e o código a um clique (ADR-0019).                     |
 | [0024](0024-refinos-da-experiencia.md)              | 2026-10-21 | Inclinação 3D, parallax e cursor com ponteiro fino, acabamento da casca, cartões que faltavam e dois achados de qualidade.       |
-| [0025](0025-fechando-a-experiencia.md)              | 2026-10-21 | A casca ganha tokens v2, barra superior com o projeto, painel recolhível e barra de ações no celular; produção fica como estava. |
+| [0026](0026-fechando-a-experiencia.md)              | 2026-10-21 | A casca ganha tokens v2, barra superior com o projeto, painel recolhível e barra de ações no celular; produção fica como estava. |
 
 ## Modelo de entrada
 
