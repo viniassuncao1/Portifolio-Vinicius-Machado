@@ -1,0 +1,110 @@
+:host {
+  display: block;
+}
+
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.titulo {
+  max-width: 24ch;
+  margin: 0;
+  font-family: var(--fonte-display);
+  font-size: clamp(1.875rem, 4vw, 3rem);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+// Quatro cartões, três larguras: nada de colunas iguais.
+.bento article {
+  grid-column: span 2;
+
+  &[data-posicao='0'] {
+    grid-column: span 4;
+  }
+
+  &[data-posicao='1'] {
+    grid-column: span 2;
+  }
+
+  &[data-posicao='2'] {
+    grid-column: span 3;
+  }
+
+  &[data-posicao='3'] {
+    grid-column: span 3;
+  }
+}
+
+.miolo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.75rem;
+
+  h4 {
+    margin: 0;
+    color: var(--s-acento);
+    font-family: var(--fonte-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  p {
+    max-width: 44ch;
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+}
+
+.rodape {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.75rem 0 0;
+}
+
+.foto {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mais {
+  color: var(--s-texto);
+  font-weight: 500;
+  text-decoration-color: var(--s-acento);
+  text-underline-offset: 0.3em;
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--s-texto);
+    outline-offset: 3px;
+  }
+}
+
+@media (max-width: 767px) {
+  .bento {
+    grid-template-columns: 1fr;
+  }
+
+  .bento article[data-posicao] {
+    grid-column: auto;
+  }
+}

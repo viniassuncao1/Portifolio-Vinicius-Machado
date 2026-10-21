@@ -1,0 +1,68 @@
+<section class="hero" aria-labelledby="nome-do-perfil">
+  <div class="texto">
+    <p class="eyebrow">
+      <span class="ponto-vivo" aria-hidden="true"></span>
+      {{ perfil.disponibilidade }} · {{ perfil.cidade }}
+    </p>
+    <h2 id="nome-do-perfil" class="nome">{{ perfil.nome }}</h2>
+    <p class="cargo">{{ perfil.cargo }}</p>
+    <p class="resumo">{{ perfil.resumo }}</p>
+    <ul class="stack" aria-label="Tecnologias principais">
+      @for (tecnologia of perfil.stack; track tecnologia) {
+        <li class="chip">{{ tecnologia }}</li>
+      }
+    </ul>
+    <div class="ctas">
+      <a class="pilula" appMagnetico routerLink="/projetos">
+        <span aria-hidden="true">▶</span> Ver projetos
+        <span class="seta-aninhada" aria-hidden="true">↗</span>
+      </a>
+      <a class="pilula secundaria" appMagnetico [href]="curriculo" download>
+        Baixar currículo
+        <span class="seta-aninhada" aria-hidden="true">↓</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="janela-do-hero casca-dupla" [attr.data-fase]="fase()">
+    <div class="miolo">
+      <div class="barra-da-janela" aria-hidden="true">
+        <span class="aba">ViniciusMachado.java</span>
+        <span class="controles"><i></i><i></i><i></i></span>
+      </div>
+      <div class="corpo">
+        @if (fase() === 'digitando') {
+          <div class="codigo" aria-hidden="true">
+            @for (linha of codigo; track $index; let i = $index) {
+              <span class="linha">
+                @for (trecho of linha; track $index; let j = $index) {
+                  <span [class]="'t-' + trecho[1]">{{ trecho[0].slice(0, visivel()[i][j]) }}</span>
+                }
+              </span>
+            }
+          </div>
+        }
+        <div class="cartao">
+          <img
+            class="foto"
+            ngSrc="fotos/vinicius.webp"
+            width="192"
+            height="192"
+            alt="Foto de Vinicius Machado"
+            priority
+          />
+          <div class="dados">
+            <p class="dado-nome">{{ perfil.nome }}</p>
+            <p class="dado-cargo">{{ perfil.cargo }}</p>
+            <p class="status">
+              <span class="ponto-vivo" aria-hidden="true"></span> {{ perfil.disponibilidade }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <p class="rodape-da-janela" aria-hidden="true">
+        <span class="verde">●</span> BUILD SUCCESSFUL · PortfolioApplication
+      </p>
+    </div>
+  </div>
+</section>

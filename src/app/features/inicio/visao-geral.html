@@ -1,0 +1,36 @@
+<div class="visao">
+  <div class="barra">
+    <app-acoes-do-recrutador />
+    <app-alternar-visao />
+  </div>
+
+  <section class="faixa" appTemaDeSecao="hero" aria-label="Apresentação">
+    <div class="coluna">
+      <app-hero />
+      <app-provas />
+    </div>
+  </section>
+
+  <section class="faixa" appTemaDeSecao="sobre" aria-label="Sobre">
+    <div class="coluna" appRevelar><app-sobre-em-cartoes /></div>
+  </section>
+
+  <section class="faixa" appTemaDeSecao="stack" aria-label="Stack">
+    <div class="coluna" appRevelar><app-stack-em-gradle /></div>
+  </section>
+
+  <section class="faixa" appTemaDeSecao="formacao" aria-label="Experiência e formação">
+    <div class="coluna empilhada">
+      <div appRevelar><app-experiencia-em-grafo /></div>
+      <div appRevelar><app-formacao-e-idiomas /></div>
+    </div>
+  </section>
+
+  <section class="faixa" appTemaDeSecao="projetos" aria-label="Projetos">
+    <div class="coluna" appRevelar><app-projetos-em-destaque /></div>
+  </section>
+
+  <section class="faixa" appTemaDeSecao="contato" aria-label="Contato">
+    <div class="coluna" appRevelar><app-contato-em-terminal /></div>
+  </section>
+</div>

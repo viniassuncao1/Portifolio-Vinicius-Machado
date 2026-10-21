@@ -1,0 +1,242 @@
+:host {
+  display: block;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  min-height: min(38rem, calc(100dvh - 14rem));
+  padding-block: clamp(1rem, 3vw, 3rem);
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.ponto-vivo {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--cor-run);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--cor-run) 60%, transparent);
+  animation: pulsar 2.4s var(--curva-padrao) infinite;
+}
+
+@keyframes pulsar {
+  70%,
+  100% {
+    box-shadow: 0 0 0 0.5rem transparent;
+  }
+}
+
+.nome {
+  margin: 0;
+  font-family: var(--fonte-display);
+  font-size: clamp(3rem, 7.5vw, 6.25rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.cargo {
+  margin: 0;
+  color: var(--s-acento);
+  font-family: var(--fonte-display);
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.resumo {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--s-secundario);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+// A janela da IDE: a casca dupla vem de `_recrutador.scss`.
+.janela-do-hero {
+  align-self: center;
+  min-width: 0;
+}
+
+.janela-do-hero .miolo {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.barra-da-janela {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--s-texto) 10%, transparent);
+  background: color-mix(in srgb, var(--s-texto) 4%, transparent);
+}
+
+.aba {
+  padding: 0.375rem 1rem;
+  border-radius: 0 0.5rem 0 0;
+  background: color-mix(in srgb, var(--s-texto) 8%, transparent);
+  color: var(--s-texto);
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+}
+
+.controles {
+  display: inline-flex;
+  gap: 0.375rem;
+
+  i {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--s-texto) 22%, transparent);
+  }
+}
+
+// Código e cartão dividem a mesma célula: o código cobre o cartão enquanto digita.
+.corpo {
+  display: grid;
+  min-height: 15rem;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+}
+
+.codigo {
+  z-index: 1;
+  margin: 0;
+  padding: 1.25rem 1.5rem;
+  background: color-mix(in srgb, var(--s-fundo) 92%, var(--s-texto) 4%);
+  color: var(--s-texto);
+  font-family: var(--fonte-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+
+  .linha {
+    display: block;
+    min-height: 1.7em;
+  }
+}
+
+.t-palavra {
+  color: var(--cor-sintaxe-palavra-chave);
+}
+
+.t-texto {
+  color: var(--cor-sintaxe-literal);
+}
+
+.cartao {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  transition: opacity var(--duracao-lenta) var(--curva-suave);
+}
+
+.janela-do-hero[data-fase='digitando'] .cartao {
+  opacity: 0;
+}
+
+.foto {
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 1.25rem;
+  object-fit: cover;
+  outline: 1px solid color-mix(in srgb, var(--s-texto) 14%, transparent);
+  outline-offset: -1px;
+}
+
+.dados {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dado-nome {
+  margin: 0;
+  font-family: var(--fonte-display);
+  font-size: 1.375rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.dado-cargo {
+  margin: 0;
+  color: var(--s-secundario);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0 0;
+  color: var(--s-texto);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.rodape-da-janela {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--s-texto) 10%, transparent);
+  color: var(--s-secundario);
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+}
+
+.verde {
+  color: var(--cor-run);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .cartao {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ponto-vivo {
+    animation: none;
+  }
+
+  .cartao {
+    transition: none;
+  }
+}

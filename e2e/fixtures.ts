@@ -10,19 +10,43 @@ const CHAVE_DA_ABERTURA = 'abertura-exibida';
  * (e o teste de link direto da janela de Run) pedem a primeira visita de verdade, com
  * `verAbertura(page)`.
  */
-const semearSessao = (contexto: BrowserContext) =>
-  contexto.addInitScript((chave) => {
-    try {
-      if (sessionStorage.getItem(chave) === null) sessionStorage.setItem(chave, '1');
-    } catch {
-      // Armazenamento bloqueado pelo teste: a tela só aparece se o app não conseguir lembrar.
-    }
-  }, CHAVE_DA_ABERTURA);
+type VisaoDoTeste = 'cartao' | 'codigo';
 
-export const test = base.extend({
+const semearSessao = (contexto: BrowserContext) =>
+  contexto.addInitScript(
+    ({ chave, escolha }) => {
+      try {
+        if (sessionStorage.getItem(chave) === null) sessionStorage.setItem(chave, '1');
+        // A suíte antiga cobre o Início em código; quem testa o cartão pede `visao: 'cartao'`.
+        if (localStorage.getItem('visao-do-conteudo') === null) {
+          localStorage.setItem('visao-do-conteudo', escolha);
+        }
+      } catch {
+        // Armazenamento bloqueado pelo teste: a tela só aparece se o app não conseguir lembrar.
+      }
+    },
+    { chave: CHAVE_DA_ABERTURA, escolha: 'codigo' },
+  );
+
+export const test = base.extend<{ visao: VisaoDoTeste }>({
+  visao: ['codigo', { option: true }],
   // Cobre o `page` do Playwright: o contexto já nasce com a sessão marcada.
-  context: async ({ context }, use) => {
+  context: async ({ context, visao }, use) => {
     await semearSessao(context);
+    // O padrão da suíte é o Início em código. Quem pede o cartão sobrescreve a visão uma vez por aba
+    // (a escolha feita depois, como alternar e recarregar, não é desfeita).
+    if (visao !== 'codigo') {
+      await context.addInitScript((escolha) => {
+        try {
+          if (sessionStorage.getItem('visao-do-teste') === null) {
+            sessionStorage.setItem('visao-do-teste', '1');
+            localStorage.setItem('visao-do-conteudo', escolha);
+          }
+        } catch {
+          // Armazenamento bloqueado pelo teste: vale a visão padrão do app.
+        }
+      }, visao);
+    }
     await use(context);
   },
   // Cobre os testes que abrem contextos próprios (`browser.newContext`).

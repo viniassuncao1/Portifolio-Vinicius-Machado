@@ -18,10 +18,14 @@ export class Magnetico {
     const movimento = inject(MovimentoConfig);
     const destruir = inject(DestroyRef);
 
+    // A biblioteca chega depois de um `import()`: se a vista já saiu de cena, não registra nada.
+    let destruido = false;
+    destruir.onDestroy(() => (destruido = true));
+
     afterNextRender(async () => {
       if (!movimento.ponteiroFino) return;
       const biblioteca = await movimento.carregar();
-      if (!biblioteca) return;
+      if (!biblioteca || destruido) return;
 
       const { animate } = biblioteca;
       const seguir = (evento: PointerEvent) => {

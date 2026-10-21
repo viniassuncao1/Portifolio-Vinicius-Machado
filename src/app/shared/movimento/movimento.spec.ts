@@ -80,4 +80,15 @@ describe('diretivas de movimento', () => {
     expect(raiz.querySelector<HTMLElement>('#texto')?.style.opacity).toBe('');
     expect(raiz.querySelector('#numero')?.textContent).toBe('42');
   });
+
+  it('se a vista sai de cena antes de a biblioteca chegar, não registra nada nem falha', async () => {
+    simularAmbiente({ reduzido: false, topo: 5000 });
+    const fixture = TestBed.createComponent(Hospedeiro);
+    fixture.detectChanges();
+
+    fixture.destroy();
+    await new Promise((resolver) => setTimeout(resolver, 80));
+
+    expect(fixture.nativeElement.querySelector('#texto')?.style.opacity ?? '').toBe('');
+  });
 });

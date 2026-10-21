@@ -155,11 +155,12 @@ test.describe('Árvore no Início', () => {
   test.describe('sem JavaScript', () => {
     test.use({ javaScriptEnabled: false });
 
-    test('entrega o código, o destaque e a árvore sem aria-current no HTML', async ({ page }) => {
+    test('entrega o cartão, o destaque e a árvore sem aria-current no HTML', async ({ page }) => {
       await page.goto('/');
 
-      await expect(page.locator('main code')).toContainText('package dev.vinicius.portfolio;');
-      await expect(page.locator('main code')).toContainText('"Spring Boot"');
+      // Sem JavaScript vale o cartão, a visão padrão; o código do Início aparece com a visão em código.
+      await expect(page.locator('main .hero .nome')).toHaveText('Vinicius Machado');
+      await expect(page.locator('main .stack')).toContainText('Spring Boot');
       await expect(page.locator('nav [aria-current]')).toHaveCount(0);
     });
   });

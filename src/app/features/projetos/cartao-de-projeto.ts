@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 
 import { contadorDoProjeto } from '../../core/projetos';
 import type { Projeto } from '../../core/projetos';
-import { CapaEmCodigoDoProjeto } from './capa-em-codigo';
+import { CapaEmCodigoDoProjeto } from '../../shared/capa-em-codigo/capa-em-codigo';
 
 /**
  * Cartão de um projeto: um link real para `/projetos/<slug>` (abre com clique direito, copiar

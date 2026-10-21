@@ -1,0 +1,36 @@
+<div class="cabecalho">
+  <p class="eyebrow">Stack</p>
+  <h3 class="titulo">O que uso todo dia e o que ainda estou aprendendo.</h3>
+  <p class="dica">Onde há projeto na vitrine que usa a tecnologia, ela é um link para ele.</p>
+</div>
+<div class="gradle casca-dupla">
+  <div class="miolo">
+    <p class="arquivo" aria-hidden="true">build.gradle</p>
+    <p class="codigo" aria-hidden="true"><span class="p">dependencies</span> {{ '{' }}</p>
+    @for (grupo of grupos; track grupo.nivel) {
+      <section class="grupo" [attr.data-nivel]="grupo.nivel">
+        <h4 class="comentario">// {{ grupo.titulo }}: {{ grupo.descricao }}</h4>
+        <ul class="itens">
+          @for (item of grupo.itens; track item.nome) {
+            <li>
+              <span class="impl" aria-hidden="true">implementation</span>
+              @if (item.projeto; as projeto) {
+                <a
+                  class="item com-link"
+                  [routerLink]="['/projetos', projeto.slug]"
+                  [attr.title]="'Usado em: ' + projeto.titulo"
+                >
+                  {{ item.nome
+                  }}<span class="somente-leitores"> (usado em {{ projeto.titulo }})</span>
+                </a>
+              } @else {
+                <span class="item">{{ item.nome }}</span>
+              }
+            </li>
+          }
+        </ul>
+      </section>
+    }
+    <p class="codigo" aria-hidden="true">{{ '}' }}</p>
+  </div>
+</div>

@@ -5,10 +5,15 @@ import { RouterTestingHarness } from '@angular/router/testing';
 
 import { routes } from '../../app.routes';
 import { EstrategiaDeTitulo } from '../../core/estrategia-de-titulo';
+import { CHAVE_DA_VISAO, VisaoDoConteudoEscolhida } from '../../core/visao-do-conteudo';
 import { Inicio } from './inicio';
 
 describe('Inicio', () => {
+  afterEach(() => localStorage.clear());
+
   async function renderizar(): Promise<HTMLElement> {
+    // Estes testes cobrem a visão em código; a visão em cartão tem os seus em `visao-geral.spec.ts`.
+    TestBed.inject(VisaoDoConteudoEscolhida).escolher('codigo');
     const fixture = TestBed.createComponent(Inicio);
     await fixture.whenStable();
     return fixture.nativeElement as HTMLElement;
@@ -146,6 +151,8 @@ describe('Inicio', () => {
 });
 
 describe('Início dentro da casca', () => {
+  afterEach(() => localStorage.clear());
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -156,6 +163,7 @@ describe('Início dentro da casca', () => {
   });
 
   async function abrirInicio(): Promise<HTMLElement> {
+    TestBed.inject(VisaoDoConteudoEscolhida).escolher('codigo');
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/');
     harness.detectChanges();
@@ -204,5 +212,51 @@ describe('Início dentro da casca', () => {
 
     expect(raiz.querySelectorAll('nav [aria-current="page"]')).toHaveLength(1);
     expect(raiz.querySelector('nav [aria-current="page"]')?.textContent).toContain('SobreMim.java');
+  });
+});
+
+describe('Início em duas visões', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({ providers: [provideRouter([{ path: '**', children: [] }])] });
+  });
+
+  afterEach(() => localStorage.clear());
+
+  async function montar() {
+    const fixture = TestBed.createComponent(Inicio);
+    await fixture.whenStable();
+    const raiz = fixture.nativeElement as HTMLElement;
+    return { fixture, raiz, visao: TestBed.inject(VisaoDoConteudoEscolhida) };
+  }
+
+  it('abre no cartão, que é a visão que se lê em segundos', async () => {
+    const { raiz } = await montar();
+
+    expect(raiz.querySelector('app-visao-geral')).not.toBeNull();
+    expect(raiz.querySelector('app-editor-de-codigo')).toBeNull();
+  });
+
+  it('o botão troca para o código e de volta', async () => {
+    const { fixture, raiz, visao } = await montar();
+
+    visao.escolher('codigo');
+    await fixture.whenStable();
+    expect(raiz.querySelector('app-editor-de-codigo')).not.toBeNull();
+    expect(raiz.querySelector('app-alternar-visao button')?.textContent).toContain(
+      'Ver como cartão',
+    );
+
+    visao.alternar();
+    await fixture.whenStable();
+    expect(raiz.querySelector('app-visao-geral')).not.toBeNull();
+    expect(raiz.querySelector('app-editor-de-codigo')).toBeNull();
+  });
+
+  it('lembra a escolha no navegador', async () => {
+    const { visao } = await montar();
+
+    visao.escolher('codigo');
+
+    expect(localStorage.getItem(CHAVE_DA_VISAO)).toBe('codigo');
   });
 });

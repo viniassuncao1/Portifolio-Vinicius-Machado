@@ -1,0 +1,29 @@
+<div class="cabecalho">
+  <p class="eyebrow">Formação</p>
+  <h3 class="titulo">Ciência da Computação com foco em engenharia de software.</h3>
+</div>
+<div class="grade">
+  <article class="casca-dupla">
+    <div class="miolo">
+      <p class="previsao">Formatura prevista: {{ formacao.previsao }}</p>
+      <h4>{{ formacao.instituicao }}</h4>
+      <p class="curso">{{ formacao.curso }}</p>
+      <p class="foco">Foco em {{ formacao.foco }}.</p>
+    </div>
+  </article>
+  <article class="casca-dupla">
+    <div class="miolo">
+      <h4>Idiomas</h4>
+      <ul>
+        @for (item of idiomas; track item.idioma) {
+          <li>
+            <span>{{ item.idioma }}</span> <span class="nivel">{{ item.nivel }}</span>
+          </li>
+        }
+      </ul>
+      <a routerLink="/certificacoes" class="mais"
+        >Certificações e eventos <span aria-hidden="true">→</span></a
+      >
+    </div>
+  </article>
+</div>

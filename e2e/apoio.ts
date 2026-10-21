@@ -49,6 +49,8 @@ export const normalizar = (texto: string | null): string =>
 
 /** Linhas do código como o visitante lê, sem as vazias e com espaços normalizados. */
 export async function linhasDoCodigo(page: Page): Promise<string[]> {
+  // No Início o HTML traz o cartão; o código aparece quando a página hidrata na visão em código.
+  await expect(page.locator('main code').first()).toBeAttached();
   const linhas = await page
     .locator('main code > span')
     .evaluateAll((els) => els.map((el) => el.textContent ?? ''));
@@ -60,6 +62,7 @@ export async function linhasDoCodigo(page: Page): Promise<string[]> {
  * linha por linha do editor.
  */
 export async function codigoSemTextos(page: Page): Promise<string> {
+  await expect(page.locator('main code').first()).toBeAttached();
   return page.locator('main code > span').evaluateAll((linhas) =>
     linhas
       .filter(
@@ -82,6 +85,7 @@ export async function codigoSemTextos(page: Page): Promise<string> {
 
 /** Os comentários `// ...` que o visitante lê, sem o `//` inicial. */
 export async function comentariosDoCodigo(page: Page): Promise<string[]> {
+  await expect(page.locator('main code').first()).toBeAttached();
   const comentarios = await page
     .locator('main code .papel-comentario')
     .evaluateAll((els) => els.map((el) => el.textContent ?? ''));

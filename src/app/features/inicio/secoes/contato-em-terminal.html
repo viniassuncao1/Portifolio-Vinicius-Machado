@@ -1,0 +1,31 @@
+<div class="cabecalho">
+  <p class="eyebrow">Contato</p>
+  <h3 class="titulo">Vamos conversar sobre a sua vaga?</h3>
+</div>
+<div class="terminal casca-dupla">
+  <div class="miolo">
+    <p class="barra" aria-hidden="true">~/portfolio · contato</p>
+    <ul class="saida">
+      @for (contato of contatos; track contato.rotulo) {
+        <li>
+          <span class="prompt" aria-hidden="true"
+            >$ contato --{{ contato.rotulo.toLowerCase() }}</span
+          >
+          <a
+            [href]="contato.href"
+            [attr.target]="contato.externo ? '_blank' : null"
+            [attr.rel]="contato.externo ? 'noopener noreferrer' : null"
+          >
+            <span class="somente-leitores">{{ contato.rotulo }}: </span>{{ contato.valor }}
+            @if (contato.externo) {
+              <span class="somente-leitores"> (abre em nova aba)</span>
+            }
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+</div>
+<div class="acoes">
+  <app-acoes-do-recrutador />
+</div>

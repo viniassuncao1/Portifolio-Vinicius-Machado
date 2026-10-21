@@ -376,7 +376,8 @@ test.describe('localStorage bloqueado', () => {
   test('a página abre, sem erro, e o botão ainda troca o tema nesta visita', async ({ page }) => {
     const erros: string[] = [];
     page.on('pageerror', (e) => erros.push(e.message));
-    await abrirHidratada(page, '/');
+    // Sem localStorage a visão do Início é o cartão: a seção Skills é um arquivo e tem o editor.
+    await abrirHidratada(page, '/skills');
 
     expect(await dataTema(page)).toBe('escuro');
     await alternarTema(page);

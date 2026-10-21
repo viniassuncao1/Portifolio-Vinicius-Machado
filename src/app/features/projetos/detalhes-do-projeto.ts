@@ -17,7 +17,7 @@ import { RouterLink } from '@angular/router';
 
 import { contadorDoProjeto } from '../../core/projetos';
 import type { Projeto } from '../../core/projetos';
-import { CapaEmCodigoDoProjeto } from './capa-em-codigo';
+import { CapaEmCodigoDoProjeto } from '../../shared/capa-em-codigo/capa-em-codigo';
 
 /**
  * Detalhes de um projeto num `<dialog>` modal nativo: o navegador prende o foco, trava o fundo

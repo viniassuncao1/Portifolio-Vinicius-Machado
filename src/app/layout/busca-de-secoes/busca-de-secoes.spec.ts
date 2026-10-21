@@ -186,4 +186,67 @@ describe('BuscaDeSecoes', () => {
     expect(campo.getAttribute('aria-activedescendant')).toBe('opcao-busca-0');
     raiz.remove();
   });
+
+  describe('comandos de quem recruta', () => {
+    afterEach(() => vi.restoreAllMocks());
+
+    it('não aparecem na lista inicial, só quando há texto na busca', async () => {
+      const { raiz, opcoes, digitar } = await montar();
+      expect(opcoes().some((o) => o.textContent?.includes('Baixar currículo'))).toBe(false);
+
+      await digitar('curr');
+
+      expect(opcoes().map((o) => o.textContent?.replace(/\s+/g, ' ').trim())).toEqual([
+        '▶ comandoBaixar currículo',
+      ]);
+      raiz.remove();
+    });
+
+    it('"currículo" baixa o PDF por um link de download', async () => {
+      const { raiz, digitar, tecla } = await montar();
+      const cliques: HTMLAnchorElement[] = [];
+      vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (
+        this: HTMLAnchorElement,
+      ) {
+        cliques.push(this);
+      });
+      await digitar('currículo');
+
+      tecla('Enter');
+
+      expect(cliques).toHaveLength(1);
+      expect(cliques[0].getAttribute('href')).toBe(
+        'CV_Vinicius_Machado_Desenvolvedor_FullStack_Java.pdf',
+      );
+      expect(cliques[0].hasAttribute('download')).toBe(true);
+      raiz.remove();
+    });
+
+    it('os comandos de LinkedIn e GitHub abrem em nova aba sem opener', async () => {
+      const { raiz, digitar, tecla } = await montar();
+      const abrir = vi.spyOn(window, 'open').mockReturnValue(null);
+
+      await digitar('linkedin');
+      tecla('Enter');
+      expect(abrir).toHaveBeenCalledWith(
+        'https://linkedin.com/in/viniassuncao',
+        '_blank',
+        'noopener,noreferrer',
+      );
+      raiz.remove();
+    });
+
+    it('"copiar e-mail" copia o endereço', async () => {
+      const escrever = vi.fn().mockResolvedValue(undefined);
+      vi.stubGlobal('navigator', { clipboard: { writeText: escrever } });
+      const { raiz, digitar, tecla } = await montar();
+
+      await digitar('copiar');
+      tecla('Enter');
+
+      expect(escrever).toHaveBeenCalledWith('viniciusmassuncao@gmail.com');
+      vi.unstubAllGlobals();
+      raiz.remove();
+    });
+  });
 });

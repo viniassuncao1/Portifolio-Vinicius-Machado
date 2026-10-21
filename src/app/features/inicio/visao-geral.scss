@@ -1,0 +1,49 @@
+:host {
+  display: block;
+}
+
+// A página inteira usa o tema da seção que está na tela: as variáveis `--s-*` do <html> transitam.
+.visao {
+  min-height: 100%;
+  background: var(--s-fundo);
+  color: var(--s-texto);
+  font-family: var(--fonte-display);
+}
+
+// Barra de ações: fica no topo ao rolar, sobre o conteúdo.
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem clamp(1rem, 4vw, 2.5rem);
+  background: color-mix(in srgb, var(--s-fundo) 86%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid color-mix(in srgb, var(--s-texto) 8%, transparent);
+}
+
+.faixa {
+  padding-block: clamp(3rem, 8vw, 7rem);
+}
+
+.coluna {
+  box-sizing: border-box;
+  max-width: var(--largura-pagina);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+
+  &.empilhada {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4rem, 8vw, 7rem);
+  }
+}
+
+// A faixa do hero começa logo abaixo da barra.
+.faixa:first-of-type {
+  padding-top: clamp(1rem, 3vw, 2rem);
+}
