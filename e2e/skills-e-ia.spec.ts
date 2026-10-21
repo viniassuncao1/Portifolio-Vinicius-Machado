@@ -278,14 +278,13 @@ test.describe('Sem JavaScript', () => {
     await expect(arquivoDaArvore(page, 'Como uso a IA')).toHaveAttribute('aria-current', 'page');
   });
 
-  test('/skills entrega as listas e os níveis no HTML, sem controle de páginas', async ({
-    page,
-  }) => {
+  test('/skills entrega os níveis no HTML, sem controle de páginas', async ({ page }) => {
     await page.goto('/skills');
 
-    await expect(page.locator('main code')).toContainText('record Tecnologias(');
-    await expect(page.locator('main code')).toContainText('record Ferramentas(');
-    await expect(page.locator('main code')).toContainText('Domínio diário');
+    // Sem JavaScript o HTML traz o cartão: a stack como build.gradle, com os quatro níveis.
+    await expect(page.locator('main .grupo')).toHaveCount(4);
+    await expect(page.locator('main')).toContainText('Domínio diário');
+    await expect(page.locator('main')).toContainText('Conhecimento teórico');
     await expect(controle(page)).toHaveCount(0);
     await expect(page).toHaveTitle('Skills / STACK | Vinicius Machado');
   });

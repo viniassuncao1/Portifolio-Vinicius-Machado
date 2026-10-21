@@ -1,23 +1,29 @@
 import { Component, afterNextRender, signal } from '@angular/core';
 
-import { EditorDeCodigo } from '../../shared/editor-de-codigo/editor-de-codigo';
-import { CONTEUDO_CONTATO, EMAIL_DE_CONTATO } from './contato.conteudo';
+import { EMAIL_DE_CONTATO } from '../../core/perfil';
+import { ContatoEmTerminal } from '../../shared/cartoes/contato-em-terminal';
+import { SecaoEmDuasVisoes } from '../../shared/secao-em-duas-visoes/secao-em-duas-visoes';
+import { CONTEUDO_CONTATO } from './contato.conteudo';
 
 const AVISO_COPIADO = 'E-mail copiado';
 const AVISO_FALHOU = 'Não foi possível copiar o e-mail';
 
-// O h1 da página vem da casca.
+// O h1 da página vem da casca. A seção tem duas visões do mesmo conteúdo: cartão e código.
 @Component({
   selector: 'app-contato',
-  imports: [EditorDeCodigo],
+  imports: [SecaoEmDuasVisoes, ContatoEmTerminal],
   template: `
-    <app-editor-de-codigo [conteudo]="conteudo" />
-    <div class="acoes">
-      @if (podeCopiar()) {
-        <button type="button" class="copiar" (click)="copiarEmail()">Copiar e-mail</button>
-      }
-      <span class="aviso" role="status" aria-live="polite">{{ aviso() }}</span>
-    </div>
+    <app-secao-em-duas-visoes [conteudo]="conteudo" tema="contato">
+      <ng-template #cartao><app-contato-em-terminal /></ng-template>
+      <ng-template #extraDoCodigo>
+        <div class="acoes">
+          @if (podeCopiar()) {
+            <button type="button" class="copiar" (click)="copiarEmail()">Copiar e-mail</button>
+          }
+          <span class="aviso" role="status" aria-live="polite">{{ aviso() }}</span>
+        </div>
+      </ng-template>
+    </app-secao-em-duas-visoes>
   `,
   styleUrl: './contato.scss',
 })

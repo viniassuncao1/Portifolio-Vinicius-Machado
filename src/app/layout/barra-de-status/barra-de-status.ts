@@ -5,6 +5,7 @@ import { AbasAbertas } from '../../core/abas-abertas';
 import { breadcrumbs } from '../../core/breadcrumbs';
 import { SHA_CURTO_DO_BUILD, SHA_DO_BUILD } from '../../core/build.gerado';
 import { EstadoDoEditor } from '../../core/estado-do-editor';
+import { RelogioDeBrasilia } from '../../core/relogio-de-brasilia';
 import { ARQUIVO_INICIO, SECOES } from '../../core/secoes';
 import { Icone } from '../../shared/icone/icone';
 
@@ -24,6 +25,7 @@ const REPOSITORIO = 'https://github.com/viniassuncao1/Portifolio-Vinicius-Machad
 export class BarraDeStatus {
   private readonly abas = inject(AbasAbertas);
   private readonly editor = inject(EstadoDoEditor);
+  protected readonly hora = inject(RelogioDeBrasilia).hora;
   /** Aviso de inicialização, por 6 s depois das boas-vindas; vazio nas demais horas. */
   private readonly abertura = inject(Abertura);
   protected readonly aviso = this.abertura.aviso;

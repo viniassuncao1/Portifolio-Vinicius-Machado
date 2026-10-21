@@ -145,7 +145,7 @@ test.describe('Tema inicial: sistema no claro', () => {
     });
     const pagina = await contexto.newPage();
 
-    await pagina.goto('/skills');
+    await pagina.goto('/diferenciais');
 
     expect(await dataTema(pagina)).toBeNull();
     expect(await fundo(pagina, 'body')).toBe(FUNDO_DA_PAGINA.claro);
@@ -157,7 +157,7 @@ test.describe('Tema inicial: sistema no claro', () => {
     const contexto = await browser.newContext({ javaScriptEnabled: false, colorScheme: 'dark' });
     const pagina = await contexto.newPage();
 
-    await pagina.goto('/skills');
+    await pagina.goto('/diferenciais');
 
     expect(await fundo(pagina, 'body')).toBe(FUNDO_DA_PAGINA.escuro);
     expect(await fundo(pagina, 'app-editor-de-codigo')).toBe(FUNDO_DO_EDITOR.escuro);
@@ -377,7 +377,7 @@ test.describe('localStorage bloqueado', () => {
     const erros: string[] = [];
     page.on('pageerror', (e) => erros.push(e.message));
     // Sem localStorage a visão do Início é o cartão: a seção Skills é um arquivo e tem o editor.
-    await abrirHidratada(page, '/skills');
+    await abrirHidratada(page, '/diferenciais');
 
     expect(await dataTema(page)).toBe('escuro');
     await alternarTema(page);
@@ -394,7 +394,7 @@ test.describe('localStorage bloqueado', () => {
       const erros: string[] = [];
       page.on('pageerror', (e) => erros.push(e.message));
 
-      await abrirHidratada(page, '/skills');
+      await abrirHidratada(page, '/diferenciais');
 
       expect(await dataTema(page)).toBe('claro');
       expect(erros).toEqual([]);

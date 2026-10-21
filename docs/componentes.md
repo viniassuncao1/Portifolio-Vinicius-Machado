@@ -757,3 +757,35 @@ imagens, capa em código e link com o rótulo "Ver site" ou "Ver repositório").
 - **Endereço:** `/projetos/:slug` é uma rota filha sem componente (a vitrine segue montada e o
   carrossel não perde a posição); abre direto pelo endereço e o Voltar fecha os detalhes.
 - **Capas:** `node scripts/gerar-capas-dos-projetos.mjs` gera os WebP (960x600, até 200 KB).
+
+## Visão geral e visões "Cartão" (ADR-0019)
+
+- **`VisaoDoConteudoEscolhida`** (`core/visao-do-conteudo.ts`): `cartao` ou `codigo`, lembrada em
+  `localStorage` (sempre em `try/catch`); antes da hidratação vale o cartão, que é o que o HTML
+  pré-renderizado traz. **`AlternarVisao`** é o botão ("Ver como código" / "Ver como cartão") com
+  `aria-pressed`. **`SecaoEmDuasVisoes`** recebe o conteúdo do editor e um `<ng-template #cartao>`
+  (e, opcional, `#extraDoCodigo`) e mostra um ou outro; as seções Sobre Mim, Skills, Experiências,
+  Formação e Contato usam, e o Início tem a visão geral própria.
+- **`core/perfil.ts`:** fatos do Vinicius (contatos, resumo, stack por nível, experiências, formação,
+  idiomas, provas) lidos pelos cartões; `perfil.spec.ts` confere que continuam nas seções em código.
+- **Visão geral do Início** (`features/inicio/`): `Hero` (a classe `ViniciusMachado` é digitada na
+  janela da IDE e se resolve no cartão; sem movimento, sem JavaScript e com movimento reduzido o
+  cartão já está lá, e o texto do hero existe no HTML desde o primeiro quadro), `VisaoGeral` (as seis
+  faixas, cada uma com o tema de cor, a barra de ações no topo e os atalhos Projetos, Currículo e
+  Contato colados embaixo no celular).
+- **Cartões** (`shared/cartoes/`): `Provas` (números que contam), `SobreEmCartoes` (bento
+  assimétrico), `StackEmGradle` (a stack como `build.gradle`; cada tecnologia aponta o projeto da
+  vitrine que a usa), `ExperienciaEmGrafo` (um `git log --graph`; a linha se desenha ao rolar com
+  `animation-timeline: view()`), `FormacaoEIdiomas`, `ProjetosEmDestaque` e `ContatoEmTerminal`.
+- **`AcoesDoRecrutador`:** Currículo (PDF), LinkedIn, GitHub e Copiar e-mail; o botão de copiar
+  ocupa o lugar desde o HTML (não muda o layout na hidratação) e confirma no próprio rótulo e numa
+  região `aria-live`. No celular as ações viram uma fileira que rola.
+- **`TemaDeSecao`** (`appTemaDeSecao`): quando a seção passa da metade da janela, o `<html>` recebe
+  `data-secao`. **Superfícies** em `src/styles/_recrutador.scss`: `.casca-dupla` (moldura de 1px e
+  miolo com raio concêntrico), `.pilula` (botão com a seta num círculo aninhado), `.eyebrow`, `.chip`.
+- **Busca (Ctrl/Cmd+K):** ao digitar, aparecem os comandos "Baixar currículo", "Abrir o LinkedIn",
+  "Abrir o GitHub" e "Copiar e-mail".
+- **Abertura:** Esc ou o botão Pular encerram a abertura na hora (item 5 do ADR-0017 revisto).
+- **Faixa de abas:** o indicador deslizante é um fio de acento sob a aba ativa (só `transform`).
+  **`BarraDeCarregamento`:** o fio no topo que "compila" a cada troca de rota (some com movimento
+  reduzido).

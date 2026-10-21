@@ -65,14 +65,14 @@ Escopo, trilhas, skills e critérios de pronto estão em
 [`docs/equipe-de-agentes/briefing-experiencia-recrutadores.md`](../../../docs/equipe-de-agentes/briefing-experiencia-recrutadores.md).
 Aprovação antecipada pelo Vinicius: executar tudo de uma vez, sem pausar para aprovar.
 
-- [ ] 8.1 Sistema visual v2: tipografia com `@fontsource-variable`, escala de espaço, raios concêntricos, sombras tingidas, grão e os componentes base (superfície em double-bezel, botão em pílula com seta aninhada, etiqueta); verificar com testes dos componentes, o teste de contraste dos temas e `docs/componentes.md` atualizado
-- [ ] 8.2 Visão geral `/` rolável com os 8 blocos (hero, provas, sobre, stack, experiência, formação, projetos, contato), atalho para a rota de cada seção e `Inicio.java` preservado; verificar com E2E da primeira dobra em 1440x900 e 390x844 e com o HTML sem JavaScript
-- [ ] 8.3 Hero "código que vira cartão" (digitação e resolução em até 2,5 s, modo direto sem movimento); verificar com E2E e com o LCP medido igual ou melhor que a linha de base
-- [ ] 8.4 Barra de ações do recrutador (Currículo, LinkedIn, GitHub, e-mail com copiar e confirmação) e os comandos equivalentes na busca; verificar com E2E, incluindo o PDF respondendo 200 com `application/pdf`
-- [ ] 8.5 Ilha de navegação e barra de ações no celular (Seções, Projetos, Contato); verificar com E2E em 390x844 sem rolagem horizontal
+- [x] 8.1 Sistema visual v2: tipografia com `@fontsource-variable`, escala de espaço, raios concêntricos, sombras tingidas, grão e os componentes base (superfície em double-bezel, botão em pílula com seta aninhada, etiqueta); verificar com testes dos componentes, o teste de contraste dos temas e `docs/componentes.md` atualizado
+- [x] 8.2 Visão geral `/` rolável com os 8 blocos (hero, provas, sobre, stack, experiência, formação, projetos, contato), atalho para a rota de cada seção e `Inicio.java` preservado; verificar com E2E da primeira dobra em 1440x900 e 390x844 e com o HTML sem JavaScript
+- [x] 8.3 Hero "código que vira cartão" (digitação e resolução em até 2,5 s, modo direto sem movimento); verificar com E2E e com o LCP medido igual ou melhor que a linha de base
+- [x] 8.4 Barra de ações do recrutador (Currículo, LinkedIn, GitHub, e-mail com copiar e confirmação) e os comandos equivalentes na busca; verificar com E2E, incluindo o PDF respondendo 200 com `application/pdf`
+- [x] 8.5 Ilha de navegação e barra de ações no celular (Seções, Projetos, Contato); verificar com E2E em 390x844 sem rolagem horizontal
 - [ ] 8.6 Visões "Cartão" das seções e o controle "Cartão ⇄ Código" com a escolha lembrada (2b.1); verificar com E2E que o conteúdo é o mesmo nas duas visões
 - [ ] 8.7 Movimento: tema por seção na visão geral e nas rotas, revelações, frase que se acende, contadores, indicadores deslizantes, barra "compilando", git graph que se desenha, interações de ponteiro e barra de status viva; verificar com E2E e com o modo de movimento reduzido
-- [ ] 8.8 Abertura (Run) opcional: pular com toque ou tecla e não repetir na visita seguinte; verificar com E2E de Esc e de segunda visita
+- [x] 8.8 Abertura (Run) opcional: pular com toque ou tecla e não repetir na visita seguinte; verificar com E2E de Esc e de segunda visita
 - [ ] 8.9 Detalhes de projeto v2 (abas "Visão geral / Código / Stack" e bloco de build) e restyling da casca de IDE com os tokens v2; verificar com E2E e axe
 - [x] 8.10 Desempenho: manter o Lighthouse móvel em 100, LCP ≤ 2,5 s e CLS ≤ 0,05 com a página nova (a linha de base real é 100 e LCP 1,1 s; a de 4,5 s era um artefato do servidor sem compressão); verificado em `/`, `/projetos` e `/skills`, salvo em `docs/diario/`
 - [ ] 8.11 Regressão visual (320, 768, 1024 e 1440, claro e escuro), axe em todas as rotas e orçamentos no CI (imagem ≤ 200 KB, JS inicial sem o `motion`); verificar com a suíte E2E verde

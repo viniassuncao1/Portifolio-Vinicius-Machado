@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { FORMACAO, IDIOMAS } from '../../../core/perfil';
+import { FORMACAO, IDIOMAS } from '../../core/perfil';
+import { FraseQueSeAcende } from '../movimento/frase-que-se-acende';
 
 @Component({
   selector: 'app-formacao-e-idiomas',
-  imports: [RouterLink],
+  imports: [FraseQueSeAcende, RouterLink],
   templateUrl: './formacao-e-idiomas.html',
   styleUrl: './formacao-e-idiomas.scss',
 })

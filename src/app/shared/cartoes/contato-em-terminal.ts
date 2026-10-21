@@ -1,13 +1,14 @@
 import { Component, inject } from '@angular/core';
 
-import { CopiarEmail } from '../../../core/copiar-email';
-import { CONTATOS, ENDERECO_DO_CURRICULO } from '../../../core/perfil';
-import { AcoesDoRecrutador } from '../../../shared/acoes-do-recrutador/acoes-do-recrutador';
+import { CopiarEmail } from '../../core/copiar-email';
+import { CONTATOS, ENDERECO_DO_CURRICULO } from '../../core/perfil';
+import { AcoesDoRecrutador } from '../../shared/acoes-do-recrutador/acoes-do-recrutador';
+import { FraseQueSeAcende } from '../movimento/frase-que-se-acende';
 
 /** O contato num terminal: o comando que "roda" e a saída, que são os links reais. Funciona sem o visual. */
 @Component({
   selector: 'app-contato-em-terminal',
-  imports: [AcoesDoRecrutador],
+  imports: [FraseQueSeAcende, AcoesDoRecrutador],
   templateUrl: './contato-em-terminal.html',
   styleUrl: './contato-em-terminal.scss',
 })

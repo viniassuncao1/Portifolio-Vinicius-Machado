@@ -46,6 +46,19 @@ DOM) viram requisitos. O plano completo está na change `refatorar-experiencia-d
 6. **Metas medidas:** AXE sem violações, contraste AA em todos os temas por seção, Lighthouse mobile
    95/100/100/100, LCP até 2,5 s, CLS até 0,05 e imagens de projeto até 200 KB.
 
+7. **Tipografia de duas camadas.** As superfícies para quem recruta (visão geral, vitrine, barra de
+   ações) usam **Geist** (variável, só o subconjunto latino, servida pelo próprio site, com
+   `font-display: block` para o texto grande do hero não trocar de métrica) e o código segue em
+   JetBrains Mono. A casca de IDE mantém a Inter (as escalas e os testes dela não mudam).
+8. **Visão "Cartão" em seis seções.** Início, Sobre Mim, Skills, Experiências, Formação e Contato
+   têm as duas visões; as demais (Diferenciais, Como uso a IA, Certificações, Eventos, Idiomas,
+   Depoimentos e os seis projetos) continuam só em código, e os projetos têm a vitrine. Os cartões
+   leem os mesmos fatos das seções em código (`core/perfil.ts`), e `perfil.spec.ts` falha se os dois
+   lados divergirem.
+9. **Medição com compressão.** O servidor dos testes passa a comprimir (brotli e gzip) como a
+   Vercel. A primeira medição sem compressão tinha dado LCP de 4,5 s; com compressão a linha de
+   base é 100 e LCP de 0,9 a 1,1 s (ver o diário 0023), então a meta é não piorar.
+
 ## Alternativas consideradas
 
 - **Manter a casca e só animar.** Entrega movimento, mas não resolve a leitura rápida por

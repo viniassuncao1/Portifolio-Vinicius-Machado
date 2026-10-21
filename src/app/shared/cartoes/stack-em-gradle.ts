@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { PROJETOS } from '../../../core/projetos';
-import { STACK } from '../../../core/perfil';
-import type { GrupoDeStack } from '../../../core/perfil';
+import { PROJETOS } from '../../core/projetos';
+import { STACK } from '../../core/perfil';
+import type { GrupoDeStack } from '../../core/perfil';
+import { FraseQueSeAcende } from '../movimento/frase-que-se-acende';
 
 interface ItemDaStack {
   readonly nome: string;
@@ -30,7 +31,7 @@ const GRUPOS: readonly GrupoComEvidencias[] = STACK.map((grupo) => ({
 
 @Component({
   selector: 'app-stack-em-gradle',
-  imports: [RouterLink],
+  imports: [FraseQueSeAcende, RouterLink],
   templateUrl: './stack-em-gradle.html',
   styleUrl: './stack-em-gradle.scss',
 })

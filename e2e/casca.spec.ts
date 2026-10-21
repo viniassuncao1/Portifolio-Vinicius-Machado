@@ -8,6 +8,9 @@ import { SECOES as SECOES_DO_SITE } from '../src/app/core/secoes';
 /** A árvore de seções (a seção com várias páginas tem outra `nav`, com `aria-current` próprio). */
 const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
 
+/** Seções com as duas visões: sem JavaScript o HTML traz o cartão. */
+const SECOES_COM_CARTAO = new Set(['sobre-mim', 'skills', 'experiencias', 'formacao', 'contato']);
+
 const SECOES = [
   { slug: 'sobre-mim', titulo: 'Sobre Mim' },
   { slug: 'diferenciais', titulo: 'Diferenciais' },
@@ -231,10 +234,15 @@ test.describe('Pré-renderização das 18 rotas', () => {
       await expect(arvore(page).locator('[data-tipo=pasta]')).toHaveCount(7);
       await expect(arvore(page).locator('a[href]')).toHaveCount(SECOES.length);
       await expect(arquivoDaArvore(page, titulo)).toHaveAttribute('aria-current', 'page');
-      // A vitrine não é um arquivo de código: o HTML traz os cartões dos projetos.
-      await (slug === 'projetos'
-        ? expect(page.getByRole('main').locator('a.cartao')).toHaveCount(6)
-        : expect(page.getByRole('main').locator('code')).toBeAttached());
+      // A vitrine e as seções com visão em cartão (a visão padrão) trazem o cartão no HTML; as demais,
+      // o código.
+      if (slug === 'projetos') {
+        await expect(page.getByRole('main').locator('a.cartao')).toHaveCount(6);
+      } else if (SECOES_COM_CARTAO.has(slug)) {
+        await expect(page.getByRole('main').locator('.cartao-da-secao')).toBeAttached();
+      } else {
+        await expect(page.getByRole('main').locator('code')).toBeAttached();
+      }
     });
   }
 });

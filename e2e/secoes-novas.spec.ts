@@ -325,21 +325,37 @@ test.describe('Contato (/contato)', () => {
 test.describe('Cinco seções novas sem JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
+  // Experiências, Formação e Contato têm cartão e código: sem JavaScript o HTML traz o cartão.
   for (const [rota, trecho] of [
-    ['/experiencias', '"Desenvolvedor Full Stack Júnior"'],
-    ['/eventos', 'Campus Party Brasília'],
+    ['/experiencias', 'Desenvolvedor Full Stack Júnior'],
     ['/formacao', 'UniCEUB'],
+  ] as const) {
+    test(`${rota} entrega o cartão no HTML`, async ({ page }) => {
+      await page.goto(rota);
+
+      await expect(page.locator('main .cartao-da-secao')).toContainText(trecho);
+      await expect(page.locator('main')).not.toContainText('em construção');
+    });
+  }
+
+  test('/contato entrega o cartão com os contatos como links reais no HTML', async ({ page }) => {
+    await page.goto('/contato');
+
+    await expect(
+      page.locator('main .cartao-da-secao a[href="mailto:viniciusmassuncao@gmail.com"]'),
+    ).toHaveCount(1);
+    await expect(page.locator('main')).not.toContainText('em construção');
+  });
+
+  // Eventos e Idiomas só têm a visão em código.
+  for (const [rota, trecho] of [
+    ['/eventos', 'Campus Party Brasília'],
     ['/idiomas', '"Básico"'],
-    ['/contato', 'mailto:viniciusmassuncao@gmail.com'],
   ] as const) {
     test(`${rota} entrega o código no HTML`, async ({ page }) => {
       await page.goto(rota);
 
-      if (trecho.startsWith('mailto:')) {
-        await expect(page.locator('main code a').first()).toHaveAttribute('href', trecho);
-      } else {
-        await expect(codigo(page)).toContainText(trecho);
-      }
+      await expect(codigo(page)).toContainText(trecho);
       await expect(page.locator('main')).not.toContainText('em construção');
     });
   }
@@ -350,6 +366,7 @@ test.describe('Cinco seções novas sem JavaScript', () => {
     await page.goto('/experiencias');
 
     await expect(controle(page)).toHaveCount(0);
-    await expect(codigo(page)).toContainText('Experiencia wattsCompany');
+    await expect(page.locator('main .commit')).toHaveCount(3);
+    await expect(page.locator('main')).toContainText('Watts Company');
   });
 });

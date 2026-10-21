@@ -335,7 +335,7 @@ test.describe('Ajustes nativos do navegador', () => {
     const contexto = await browser.newContext({ javaScriptEnabled: false });
     const pagina = await contexto.newPage();
 
-    for (const rota of ['/sobre-mim', '/skills', '/depoimentos']) {
+    for (const rota of ['/diferenciais', '/como-uso-ia', '/depoimentos']) {
       await pagina.goto(rota);
 
       await expect(pagina.locator('main pre'), rota).toHaveAttribute('translate', 'no');

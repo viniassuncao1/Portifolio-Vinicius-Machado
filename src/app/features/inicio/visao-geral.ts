@@ -8,13 +8,13 @@ import { AlternarVisao } from '../../shared/alternar-visao/alternar-visao';
 import { Revelar } from '../../shared/movimento/revelar';
 import { TemaDeSecao } from '../../shared/movimento/tema-de-secao';
 import { Hero } from './hero';
-import { ContatoEmTerminal } from './secoes/contato-em-terminal';
-import { ExperienciaEmGrafo } from './secoes/experiencia-em-grafo';
-import { FormacaoEIdiomas } from './secoes/formacao-e-idiomas';
-import { ProjetosEmDestaque } from './secoes/projetos-em-destaque';
-import { Provas } from './secoes/provas';
-import { SobreEmCartoes } from './secoes/sobre-em-cartoes';
-import { StackEmGradle } from './secoes/stack-em-gradle';
+import { ContatoEmTerminal } from '../../shared/cartoes/contato-em-terminal';
+import { ExperienciaEmGrafo } from '../../shared/cartoes/experiencia-em-grafo';
+import { FormacaoEIdiomas } from '../../shared/cartoes/formacao-e-idiomas';
+import { ProjetosEmDestaque } from '../../shared/cartoes/projetos-em-destaque';
+import { Provas } from '../../shared/cartoes/provas';
+import { SobreEmCartoes } from '../../shared/cartoes/sobre-em-cartoes';
+import { StackEmGradle } from '../../shared/cartoes/stack-em-gradle';
 
 /**
  * A visão "Cartão" do Início: a página que quem recruta lê em segundos (ADR-0019). Cada bloco tem o

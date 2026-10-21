@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { PROVAS } from '../../../core/perfil';
-import { Contador } from '../../../shared/movimento/contador';
+import { PROVAS } from '../../core/perfil';
+import { Contador } from '../../shared/movimento/contador';
 
 /** Quatro fatos curtos, todos já afirmados nas seções do site; os números contam ao entrar na janela. */
 @Component({

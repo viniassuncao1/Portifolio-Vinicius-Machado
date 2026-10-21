@@ -28,8 +28,38 @@ const semearSessao = (contexto: BrowserContext) =>
     { chave: CHAVE_DA_ABERTURA, escolha: 'codigo' },
   );
 
+/** Rotas que têm as duas visões: o HTML traz o cartão e, ao hidratar, a visão lembrada pode ser o código. */
+const ROTAS_COM_DUAS_VISOES = new Set([
+  '/',
+  '/sobre-mim',
+  '/skills',
+  '/experiencias',
+  '/formacao',
+  '/contato',
+]);
+
 export const test = base.extend<{ visao: VisaoDoTeste }>({
   visao: ['codigo', { option: true }],
+  // Na visão em código o HTML pré-renderizado ainda é o cartão: depois do `goto`, os testes esperam
+  // o editor aparecer, para não ler o cartão achando que é o código.
+  page: async ({ page, visao, javaScriptEnabled }, use) => {
+    if (visao === 'codigo' && javaScriptEnabled !== false) {
+      const irPara = page.goto.bind(page);
+      page.goto = async (url, opcoes) => {
+        const resposta = await irPara(url, opcoes);
+        const caminho = new URL(url, 'http://localhost').pathname.replace(/\/$/, '') || '/';
+        if (ROTAS_COM_DUAS_VISOES.has(caminho)) {
+          await page
+            .locator('main app-editor-de-codigo')
+            .first()
+            .waitFor({ state: 'attached', timeout: 15_000 })
+            .catch(() => undefined);
+        }
+        return resposta;
+      };
+    }
+    await use(page);
+  },
   // Cobre o `page` do Playwright: o contexto já nasce com a sessão marcada.
   context: async ({ context, visao }, use) => {
     await semearSessao(context);

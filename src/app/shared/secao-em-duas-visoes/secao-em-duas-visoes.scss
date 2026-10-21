@@ -1,0 +1,31 @@
+:host {
+  display: block;
+}
+
+.troca {
+  padding: 0 1rem 0.75rem;
+}
+
+// A visão em cartão usa o tema da seção (`--s-*`, aplicado ao <html> por `appTemaDeSecao`).
+.cartao-da-secao {
+  min-height: 100%;
+  background: var(--s-fundo);
+  color: var(--s-texto);
+  font-family: var(--fonte-display);
+}
+
+.barra {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 0.75rem clamp(1rem, 4vw, 2.5rem);
+  background: color-mix(in srgb, var(--s-fundo) 86%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.coluna {
+  box-sizing: border-box;
+  max-width: var(--largura-pagina);
+  margin-inline: auto;
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 4vw, 2.5rem) clamp(3rem, 8vw, 6rem);
+}

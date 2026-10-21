@@ -348,8 +348,8 @@ test.describe('Próximo arquivo', () => {
     const contexto = await browser.newContext({ javaScriptEnabled: false });
     const pagina = await contexto.newPage();
 
-    await pagina.goto('/sobre-mim');
-    await expect(pagina.locator('app-proximo-arquivo a')).toHaveAttribute('href', '/diferenciais');
+    await pagina.goto('/diferenciais');
+    await expect(pagina.locator('app-proximo-arquivo a')).toHaveAttribute('href', '/como-uso-ia');
     await pagina.goto('/');
     await expect(pagina.locator('app-proximo-arquivo a')).toHaveCount(0);
     await contexto.close();
