@@ -6,6 +6,7 @@ import {
   computed,
   effect,
   inject,
+  signal,
   viewChildren,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -35,6 +36,8 @@ export class FaixaDeAbas {
 
   protected readonly abas = this.estado.abas;
   protected readonly slugAtivo = computed(() => this.estado.ativa()?.slug);
+  /** Posição e largura da aba ativa (px), medidas depois de cada renderização. */
+  protected readonly indicador = signal({ x: 0, largura: 0 });
 
   constructor() {
     effect(() => {
@@ -43,6 +46,7 @@ export class FaixaDeAbas {
       afterNextRender(
         () => {
           this.mostrarAbaAtiva();
+          this.medirIndicador();
           if (this.focoPendente === undefined || this.slugAtivo() !== this.focoPendente) return;
           this.focoPendente = undefined;
           this.focarAbaAtiva();
@@ -105,6 +109,14 @@ export class FaixaDeAbas {
       inline: 'nearest',
       behavior: reduzido ? 'auto' : 'smooth',
     });
+  }
+
+  /** O indicador acompanha a aba ativa: só `transform` muda, então a animação não mexe no layout. */
+  private medirIndicador(): void {
+    const indice = this.abas().findIndex((aba) => aba.slug === this.slugAtivo());
+    const botao = this.botoes()[indice]?.nativeElement;
+    if (!botao) return;
+    this.indicador.set({ x: botao.offsetLeft, largura: botao.offsetWidth });
   }
 
   private focarAbaAtiva(): void {

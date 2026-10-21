@@ -34,8 +34,9 @@ const bannerDoSpring = (): readonly LinhaDoLog[] => [...montarBanner(), { texto:
  * Abertura do site: splash, Run, build, log do Spring e a revelação da IDE. Só relógio e estado
  * (signals): o DOM, o foco e o `inert` ficam no componente `app-abertura`, e o movimento no CSS.
  * Acontece só em `/` e uma vez por sessão; num link direto não há abertura, só o aviso na barra
- * de status. Não há como pular: toda fase tem teto de tempo e, sem clique, a execução começa
- * sozinha. Com movimento reduzido as etapas são as mesmas, sem movimento.
+ * de status. O visitante pode pular a abertura (Esc ou o botão Pular, ADR-0019); sem isso toda
+ * fase tem teto de tempo e, sem clique, a execução começa sozinha. Com movimento reduzido as
+ * etapas são as mesmas, sem movimento.
  */
 @Service()
 export class Abertura {
@@ -110,6 +111,29 @@ export class Abertura {
       return;
     }
     this.executarComMovimento();
+  }
+
+  /**
+   * Pula a abertura (Esc ou o botão Pular): o build e o log aparecem completos de uma vez e a IDE
+   * surge com o fade curto do movimento reduzido. Vale em qualquer fase antes da revelação.
+   */
+  pular(): void {
+    const fase = this.fase();
+    if (fase === 'encerrada' || fase === 'revelando') return;
+    this.cancelar();
+    this.reduzidoNaExecucao = true;
+    this.anunciar('Abertura pulada. Portfólio pronto');
+    const t = LINHA_DO_TEMPO;
+    this.tarefas.set(['compileJava', ...t.tarefas.map((x) => x.nome.replace(/^:/, ''))]);
+    this.arquivosCompilados.set(CLASSES_COMPILADAS.map(caminhoDaClasse));
+    this.progressoDoBuild.set(1);
+    this.buildConcluido.set(true);
+    this.abaAtiva.set('run');
+    this.linhasDoLog.set([...bannerDoSpring(), ...montarLog(new Date())]);
+    this.iniciado.set(true);
+    this.pulso.set(false);
+    this.fase.set('iniciando');
+    this.revelar();
   }
 
   /** Marca o fim da revelação: a abertura sai do DOM e o aviso passa a valer. */

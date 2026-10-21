@@ -30,7 +30,19 @@
     <div class="coluna" appRevelar><app-projetos-em-destaque /></div>
   </section>
 
-  <section class="faixa" appTemaDeSecao="contato" aria-label="Contato">
+  <section class="faixa" id="contato-do-inicio" appTemaDeSecao="contato" aria-label="Contato">
     <div class="coluna" appRevelar><app-contato-em-terminal /></div>
   </section>
+
+  <nav class="atalhos" aria-label="Atalhos">
+    <a class="pilula" routerLink="/projetos">
+      Projetos <span class="seta-aninhada" aria-hidden="true">↗</span>
+    </a>
+    <a class="pilula secundaria" [href]="curriculo" download>
+      Currículo <span class="seta-aninhada" aria-hidden="true">↓</span>
+    </a>
+    <button type="button" class="pilula secundaria" (click)="irParaOContato()">
+      Contato <span class="seta-aninhada" aria-hidden="true">↓</span>
+    </button>
+  </nav>
 </div>

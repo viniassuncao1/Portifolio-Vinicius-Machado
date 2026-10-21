@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, DOCUMENT, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
+import { ENDERECO_DO_CURRICULO } from '../../core/perfil';
+import { MovimentoConfig } from '../../core/movimento/movimento-config';
 import { AcoesDoRecrutador } from '../../shared/acoes-do-recrutador/acoes-do-recrutador';
 import { AlternarVisao } from '../../shared/alternar-visao/alternar-visao';
 import { Revelar } from '../../shared/movimento/revelar';
@@ -29,6 +32,7 @@ import { StackEmGradle } from './secoes/stack-em-gradle';
     Hero,
     ProjetosEmDestaque,
     Provas,
+    RouterLink,
     Revelar,
     SobreEmCartoes,
     StackEmGradle,
@@ -37,4 +41,16 @@ import { StackEmGradle } from './secoes/stack-em-gradle';
   templateUrl: './visao-geral.html',
   styleUrl: './visao-geral.scss',
 })
-export class VisaoGeral {}
+export class VisaoGeral {
+  private readonly documento = inject(DOCUMENT);
+  private readonly movimento = inject(MovimentoConfig);
+  protected readonly curriculo = ENDERECO_DO_CURRICULO;
+
+  /** Atalho do celular: leva à faixa do contato, sem animação com movimento reduzido. */
+  protected irParaOContato(): void {
+    this.documento.getElementById('contato-do-inicio')?.scrollIntoView({
+      behavior: this.movimento.reduzido() ? 'auto' : 'smooth',
+      block: 'start',
+    });
+  }
+}

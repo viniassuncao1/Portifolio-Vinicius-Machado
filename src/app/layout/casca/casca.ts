@@ -18,6 +18,7 @@ import { Abertura } from '../../core/abertura';
 import { JanelaDePreviewComponente } from '../../shared/janela-de-preview/janela-de-preview';
 import { BuscaDeSecoes } from '../busca-de-secoes/busca-de-secoes';
 import { BarraDeStatus } from '../barra-de-status/barra-de-status';
+import { BarraDeCarregamento } from '../barra-de-carregamento/barra-de-carregamento';
 import { BarraDeFerramentas } from '../barra-de-ferramentas/barra-de-ferramentas';
 import { FaixaDeAbas } from '../faixa-de-abas/faixa-de-abas';
 import { FaixaDeFerramentas } from '../faixa-de-ferramentas/faixa-de-ferramentas';
@@ -35,6 +36,7 @@ import { AberturaComponente } from '../abertura/abertura';
   selector: 'app-casca',
   imports: [
     RouterOutlet,
+    BarraDeCarregamento,
     BarraDeFerramentas,
     FaixaDeFerramentas,
     PainelLateral,

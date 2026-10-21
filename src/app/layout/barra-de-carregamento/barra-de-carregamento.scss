@@ -1,0 +1,41 @@
+:host {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 30;
+  height: 2px;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.fio {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--cor-acento), var(--cor-run));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+:host([data-estado='correndo']) {
+  opacity: 1;
+
+  .fio {
+    transform: scaleX(0.8);
+    transition: transform 1.2s var(--curva-saida);
+  }
+}
+
+:host([data-estado='terminando']) {
+  opacity: 0;
+  transition: opacity 0.25s var(--curva-padrao);
+
+  .fio {
+    transform: scaleX(1);
+    transition: transform 0.2s var(--curva-saida);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    display: none;
+  }
+}

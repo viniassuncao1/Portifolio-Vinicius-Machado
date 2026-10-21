@@ -10,6 +10,7 @@
 }
 
 .acao {
+  flex: none;
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
@@ -55,9 +56,14 @@
 }
 
 .aviso {
-  min-width: 8rem;
-  color: var(--s-secundario);
-  font-size: 0.8125rem;
+  // Só para leitores de tela: quem enxerga vê a confirmação no próprio botão.
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .somente-leitores {
@@ -73,5 +79,14 @@
 @media (prefers-reduced-motion: reduce) {
   .acao {
     transition: none;
+  }
+}
+
+// No celular as ações viram uma fileira que rola na horizontal, em vez de ocupar a tela.
+@media (max-width: 767px) {
+  .acoes {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
 }

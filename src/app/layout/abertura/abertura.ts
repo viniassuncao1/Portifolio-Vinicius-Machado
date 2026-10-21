@@ -29,7 +29,7 @@ type DocumentoComTransicao = Document & {
  * Camada da abertura: o DOM, o foco, o `inert` e a coreografia de recolher. O estado e o relógio
  * são do serviço `Abertura`; o movimento está no CSS. É um diálogo modal com o resto da casca
  * `inert`; o foco vai para o ▶ quando o projeto fica pronto, para a janela ao executar e para o
- * `<main>` ao fim. Esc não faz nada e não há botão de pular.
+ * `<main>` ao fim. Esc ou o botão Pular encerram a abertura na hora (ADR-0019).
  */
 @Component({
   selector: 'app-abertura',
@@ -86,8 +86,17 @@ export class AberturaComponente {
     this.abertura.executar();
   }
 
-  /** O atalho de executar do IntelliJ: ⌃R no Mac, ⇧F10 nos outros sistemas. Esc não faz nada. */
+  protected pular(): void {
+    this.abertura.pular();
+  }
+
+  /** Esc pula a abertura; o atalho de executar do IntelliJ é ⌃R no Mac e ⇧F10 nos outros sistemas. */
   protected aoTeclar(evento: KeyboardEvent): void {
+    if (evento.key === 'Escape' && this.abertura.ativa()) {
+      evento.preventDefault();
+      this.abertura.pular();
+      return;
+    }
     if (this.abertura.fase() !== 'pronto') return;
     const mac = this.abertura.ehMac && evento.ctrlKey && !evento.metaKey && evento.key === 'r';
     const outros = !this.abertura.ehMac && evento.shiftKey && evento.key === 'F10';

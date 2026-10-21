@@ -20,7 +20,7 @@
     [attr.aria-hidden]="email.disponivel() ? null : 'true'"
     (click)="email.copiar()"
   >
-    Copiar e-mail
+    {{ copiado() ? 'E-mail copiado ✓' : 'Copiar e-mail' }}
   </button>
   <span class="aviso" role="status" aria-live="polite">{{ email.aviso() }}</span>
 </nav>

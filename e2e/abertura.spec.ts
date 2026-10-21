@@ -503,30 +503,27 @@ test.describe('Abertura: execução, build e Spring', () => {
   });
 });
 
-test.describe('Abertura: sem pular e com teto', () => {
-  test('não há botão de pular em nenhuma fase e o Esc não fecha nada', async ({ page }) => {
+test.describe('Abertura: pular e teto', () => {
+  test('o botão Pular aparece e o Esc leva direto à IDE', async ({ page }) => {
     await abrirComRelogio(page);
-    const pular = page
-      .locator('app-abertura')
-      .getByRole('button', { name: /pular|skip|fechar|close/i });
+    await expect(page.locator('app-abertura').getByRole('button', { name: /Pular/ })).toBeVisible();
 
-    await expect(pular).toHaveCount(0);
     await page.keyboard.press('Escape');
     await assentar(page);
-    await faseDe(page, 'splash');
+    await expect(abertura(page)).toHaveAttribute('data-fase', 'revelando');
+    await avancar(page, 1000);
+    await faseDe(page, 'encerrada');
+  });
 
+  test('pular na fase de pronto também funciona, com o botão', async ({ page }) => {
+    await abrirComRelogio(page);
     await ateOPronto(page);
-    await expect(pular).toHaveCount(0);
-    await page.keyboard.press('Escape');
-    await assentar(page);
-    await faseDe(page, 'pronto');
 
-    await executar(page);
-    await expect(pular).toHaveCount(0);
-    await page.keyboard.press('Escape');
+    await page.locator('app-abertura').getByRole('button', { name: /Pular/ }).click();
     await assentar(page);
-    await expect(abertura(page)).not.toHaveAttribute('data-fase', 'encerrada');
-    await expect(abertura(page)).not.toHaveAttribute('data-fase', 'revelando');
+    await avancar(page, 1000);
+
+    await faseDe(page, 'encerrada');
   });
 
   test('o pior caso sem nenhum clique leva cerca de 12 s e termina no portfólio', async ({

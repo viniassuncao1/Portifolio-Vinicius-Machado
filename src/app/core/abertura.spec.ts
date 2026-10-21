@@ -201,7 +201,7 @@ describe('Abertura', () => {
       expect(abertura.pulso()).toBe(false);
     });
 
-    it('não há como pular: nada além do ▶ muda a fase', async () => {
+    it('Esc não executa o ▶: quem pula usa o método pular()', async () => {
       const abertura = comecar();
       await ateOPronto(abertura);
 
@@ -209,7 +209,42 @@ describe('Abertura', () => {
       await avancar(100);
 
       expect(abertura.fase()).toBe('pronto');
-      expect('pular' in abertura).toBe(false);
+    });
+
+    it('pular() mostra o build e o log completos e revela a IDE com o fade curto', async () => {
+      const abertura = comecar();
+      await ateOPronto(abertura);
+
+      abertura.pular();
+
+      expect(abertura.buildConcluido()).toBe(true);
+      expect(abertura.iniciado()).toBe(true);
+      expect(abertura.abaAtiva()).toBe('run');
+      expect(abertura.fase()).toBe('revelando');
+      await avancar(LINHA_DO_TEMPO.reduzido.fade);
+      expect(abertura.fase()).toBe('encerrada');
+      expect(abertura.aviso()).toContain('PortfolioApplication');
+    });
+
+    it('pular() vale já no splash, antes de o projeto ficar pronto', async () => {
+      const abertura = comecar();
+
+      abertura.pular();
+
+      expect(abertura.fase()).toBe('revelando');
+      await avancar(LINHA_DO_TEMPO.reduzido.fade);
+      expect(abertura.fase()).toBe('encerrada');
+    });
+
+    it('pular() não faz nada depois da revelação nem sem abertura', async () => {
+      const abertura = comecar();
+      await ateOPronto(abertura);
+      abertura.pular();
+      await avancar(LINHA_DO_TEMPO.reduzido.fade);
+
+      abertura.pular();
+
+      expect(abertura.fase()).toBe('encerrada');
     });
   });
 
