@@ -1,7 +1,7 @@
 # 0026: Fechando a experiência
 
 - **Data:** 2026-10-21
-- **Change:** [refatorar-experiencia-do-usuario](../../openspec/changes/refatorar-experiencia-do-usuario/) (grupo 9, fechamento)
+- **Change:** [refatorar-experiencia-do-usuario](../../openspec/changes/archive/2026-10-21-refatorar-experiencia-do-usuario/) (grupo 9, fechamento)
 - **PR:** [#44](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/44) (sem publicar)
 - **Testes:** 1030 testes unitários (95,25% de cobertura de instruções) e 1142 testes E2E
 - **ADRs:** [0019](../adr/0019-experiencia-focada-em-recrutadores.md) e [0020](../adr/0020-deploy-de-producao-manual.md)
@@ -49,7 +49,7 @@ equipe, e revisar no `localhost:4200`.
 
 ## Links
 
-- Change: [`openspec/changes/refatorar-experiencia-do-usuario`](../../openspec/changes/refatorar-experiencia-do-usuario/)
+- Change: [`openspec/changes/refatorar-experiencia-do-usuario`](../../openspec/changes/archive/2026-10-21-refatorar-experiencia-do-usuario/)
 - Documentação: [componentes](../componentes.md#casca) e [arquitetura](../arquitetura.md#casca-reimaginada-fechamento-da-experiência)
 - Entrada anterior: [0024 refinos da experiência](0024-refinos-da-experiencia.md)
 

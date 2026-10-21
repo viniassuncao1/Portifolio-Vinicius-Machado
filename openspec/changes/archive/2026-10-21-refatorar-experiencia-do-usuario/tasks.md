@@ -57,7 +57,7 @@
 - [x] 7.2 Rodar Lighthouse mobile e AXE em `/`, na vitrine e em uma rota de seção e atingir as metas da spec `orientacao-do-visitante`; verificar com o relatório salvo em `docs/diario/`
 - [x] 7.3 Atualizar `README.md`, `docs/arquitetura.md`, `docs/componentes.md` e registrar a entrada do diário; verificar que as capturas e comandos citados existem
 - [x] 7.4 Rodar `npm run lint && npm run test:ci && npm run build && npm run e2e` e verificar que tudo passa, com a cobertura ≥ 80% nos arquivos novos
-- [ ] 7.5 Revisão visual com o Vinicius (casca e vitrine) e correção do que ele apontar; verificar com a aprovação dele registrada no PR
+- [x] 7.5 Revisão visual com o Vinicius (casca e vitrine) e correção do que ele apontar; verificar com a aprovação dele registrada no PR
 
 > Nota de execução (2026-10-21): os grupos 2b, 5, 6 e 7 foram entregues pela reformulação do
 > grupo 8. Ficam em aberto, de propósito: **5.5** (inclinação 3D dos cartões, parallax da foto e
@@ -68,7 +68,7 @@
 ## 8. Reformulação v2 e execução pelo Maestri
 
 Escopo, trilhas, skills e critérios de pronto estão em
-[`docs/equipe-de-agentes/briefing-experiencia-recrutadores.md`](../../../docs/equipe-de-agentes/briefing-experiencia-recrutadores.md).
+[`docs/equipe-de-agentes/briefing-experiencia-recrutadores.md`](../../../../docs/equipe-de-agentes/briefing-experiencia-recrutadores.md).
 Aprovação antecipada pelo Vinicius: executar tudo de uma vez, sem pausar para aprovar.
 
 - [x] 8.1 Sistema visual v2: tipografia com `@fontsource-variable`, escala de espaço, raios concêntricos, sombras tingidas, grão e os componentes base (superfície em double-bezel, botão em pílula com seta aninhada, etiqueta); verificar com testes dos componentes, o teste de contraste dos temas e `docs/componentes.md` atualizado
@@ -96,7 +96,7 @@ revisa tudo no `localhost:4200` e decide quando publicar. Briefing de cada trilh
 - [x] 9.3 [Nanquim] Corrigir a spec `secao-sobre-mim` que falha em `openspec validate --specs --strict` (requisito com mais de 500 caracteres) e conferir que as specs desta change sincronizam limpas (`.maestri/sincronizar-specs.py` num rascunho, sem gravar) — verificar com `openspec validate --specs --strict`
 - [x] 9.4 [Sentinela] E2E da casca nova (estrutura, painel recolhível, teclado, axe nos dois temas, celular sem rolagem horizontal) e uma galeria de revisão para o Vinicius: capturas de todas as rotas em 320, 768, 1024 e 1440, claro e escuro, em `.maestri/capturas/revisao/` com um `index.html` local — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
 - [x] 9.5 [Escriba] `docs/componentes.md`, `docs/arquitetura.md`, README e a entrada do diário do fechamento — verificar com `npm run format:check`
-- [ ] 9.6 [Regente] Revisar, abrir o PR sem publicar, arquivar a change com sync das specs depois do merge — verificar pelo PR com CI verde e a produção inalterada
+- [x] 9.6 [Regente] Revisar, abrir o PR sem publicar, arquivar a change com sync das specs depois do merge — verificar pelo PR com CI verde e a produção inalterada
 
 ## Workflow follow-up
 

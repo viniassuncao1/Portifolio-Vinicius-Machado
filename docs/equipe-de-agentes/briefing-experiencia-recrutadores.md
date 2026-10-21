@@ -1,7 +1,7 @@
 # Briefing para o Maestri: experiência focada em recrutadores
 
 Data: 2026-10-21. Autor: Vinicius, com o plano montado por uma sessão do Claude Code.
-Change: [`refatorar-experiencia-do-usuario`](../../openspec/changes/refatorar-experiencia-do-usuario/).
+Change: [`refatorar-experiencia-do-usuario`](../../openspec/changes/archive/2026-10-21-refatorar-experiencia-do-usuario/).
 Branch: `feat/refatorar-experiencia` (já criada, com trabalho não commitado no checkout).
 
 ## 0. Autorização e regras de execução (leia primeiro)
@@ -238,7 +238,7 @@ Skills: `e2e-testing`, `browser-qa`, `playwright-cli`, `verification-loop`, `tdd
 - E2. Atualizar `README.md`, `docs/arquitetura.md`, `docs/componentes.md` e a entrada 0023 do
   diário (problema, decisões, números antes e depois, aprendizado, rascunho de post para o
   LinkedIn).
-- E3. Manter `openspec/changes/refatorar-experiencia-do-usuario/` consistente (specs, design e
+- E3. Manter `openspec/changes/archive/2026-10-21-refatorar-experiencia-do-usuario/` consistente (specs, design e
   `tasks.md` com as caixas marcadas conforme o que for entregue).
 
 ### Trilha F: Regente (integração)

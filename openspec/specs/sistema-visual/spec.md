@@ -42,24 +42,6 @@ movimento no sistema, exibindo o estado final diretamente.
 - **WHEN** o usuário com `prefers-reduced-motion: reduce` troca de seção ou expande a árvore
 - **THEN** o novo estado aparece imediatamente, sem animação
 
-### Requirement: Design como referência
-As telas em `design/telas/` SHALL ser a referência das informações e da identidade visual
-(paleta da interface, ícones, editor de cantos arredondados, abas e cabeçalho do painel). Do
-IntelliJ IDEA ficam o projeto em pastas, as referências ao Git, a faixa de ferramentas, a barra
-de status com o caminho do arquivo, a tipografia compacta e as cores de sintaxe do Java.
-Desvios MUST ser registrados no design da change.
-
-#### Scenario: Comparação com a tela 01
-- **WHEN** a página inicial é aberta numa janela de 1920x1080
-- **THEN** as informações, os ícones e as cores da interface batem com a `tela-01.png`: painel e
-  editor nos cinzas do design e editor com cantos arredondados; a barra de ferramentas é escura
-  (desvio registrado) e o código usa as cores de sintaxe do Java do IntelliJ
-
-#### Scenario: Desvio intencional
-- **WHEN** uma change acrescenta algo que não existe no design
-- **THEN** o elemento usa os tokens do sistema visual e o desvio está descrito no design da
-  change
-
 ### Requirement: Escala da tipografia
 Numa tela de desktop, a interface SHALL usar 13px (árvore com linhas de 24px, barra de status com
 texto de 12px) e o código 14px com linhas de 22px e números de linha de 13px, com o painel
@@ -72,12 +54,15 @@ tokens.
   painel lateral tem 280px
 
 ### Requirement: Acento único e foco
-O sistema SHALL usar um único acento, o rosa do design (`#DE60D2`), e todo controle focável
-MUST mostrar um anel de foco rosa de 2px.
+Cada tema SHALL definir um acento próprio por token, usado de forma consistente dentro dele, e todo
+controle focável MUST mostrar um anel de foco de 2px com contraste de pelo menos 3:1 contra o fundo
+do tema ativo, sem depender só da cor.
 
 #### Scenario: Foco no teclado
-- **WHEN** o visitante navega com Tab pela árvore, pelas abas e pelos botões
-- **THEN** cada controle focado mostra o anel rosa de 2px
+- **WHEN** o visitante navega com Tab pela árvore, pelas abas e pelos botões em seções de temas
+  diferentes
+- **THEN** cada controle focado mostra o anel de 2px com contraste de pelo menos 3:1 no tema da
+  seção
 
 ### Requirement: Ajustes nativos do navegador
 O sistema SHALL declarar `color-scheme` e `theme-color` de acordo com o tema ativo (`#2B2B2B` no
@@ -110,3 +95,28 @@ palavras-chave `#CF8E6D`, textos `#6AAB73`, números `#2AACB8`, anotações `#B3
 #### Scenario: Palavra-chave no editor
 - **WHEN** o editor exibe `public class`
 - **THEN** as palavras-chave aparecem em `#CF8E6D`, com contraste de pelo menos 4,5:1
+
+### Requirement: Linguagem mínima de IDE
+O portfólio SHALL manter uma linguagem de IDE mínima, com referências ao Java e ao IntelliJ IDEA
+(projeto em pacotes, abas, barra de status com caminho e Git, ▶ Executar, sintaxe do Java), e MUST
+NOT seguir fielmente as telas de `design/telas/`. Os desvios em relação ao design original MUST
+constar no ADR que revisa o ADR-0012.
+
+#### Scenario: Reconhecimento de IDE
+- **WHEN** um visitante vê a página inicial
+- **THEN** reconhece uma IDE pelo projeto em pacotes, pelas abas, pela barra de status e pelo
+  código em Java, sem precisar que o visual coincida com uma tela do design
+
+#### Scenario: Desvio registrado
+- **WHEN** a interface adota uma forma, cor ou estrutura que difere de `design/telas/`
+- **THEN** o desvio consta no ADR que revisa o ADR-0012 ou no design da change
+
+### Requirement: Tokens de tema por seção
+O sistema SHALL definir, para cada seção da página inicial, um conjunto de tokens (fundo, texto,
+texto secundário, linha, acento, acento secundário e texto sobre o acento) e MUST validar em
+teste que todo par de texto e fundo de cada conjunto tem contraste de pelo menos 4,5:1, inclusive
+no tema claro.
+
+#### Scenario: Novo tema reprovado
+- **WHEN** um conjunto de tokens de seção tem um par de texto e fundo abaixo de 4,5:1
+- **THEN** o teste de contraste falha e aponta a seção e o par

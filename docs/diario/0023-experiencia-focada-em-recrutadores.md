@@ -1,7 +1,7 @@
 # 0023: Experiência focada em recrutadores
 
 - **Data:** 2026-10-20
-- **Change:** [refatorar-experiencia-do-usuario](../../openspec/changes/refatorar-experiencia-do-usuario/)
+- **Change:** [refatorar-experiencia-do-usuario](../../openspec/changes/archive/2026-10-21-refatorar-experiencia-do-usuario/)
 - **PR:** [#41](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/41)
 - **ADRs:** [0019](../adr/0019-experiencia-focada-em-recrutadores.md)
 
