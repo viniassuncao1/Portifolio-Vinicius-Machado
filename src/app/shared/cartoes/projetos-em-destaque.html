@@ -5,7 +5,7 @@
 <ul class="bento">
   @for (projeto of projetos; track projeto.slug; let i = $index) {
     <li [attr.data-posicao]="i">
-      <a class="cartao casca-dupla" [routerLink]="['/projetos', projeto.slug]">
+      <a appInclinar class="cartao casca-dupla" [routerLink]="['/projetos', projeto.slug]">
         <span class="miolo">
           <span class="capa">
             @if (projeto.imagens[0]; as imagem) {

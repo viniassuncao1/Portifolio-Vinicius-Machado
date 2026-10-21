@@ -17,6 +17,7 @@ import { MovimentoConfig } from '../../core/movimento/movimento-config';
 import { MOVIMENTO } from '../../core/movimento/movimento.tokens';
 import { ENDERECO_DO_CURRICULO, PERFIL } from '../../core/perfil';
 import { Magnetico } from '../../shared/movimento/magnetico';
+import { Parallax } from '../../shared/movimento/parallax';
 
 type TipoDeTrecho = 'palavra' | 'texto' | 'comum';
 type Trecho = readonly [texto: string, tipo: TipoDeTrecho];
@@ -85,7 +86,7 @@ export class DigitacaoDoHero {
  */
 @Component({
   selector: 'app-hero',
-  imports: [NgOptimizedImage, RouterLink, Magnetico],
+  imports: [Parallax, NgOptimizedImage, RouterLink, Magnetico],
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
 })
