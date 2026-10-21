@@ -98,7 +98,10 @@
                 </div>
                 <p class="descricao">
                   Este é o trecho de abertura do projeto. O arquivo completo, com o Javadoc e os
-                  detalhes, está em <a [routerLink]="['/' + p.secao]">{{ p.secao }}</a
+                  detalhes, está em
+                  <a [routerLink]="['/' + p.secao]" [queryParams]="{ visao: 'codigo' }">{{
+                    p.secao
+                  }}</a
                   >.
                 </p>
               }
@@ -138,7 +141,7 @@
                 <span class="rotulo"> (abre em nova aba)</span>
               </a>
             }
-            <a class="botao" [routerLink]="['/' + p.secao]">
+            <a class="botao" [routerLink]="['/' + p.secao]" [queryParams]="{ visao: 'codigo' }">
               Ver em código <span aria-hidden="true">{{ '{ }' }}</span>
             </a>
           </div>

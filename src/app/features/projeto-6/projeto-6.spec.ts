@@ -2,8 +2,13 @@ import { TestBed } from '@angular/core/testing';
 
 import { Projeto6 } from './projeto-6';
 import { CONTEUDO_PROJETO_6 } from './projeto-6.conteudo';
+import { VisaoDoConteudoEscolhida } from '../../core/visao-do-conteudo';
 
 describe('Projeto6', () => {
+  // Estes testes cobrem a visão em código; o cartão tem os seus em `shared/cartoes` e nos E2E.
+  beforeEach(() => TestBed.inject(VisaoDoConteudoEscolhida).escolher('codigo'));
+  afterEach(() => localStorage.clear());
+
   async function codigo(): Promise<string> {
     const fixture = TestBed.createComponent(Projeto6);
     await fixture.whenStable();
