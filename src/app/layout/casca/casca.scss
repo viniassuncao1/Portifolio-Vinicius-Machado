@@ -76,6 +76,8 @@
   min-height: 0;
   border-end-start-radius: var(--raio-editor);
   background: var(--cor-editor);
+  // Um fio de luz no topo do editor: a superfície ganha volume sem mudar de tamanho.
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--cor-texto) 7%, transparent);
 }
 
 // Região rolável do editor (alcançável por teclado pelo próprio bloco de código).

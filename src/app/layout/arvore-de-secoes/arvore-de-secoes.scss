@@ -47,6 +47,16 @@ nav > ul {
       opacity: 1;
     }
   }
+
+  // Barra de acento na borda do arquivo da seção atual (a mesma cor do indicador das abas).
+  &.atual::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 2px;
+    background: var(--cor-acento);
+  }
 }
 
 // Arquivos não têm seta: o ícone fica sob o da pasta, deslocado pela largura da seta.
