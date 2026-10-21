@@ -26,8 +26,9 @@ Um ADR aceito não é editado. Se a decisão mudar, um novo ADR o substitui e o 
 | [0016](0016-repositorio-no-estilo-do-github.md)           | Página do repositório no estilo do GitHub                    | Aceito                                         |
 | [0017](0017-abertura-com-run.md)                          | Abertura com Run                                             | Aceito, substituído em parte pelo 0019         |
 | [0018](0018-secoes-num-arquivo-so.md)                     | Seções num arquivo só, sem paginação                         | Aceito                                         |
-| [0019](0019-experiencia-focada-em-recrutadores.md)        | Experiência focada em recrutadores                           | Aceito                                         |
+| [0019](0019-experiencia-focada-em-recrutadores.md)        | Experiência focada em recrutadores                           | Aceito, substituído em parte pelo 0021         |
 | [0020](0020-deploy-de-producao-manual.md)                 | Deploy de produção manual                                    | Aceito                                         |
+| [0021](0021-ide-como-linguagem-do-conteudo.md)            | A IDE como linguagem do conteúdo                             | Aceito                                         |
 
 ## Modelo
 
