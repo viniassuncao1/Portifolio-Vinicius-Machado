@@ -105,7 +105,9 @@ test.describe('Certificações sem JavaScript', () => {
   }) => {
     await page.goto('/certificacoes');
 
-    for (const [nome] of CURSOS) await expect(codigo(page)).toContainText(nome);
+    for (const [nome] of CURSOS) {
+      await expect(page.locator('main .cartao-da-secao')).toContainText(nome);
+    }
     await expect(controle(page)).toHaveCount(0);
     await expect(page.locator('main')).not.toContainText('em construção');
   });

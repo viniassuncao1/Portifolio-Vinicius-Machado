@@ -12,6 +12,8 @@
   font-family: var(--fonte-interface);
   font-size: var(--texto-arvore);
   user-select: none;
+  // A barra se separa do painel por uma sombra fina, não por mais uma borda (a altura não muda).
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--cor-texto) 5%, transparent);
 }
 
 .botao {

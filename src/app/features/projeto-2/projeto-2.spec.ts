@@ -1,11 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
 import { Projeto2 } from './projeto-2';
+import { VisaoDoConteudoEscolhida } from '../../core/visao-do-conteudo';
 
 const PALAVRAS_DE_TEXTO_GERADO =
   /\b(robusto|robusta|crucial|fundamental|mergulh\w+|ecossistema)\b/i;
 
 describe('Projeto2', () => {
+  // Estes testes cobrem a visão em código; o cartão tem os seus em `shared/cartoes` e nos E2E.
+  beforeEach(() => TestBed.inject(VisaoDoConteudoEscolhida).escolher('codigo'));
+  afterEach(() => localStorage.clear());
+
   async function renderizar(): Promise<HTMLElement> {
     const fixture = TestBed.createComponent(Projeto2);
     await fixture.whenStable();

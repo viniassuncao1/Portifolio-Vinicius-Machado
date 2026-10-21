@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { paragrafosDoJavadoc } from '../../shared/editor-de-codigo/conteudo';
 import { Depoimentos } from './depoimentos';
 import { CONTEUDO_DEPOIMENTOS } from './depoimentos.conteudo';
+import { VisaoDoConteudoEscolhida } from '../../core/visao-do-conteudo';
 
 /** Texto da recomendação de Luana Porto, um item por parágrafo, como foi escrito no LinkedIn. */
 const PARAGRAFOS = [
@@ -12,6 +13,10 @@ const PARAGRAFOS = [
 ];
 
 describe('Depoimentos', () => {
+  // Estes testes cobrem a visão em código; o cartão tem os seus em `shared/cartoes` e nos E2E.
+  beforeEach(() => TestBed.inject(VisaoDoConteudoEscolhida).escolher('codigo'));
+  afterEach(() => localStorage.clear());
+
   async function renderizar(): Promise<HTMLElement> {
     const fixture = TestBed.createComponent(Depoimentos);
     await fixture.whenStable();

@@ -9,6 +9,7 @@ import {
   valor,
   vazia,
 } from '../../shared/editor-de-codigo/conteudo';
+import { DIFERENCIAIS } from '../../core/perfil';
 import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
 
 /** Conteúdo da tela 03 (design/telas/tela-03.png) no estilo de leitura (ADR-0011): dados pessoais em português. */
@@ -16,10 +17,7 @@ export const CONTEUDO_DIFERENCIAIS: ConteudoDoEditor = [
   vazia(),
   linha(0, palavraChave('package'), comum(' dev.vinicius.portfolio.sobre;')),
   vazia(),
-  javadoc(
-    0,
-    'Moro em Brasília há 20 anos. Sou mineiro, extrovertido, curioso e gosto de uma boa discussão, principalmente com quem sabe mais do que eu sobre algum assunto. Estou disposto a experiências novas e não me prendo só a back-end ou front-end: gosto de testar, aprender e encarar o que aparecer pela frente.',
-  ),
+  javadoc(0, DIFERENCIAIS.texto),
   linha(0, palavraChave('public class'), comum(' Diferenciais {')),
   vazia(),
   linha(1, comentario('// Os dados que me definem')),

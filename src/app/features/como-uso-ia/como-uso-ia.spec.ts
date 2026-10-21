@@ -1,11 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ComoUsoIa } from './como-uso-ia';
+import { VisaoDoConteudoEscolhida } from '../../core/visao-do-conteudo';
 
 const INICIO_DO_PARAGRAFO = 'Não vejo IA como modismo';
 const FIM_DO_PARAGRAFO = 'parte de como eu planejo e entrego código.';
 
 describe('ComoUsoIa', () => {
+  // Estes testes cobrem a visão em código; o cartão tem os seus em `shared/cartoes` e nos E2E.
+  beforeEach(() => TestBed.inject(VisaoDoConteudoEscolhida).escolher('codigo'));
+  afterEach(() => localStorage.clear());
+
   async function renderizar(): Promise<HTMLElement> {
     const fixture = TestBed.createComponent(ComoUsoIa);
     await fixture.whenStable();

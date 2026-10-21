@@ -39,13 +39,13 @@
 - [x] 5.2 Implementar a revelação de títulos por linha, dos blocos e a frase que se acende (`animation-timeline` com fallback); verificar que sem JavaScript todo o texto está visível e que com movimento reduzido aparece o estado final
 - [x] 5.3 Implementar o indicador deslizante nas abas e na navegação; verificar com e2e a posição do indicador ao ativar outra aba
 - [x] 5.4 Implementar a linha do tempo que se desenha na visão geral (coluna única no celular); verificar com e2e o preenchimento ao rolar
-- [ ] 5.5 Implementar as interações de ponteiro (botões magnéticos, inclinação 3D, parallax, cursor opcional) só com ponteiro fino e sem ocultar o cursor nativo; verificar que em toque nada é aplicado
+- [x] 5.5 Implementar as interações de ponteiro (botões magnéticos, inclinação 3D, parallax, cursor opcional) só com ponteiro fino e sem ocultar o cursor nativo; verificar que em toque nada é aplicado
 - [x] 5.6 Implementar o relógio de Brasília (30 s, fora de `aria-live`) e o "disponível" na barra de status; verificar com teste unitário usando relógio falso
 - [x] 5.7 Rodar a verificação de reduced-motion e de reflow (sem JavaScript) em todas as telas; verificar com `e2e` dedicado e atualizar a spec de movimento reduzido existente
 
 ## 6. Casca reimaginada e orientação (Pincel)
 
-- [ ] 6.1 Redesenhar a casca (barra superior, painel recolhível, faixa de abas, barra de status, proporções e paleta pelos tokens) mantendo pacotes, abas, Git e ▶ Executar; verificar que as seções abrem pelos mesmos endereços e que `casca.spec.ts` e os e2e de casca passam
+- [x] 6.1 Redesenhar a casca (barra superior, painel recolhível, faixa de abas, barra de status, proporções e paleta pelos tokens) mantendo pacotes, abas, Git e ▶ Executar; verificar que as seções abrem pelos mesmos endereços e que `casca.spec.ts` e os e2e de casca passam
 - [x] 6.2 Criar a visão geral rolável em `/` (primeira dobra, blocos-resumo e caminhos rápidos Projetos/Currículo/Contato) sem perder `Inicio.java` como arquivo; verificar com e2e que a primeira dobra de 1440x900 mostra nome, cargo, stack, "disponível" e as três ações
 - [x] 6.3 Implementar a barra de ações inferior no celular (Seções, Projetos, Contato), a gaveta com pastas abertas e a vitrine em grade; verificar em 390x844 sem rolagem horizontal
 - [x] 6.4 Tornar a abertura opcional (pular com toque/tecla, lembrar a visita, sem atrasar o LCP); verificar com e2e de Esc e de segunda visita
@@ -88,3 +88,8 @@ Aprovação antecipada pelo Vinicius: executar tudo de uma vez, sem pausar para 
 
 - Abrir o PR (o Regente), esperar a CI e o merge sem apagar a branch, e arquivar a change com `/opsx:archive`.
 - Atualizar as specs principais (sync) e registrar o resultado no diário.
+
+> Nota (2026-10-21, segundo PR): **5.5** (inclinação 3D dos cartões, parallax da foto e cursor
+> personalizado, só com ponteiro fino e sem movimento reduzido), **6.1** (acabamento da casca: barra
+> de acento no item atual, sombra interna do editor e da barra de ferramentas) e as visões Cartão
+> de todas as seções restantes foram entregues na branch `feat/refinos-da-experiencia`.

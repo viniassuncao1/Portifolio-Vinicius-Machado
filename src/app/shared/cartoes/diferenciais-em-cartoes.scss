@@ -1,0 +1,31 @@
+:host {
+  display: block;
+}
+
+.bento {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.citacao {
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.dados {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.numero {
+  font-size: 2.5rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+}
+
+@media (max-width: 767px) {
+  .bento {
+    grid-template-columns: 1fr;
+  }
+}

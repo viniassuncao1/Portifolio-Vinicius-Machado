@@ -31,8 +31,7 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
   ([ADR-0016](docs/adr/0016-repositorio-no-estilo-do-github.md),
   [ADR-0013](docs/adr/0013-historico-do-git-gerado-no-build.md)).
 - **Cartão ⇄ Código ([ADR-0019](docs/adr/0019-experiencia-focada-em-recrutadores.md)):** o Início
-  e as seções Sobre Mim, Skills, Experiências, Formação e Contato têm duas visões do mesmo
-  conteúdo. O **cartão** (padrão) se lê em segundos: um hero em que a classe `ViniciusMachado` é
+  e todas as seções têm duas visões do mesmo conteúdo. O **cartão** (padrão) se lê em segundos: um hero em que a classe `ViniciusMachado` é
   digitada na janela da IDE e vira o cartão de apresentação, a barra de ações (currículo, LinkedIn,
   GitHub, copiar e-mail), números que contam, a stack como `build.gradle`, a experiência como
   `git log --graph` e o contato num terminal, com o tema de cor mudando a cada seção. O **código**
@@ -40,6 +39,8 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 - **Vitrine de projetos (`/projetos`):** os seis projetos num carrossel arrastável (ou grade), com
   expansão do cartão até a tela cheia por View Transition, detalhes em `<dialog>` com abas
   "Visão geral / Código / Stack" e endereço compartilhável por projeto.
+- **Interações de ponteiro:** os cartões de projeto se inclinam em 3D, a foto do hero tem parallax e
+  um anel de cursor acompanha o mouse; só com ponteiro fino e nunca com movimento reduzido.
 - **Movimento com cuidado:** CSS e View Transitions primeiro e a biblioteca `motion` carregada só
   depois da hidratação e nunca com `prefers-reduced-motion`; a abertura pode ser pulada (Esc).
   Lighthouse móvel 100 em tudo, LCP de 1,1 s e axe sem violações nos dois temas.

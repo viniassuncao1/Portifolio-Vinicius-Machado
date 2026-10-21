@@ -8,6 +8,7 @@ import {
   valor,
   vazia,
 } from '../../shared/editor-de-codigo/conteudo';
+import { EVENTOS } from '../../core/perfil';
 import type { ConteudoDoEditor, Linha } from '../../shared/editor-de-codigo/conteudo';
 
 const evento = (nome: string, vezes: number, ultimo: boolean): Linha =>
@@ -44,9 +45,7 @@ export const CONTEUDO_EVENTOS: ConteudoDoEditor = [
   vazia(),
   linha(1, comentario('// Eventos de tecnologia dos quais participei')),
   linha(1, declaracao('List<Evento>'), comum(' participei = List.of(')),
-  evento('Brasília IT', 1, false),
-  evento('Campus Party Brasília', 2, false),
-  evento('BB Digital Week', 1, true),
+  ...EVENTOS.map((e, i) => evento(e.nome, e.vezes, i === EVENTOS.length - 1)),
   linha(1, comum(');')),
   vazia(),
   linha(0, comum('}')),

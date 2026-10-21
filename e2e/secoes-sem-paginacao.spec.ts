@@ -23,22 +23,22 @@ const controle = (page: import('@playwright/test').Page) =>
   page.getByRole('navigation', { name: 'Páginas da seção' });
 
 test.describe('Seções numa tela só', () => {
-  test('nenhuma rota do site tem controle de páginas, indicação n/N nem links de página', async ({
-    page,
-  }) => {
-    for (const rota of ['/', ...SECOES.map((secao) => `/${secao.slug}`), '/repositorio']) {
+  // Um teste por rota: todas num teste só estouravam o tempo na CI.
+  for (const rota of ['/', ...SECOES.map((secao) => `/${secao.slug}`), '/repositorio']) {
+    test(`${rota} não tem controle de páginas, indicação n/N nem links de página`, async ({
+      page,
+    }) => {
       await page.goto(rota);
       await expect(page.getByRole('heading', { level: 1 })).toBeAttached();
 
-      await expect(controle(page), rota).toHaveCount(0);
-      await expect(
-        page.getByRole('link', { name: /Próxima página|Página anterior/ }),
-        rota,
-      ).toHaveCount(0);
-      await expect(page.locator('main'), rota).not.toContainText(/\b\d\/[2-9]\b/);
-      if (rota !== '/') await expect(page, rota).toHaveTitle(/^[^()]+\| Vinicius Machado$/);
-    }
-  });
+      await expect(controle(page)).toHaveCount(0);
+      await expect(page.getByRole('link', { name: /Próxima página|Página anterior/ })).toHaveCount(
+        0,
+      );
+      await expect(page.locator('main')).not.toContainText(/\b\d\/[2-9]\b/);
+      if (rota !== '/') await expect(page).toHaveTitle(/^[^()]+\| Vinicius Machado$/);
+    });
+  }
 
   for (const { slug, titulo, ultimo } of COM_ENDERECO_ANTIGO) {
     test(`/${slug} mostra tudo no mesmo arquivo, até o fim (${ultimo})`, async ({ page }) => {

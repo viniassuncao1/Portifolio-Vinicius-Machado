@@ -236,12 +236,12 @@ test.describe('Seções sem JavaScript', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Sobre Mim');
   });
 
-  test('/diferenciais entrega o código, os valores e o Javadoc no HTML', async ({ page }) => {
+  test('/diferenciais entrega o cartão no HTML', async ({ page }) => {
     await page.goto('/diferenciais');
 
-    await expect(page.locator('main code')).toContainText('record DadosPessoais(');
-    await expect(page.locator('main .papel-valor')).toHaveCount(4);
-    await expect(page.locator('main .javadoc')).toContainText('Moro em Brasília há 20 anos.');
+    await expect(page.locator('main .cartao-da-secao')).toContainText(
+      'Moro em Brasília há 20 anos.',
+    );
     await expect(arquivoDaArvore(page, 'Diferenciais')).toHaveAttribute('aria-current', 'page');
   });
 

@@ -126,7 +126,7 @@ describe('DetalhesDoProjeto', () => {
     const { raiz } = montar(PROJETOS[2]);
 
     const links = Array.from(raiz.querySelectorAll<HTMLAnchorElement>('.acoes a'));
-    expect(links.at(-1)?.getAttribute('href')).toBe('/projeto-3');
+    expect(links.at(-1)?.getAttribute('href')).toBe('/projeto-3?visao=codigo');
     expect(links.at(-1)?.textContent).toContain('Ver em código');
   });
 
@@ -189,7 +189,9 @@ describe('DetalhesDoProjeto', () => {
       fixture.detectChanges();
 
       expect(raiz.querySelector('.trecho')?.textContent).toContain('LauncherDeTv');
-      expect(raiz.querySelector('.painel-da-aba a')?.getAttribute('href')).toBe('/projeto-3');
+      expect(raiz.querySelector('.painel-da-aba a')?.getAttribute('href')).toBe(
+        '/projeto-3?visao=codigo',
+      );
     });
 
     it('a aba Stack mostra o papel, as tecnologias e os destaques como um build', () => {

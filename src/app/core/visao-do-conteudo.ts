@@ -38,6 +38,11 @@ export class VisaoDoConteudoEscolhida {
     }
   }
 
+  /** Mostra a visão sem gravá-la: quem pede "Ver em código" não muda a preferência de sempre. */
+  escolherSemLembrar(visao: VisaoDoConteudo): void {
+    this.atual.set(visao);
+  }
+
   alternar(): void {
     this.escolher(this.atual() === 'cartao' ? 'codigo' : 'cartao');
   }

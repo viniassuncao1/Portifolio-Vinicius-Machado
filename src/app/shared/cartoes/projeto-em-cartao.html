@@ -1,0 +1,52 @@
+@if (projeto(); as p) {
+  <div class="cabecalho-de-secao">
+    <p class="eyebrow">Projeto {{ p.numero }} de {{ total }}</p>
+    <h3 class="titulo-de-secao" appFraseQueSeAcende>{{ p.titulo }}</h3>
+  </div>
+  <div class="bento">
+    <div class="casca-dupla capa">
+      <div class="miolo">
+        @if (imagem(); as img) {
+          <img
+            [ngSrc]="img.src"
+            [width]="img.largura"
+            [height]="img.altura"
+            [alt]="img.alt"
+            priority
+          />
+        } @else {
+          <app-capa-em-codigo [capa]="p.capa" />
+        }
+      </div>
+    </div>
+    <div class="casca-dupla">
+      <div class="miolo miolo-de-cartao">
+        <ul class="chips" aria-label="Tecnologias">
+          @for (etiqueta of p.etiquetas; track etiqueta) {
+            <li class="chip">{{ etiqueta }}</li>
+          }
+        </ul>
+        <p class="descricao">{{ p.descricao }}</p>
+        <p class="rotulo-mono">papel</p>
+        <p>{{ p.papel }}</p>
+        <ul class="destaques">
+          @for (destaque of p.destaques; track destaque) {
+            <li>{{ destaque }}</li>
+          }
+        </ul>
+        <div class="acoes">
+          @if (p.link; as link) {
+            <a class="pilula" [href]="link.url" target="_blank" rel="noopener noreferrer">
+              {{ link.rotulo }}
+              <span class="seta-aninhada" aria-hidden="true">↗</span>
+              <span class="somente-leitores"> (abre em nova aba)</span>
+            </a>
+          }
+          <a class="pilula secundaria" [routerLink]="['/projetos', p.slug]">
+            Ver na vitrine <span class="seta-aninhada" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,41 @@
+:host {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 40;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duracao-media) var(--curva-padrao);
+}
+
+:host([data-ativo='true']) {
+  opacity: 1;
+}
+
+.anel {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 2rem;
+  height: 2rem;
+  margin: -1rem 0 0 -1rem;
+  border: 1.5px solid var(--cor-acento);
+  border-radius: 50%;
+  transform: translate3d(var(--x, -100px), var(--y, -100px), 0) scale(1);
+  transition:
+    transform 90ms linear,
+    background var(--duracao-media) var(--curva-padrao),
+    border-color var(--duracao-media) var(--curva-padrao);
+}
+
+// Sobre um link ou botão o anel cresce e ganha um preenchimento leve.
+:host([data-sobre-alvo='true']) .anel {
+  transform: translate3d(var(--x, -100px), var(--y, -100px), 0) scale(1.6);
+  background: color-mix(in srgb, var(--cor-acento) 18%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    display: none;
+  }
+}

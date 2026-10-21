@@ -149,7 +149,8 @@ test.describe('Tema inicial: sistema no claro', () => {
 
     expect(await dataTema(pagina)).toBeNull();
     expect(await fundo(pagina, 'body')).toBe(FUNDO_DA_PAGINA.claro);
-    expect(await fundo(pagina, 'app-editor-de-codigo')).toBe(FUNDO_DO_EDITOR.claro);
+    // Sem JavaScript o HTML é o cartão (com o tema de cor da seção, coberto em tema-de-secao).
+    await expect(pagina.locator('main .cartao-da-secao')).toBeAttached();
     await contexto.close();
   });
 
@@ -160,7 +161,7 @@ test.describe('Tema inicial: sistema no claro', () => {
     await pagina.goto('/diferenciais');
 
     expect(await fundo(pagina, 'body')).toBe(FUNDO_DA_PAGINA.escuro);
-    expect(await fundo(pagina, 'app-editor-de-codigo')).toBe(FUNDO_DO_EDITOR.escuro);
+    await expect(pagina.locator('main .cartao-da-secao')).toBeAttached();
     await contexto.close();
   });
 
@@ -376,8 +377,9 @@ test.describe('localStorage bloqueado', () => {
   test('a página abre, sem erro, e o botão ainda troca o tema nesta visita', async ({ page }) => {
     const erros: string[] = [];
     page.on('pageerror', (e) => erros.push(e.message));
-    // Sem localStorage a visão do Início é o cartão: a seção Skills é um arquivo e tem o editor.
-    await abrirHidratada(page, '/diferenciais');
+    // Sem localStorage a visão padrão é o cartão.
+    await page.goto('/diferenciais');
+    await expect(page.getByRole('button', { name: 'Ver como código' })).toBeVisible();
 
     expect(await dataTema(page)).toBe('escuro');
     await alternarTema(page);
@@ -394,7 +396,8 @@ test.describe('localStorage bloqueado', () => {
       const erros: string[] = [];
       page.on('pageerror', (e) => erros.push(e.message));
 
-      await abrirHidratada(page, '/diferenciais');
+      await page.goto('/diferenciais');
+      await expect(page.getByRole('button', { name: 'Ver como código' })).toBeVisible();
 
       expect(await dataTema(page)).toBe('claro');
       expect(erros).toEqual([]);

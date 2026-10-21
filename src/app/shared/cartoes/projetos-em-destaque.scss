@@ -49,10 +49,6 @@
   text-decoration: none;
   transition: transform var(--duracao-media) var(--curva-suave);
 
-  &:hover {
-    transform: translateY(-3px);
-  }
-
   &:focus-visible {
     outline: var(--largura-anel-foco) solid var(--s-texto);
     outline-offset: 3px;
@@ -125,9 +121,5 @@
 @media (prefers-reduced-motion: reduce) {
   .cartao {
     transition: none;
-
-    &:hover {
-      transform: none;
-    }
   }
 }

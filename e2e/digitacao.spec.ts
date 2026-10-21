@@ -248,16 +248,15 @@ test.describe('Movimento reduzido', () => {
 test.describe('Sem JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
-  test('o HTML pré-renderizado traz o código completo e nunca o estado de digitação', async ({
-    page,
-  }) => {
+  test('o HTML pré-renderizado traz o cartão e nunca o estado de digitação', async ({ page }) => {
     const resposta = await page.request.get('/diferenciais');
     const html = await resposta.text();
 
-    expect(html).toContain('app-editor-de-codigo');
+    // As seções com duas visões entregam o cartão; o editor só entra depois da hidratação.
+    expect(html).toContain('cartao-da-secao');
     expect(html).not.toMatch(/class="[^"]*digitando/);
     await page.goto('/diferenciais');
-    await expect(page.locator(`${EDITOR} code`)).toContainText('DadosPessoais');
-    await expect(page.locator(EDITOR)).not.toHaveClass(/digitando/);
+    await expect(page.locator('main .cartao-da-secao')).toContainText('Brasília');
+    await expect(page.locator(EDITOR)).toHaveCount(0);
   });
 });

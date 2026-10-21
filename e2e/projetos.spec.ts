@@ -5,7 +5,6 @@ import { linhasDoCodigo, normalizar, textoDoCodigo } from './apoio';
 
 const controle = (page: Page) => page.getByRole('navigation', { name: 'Páginas da seção' });
 const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
-const codigo = (page: Page) => page.locator('main code');
 
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -251,14 +250,14 @@ test.describe('Projetos sem JavaScript', () => {
 
   for (const [rota, trecho] of [
     ['/projeto-4', 'WhatsApp'],
-    ['/projeto-5', 'HTML + JavaScript'],
+    ['/projeto-5', 'JavaScript'],
     ['/projeto-6', 'React'],
-    ['/projeto-1', 'Oracle → PostgreSQL'],
+    ['/projeto-1', 'Oracle'],
   ] as const) {
     test(`${rota} entrega o conteúdo no HTML`, async ({ page }) => {
       await page.goto(rota);
 
-      await expect(codigo(page)).toContainText(trecho);
+      await expect(page.locator('main .cartao-da-secao')).toContainText(trecho);
       await expect(page.locator('main')).not.toContainText('em construção');
     });
   }
