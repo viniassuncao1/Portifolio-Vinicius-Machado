@@ -789,3 +789,10 @@ imagens, capa em código e link com o rótulo "Ver site" ou "Ver repositório").
 - **Faixa de abas:** o indicador deslizante é um fio de acento sob a aba ativa (só `transform`).
   **`BarraDeCarregamento`:** o fio no topo que "compila" a cada troca de rota (some com movimento
   reduzido).
+- **Cartões das demais seções:** `shared/cartoes/` também traz os cartões de Diferenciais, Como uso a
+  IA, Certificações, Eventos, Idiomas, Depoimentos e `ProjetoEmCartao` (papel, destaques e o link
+  "Ver na vitrine"). `SecaoEmDuasVisoes` aceita `?visao=codigo` para abrir o arquivo Java sem mudar a
+  escolha lembrada (é o destino do "Ver em código" da vitrine). Os dados vêm de `core/perfil.ts`.
+- **Interações de ponteiro:** `appInclinar` (inclinação 3D com o `motion`), `appParallax` (foto do
+  hero) e `CursorDoSite` (anel que cresce sobre alvos e fica `aria-hidden`). Só com ponteiro fino, fora
+  de aparelho fraco e nunca com `prefers-reduced-motion`; o cursor nativo não é escondido.

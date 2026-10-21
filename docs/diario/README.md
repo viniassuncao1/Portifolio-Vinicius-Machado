@@ -16,30 +16,32 @@ e eu quero mostrar o processo, não só o resultado.
 
 ## Entradas
 
-| Entrada                                             | Data       | Resumo                                                                                                                |
-| --------------------------------------------------- | ---------- | --------------------------------------------------------------------------------------------------------------------- |
-| [0001](0001-fundacao-do-projeto.md)                 | 2026-10-08 | Angular 22 pré-renderizado, CI/CD na Vercel, ADRs, OpenSpec e equipe de IA.                                           |
-| [0002](0002-fundacao-visual-e-casca-da-ide.md)      | 2026-10-09 | Tokens, casca da IDE como rota-pai, editor de código com dados tipados, gaveta no celular e axe.                      |
-| [0003](0003-secoes-sobre-mim-e-diferenciais.md)     | 2026-10-09 | Primeiras seções só com dados, papel de sintaxe `valor`, parágrafo em 72 colunas e mapa de features.                  |
-| [0004](0004-secoes-como-uso-ia-e-skills.md)         | 2026-10-09 | Seções de IA e Skills, páginas com endereço próprio, densidade das linhas e correção do nome da classe.               |
-| [0005](0005-experiencia-de-ide-e-java-moderno.md)   | 2026-10-09 | Design como referência (ADR-0010), experiência de IDE, Java moderno e a equipe com seis especialistas.                |
-| [0006](0006-certificacoes-niveis-e-legibilidade.md) | 2026-10-09 | Escala de 23px para ~17px só por tokens, Java legível, Certificações e níveis em Skills.                              |
-| [0007](0007-projetos-e-janela-de-preview.md)        | 2026-10-13 | Janela de preview com captura primeiro e ao vivo sob demanda, botão Executar e os quatro projetos.                    |
-| [0008](0008-secao-depoimentos.md)                   | 2026-10-13 | Última seção com a primeira recomendação real, Javadoc com parágrafos e as 15 seções completas.                       |
-| [0009](0009-seo-e-compartilhamento.md)              | 2026-10-13 | Metadados Open Graph, descrição por seção, JSON-LD, sitemap no build e o cartão de compartilhamento.                  |
-| [0010](0010-tokens-e-tipografia-intellij.md)        | 2026-10-13 | Identidade do IntelliJ New UI (ADR-0011) quase só por tokens: paleta Dark, Inter e JetBrains Mono, escala compacta.   |
-| [0011](0011-design-original-com-icones-e-git.md)    | 2026-10-14 | Virada de rumo (ADR-0012): o design original volta, com pastas, Git, ▶ na calha e a tipografia compacta do IntelliJ.  |
-| [0012](0012-painel-do-git.md)                       | 2026-10-14 | Painel do Git com o histórico real do repositório, gerado no build, sem token e sem e-mails (ADR-0013).               |
-| [0013](0013-tema-claro.md)                          | 2026-10-14 | Tema claro por tokens, aplicado antes da primeira pintura por um script inline, e contraste ajustado (ADR-0014).      |
-| [0014](0014-janela-de-run-e-java-para-leitura.md)   | 2026-10-14 | Janela de Run com o log do Spring e Java para leitura: domínio em português e PortfolioApplication.java.              |
-| [0015](0015-fotos-de-perfil.md)                     | 2026-10-14 | Retrato redondo no Javadoc do editor: fotos do Vinicius e da Luana, com @author linkando o LinkedIn.                  |
-| [0016](0016-boas-vindas-repositorio-e-ux.md)        | 2026-10-14 | Auditoria de UX: tela de boas-vindas, repositório no estilo do GitHub e melhorias de leitura e navegação.             |
-| [0017](0017-abertura-com-run.md)                    | 2026-10-15 | A abertura vira rodar o projeto: splash, Run, build das classes e log do Spring, sem pular (ADR-0017).                |
-| [0018](0018-projeto-5-o-proprio-portfolio.md)       | 2026-10-15 | Projeto 5, "Este portfólio": o estudo com IA, SDD no OpenSpec, ECC e Maestri, com fatos conferidos.                   |
-| [0019](0019-secoes-sem-paginacao.md)                | 2026-10-15 | Cada seção vira um arquivo só, sem paginação, e os links antigos redirecionam (ADR-0018).                             |
-| [0020](0020-dominio-proprio.md)                     | 2026-10-16 | O portfólio passa a usar vinimachado.wattscompany.com.br no SEO, no sitemap e no cartão, e o .vercel.app redireciona. |
-| [0021](0021-icone-com-iniciais.md)                  | 2026-10-16 | O favicon do Angular vira um "VM" num quadrado arredondado, no estilo do ícone de projeto do IntelliJ.                |
-| [0022](0022-copy-para-vagas-java.md)                | 2026-10-19 | Os textos e a ordem dos projetos passam a falar com vagas Java, e entra o launcher de TV em Java.                     |
+| Entrada                                             | Data       | Resumo                                                                                                                     |
+| --------------------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------- |
+| [0001](0001-fundacao-do-projeto.md)                 | 2026-10-08 | Angular 22 pré-renderizado, CI/CD na Vercel, ADRs, OpenSpec e equipe de IA.                                                |
+| [0002](0002-fundacao-visual-e-casca-da-ide.md)      | 2026-10-09 | Tokens, casca da IDE como rota-pai, editor de código com dados tipados, gaveta no celular e axe.                           |
+| [0003](0003-secoes-sobre-mim-e-diferenciais.md)     | 2026-10-09 | Primeiras seções só com dados, papel de sintaxe `valor`, parágrafo em 72 colunas e mapa de features.                       |
+| [0004](0004-secoes-como-uso-ia-e-skills.md)         | 2026-10-09 | Seções de IA e Skills, páginas com endereço próprio, densidade das linhas e correção do nome da classe.                    |
+| [0005](0005-experiencia-de-ide-e-java-moderno.md)   | 2026-10-09 | Design como referência (ADR-0010), experiência de IDE, Java moderno e a equipe com seis especialistas.                     |
+| [0006](0006-certificacoes-niveis-e-legibilidade.md) | 2026-10-09 | Escala de 23px para ~17px só por tokens, Java legível, Certificações e níveis em Skills.                                   |
+| [0007](0007-projetos-e-janela-de-preview.md)        | 2026-10-13 | Janela de preview com captura primeiro e ao vivo sob demanda, botão Executar e os quatro projetos.                         |
+| [0008](0008-secao-depoimentos.md)                   | 2026-10-13 | Última seção com a primeira recomendação real, Javadoc com parágrafos e as 15 seções completas.                            |
+| [0009](0009-seo-e-compartilhamento.md)              | 2026-10-13 | Metadados Open Graph, descrição por seção, JSON-LD, sitemap no build e o cartão de compartilhamento.                       |
+| [0010](0010-tokens-e-tipografia-intellij.md)        | 2026-10-13 | Identidade do IntelliJ New UI (ADR-0011) quase só por tokens: paleta Dark, Inter e JetBrains Mono, escala compacta.        |
+| [0011](0011-design-original-com-icones-e-git.md)    | 2026-10-14 | Virada de rumo (ADR-0012): o design original volta, com pastas, Git, ▶ na calha e a tipografia compacta do IntelliJ.       |
+| [0012](0012-painel-do-git.md)                       | 2026-10-14 | Painel do Git com o histórico real do repositório, gerado no build, sem token e sem e-mails (ADR-0013).                    |
+| [0013](0013-tema-claro.md)                          | 2026-10-14 | Tema claro por tokens, aplicado antes da primeira pintura por um script inline, e contraste ajustado (ADR-0014).           |
+| [0014](0014-janela-de-run-e-java-para-leitura.md)   | 2026-10-14 | Janela de Run com o log do Spring e Java para leitura: domínio em português e PortfolioApplication.java.                   |
+| [0015](0015-fotos-de-perfil.md)                     | 2026-10-14 | Retrato redondo no Javadoc do editor: fotos do Vinicius e da Luana, com @author linkando o LinkedIn.                       |
+| [0016](0016-boas-vindas-repositorio-e-ux.md)        | 2026-10-14 | Auditoria de UX: tela de boas-vindas, repositório no estilo do GitHub e melhorias de leitura e navegação.                  |
+| [0017](0017-abertura-com-run.md)                    | 2026-10-15 | A abertura vira rodar o projeto: splash, Run, build das classes e log do Spring, sem pular (ADR-0017).                     |
+| [0018](0018-projeto-5-o-proprio-portfolio.md)       | 2026-10-15 | Projeto 5, "Este portfólio": o estudo com IA, SDD no OpenSpec, ECC e Maestri, com fatos conferidos.                        |
+| [0019](0019-secoes-sem-paginacao.md)                | 2026-10-15 | Cada seção vira um arquivo só, sem paginação, e os links antigos redirecionam (ADR-0018).                                  |
+| [0020](0020-dominio-proprio.md)                     | 2026-10-16 | O portfólio passa a usar vinimachado.wattscompany.com.br no SEO, no sitemap e no cartão, e o .vercel.app redireciona.      |
+| [0021](0021-icone-com-iniciais.md)                  | 2026-10-16 | O favicon do Angular vira um "VM" num quadrado arredondado, no estilo do ícone de projeto do IntelliJ.                     |
+| [0022](0022-copy-para-vagas-java.md)                | 2026-10-19 | Os textos e a ordem dos projetos passam a falar com vagas Java, e entra o launcher de TV em Java.                          |
+| [0023](0023-experiencia-focada-em-recrutadores.md)  | 2026-10-20 | A experiência passa a ser pensada para recrutadores: visão geral, cartões e o código a um clique (ADR-0019).               |
+| [0024](0024-refinos-da-experiencia.md)              | 2026-10-21 | Inclinação 3D, parallax e cursor com ponteiro fino, acabamento da casca, cartões que faltavam e dois achados de qualidade. |
 
 ## Modelo de entrada
 
