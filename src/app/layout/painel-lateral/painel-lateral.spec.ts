@@ -4,7 +4,10 @@ import { provideRouter } from '@angular/router';
 import { PainelLateral } from './painel-lateral';
 
 describe('PainelLateral', () => {
-  beforeEach(() => TestBed.configureTestingModule({ providers: [provideRouter([])] }));
+  // Rota coringa: o clique no link Repositório navega, e a navegação precisa terminar dentro do teste.
+  beforeEach(() =>
+    TestBed.configureTestingModule({ providers: [provideRouter([{ path: '**', children: [] }])] }),
+  );
 
   it('mostra a árvore em 7 pastas, com a primeira expandida', async () => {
     const fixture = TestBed.createComponent(PainelLateral);
@@ -29,6 +32,7 @@ describe('PainelLateral', () => {
     expect(link.closest('nav')).toBeNull();
     expect(elemento.querySelector('app-arvore-de-secoes')?.nextElementSibling).toBe(link);
     link.click();
+    await fixture.whenStable();
     expect(escolhida).toBe(1);
   });
 
