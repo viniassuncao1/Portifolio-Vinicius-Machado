@@ -1,6 +1,6 @@
 # ADR-0012: Design original com elementos do IntelliJ
 
-- **Status:** Aceito
+- **Status:** Aceito, substituído em parte pelo [ADR-0019](0019-experiencia-focada-em-recrutadores.md)
 - **Data:** 2026-10-14
 - **Substitui em parte:** [ADR-0011](0011-identidade-visual-intellij-new-ui.md) (a identidade
   visual: paleta, barras e formas)

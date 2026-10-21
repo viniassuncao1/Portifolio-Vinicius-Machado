@@ -19,13 +19,14 @@ Um ADR aceito não é editado. Se a decisão mudar, um novo ADR o substitui e o 
 | [0009](0009-acessibilidade-automatizada-com-axe.md)       | Acessibilidade automatizada com axe nos E2E                  | Aceito                                         |
 | [0010](0010-design-como-referencia-e-java-moderno.md)     | Design como referência e Java moderno                        | Aceito, substituído em parte pelo 0011         |
 | [0011](0011-identidade-visual-intellij-new-ui.md)         | Identidade visual do IntelliJ IDEA New UI                    | Aceito, substituído em parte pelos 0012 e 0015 |
-| [0012](0012-design-original-com-elementos-do-intellij.md) | Design original com elementos do IntelliJ                    | Aceito                                         |
+| [0012](0012-design-original-com-elementos-do-intellij.md) | Design original com elementos do IntelliJ                    | Aceito, substituído em parte pelo 0019         |
 | [0013](0013-historico-do-git-gerado-no-build.md)          | Histórico do Git gerado no build                             | Aceito, substituído em parte pelo 0016         |
 | [0014](0014-tema-claro.md)                                | Tema claro                                                   | Aceito                                         |
 | [0015](0015-tela-de-boas-vindas.md)                       | Tela de boas-vindas no lugar da abertura com a janela de Run | Aceito, substituído pelo 0017                  |
 | [0016](0016-repositorio-no-estilo-do-github.md)           | Página do repositório no estilo do GitHub                    | Aceito                                         |
-| [0017](0017-abertura-com-run.md)                          | Abertura com Run                                             | Aceito                                         |
+| [0017](0017-abertura-com-run.md)                          | Abertura com Run                                             | Aceito, substituído em parte pelo 0019         |
 | [0018](0018-secoes-num-arquivo-so.md)                     | Seções num arquivo só, sem paginação                         | Aceito                                         |
+| [0019](0019-experiencia-focada-em-recrutadores.md)        | Experiência focada em recrutadores                           | Aceito                                         |
 
 ## Modelo
 

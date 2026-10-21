@@ -1,6 +1,6 @@
 # ADR-0017: Abertura com Run
 
-- **Status:** Aceito
+- **Status:** Aceito, item 5 substituído pelo [ADR-0019](0019-experiencia-focada-em-recrutadores.md)
 - **Data:** 2026-10-15
 - **Substitui:** [ADR-0015](0015-tela-de-boas-vindas.md) (a abertura do site)
 
