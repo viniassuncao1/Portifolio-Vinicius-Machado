@@ -76,12 +76,18 @@ describe('Hero', () => {
       toFake: ['requestAnimationFrame', 'cancelAnimationFrame', 'setTimeout', 'performance'],
     });
 
-    const fixture = montar();
-
-    expect(
+    const primeira = montar();
+    const fase = (fixture: ReturnType<typeof montar>) =>
       (fixture.nativeElement as HTMLElement)
         .querySelector('.janela-do-hero')
-        ?.getAttribute('data-fase'),
-    ).toBe('cartao');
+        ?.getAttribute('data-fase');
+    expect(fase(primeira)).toBe('digitando');
+
+    // Voltar ao Início na mesma carga da página não digita de novo.
+    const segunda = TestBed.createComponent(Hero);
+    segunda.detectChanges();
+    TestBed.inject(ApplicationRef).tick();
+    segunda.detectChanges();
+    expect(fase(segunda)).toBe('cartao');
   });
 });

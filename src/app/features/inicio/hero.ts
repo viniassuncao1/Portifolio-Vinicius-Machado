@@ -2,6 +2,7 @@ import { NgOptimizedImage } from '@angular/common';
 import {
   Component,
   DestroyRef,
+  Service,
   afterNextRender,
   computed,
   effect,
@@ -60,8 +61,21 @@ const TOTAL_DE_CARACTERES = CODIGO.flat().reduce((soma, [texto]) => soma + texto
 const DURACAO_DA_DIGITACAO_MS = 1500;
 const PAUSA_ANTES_DO_CARTAO_MS = 350;
 
-/** Só na primeira vez em que o Início aparece nesta carga da página. */
-let jaAnimou = false;
+/**
+ * Lembra se o hero já digitou nesta carga da página. É um serviço (um por aplicação) e não uma
+ * variável do módulo para que cada teste comece do zero, em qualquer ordem de execução.
+ */
+@Service()
+export class DigitacaoDoHero {
+  private feita = false;
+
+  /** `true` só na primeira chamada: a digitação acontece uma vez por carga da página. */
+  marcar(): boolean {
+    if (this.feita) return false;
+    this.feita = true;
+    return true;
+  }
+}
 
 /**
  * Primeira dobra: nome, cargo, resumo e ações à esquerda (texto puro, que existe no HTML desde o
@@ -78,6 +92,7 @@ let jaAnimou = false;
 export class Hero {
   private readonly movimento = inject(MovimentoConfig);
   private readonly abertura = inject(Abertura);
+  private readonly digitacao = inject(DigitacaoDoHero);
   private readonly destruir = inject(DestroyRef);
 
   protected readonly perfil = PERFIL;
@@ -112,9 +127,9 @@ export class Hero {
   }
 
   private async iniciar(): Promise<void> {
-    if (jaAnimou || this.rodando || !this.movimento.deveAnimar({ essencial: true })) return;
+    if (this.rodando || !this.movimento.deveAnimar({ essencial: true })) return;
+    if (!this.digitacao.marcar()) return;
     this.rodando = true;
-    jaAnimou = true;
     this.fase.set('digitando');
     const inicio = performance.now();
     let quadro = 0;

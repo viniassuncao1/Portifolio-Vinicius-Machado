@@ -38,7 +38,13 @@ describe('VisaoGeral', () => {
   });
 
   it('o cartão da apresentação já está no HTML, com a foto e o estado "Disponível"', async () => {
+    // Sem movimento (o estado do HTML): o hero não digita e o cartão já está lá.
+    vi.stubGlobal('matchMedia', (consulta: string) => ({
+      matches: consulta.includes('reduced-motion'),
+      addEventListener: () => undefined,
+    }));
     const raiz = await montar();
+    vi.unstubAllGlobals();
 
     expect(raiz.querySelector('.cartao img')?.getAttribute('alt')).toBe('Foto de Vinicius Machado');
     expect(raiz.querySelector('.cartao .status')?.textContent).toContain('Disponível');
