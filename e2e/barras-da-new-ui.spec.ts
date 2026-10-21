@@ -383,14 +383,20 @@ test.describe('Ícones da New UI e créditos', () => {
     await expect(page.locator('app-barra-de-ferramentas .botao-busca img').first()).toBeVisible();
 
     // Ícones de controles escondidos neste tamanho (o Projeto do celular) nem chegam a carregar.
-    const imagens = await page.locator('app-icone img').evaluateAll((els) =>
-      els
-        .filter((el) => el.checkVisibility())
-        .map((el) => ({
-          src: (el as HTMLImageElement).getAttribute('src'),
-          ok: (el as HTMLImageElement).complete && (el as HTMLImageElement).naturalWidth > 0,
-        })),
-    );
+    const lerImagens = () =>
+      page.locator('app-icone img').evaluateAll((els) =>
+        els
+          .filter((el) => el.checkVisibility())
+          .map((el) => ({
+            src: (el as HTMLImageElement).getAttribute('src'),
+            ok: (el as HTMLImageElement).complete && (el as HTMLImageElement).naturalWidth > 0,
+          })),
+      );
+    // Imagens com carga tardia: espera todas as visíveis terminarem de carregar.
+    await expect
+      .poll(async () => (await lerImagens()).filter((imagem) => !imagem.ok).map((i) => i.src))
+      .toEqual([]);
+    const imagens = await lerImagens();
 
     expect(imagens.length).toBeGreaterThan(8);
     for (const { src, ok } of imagens) {

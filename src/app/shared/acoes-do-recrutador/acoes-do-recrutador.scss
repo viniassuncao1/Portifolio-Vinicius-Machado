@@ -83,7 +83,7 @@
 }
 
 // No celular as ações viram uma fileira que rola na horizontal, em vez de ocupar a tela.
-@media (max-width: 767px) {
+@media (max-width: 899px) {
   .acoes {
     flex-wrap: nowrap;
     overflow-x: auto;

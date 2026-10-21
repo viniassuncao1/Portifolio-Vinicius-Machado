@@ -57,6 +57,18 @@ componente usar as diretivas (grupo 5).
   diferentes por causa do `min-width` de itens flex e o foco inicial do diálogo ia para o lugar
   errado.
 
+## Telas
+
+Geradas por `node scripts/capturar-telas.mjs` (nos dois temas, com movimento reduzido):
+
+| Início 1440 (escuro)                                                   | Início 1440 (claro)                                                  |
+| ---------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| ![Início no desktop, tema escuro](imagens/0023/inicio-1440-escuro.jpg) | ![Início no desktop, tema claro](imagens/0023/inicio-1440-claro.jpg) |
+
+| Início 390                                               | Vitrine de projetos                                          | Detalhes de um projeto                                          |
+| -------------------------------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------------- |
+| ![Início no celular](imagens/0023/inicio-390-escuro.jpg) | ![Vitrine de projetos](imagens/0023/vitrine-1440-escuro.jpg) | ![Detalhes de um projeto](imagens/0023/projeto-1440-escuro.jpg) |
+
 ## Decisões
 
 - ADR-0019: a IDE vira linguagem, cartão e código são duas visões, vitrine de projetos, `motion` no
@@ -64,7 +76,17 @@ componente usar as diretivas (grupo 5).
 
 ## Aprendizado
 
-- Medir antes mostrou que o problema real é o LCP, não a acessibilidade.
+- **Medir antes e conferir a medição.** O LCP de 4,5 s era um servidor local sem compressão; o
+  problema real nunca foi desempenho, e a meta virou "não piorar".
+- **O E2E acha o que o teste unitário não acha:** a expansão do cartão perdia a animação porque o
+  roteador abria a própria View Transition logo depois da minha, e só um teste que amostra as
+  animações do pseudo-elemento mostrou isso.
+- **Layout que muda na hidratação conta como CLS:** o botão "Copiar e-mail" que só aparecia depois
+  da hidratação mudava a barra de ações de linha (CLS de 0,045 para 0,009 reservando o lugar).
+- **Duas visões do mesmo conteúdo exigem um teste que as compare:** `perfil.spec.ts` lê as seções
+  em código e falha se o cartão divergir delas.
+- **Biblioteca carregada depois de um `await` precisa saber se a vista ainda existe:** registrar
+  `onDestroy` depois do `import()` quebrava ao navegar rápido (NG0911).
 
 ## Links
 

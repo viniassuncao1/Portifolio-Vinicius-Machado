@@ -53,12 +53,18 @@
   display: none;
 }
 
-@media (max-width: 767px) {
+// Com a árvore ao lado (até 900px) a barra de ações vira uma fileira que rola, em vez de quebrar linha.
+@media (max-width: 899px) {
   .barra {
-    position: static;
     flex-wrap: nowrap;
     overflow-x: auto;
     scrollbar-width: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .barra {
+    position: static;
   }
 
   .atalhos {

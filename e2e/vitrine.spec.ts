@@ -292,6 +292,26 @@ test.describe('Detalhes do projeto', () => {
     );
   });
 
+  test('as abas Visão geral, Código e Stack trocam o painel, com setas e sem mudar de projeto', async ({
+    page,
+  }) => {
+    await abrirVitrine(page, '/projetos/launcher-de-tv');
+    const abas = dialogo(page).getByRole('tab');
+    await expect(abas).toHaveText(['Visão geral', 'Código', 'Stack']);
+    await expect(dialogo(page).getByRole('tabpanel')).toContainText('CleanYourTV');
+
+    await abas.nth(0).focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(abas.nth(1)).toHaveAttribute('aria-selected', 'true');
+    await expect(abas.nth(1)).toBeFocused();
+    await expect(dialogo(page).getByRole('tabpanel')).toContainText('LauncherDeTv');
+    await expect(dialogo(page).locator('.contador')).toHaveText('03 / 06');
+
+    await page.keyboard.press('ArrowRight');
+    await expect(dialogo(page).getByRole('tabpanel')).toContainText('BUILD SUCCESSFUL');
+    await expect(dialogo(page).getByRole('tabpanel')).toContainText('Android 4.4');
+  });
+
   test('sem violações de acessibilidade (axe) com os detalhes abertos', async ({ page }) => {
     await abrirVitrine(page, '/projetos/dra-juliana');
     await expect(dialogo(page)).toBeVisible();

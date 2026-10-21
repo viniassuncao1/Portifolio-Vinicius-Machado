@@ -24,6 +24,10 @@ describe('PROJETOS', () => {
     expect(new Set(PROJETOS.map((p) => p.slug)).size).toBe(PROJETOS.length);
   });
 
+  it('cada projeto diz o papel do Vinicius', () => {
+    for (const projeto of PROJETOS) expect(projeto.papel.length).toBeGreaterThan(10);
+  });
+
   it('cada projeto tem até três destaques e uma capa em código', () => {
     for (const projeto of PROJETOS) {
       expect(projeto.destaques.length).toBeGreaterThan(0);

@@ -8,14 +8,14 @@
 ## 2. Tokens e sistema visual (Pincel)
 
 - [x] 2.1 Definir os tokens de tema por seção (fundo, texto, secundário, linha, acento, acento 2, texto sobre o acento) em `src/styles`, registrados com `@property`, nas variantes clara e escura; verificar com o teste de contraste da 1.4
-- [ ] 2.2 Aplicar anel de foco de 2px com contraste ≥ 3:1 por tema e remover o acento único fixo; verificar com um e2e de Tab em duas seções de temas diferentes
-- [ ] 2.3 Atualizar `docs/componentes.md` com os tokens novos e o `sistema-visual` no README; verificar que os nomes dos tokens citados existem no código
+- [x] 2.2 Aplicar anel de foco de 2px com contraste ≥ 3:1 por tema e remover o acento único fixo; verificar com um e2e de Tab em duas seções de temas diferentes
+- [x] 2.3 Atualizar `docs/componentes.md` com os tokens novos e o `sistema-visual` no README; verificar que os nomes dos tokens citados existem no código
 
 ## 2b. Modo recrutador (Pincel e Compasso)
 
-- [ ] 2b.1 Criar o controle "Cartão ⇄ Código" por seção, com `aria-pressed` e a escolha lembrada (com `try/catch`); verificar com e2e que a visão inicial é "Cartão" e que o conteúdo é o mesmo nas duas visões
-- [ ] 2b.2 Implementar o hero "código que vira cartão" (digitação e resolução em até 2,5 s, com modo direto em movimento reduzido); verificar com e2e e medir que o LCP não piora em relação à linha de base
-- [ ] 2b.3 Implementar a barra de ações (Currículo, LinkedIn, GitHub, e-mail com copiar e confirmação em `aria-live`) e os comandos equivalentes na busca; verificar com e2e de clique, copiar e Ctrl/Cmd+K. O Currículo aponta para `public/CV_Vinicius_Machado_Desenvolvedor_FullStack_Java.pdf` (já adicionado) e o e2e confere que o arquivo responde 200 com `application/pdf`
+- [x] 2b.1 Criar o controle "Cartão ⇄ Código" por seção, com `aria-pressed` e a escolha lembrada (com `try/catch`); verificar com e2e que a visão inicial é "Cartão" e que o conteúdo é o mesmo nas duas visões
+- [x] 2b.2 Implementar o hero "código que vira cartão" (digitação e resolução em até 2,5 s, com modo direto em movimento reduzido); verificar com e2e e medir que o LCP não piora em relação à linha de base
+- [x] 2b.3 Implementar a barra de ações (Currículo, LinkedIn, GitHub, e-mail com copiar e confirmação em `aria-live`) e os comandos equivalentes na busca; verificar com e2e de clique, copiar e Ctrl/Cmd+K. O Currículo aponta para `public/CV_Vinicius_Machado_Desenvolvedor_FullStack_Java.pdf` (já adicionado) e o e2e confere que o arquivo responde 200 com `application/pdf`
 
 ## 3. Camada de movimento com `motion` e protótipo do carrossel (Compasso)
 
@@ -35,29 +35,35 @@
 
 ## 5. Movimento e microinterações (Compasso)
 
-- [ ] 5.1 Implementar o tema por seção na visão geral (`IntersectionObserver` + `data-tema` + transição das variáveis) e nas rotas; verificar com e2e que o tema muda ao passar da metade e que não há piscada
-- [ ] 5.2 Implementar a revelação de títulos por linha, dos blocos e a frase que se acende (`animation-timeline` com fallback); verificar que sem JavaScript todo o texto está visível e que com movimento reduzido aparece o estado final
-- [ ] 5.3 Implementar o indicador deslizante nas abas e na navegação; verificar com e2e a posição do indicador ao ativar outra aba
-- [ ] 5.4 Implementar a linha do tempo que se desenha na visão geral (coluna única no celular); verificar com e2e o preenchimento ao rolar
+- [x] 5.1 Implementar o tema por seção na visão geral (`IntersectionObserver` + `data-tema` + transição das variáveis) e nas rotas; verificar com e2e que o tema muda ao passar da metade e que não há piscada
+- [x] 5.2 Implementar a revelação de títulos por linha, dos blocos e a frase que se acende (`animation-timeline` com fallback); verificar que sem JavaScript todo o texto está visível e que com movimento reduzido aparece o estado final
+- [x] 5.3 Implementar o indicador deslizante nas abas e na navegação; verificar com e2e a posição do indicador ao ativar outra aba
+- [x] 5.4 Implementar a linha do tempo que se desenha na visão geral (coluna única no celular); verificar com e2e o preenchimento ao rolar
 - [ ] 5.5 Implementar as interações de ponteiro (botões magnéticos, inclinação 3D, parallax, cursor opcional) só com ponteiro fino e sem ocultar o cursor nativo; verificar que em toque nada é aplicado
-- [ ] 5.6 Implementar o relógio de Brasília (30 s, fora de `aria-live`) e o "disponível" na barra de status; verificar com teste unitário usando relógio falso
-- [ ] 5.7 Rodar a verificação de reduced-motion e de reflow (sem JavaScript) em todas as telas; verificar com `e2e` dedicado e atualizar a spec de movimento reduzido existente
+- [x] 5.6 Implementar o relógio de Brasília (30 s, fora de `aria-live`) e o "disponível" na barra de status; verificar com teste unitário usando relógio falso
+- [x] 5.7 Rodar a verificação de reduced-motion e de reflow (sem JavaScript) em todas as telas; verificar com `e2e` dedicado e atualizar a spec de movimento reduzido existente
 
 ## 6. Casca reimaginada e orientação (Pincel)
 
 - [ ] 6.1 Redesenhar a casca (barra superior, painel recolhível, faixa de abas, barra de status, proporções e paleta pelos tokens) mantendo pacotes, abas, Git e ▶ Executar; verificar que as seções abrem pelos mesmos endereços e que `casca.spec.ts` e os e2e de casca passam
-- [ ] 6.2 Criar a visão geral rolável em `/` (primeira dobra, blocos-resumo e caminhos rápidos Projetos/Currículo/Contato) sem perder `Inicio.java` como arquivo; verificar com e2e que a primeira dobra de 1440x900 mostra nome, cargo, stack, "disponível" e as três ações
-- [ ] 6.3 Implementar a barra de ações inferior no celular (Seções, Projetos, Contato), a gaveta com pastas abertas e a vitrine em grade; verificar em 390x844 sem rolagem horizontal
-- [ ] 6.4 Tornar a abertura opcional (pular com toque/tecla, lembrar a visita, sem atrasar o LCP); verificar com e2e de Esc e de segunda visita
-- [ ] 6.5 Ajustar a busca (Ctrl/Cmd+K) e o "Próximo arquivo" à nova casca; verificar com os e2e de busca e de teclado existentes
+- [x] 6.2 Criar a visão geral rolável em `/` (primeira dobra, blocos-resumo e caminhos rápidos Projetos/Currículo/Contato) sem perder `Inicio.java` como arquivo; verificar com e2e que a primeira dobra de 1440x900 mostra nome, cargo, stack, "disponível" e as três ações
+- [x] 6.3 Implementar a barra de ações inferior no celular (Seções, Projetos, Contato), a gaveta com pastas abertas e a vitrine em grade; verificar em 390x844 sem rolagem horizontal
+- [x] 6.4 Tornar a abertura opcional (pular com toque/tecla, lembrar a visita, sem atrasar o LCP); verificar com e2e de Esc e de segunda visita
+- [x] 6.5 Ajustar a busca (Ctrl/Cmd+K) e o "Próximo arquivo" à nova casca; verificar com os e2e de busca e de teclado existentes
 
 ## 7. Qualidade e entrega
 
-- [ ] 7.1 Otimizar imagens e fotos (AVIF/WebP, `NgOptimizedImage`, dimensões, carga tardia) e impor o orçamento de 200 KB no CI; verificar que o teste falha com um arquivo acima do limite
-- [ ] 7.2 Rodar Lighthouse mobile e AXE em `/`, na vitrine e em uma rota de seção e atingir as metas da spec `orientacao-do-visitante`; verificar com o relatório salvo em `docs/diario/`
-- [ ] 7.3 Atualizar `README.md`, `docs/arquitetura.md`, `docs/componentes.md` e registrar a entrada do diário; verificar que as capturas e comandos citados existem
+- [x] 7.1 Otimizar imagens e fotos (AVIF/WebP, `NgOptimizedImage`, dimensões, carga tardia) e impor o orçamento de 200 KB no CI; verificar que o teste falha com um arquivo acima do limite
+- [x] 7.2 Rodar Lighthouse mobile e AXE em `/`, na vitrine e em uma rota de seção e atingir as metas da spec `orientacao-do-visitante`; verificar com o relatório salvo em `docs/diario/`
+- [x] 7.3 Atualizar `README.md`, `docs/arquitetura.md`, `docs/componentes.md` e registrar a entrada do diário; verificar que as capturas e comandos citados existem
 - [ ] 7.4 Rodar `npm run lint && npm run test:ci && npm run build && npm run e2e` e verificar que tudo passa, com a cobertura ≥ 80% nos arquivos novos
 - [ ] 7.5 Revisão visual com o Vinicius (casca e vitrine) e correção do que ele apontar; verificar com a aprovação dele registrada no PR
+
+> Nota de execução (2026-10-21): os grupos 2b, 5, 6 e 7 foram entregues pela reformulação do
+> grupo 8. Ficam em aberto, de propósito: **5.5** (inclinação 3D dos cartões, parallax da foto e
+> cursor personalizado; só os botões magnéticos do hero foram feitos), **6.1** (a casca de IDE
+> ganhou indicador deslizante, barra de carregamento e relógio, mas não foi redesenhada), **7.4**
+> (o gate final roda no PR), **7.5** (revisão visual do Vinicius) e **8.12** (PR aberto).
 
 ## 8. Reformulação v2 e execução pelo Maestri
 
@@ -70,12 +76,12 @@ Aprovação antecipada pelo Vinicius: executar tudo de uma vez, sem pausar para 
 - [x] 8.3 Hero "código que vira cartão" (digitação e resolução em até 2,5 s, modo direto sem movimento); verificar com E2E e com o LCP medido igual ou melhor que a linha de base
 - [x] 8.4 Barra de ações do recrutador (Currículo, LinkedIn, GitHub, e-mail com copiar e confirmação) e os comandos equivalentes na busca; verificar com E2E, incluindo o PDF respondendo 200 com `application/pdf`
 - [x] 8.5 Ilha de navegação e barra de ações no celular (Seções, Projetos, Contato); verificar com E2E em 390x844 sem rolagem horizontal
-- [ ] 8.6 Visões "Cartão" das seções e o controle "Cartão ⇄ Código" com a escolha lembrada (2b.1); verificar com E2E que o conteúdo é o mesmo nas duas visões
-- [ ] 8.7 Movimento: tema por seção na visão geral e nas rotas, revelações, frase que se acende, contadores, indicadores deslizantes, barra "compilando", git graph que se desenha, interações de ponteiro e barra de status viva; verificar com E2E e com o modo de movimento reduzido
+- [x] 8.6 Visões "Cartão" das seções e o controle "Cartão ⇄ Código" com a escolha lembrada (2b.1); verificar com E2E que o conteúdo é o mesmo nas duas visões
+- [x] 8.7 Movimento: tema por seção na visão geral e nas rotas, revelações, frase que se acende, contadores, indicadores deslizantes, barra "compilando", git graph que se desenha, interações de ponteiro e barra de status viva; verificar com E2E e com o modo de movimento reduzido
 - [x] 8.8 Abertura (Run) opcional: pular com toque ou tecla e não repetir na visita seguinte; verificar com E2E de Esc e de segunda visita
-- [ ] 8.9 Detalhes de projeto v2 (abas "Visão geral / Código / Stack" e bloco de build) e restyling da casca de IDE com os tokens v2; verificar com E2E e axe
+- [x] 8.9 Detalhes de projeto v2 (abas "Visão geral / Código / Stack" e bloco de build) e restyling da casca de IDE com os tokens v2; verificar com E2E e axe
 - [x] 8.10 Desempenho: manter o Lighthouse móvel em 100, LCP ≤ 2,5 s e CLS ≤ 0,05 com a página nova (a linha de base real é 100 e LCP 1,1 s; a de 4,5 s era um artefato do servidor sem compressão); verificado em `/`, `/projetos` e `/skills`, salvo em `docs/diario/`
-- [ ] 8.11 Regressão visual (320, 768, 1024 e 1440, claro e escuro), axe em todas as rotas e orçamentos no CI (imagem ≤ 200 KB, JS inicial sem o `motion`); verificar com a suíte E2E verde
+- [x] 8.11 Regressão visual (320, 768, 1024 e 1440, claro e escuro), axe em todas as rotas e orçamentos no CI (imagem ≤ 200 KB, JS inicial sem o `motion`); verificar com a suíte E2E verde
 - [ ] 8.12 Documentação final (ADR-0019, README, `docs/arquitetura.md`, `docs/componentes.md`, diário 0023) e PR aberto sem merge; verificar que lint, testes unitários, build e E2E passam e que o PR descreve as skills usadas
 
 ## Workflow follow-up

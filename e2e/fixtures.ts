@@ -45,8 +45,16 @@ export const test = base.extend<{ visao: VisaoDoTeste }>({
   page: async ({ page, visao, javaScriptEnabled }, use) => {
     if (visao === 'codigo' && javaScriptEnabled !== false) {
       const irPara = page.goto.bind(page);
+      // Com o relógio falso (os testes da abertura) a página não hidrata sozinha: não há o que esperar.
+      let relogioFalso = false;
+      const instalar = page.clock.install.bind(page.clock);
+      page.clock.install = async (...argumentos) => {
+        relogioFalso = true;
+        return instalar(...argumentos);
+      };
       page.goto = async (url, opcoes) => {
         const resposta = await irPara(url, opcoes);
+        if (relogioFalso) return resposta;
         const caminho = new URL(url, 'http://localhost').pathname.replace(/\/$/, '') || '/';
         if (ROTAS_COM_DUAS_VISOES.has(caminho)) {
           await page

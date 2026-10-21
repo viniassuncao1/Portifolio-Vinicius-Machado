@@ -29,6 +29,8 @@ export interface Projeto {
   /** Até três destaques curtos, para ler o projeto em segundos. */
   readonly destaques: readonly string[];
   readonly descricao: string;
+  /** O papel do Vinicius no projeto, para a aba Stack dos detalhes. */
+  readonly papel: string;
   /** Capturas de tela; sem elas o cartão usa `capa`. */
   readonly imagens: readonly ImagemDeProjeto[];
   readonly capa: CapaEmCodigo;
@@ -40,6 +42,7 @@ export interface Projeto {
 export const PROJETOS: readonly Projeto[] = [
   {
     slug: 'memora',
+    papel: 'Estagiário e depois Desenvolvedor Full Stack Júnior na Memora',
     secao: 'projeto-1',
     numero: 1,
     titulo: 'Cases da Memora',
@@ -63,6 +66,7 @@ export const PROJETOS: readonly Projeto[] = [
   },
   {
     slug: 'portfolio',
+    papel: 'Projeto pessoal, feito de ponta a ponta',
     secao: 'projeto-2',
     numero: 2,
     titulo: 'Este portfólio',
@@ -90,6 +94,7 @@ export const PROJETOS: readonly Projeto[] = [
   },
   {
     slug: 'launcher-de-tv',
+    papel: 'Fork do CleanYourTV, do Gathin, levado para o Android 4.4',
     secao: 'projeto-3',
     numero: 3,
     titulo: 'Launcher de TV',
@@ -110,6 +115,7 @@ export const PROJETOS: readonly Projeto[] = [
   },
   {
     slug: 'ana',
+    papel: 'Desenvolvedor na Watts Company, para uma fisioterapeuta autônoma',
     secao: 'projeto-4',
     numero: 4,
     titulo: 'Ana, agente de IA',
@@ -133,6 +139,7 @@ export const PROJETOS: readonly Projeto[] = [
   },
   {
     slug: 'dra-juliana',
+    papel: 'Design e desenvolvimento, para a Dra. Juliana Maluhy',
     secao: 'projeto-5',
     numero: 5,
     titulo: 'Dra. Juliana Maluhy',
@@ -157,6 +164,7 @@ export const PROJETOS: readonly Projeto[] = [
   },
   {
     slug: 'watts-company',
+    papel: 'Desenvolvedor e co-fundador da Watts Company',
     secao: 'projeto-6',
     numero: 6,
     titulo: 'Watts Company',

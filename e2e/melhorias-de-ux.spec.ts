@@ -576,6 +576,7 @@ test.describe('Limite de 5 abas', () => {
     await abrirPastas(page);
     for (const secao of ['Sobre Mim', 'Diferenciais', 'Skills / STACK', 'Experiências']) {
       await arquivoDaArvore(page, secao).click();
+      await expect(arquivoDaArvore(page, secao)).toHaveAttribute('aria-current', 'page');
     }
     await expect(abas(page)).toHaveCount(5);
     // Reusa a primeira (Início): a mais antiga passa a ser Sobre Mim.

@@ -19,6 +19,15 @@ import { contadorDoProjeto } from '../../core/projetos';
 import type { Projeto } from '../../core/projetos';
 import { CapaEmCodigoDoProjeto } from '../../shared/capa-em-codigo/capa-em-codigo';
 
+export type AbaDosDetalhes = 'visao' | 'codigo' | 'stack';
+
+/** As abas dos detalhes, na ordem em que aparecem. */
+export const ABAS_DOS_DETALHES: readonly { id: AbaDosDetalhes; rotulo: string }[] = [
+  { id: 'visao', rotulo: 'Visão geral' },
+  { id: 'codigo', rotulo: 'Código' },
+  { id: 'stack', rotulo: 'Stack' },
+];
+
 /**
  * Detalhes de um projeto num `<dialog>` modal nativo: o navegador prende o foco, trava o fundo
  * (`inert`) e trata o Esc. A vitrine decide quando abrir e fechar (e anima a expansão a partir do
@@ -50,6 +59,12 @@ export class DetalhesDoProjeto {
     source: this.projeto,
     computation: () => 0,
   });
+  /** Aba aberta; volta à Visão geral a cada projeto. */
+  protected readonly aba = linkedSignal<Projeto | null, AbaDosDetalhes>({
+    source: this.projeto,
+    computation: () => 'visao',
+  });
+  protected readonly abas = ABAS_DOS_DETALHES;
   protected readonly imagem = computed(
     () => this.projeto()?.imagens[this.indiceDaImagem()] ?? null,
   );
@@ -107,6 +122,27 @@ export class DetalhesDoProjeto {
       evento.preventDefault();
       primeiro.focus();
     }
+  }
+
+  protected escolherAba(id: AbaDosDetalhes): void {
+    this.aba.set(id);
+  }
+
+  /** Setas, Home e End movem entre as abas (e não chegam ao atalho de projeto anterior e próximo). */
+  protected aoTeclarNaAba(evento: KeyboardEvent, indice: number): void {
+    const total = this.abas.length;
+    const destino = {
+      ArrowRight: (indice + 1) % total,
+      ArrowLeft: (indice - 1 + total) % total,
+      Home: 0,
+      End: total - 1,
+    }[evento.key];
+    if (destino === undefined) return;
+    evento.preventDefault();
+    evento.stopPropagation();
+    this.aba.set(this.abas[destino].id);
+    const lista = (evento.currentTarget as HTMLElement).parentElement;
+    lista?.querySelectorAll<HTMLElement>('[role="tab"]')[destino]?.focus();
   }
 
   protected escolherImagem(indice: number): void {

@@ -52,12 +52,80 @@
             }
           </ul>
           <h2 id="titulo-do-projeto">{{ p.titulo }}</h2>
-          <p class="descricao">{{ p.descricao }}</p>
-          <ul class="destaques">
-            @for (destaque of p.destaques; track destaque) {
-              <li>{{ destaque }}</li>
+
+          <div class="abas" role="tablist" aria-label="Seções dos detalhes">
+            @for (a of abas; track a.id; let i = $index) {
+              <button
+                type="button"
+                role="tab"
+                class="aba"
+                [id]="'aba-' + a.id"
+                [attr.aria-selected]="aba() === a.id"
+                [attr.aria-controls]="'painel-' + a.id"
+                [attr.tabindex]="aba() === a.id ? 0 : -1"
+                (click)="escolherAba(a.id)"
+                (keydown)="aoTeclarNaAba($event, i)"
+              >
+                {{ a.rotulo }}
+              </button>
             }
-          </ul>
+          </div>
+
+          <div
+            class="painel-da-aba"
+            role="tabpanel"
+            [id]="'painel-' + aba()"
+            [attr.aria-labelledby]="'aba-' + aba()"
+          >
+            @switch (aba()) {
+              @case ('visao') {
+                <p class="descricao">{{ p.descricao }}</p>
+                <ul class="destaques">
+                  @for (destaque of p.destaques; track destaque) {
+                    <li>{{ destaque }}</li>
+                  }
+                </ul>
+              }
+              @case ('codigo') {
+                <div class="trecho" aria-label="Trecho em Java do projeto" role="group">
+                  <p class="linha">
+                    <span class="palavra">public class</span> {{ p.capa.classe }} {{ '{' }}
+                  </p>
+                  @for (linha of p.capa.linhas; track $index) {
+                    <p class="linha recuo">{{ linha }}</p>
+                  }
+                  <p class="linha">{{ '}' }}</p>
+                </div>
+                <p class="descricao">
+                  Este é o trecho de abertura do projeto. O arquivo completo, com o Javadoc e os
+                  detalhes, está em <a [routerLink]="['/' + p.secao]">{{ p.secao }}</a
+                  >.
+                </p>
+              }
+              @case ('stack') {
+                <div class="build" role="group" aria-label="Tecnologias do projeto">
+                  <p class="linha tarefa">&gt; Task :papel</p>
+                  <p class="linha saida">{{ p.papel }}</p>
+                  <p class="linha tarefa">&gt; Task :compileStack</p>
+                  @for (etiqueta of p.etiquetas; track etiqueta) {
+                    <p class="linha saida">
+                      <span class="ok" aria-hidden="true">✓</span> {{ etiqueta }}
+                    </p>
+                  }
+                  <p class="linha tarefa">&gt; Task :destaques</p>
+                  @for (destaque of p.destaques; track destaque) {
+                    <p class="linha saida">
+                      <span class="ok" aria-hidden="true">✓</span> {{ destaque }}
+                    </p>
+                  }
+                  <p class="linha final">
+                    <span class="ok" aria-hidden="true">●</span> BUILD SUCCESSFUL
+                  </p>
+                </div>
+              }
+            }
+          </div>
+
           <div class="acoes">
             @if (p.link; as link) {
               <a

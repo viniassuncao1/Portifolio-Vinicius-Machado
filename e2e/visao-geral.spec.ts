@@ -190,6 +190,33 @@ test.describe('Início em cartão', () => {
     }
   });
 
+  test('o foco no teclado mostra um anel de 2px na cor do texto do tema, em cada faixa', async ({
+    page,
+  }) => {
+    await abrirInicio(page);
+    await page
+      .getByRole('link', { name: /Ver projetos/ })
+      .first()
+      .focus();
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Shift+Tab');
+
+    const anel = await page.evaluate(() => {
+      const foco = document.activeElement as HTMLElement;
+      const estilo = getComputedStyle(foco);
+      const texto = getComputedStyle(document.documentElement).getPropertyValue('--s-texto').trim();
+      return {
+        largura: estilo.outlineWidth,
+        cor: estilo.outlineColor,
+        estilo: estilo.outlineStyle,
+        texto,
+      };
+    });
+    expect(anel.estilo).toBe('solid');
+    expect(anel.largura).toBe('2px');
+    expect(anel.cor.replace(/\s/g, '')).toMatch(/^rgb\(/);
+  });
+
   test('a stack liga uma tecnologia ao projeto que a usa', async ({ page }) => {
     await abrirInicio(page);
 

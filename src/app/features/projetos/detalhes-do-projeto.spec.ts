@@ -154,4 +154,79 @@ describe('DetalhesDoProjeto', () => {
 
     expect(raiz.querySelector('.miniaturas')).toBeNull();
   });
+
+  describe('abas dos detalhes', () => {
+    const abasDe = (raiz: HTMLElement) =>
+      Array.from(raiz.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+
+    it('tem Visão geral, Código e Stack, com a primeira aberta', () => {
+      const { raiz } = montar(PROJETOS[2]);
+
+      expect(abasDe(raiz).map((a) => a.textContent?.trim())).toEqual([
+        'Visão geral',
+        'Código',
+        'Stack',
+      ]);
+      expect(abasDe(raiz)[0].getAttribute('aria-selected')).toBe('true');
+      expect(abasDe(raiz)[1].getAttribute('tabindex')).toBe('-1');
+      expect(raiz.querySelector('[role="tabpanel"] .descricao')?.textContent).toContain(
+        'CleanYourTV',
+      );
+    });
+
+    it('o painel é rotulado pela aba aberta', () => {
+      const { raiz } = montar(PROJETOS[2]);
+
+      const painel = raiz.querySelector('[role="tabpanel"]')!;
+      expect(painel.getAttribute('aria-labelledby')).toBe('aba-visao');
+      expect(abasDe(raiz)[0].getAttribute('aria-controls')).toBe(painel.id);
+    });
+
+    it('a aba Código mostra o trecho em Java e o caminho para o arquivo completo', () => {
+      const { fixture, raiz } = montar(PROJETOS[2]);
+
+      abasDe(raiz)[1].click();
+      fixture.detectChanges();
+
+      expect(raiz.querySelector('.trecho')?.textContent).toContain('LauncherDeTv');
+      expect(raiz.querySelector('.painel-da-aba a')?.getAttribute('href')).toBe('/projeto-3');
+    });
+
+    it('a aba Stack mostra o papel, as tecnologias e os destaques como um build', () => {
+      const { fixture, raiz } = montar(PROJETOS[2]);
+
+      abasDe(raiz)[2].click();
+      fixture.detectChanges();
+
+      const build = raiz.querySelector('.build')?.textContent ?? '';
+      expect(build).toContain(PROJETOS[2].papel);
+      for (const etiqueta of PROJETOS[2].etiquetas) expect(build).toContain(etiqueta);
+      expect(build).toContain('BUILD SUCCESSFUL');
+    });
+
+    it('as setas movem entre as abas e não trocam de projeto', () => {
+      const { fixture, raiz } = montar(PROJETOS[2]);
+      const navegacoes: number[] = [];
+      fixture.componentInstance.navegar.subscribe((passo) => navegacoes.push(passo));
+
+      abasDe(raiz)[0].dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }),
+      );
+      fixture.detectChanges();
+
+      expect(abasDe(raiz)[1].getAttribute('aria-selected')).toBe('true');
+      expect(navegacoes).toEqual([]);
+    });
+
+    it('volta à Visão geral ao trocar de projeto', () => {
+      const { fixture, raiz } = montar(PROJETOS[2]);
+      abasDe(raiz)[2].click();
+      fixture.detectChanges();
+
+      fixture.componentRef.setInput('projeto', PROJETOS[3]);
+      fixture.detectChanges();
+
+      expect(abasDe(raiz)[0].getAttribute('aria-selected')).toBe('true');
+    });
+  });
 });
