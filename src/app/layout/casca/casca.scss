@@ -15,22 +15,21 @@
   column-gap: 0;
   flex: 1 1 0;
   min-height: 0;
-  transition: grid-template-columns var(--duracao-media) var(--curva-saida);
 
   app-painel-lateral {
     min-width: 0;
   }
 }
 
-// Projeto escondido (desktop): a coluna do painel fecha e o editor ocupa o espaço. `visibility`
-// espera o fim da transição para tirar o painel do foco e dos leitores de tela.
+// Projeto escondido (desktop): a coluna do painel zera na hora (grid não se anima) e o editor ocupa
+// o espaço. `visibility` tira o painel do foco e dos leitores de tela; o movimento da entrada e da
+// saída do conteúdo é do `_movimento.scss`, por `[data-painel]`.
 @media (min-width: 768px) {
   .area[data-painel='false'] {
     grid-template-columns: var(--largura-faixa-ferramentas) 0 minmax(0, 1fr);
 
     app-painel-lateral {
       visibility: hidden;
-      transition: visibility 0s var(--duracao-media);
     }
   }
 }
@@ -42,18 +41,28 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .area,
-  .area[data-painel='false'] app-painel-lateral {
-    transition: none;
-  }
-}
-
 .coluna-editor {
   display: flex;
   flex-direction: column;
   min-width: 0;
   min-height: 0;
+}
+
+// Superfície v2 (double-bezel): a coluna do editor é a bandeja (cor própria, cantos concêntricos) e o
+// editor é a superfície interna, com o fio de luz no topo. Só no desktop: no celular o editor vai de
+// borda a borda.
+@media (min-width: 768px) {
+  .coluna-editor {
+    border-end-start-radius: var(--raio-bandeja);
+    background: var(--cor-bandeja);
+    box-shadow: var(--sombra-bandeja);
+  }
+
+  .editor {
+    margin: 0 var(--espaco-bandeja) var(--espaco-bandeja) var(--espaco-bandeja);
+    border-end-end-radius: var(--raio-editor);
+    box-shadow: inset 0 1px 0 var(--cor-bisel-claro);
+  }
 }
 
 // Faixa de abas: o degradê fica aqui e a aba ativa se funde com o editor.
@@ -77,7 +86,7 @@
   border-end-start-radius: var(--raio-editor);
   background: var(--cor-editor);
   // Um fio de luz no topo do editor: a superfície ganha volume sem mudar de tamanho.
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--cor-texto) 7%, transparent);
+  box-shadow: inset 0 1px 0 var(--cor-bisel-claro);
 }
 
 // Região rolável do editor (alcançável por teclado pelo próprio bloco de código).
@@ -130,7 +139,8 @@
   // `visibility` só espera o fim da saída para tirar o painel do foco e dos leitores de tela.
   app-painel-lateral {
     position: fixed;
-    inset-block: var(--altura-barra-ferramentas) 0;
+    inset-block: var(--altura-barra-ferramentas)
+      calc(var(--altura-acoes-celular) + var(--altura-barra-status));
     inset-inline-start: 0;
     z-index: var(--camada-gaveta);
     width: 100%;
