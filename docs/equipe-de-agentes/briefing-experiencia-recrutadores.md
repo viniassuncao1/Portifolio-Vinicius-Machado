@@ -41,8 +41,8 @@ Feito e verificado nesta branch (lint, 922 testes unitários, build e E2E da vit
 - **ADR-0019** (`docs/adr/0019-experiencia-focada-em-recrutadores.md`), índice dos ADRs e status
   dos ADRs 0012 e 0017 atualizados.
 - **Linha de base** em `docs/diario/0023-experiencia-focada-em-recrutadores.md`: Lighthouse móvel
-  de 70 a 74 em desempenho (LCP 4,5 a 5,1 s), 100 em acessibilidade, boas práticas e SEO, e 0
-  violações no axe. **O problema real é desempenho (LCP), não acessibilidade.**
+  100 em tudo, LCP 0,9 a 1,1 s, 0 violações no axe. (A primeira medição, com LCP de 4,5 s, vinha de
+  um servidor local sem compressão; foi corrigida.) A meta passa a ser **não piorar**.
 - **Temas de cor por seção** (`src/styles/_temas-de-secao.scss`, claros e escuros) com teste que
   falha se qualquer par de texto e fundo ficar abaixo de 4,5:1 (`src/app/core/temas-de-secao.spec.ts`).
 - **Camada de movimento com `motion`** (API vanilla, 24,6 KB gzip com `animate` e `inView`):

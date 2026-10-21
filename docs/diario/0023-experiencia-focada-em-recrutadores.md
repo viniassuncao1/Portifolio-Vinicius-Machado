@@ -14,20 +14,29 @@ recruta, com a IDE como referência mínima.
 
 ## Linha de base (antes da change)
 
-Medida em 2026-10-20 sobre o build de produção servido localmente, com Lighthouse 12 no perfil
-móvel padrão (throttling simulado) e o axe dos E2E.
+Medida em 2026-10-20/21 sobre o build de produção, com Lighthouse 12 no perfil móvel padrão
+(throttling simulado) e o axe dos E2E. **A primeira medição usou um servidor local sem compressão
+e deu desempenho de 70 a 74 e LCP de 4,5 a 5,1 s: era um artefato.** A Vercel entrega HTML, JS e CSS
+comprimidos; depois de pôr brotli e gzip em `e2e/servidor.mjs`, o mesmo build da `main` (commit
+`9d8a4cf`) deu o resultado abaixo, que é o que vale como linha de base.
 
-| Página       | Desempenho | Acessibilidade | Boas práticas | SEO | LCP   | CLS   | TBT   |
-| ------------ | ---------- | -------------- | ------------- | --- | ----- | ----- | ----- |
-| `/`          | 70         | 100            | 100           | 100 | 5,1 s | 0,02  | 70 ms |
-| `/skills`    | 74         | 100            | 100           | 100 | 4,5 s | 0,014 | 10 ms |
-| `/projeto-2` | 74         | 100            | 100           | 100 | 4,5 s | 0,036 | 0 ms  |
+| Página       | Desempenho | LCP   | CLS   | TBT  |
+| ------------ | ---------- | ----- | ----- | ---- |
+| `/`          | 100        | 1,1 s | 0,02  | 0 ms |
+| `/skills`    | 100        | 0,9 s | 0,014 | 0 ms |
+| `/projeto-2` | 100        | 0,9 s | 0,036 | 0 ms |
 
-- **axe (WCAG 2 A e AA):** 0 violações nas 37 verificações dos E2E, no celular.
-- **Leitura:** acessibilidade, boas práticas e SEO já estão no teto. O ponto fraco é o desempenho,
-  sobretudo o LCP (4,5 a 5,1 s, contra a meta de 2,5 s). A meta da change é Lighthouse móvel 95 em
-  desempenho, então o orçamento de peso e a abertura que não atrasa o conteúdo importam mais do que
-  correções de acessibilidade.
+- **axe (WCAG 2 A e AA):** 0 violações nas 37 verificações dos E2E, no celular; acessibilidade,
+  boas práticas e SEO em 100 no Lighthouse.
+- **Leitura:** o site já estava no teto em tudo. A meta da change deixa de ser "corrigir o LCP" e
+  passa a ser **não piorar**: desempenho 100, LCP até 2,5 s e CLS até 0,05 com a página nova.
+
+## Depois da visão geral
+
+`/` em cartão (hero, provas, sobre, stack, experiência, formação, projetos e contato, com tema por
+seção): desempenho 100, acessibilidade 100, boas práticas 100, SEO 100, **LCP 1,1 s, CLS 0,009,
+TBT 40 ms**. O CLS começou em 0,045: a barra de ações mudava de linha quando o botão "Copiar
+e-mail" aparecia depois da hidratação; hoje o botão ocupa o lugar desde o HTML pré-renderizado.
 
 ## Medições da biblioteca de movimento
 

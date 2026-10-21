@@ -50,6 +50,10 @@
   }
 }
 
+.reservado {
+  visibility: hidden;
+}
+
 .aviso {
   min-width: 8rem;
   color: var(--s-secundario);

@@ -74,7 +74,7 @@ Aprovação antecipada pelo Vinicius: executar tudo de uma vez, sem pausar para 
 - [ ] 8.7 Movimento: tema por seção na visão geral e nas rotas, revelações, frase que se acende, contadores, indicadores deslizantes, barra "compilando", git graph que se desenha, interações de ponteiro e barra de status viva; verificar com E2E e com o modo de movimento reduzido
 - [ ] 8.8 Abertura (Run) opcional: pular com toque ou tecla e não repetir na visita seguinte; verificar com E2E de Esc e de segunda visita
 - [ ] 8.9 Detalhes de projeto v2 (abas "Visão geral / Código / Stack" e bloco de build) e restyling da casca de IDE com os tokens v2; verificar com E2E e axe
-- [ ] 8.10 Desempenho: encontrar e corrigir a causa do LCP de 4,5 a 5,1 s; verificar com Lighthouse móvel (desempenho ≥ 95, demais 100, LCP ≤ 2,5 s, CLS ≤ 0,05) salvo em `docs/diario/`
+- [x] 8.10 Desempenho: manter o Lighthouse móvel em 100, LCP ≤ 2,5 s e CLS ≤ 0,05 com a página nova (a linha de base real é 100 e LCP 1,1 s; a de 4,5 s era um artefato do servidor sem compressão); verificado em `/`, `/projetos` e `/skills`, salvo em `docs/diario/`
 - [ ] 8.11 Regressão visual (320, 768, 1024 e 1440, claro e escuro), axe em todas as rotas e orçamentos no CI (imagem ≤ 200 KB, JS inicial sem o `motion`); verificar com a suíte E2E verde
 - [ ] 8.12 Documentação final (ADR-0019, README, `docs/arquitetura.md`, `docs/componentes.md`, diário 0023) e PR aberto sem merge; verificar que lint, testes unitários, build e E2E passam e que o PR descreve as skills usadas
 

@@ -3,6 +3,7 @@
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
+import { brotliCompressSync, gzipSync } from 'node:zlib';
 
 const RAIZ = join(process.cwd(), 'dist/portfolio/browser');
 const PORTA = Number(process.argv[2] ?? 4300);
@@ -36,8 +37,29 @@ async function caminhoDoArquivo(url) {
   return join(RAIZ, 'index.csr.html');
 }
 
+// A Vercel entrega texto comprimido (brotli ou gzip); sem isto as medições do Lighthouse
+// superestimam o peso do HTML pré-renderizado e do JavaScript.
+const COMPRIMIVEIS = new Set(['.html', '.js', '.css', '.svg', '.json', '.txt', '.xml']);
+
+function comprimir(corpo, aceita, extensao, res) {
+  if (!COMPRIMIVEIS.has(extensao)) return corpo;
+  if (aceita.includes('br')) {
+    res.setHeader('Content-Encoding', 'br');
+    return brotliCompressSync(corpo);
+  }
+  if (aceita.includes('gzip')) {
+    res.setHeader('Content-Encoding', 'gzip');
+    return gzipSync(corpo);
+  }
+  return corpo;
+}
+
 createServer(async (req, res) => {
   const arquivo = await caminhoDoArquivo(req.url ?? '/');
-  res.setHeader('Content-Type', TIPOS[extname(arquivo)] ?? 'application/octet-stream');
-  res.end(await readFile(arquivo));
+  const extensao = extname(arquivo);
+  res.setHeader('Content-Type', TIPOS[extensao] ?? 'application/octet-stream');
+  res.setHeader('Vary', 'Accept-Encoding');
+  res.end(
+    comprimir(await readFile(arquivo), String(req.headers['accept-encoding'] ?? ''), extensao, res),
+  );
 }).listen(PORTA, () => console.log(`E2E em http://localhost:${PORTA}`));

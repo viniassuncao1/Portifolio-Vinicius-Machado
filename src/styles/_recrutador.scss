@@ -7,7 +7,9 @@
 @font-face {
   font-family: 'Geist Variable';
   font-style: normal;
-  font-display: swap;
+  // `block`: o texto grande do hero espera os 29 KB da fonte (alguns ms) em vez de trocar de métrica
+  // no meio da leitura, o que moveria o layout (CLS).
+  font-display: block;
   font-weight: 100 900;
   src: url('../../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2')
     format('woff2-variations');
