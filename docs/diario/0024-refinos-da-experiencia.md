@@ -1,7 +1,7 @@
 # 0024: Refinos da experiência
 
 - **Data:** 2026-10-21
-- **Change:** [refatorar-experiencia-do-usuario](../../openspec/changes/refatorar-experiencia-do-usuario/) (follow-ups 5.5 e 6.1)
+- **Change:** [refatorar-experiencia-do-usuario](../../openspec/changes/archive/2026-10-21-refatorar-experiencia-do-usuario/) (follow-ups 5.5 e 6.1)
 - **PR:** [#42](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/42) (base `feat/refatorar-experiencia`)
 - **Testes:** 1017 testes unitários (95,15% de cobertura de instruções) e 1004 testes E2E
 - **ADRs:** [0019](../adr/0019-experiencia-focada-em-recrutadores.md), item 8
@@ -47,7 +47,7 @@ estrutura.
 
 ## Links
 
-- Change: [`openspec/changes/refatorar-experiencia-do-usuario`](../../openspec/changes/refatorar-experiencia-do-usuario/)
+- Change: [`openspec/changes/refatorar-experiencia-do-usuario`](../../openspec/changes/archive/2026-10-21-refatorar-experiencia-do-usuario/)
 - Entrada anterior: [0023 experiência focada em recrutadores](0023-experiencia-focada-em-recrutadores.md)
 
 ## Rascunho de post para o LinkedIn

@@ -7,14 +7,16 @@ ferramentas, árvore de seções, aba e editor) e permitir navegar entre as seç
 ## Requirements
 
 ### Requirement: Estrutura fixa da IDE
-Toda página SHALL exibir a barra de ferramentas escura no topo, a faixa de ferramentas e o
-painel do projeto (com o cabeçalho `Portfolio_Vinicius` do design) à esquerda e, à direita, a
-faixa de abas sobre o editor de cantos arredondados, com a barra de status no rodapé.
+Toda página SHALL exibir a casca da IDE com as mesmas partes nas mesmas posições: barra superior
+com identidade do projeto, ações rápidas e a ação ▶ Executar, navegação do projeto em pacotes,
+faixa de abas de arquivos abertos sobre a área de conteúdo, e barra de status no rodapé. O
+desenho, as proporções e o ritmo dessas partes são definidos pelo design da change, sem seguir
+fielmente as telas de `design/telas/`.
 
 #### Scenario: Abertura de qualquer seção
 - **WHEN** o visitante abre a página inicial ou a rota de qualquer seção
-- **THEN** a barra de ferramentas, a faixa de ferramentas, o painel, a faixa de abas, o editor e
-  a barra de status aparecem nas mesmas posições
+- **THEN** a barra superior, a navegação do projeto, a faixa de abas, a área de conteúdo e a
+  barra de status aparecem nas mesmas posições
 
 ### Requirement: Árvore com as seções do portfólio
 O painel lateral SHALL mostrar o projeto em pastas, nesta ordem: `sobre` (Sobre Mim,
@@ -81,18 +83,19 @@ com nome acessível.
   botão de tema e Executar são anunciados como botões
 
 ### Requirement: Adaptação a telas pequenas
-Em telas com largura menor que 768px, a faixa de ferramentas SHALL ficar oculta, o painel do
-projeto SHALL ficar recolhido, abrindo pelo botão Projeto da barra superior, e o editor SHALL
-ocupar a largura disponível sem rolagem horizontal da página.
+Em telas com largura menor que 768px, a casca SHALL usar a barra de ações inferior da spec
+`orientacao-do-visitante`, ocultar a faixa de ferramentas, abrir o projeto numa gaveta pelo botão
+"Seções" (com todas as pastas abertas) e fazer a área de conteúdo ocupar a largura disponível sem
+rolagem horizontal da página.
 
 #### Scenario: Celular de 390px
 - **WHEN** a página inicial é aberta numa tela de 390x844
-- **THEN** o editor ocupa a largura da tela, a página não rola na horizontal e há um botão para
-  abrir a árvore de seções
+- **THEN** a área de conteúdo ocupa a largura da tela, a página não rola na horizontal e a barra
+  de ações oferece Seções, Projetos e Contato
 
 #### Scenario: Escolha de seção no celular
-- **WHEN** o visitante abre a árvore pelo botão e escolhe "Formação"
-- **THEN** a seção "Formação" é aberta e a árvore volta a ficar recolhida
+- **WHEN** o visitante abre a gaveta por "Seções" e escolhe "Formação"
+- **THEN** a seção "Formação" é aberta e a gaveta volta a ficar recolhida
 
 ### Requirement: Todas as rotas pré-renderizadas
 A rota de cada seção SHALL ser entregue já renderizada no HTML, sem depender de JavaScript para
@@ -117,14 +120,6 @@ indicando com `aria-current="page"` quando ela é a página atual.
 #### Scenario: Commit na faixa
 - **WHEN** o visitante ativa Commit
 - **THEN** a aba `Portfolio-Vinicius-Machado` abre e o botão fica com `aria-current="page"`
-
-### Requirement: Seções fáceis de achar no celular
-No celular, o botão que abre a árvore SHALL ter o texto visível "Seções" e as pastas da gaveta
-SHALL começar abertas.
-
-#### Scenario: Abrir a gaveta
-- **WHEN** o visitante ativa "Seções" numa tela de 390x844
-- **THEN** a gaveta abre com todas as pastas abertas
 
 ### Requirement: Decorativos discretos
 Os ícones decorativos da barra superior SHALL ficar mais apagados que os botões reais e MUST NOT
