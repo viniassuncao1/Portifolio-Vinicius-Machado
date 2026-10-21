@@ -9,17 +9,10 @@ import {
   valor,
   vazia,
 } from '../../shared/editor-de-codigo/conteudo';
+import { RECOMENDACOES } from '../../core/perfil';
 import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
 
-/**
- * Texto da recomendação de Luana Porto, um item por parágrafo, como foi escrito no LinkedIn. Os
- * parágrafos formam um só Javadoc, separados por uma linha em branco.
- */
-const TEXTO_LUANA_PORTO: readonly string[] = [
-  'Tive a oportunidade de trabalhar com o Vinícius e acompanhar de perto seu trabalho no dia a dia. É um profissional muito comprometido, responsável e colaborativo, sempre disposto a ajudar o time e contribuir para que as entregas aconteçam da melhor forma possível.',
-  'Além da parte técnica, se destaca pela facilidade de comunicação, organização e pela forma como lida com desafios e aprende novas tecnologias. É uma pessoa em quem o time pode confiar e que agrega muito ao ambiente de trabalho.',
-  'Recomendo o Vinícius com muita tranquilidade e tenho certeza de que será uma ótima adição a qualquer equipe.',
-];
+const LUANA = RECOMENDACOES[0];
 
 /**
  * Conteúdo da seção Depoimentos/Recomendações (referência visual: design/telas/tela-29.png).
@@ -53,9 +46,9 @@ export const CONTEUDO_DEPOIMENTOS: ConteudoDoEditor = [
   linha(1, comentario('// Recomendação recebida no LinkedIn')),
   javadocComRetrato(
     1,
-    TEXTO_LUANA_PORTO.join('\n\n'),
-    { src: 'fotos/luana-porto.webp', alt: 'Foto de Luana Porto', tamanho: 'pequeno' },
-    { nome: 'Luana Porto', href: 'https://www.linkedin.com/in/luana-porto-pereira-gomes/' },
+    LUANA.paragrafos.join('\n\n'),
+    { src: LUANA.foto.src, alt: LUANA.foto.alt, tamanho: 'pequeno' },
+    { nome: LUANA.autora, href: LUANA.linkedin },
   ),
   linha(
     1,

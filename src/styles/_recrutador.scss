@@ -138,3 +138,76 @@
     transition: none;
   }
 }
+
+// Cabeçalho e links comuns às visões em cartão das seções.
+.cabecalho-de-secao {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.titulo-de-secao {
+  max-width: 24ch;
+  margin: 0;
+  font-family: var(--fonte-display);
+  font-size: clamp(1.875rem, 4vw, 3rem);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.link-mais {
+  color: var(--s-texto);
+  font-weight: 500;
+  text-decoration-color: var(--s-acento);
+  text-underline-offset: 0.3em;
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--s-texto);
+    outline-offset: 3px;
+  }
+}
+
+.grade-de-cartoes {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.miolo-de-cartao {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem 1.75rem;
+
+  h4 {
+    margin: 0;
+    font-family: var(--fonte-display);
+    font-size: 1.25rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .rotulo-mono {
+    color: var(--s-acento);
+    font-family: var(--fonte-mono);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .apoio {
+    color: var(--s-secundario);
+    line-height: 1.5;
+  }
+}

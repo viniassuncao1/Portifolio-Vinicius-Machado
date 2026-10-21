@@ -2,11 +2,16 @@ import { TestBed } from '@angular/core/testing';
 
 import { CONTEUDO_DIFERENCIAIS } from './diferenciais.conteudo';
 import { Diferenciais } from './diferenciais';
+import { VisaoDoConteudoEscolhida } from '../../core/visao-do-conteudo';
 
 const INICIO_DO_PARAGRAFO = 'Moro em Brasília há 20 anos.';
 const FIM_DO_PARAGRAFO = 'encarar o que aparecer pela frente.';
 
 describe('Diferenciais', () => {
+  // Estes testes cobrem a visão em código; o cartão tem os seus em `shared/cartoes` e nos E2E.
+  beforeEach(() => TestBed.inject(VisaoDoConteudoEscolhida).escolher('codigo'));
+  afterEach(() => localStorage.clear());
+
   async function renderizar(): Promise<HTMLElement> {
     const fixture = TestBed.createComponent(Diferenciais);
     await fixture.whenStable();
