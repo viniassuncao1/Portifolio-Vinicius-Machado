@@ -30,7 +30,7 @@
   }
 
   &:focus-visible {
-    outline: var(--largura-anel-foco) solid var(--s-texto);
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
     outline-offset: 2px;
   }
 }
