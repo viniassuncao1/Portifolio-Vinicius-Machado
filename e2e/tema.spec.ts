@@ -332,11 +332,12 @@ test.describe('Ajustes nativos do navegador', () => {
   });
 
   test('o bloco de código não é traduzido pelo tradutor do navegador', async ({ browser }) => {
-    const contexto = await browser.newContext({ javaScriptEnabled: false });
+    const contexto = await browser.newContext();
     const pagina = await contexto.newPage();
 
     for (const rota of ['/diferenciais', '/como-uso-ia', '/depoimentos']) {
       await pagina.goto(rota);
+      await pagina.getByRole('button', { name: 'Ver como código' }).click();
 
       await expect(pagina.locator('main pre'), rota).toHaveAttribute('translate', 'no');
       expect(await pagina.locator('main pre').evaluate((el: HTMLElement) => el.translate)).toBe(

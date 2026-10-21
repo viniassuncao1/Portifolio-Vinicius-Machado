@@ -281,7 +281,7 @@ test.describe('Detalhes do projeto', () => {
     await dialogo(page)
       .getByRole('link', { name: /Ver em código/ })
       .click();
-    await expect(page).toHaveURL(/\/projeto-5$/);
+    await expect(page).toHaveURL(/\/projeto-5\?visao=codigo$/);
   });
 
   test('projeto sem endereço público não mostra o botão do site', async ({ page }) => {

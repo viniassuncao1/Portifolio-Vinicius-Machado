@@ -269,12 +269,10 @@ test.describe('Skills: endereços antigos das páginas', () => {
 test.describe('Sem JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
-  test('/como-uso-ia entrega o código, os valores e o Javadoc no HTML', async ({ page }) => {
+  test('/como-uso-ia entrega o cartão no HTML', async ({ page }) => {
     await page.goto('/como-uso-ia');
 
-    await expect(page.locator('main code')).toContainText('InteligenciaArtificial');
-    await expect(page.locator('main .papel-valor')).toHaveText(['false', 'true']);
-    await expect(page.locator('main .javadoc')).toContainText('Não vejo IA como modismo');
+    await expect(page.locator('main .cartao-da-secao')).toContainText('Não vejo IA como modismo');
     await expect(arquivoDaArvore(page, 'Como uso a IA')).toHaveAttribute('aria-current', 'page');
   });
 

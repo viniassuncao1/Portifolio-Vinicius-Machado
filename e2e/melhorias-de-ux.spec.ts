@@ -342,17 +342,13 @@ test.describe('Próximo arquivo', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Diferenciais');
   });
 
-  test('o Início não tem "Próximo arquivo" (tem os atalhos) e o link está no HTML sem JavaScript', async ({
-    browser,
+  test('o Início não tem "Próximo arquivo" (tem os atalhos) e o link existe no código das seções', async ({
+    page,
   }) => {
-    const contexto = await browser.newContext({ javaScriptEnabled: false });
-    const pagina = await contexto.newPage();
-
-    await pagina.goto('/diferenciais');
-    await expect(pagina.locator('app-proximo-arquivo a')).toHaveAttribute('href', '/como-uso-ia');
-    await pagina.goto('/');
-    await expect(pagina.locator('app-proximo-arquivo a')).toHaveCount(0);
-    await contexto.close();
+    await page.goto('/diferenciais');
+    await expect(page.locator('app-proximo-arquivo a')).toHaveAttribute('href', '/como-uso-ia');
+    await page.goto('/');
+    await expect(page.locator('app-proximo-arquivo a')).toHaveCount(0);
   });
 });
 

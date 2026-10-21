@@ -8,8 +8,26 @@ import { SECOES as SECOES_DO_SITE } from '../src/app/core/secoes';
 /** A árvore de seções (a seção com várias páginas tem outra `nav`, com `aria-current` próprio). */
 const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
 
-/** Seções com as duas visões: sem JavaScript o HTML traz o cartão. */
-const SECOES_COM_CARTAO = new Set(['sobre-mim', 'skills', 'experiencias', 'formacao', 'contato']);
+/** Seções com as duas visões (todas, menos a vitrine): sem JavaScript o HTML traz o cartão. */
+const SECOES_COM_CARTAO = new Set([
+  'sobre-mim',
+  'diferenciais',
+  'como-uso-ia',
+  'skills',
+  'experiencias',
+  'projeto-1',
+  'projeto-2',
+  'projeto-3',
+  'projeto-4',
+  'projeto-5',
+  'projeto-6',
+  'certificacoes',
+  'eventos',
+  'formacao',
+  'idiomas',
+  'depoimentos',
+  'contato',
+]);
 
 const SECOES = [
   { slug: 'sobre-mim', titulo: 'Sobre Mim' },

@@ -176,9 +176,10 @@ test.describe('Projeto 2: este portfólio como estudo com IA (/projeto-2)', () =
     const pagina = await contexto.newPage();
     await pagina.goto('/projeto-2');
 
-    await expect(pagina.locator('main code')).toContainText('Ferramenta maestri');
-    await expect(pagina.locator('main .javadoc').nth(3)).toContainText('Evert Junior');
-    await expect(pagina.locator('main a[href="https://github.com/affaan-m/ECC"]')).toHaveCount(1);
+    await expect(pagina.locator('main .cartao-da-secao')).toContainText('Maestri');
+    await expect(
+      pagina.locator('main .cartao-da-secao a[href^="https://"]').first(),
+    ).toBeAttached();
     await expect(pagina.locator('main')).not.toContainText('em construção');
     await contexto.close();
   });

@@ -10,7 +10,6 @@ const PARAGRAFOS = [
 ];
 
 const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
-const codigo = (page: Page) => page.locator('main code');
 
 test.beforeEach(async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -135,11 +134,11 @@ test.describe('Depoimentos sem JavaScript', () => {
     await page.goto('/depoimentos');
 
     await expect(page).toHaveTitle('Depoimentos/Recomendações | Vinicius Machado');
-    await expect(codigo(page)).toContainText('Luana Porto');
-    await expect(codigo(page)).toContainText('Desenvolvedor Backend Java');
-    await expect(codigo(page)).toContainText('Trabalhou na mesma equipe');
-    await expect(codigo(page)).toContainText('LocalDate.of(2026, 9, 22)');
-    for (const paragrafo of PARAGRAFOS) await expect(codigo(page)).toContainText(paragrafo);
+    // Sem JavaScript o HTML traz o cartão, com a recomendação inteira.
+    const cartao = page.locator('main .cartao-da-secao');
+    await expect(cartao).toContainText('Luana Porto');
+    await expect(cartao).toContainText('Desenvolvedor Backend Java');
+    for (const paragrafo of PARAGRAFOS) await expect(cartao).toContainText(paragrafo);
     await expect(page.locator('main')).not.toContainText('em construção');
   });
 });

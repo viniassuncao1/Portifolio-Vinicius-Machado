@@ -1,6 +1,8 @@
 import { expect, test as base } from '@playwright/test';
 import type { BrowserContext } from '@playwright/test';
 
+import { SECOES, SLUG_DA_VITRINE } from '../src/app/core/secoes';
+
 /** Chave que marca a sessão em que a abertura (ou o aviso, num link direto) já foi exibida (core/abertura.ts). */
 const CHAVE_DA_ABERTURA = 'abertura-exibida';
 
@@ -34,11 +36,7 @@ const semearSessao = (contexto: BrowserContext) =>
 /** Rotas que têm as duas visões: o HTML traz o cartão e, ao hidratar, a visão lembrada pode ser o código. */
 const ROTAS_COM_DUAS_VISOES = new Set([
   '/',
-  '/sobre-mim',
-  '/skills',
-  '/experiencias',
-  '/formacao',
-  '/contato',
+  ...SECOES.filter((secao) => secao.slug !== SLUG_DA_VITRINE).map((secao) => `/${secao.slug}`),
 ]);
 
 export const test = base.extend<{ visao: VisaoDoTeste }>({

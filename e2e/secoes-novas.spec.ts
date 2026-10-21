@@ -347,15 +347,15 @@ test.describe('Cinco seções novas sem JavaScript', () => {
     await expect(page.locator('main')).not.toContainText('em construção');
   });
 
-  // Eventos e Idiomas só têm a visão em código.
+  // Eventos e Idiomas também entregam o cartão no HTML.
   for (const [rota, trecho] of [
     ['/eventos', 'Campus Party Brasília'],
-    ['/idiomas', '"Básico"'],
+    ['/idiomas', 'Básico'],
   ] as const) {
-    test(`${rota} entrega o código no HTML`, async ({ page }) => {
+    test(`${rota} entrega o cartão no HTML`, async ({ page }) => {
       await page.goto(rota);
 
-      await expect(codigo(page)).toContainText(trecho);
+      await expect(page.locator('main .cartao-da-secao')).toContainText(trecho);
       await expect(page.locator('main')).not.toContainText('em construção');
     });
   }
