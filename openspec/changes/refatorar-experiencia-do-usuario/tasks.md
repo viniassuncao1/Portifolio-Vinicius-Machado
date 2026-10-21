@@ -45,7 +45,7 @@
 
 ## 6. Casca reimaginada e orientação (Pincel)
 
-- [x] 6.1 Redesenhar a casca (barra superior, painel recolhível, faixa de abas, barra de status, proporções e paleta pelos tokens) mantendo pacotes, abas, Git e ▶ Executar; verificar que as seções abrem pelos mesmos endereços e que `casca.spec.ts` e os e2e de casca passam
+- [x] 6.1 (acabamento; redesenho completo na 9.1) Redesenhar a casca (barra superior, painel recolhível, faixa de abas, barra de status, proporções e paleta pelos tokens) mantendo pacotes, abas, Git e ▶ Executar; verificar que as seções abrem pelos mesmos endereços e que `casca.spec.ts` e os e2e de casca passam
 - [x] 6.2 Criar a visão geral rolável em `/` (primeira dobra, blocos-resumo e caminhos rápidos Projetos/Currículo/Contato) sem perder `Inicio.java` como arquivo; verificar com e2e que a primeira dobra de 1440x900 mostra nome, cargo, stack, "disponível" e as três ações
 - [x] 6.3 Implementar a barra de ações inferior no celular (Seções, Projetos, Contato), a gaveta com pastas abertas e a vitrine em grade; verificar em 390x844 sem rolagem horizontal
 - [x] 6.4 Tornar a abertura opcional (pular com toque/tecla, lembrar a visita, sem atrasar o LCP); verificar com e2e de Esc e de segunda visita
@@ -83,6 +83,20 @@ Aprovação antecipada pelo Vinicius: executar tudo de uma vez, sem pausar para 
 - [x] 8.10 Desempenho: manter o Lighthouse móvel em 100, LCP ≤ 2,5 s e CLS ≤ 0,05 com a página nova (a linha de base real é 100 e LCP 1,1 s; a de 4,5 s era um artefato do servidor sem compressão); verificado em `/`, `/projetos` e `/skills`, salvo em `docs/diario/`
 - [x] 8.11 Regressão visual (320, 768, 1024 e 1440, claro e escuro), axe em todas as rotas e orçamentos no CI (imagem ≤ 200 KB, JS inicial sem o `motion`); verificar com a suíte E2E verde
 - [x] 8.12 Documentação final (ADR-0019, README, `docs/arquitetura.md`, `docs/componentes.md`, diário 0023) e PR aberto sem merge; verificar que lint, testes unitários, build e E2E passam e que o PR descreve as skills usadas
+
+## 9. Fechamento (Regente, 2026-10-21)
+
+O segundo PR marcou a 6.1 com um acabamento de CSS; o redesenho pedido pela tarefa e pela seção
+"Casca reimaginada" do `design.md` fica neste grupo. A produção não muda (ADR-0020): o Vinicius
+revisa tudo no `localhost:4200` e decide quando publicar. Briefing de cada trilha:
+`docs/equipe-de-agentes/briefing-experiencia-recrutadores.md` (trilhas A e B).
+
+- [ ] 9.1 [Pincel] Redesenhar a casca de verdade, com os tokens v2 e as superfícies double-bezel: barra superior com identidade do projeto, busca (Ctrl/Cmd+K) e ▶ Executar; painel do projeto recolhível (botão e atalho, estado lembrado na sessão); faixa de abas com o indicador deslizante; barra de status com caminho, branch, relógio de Brasília e "disponível"; proporções e paleta pelos tokens, nos dois temas e no celular (barra de ações inferior). Mantém pacotes, abas, Git, ▶ Executar, rotas e slugs — verificar com capturas `casca-v2-*` em 1440 e 390, claro e escuro, e `casca.spec.ts`
+- [ ] 9.2 [Compasso] Movimento da casca nova: painel recolhível, indicador das abas, barra de status viva e estados de hover/foco/pressionado, só `transform`/`opacity`, tokens de movimento e movimento reduzido — verificar no portal e com os e2e de movimento
+- [ ] 9.3 [Nanquim] Corrigir a spec `secao-sobre-mim` que falha em `openspec validate --specs --strict` (requisito com mais de 500 caracteres) e conferir que as specs desta change sincronizam limpas (`.maestri/sincronizar-specs.py` num rascunho, sem gravar) — verificar com `openspec validate --specs --strict`
+- [ ] 9.4 [Sentinela] E2E da casca nova (estrutura, painel recolhível, teclado, axe nos dois temas, celular sem rolagem horizontal) e uma galeria de revisão para o Vinicius: capturas de todas as rotas em 320, 768, 1024 e 1440, claro e escuro, em `.maestri/capturas/revisao/` com um `index.html` local — verificar com `npm run lint && npm run test:ci && npm run build && npm run e2e`
+- [ ] 9.5 [Escriba] `docs/componentes.md`, `docs/arquitetura.md`, README e a entrada do diário do fechamento — verificar com `npm run format:check`
+- [ ] 9.6 [Regente] Revisar, abrir o PR sem publicar, arquivar a change com sync das specs depois do merge — verificar pelo PR com CI verde e a produção inalterada
 
 ## Workflow follow-up
 
