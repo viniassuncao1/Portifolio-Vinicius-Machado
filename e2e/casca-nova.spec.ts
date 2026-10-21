@@ -28,7 +28,9 @@ test.describe('Casca nova: estrutura no desktop (1440x900)', () => {
   }) => {
     await abrirHidratada(page, '/skills');
 
-    await expect(barra(page)).toBeVisible();
+    await expect(page.getByRole('banner')).toHaveCount(1);
+    await expect(barra(page)).toHaveAttribute('role', 'banner');
+    await expect(page.getByRole('banner')).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Seções do portfólio' })).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Faixa de arquivos' })).toBeVisible();
     await expect(page.getByRole('main')).toBeVisible();
@@ -52,6 +54,14 @@ test.describe('Casca nova: estrutura no desktop (1440x900)', () => {
       'Usar tema claro',
       'Branch master, abrir o repositório',
     ]);
+  });
+
+  test('o link Repositório da gaveta só existe no celular: no desktop fica escondido', async ({
+    page,
+  }) => {
+    await abrirHidratada(page, '/skills');
+
+    await expect(painel(page).getByRole('link', { name: 'Repositório' })).toBeHidden();
   });
 
   test('"Portfolio_Vinicius, ir para o início" leva ao Início, também pelo teclado', async ({
@@ -381,6 +391,44 @@ test.describe('Casca nova: celular (390x844)', () => {
       'aria-current',
       'page',
     );
+  });
+
+  test('a gaveta tem o link Repositório depois da árvore, que leva a /repositorio e fecha a gaveta', async ({
+    page,
+  }) => {
+    await abrirHidratada(page, '/skills');
+    await acoes(page).getByRole('button', { name: 'Seções' }).click();
+    const link = painel(page).getByRole('link', { name: 'Repositório' });
+
+    await expect(link).toBeVisible();
+    await expect(link).toHaveAttribute('href', '/repositorio');
+    const [arvoreCaixa, linkCaixa] = [
+      (await arvoreDeSecoes(page).boundingBox())!,
+      (await link.boundingBox())!,
+    ];
+    expect(linkCaixa.y, 'depois da árvore').toBeGreaterThanOrEqual(arvoreCaixa.y);
+    expect(linkCaixa.height).toBeGreaterThanOrEqual(44);
+    await link.click();
+
+    await expect(page).toHaveURL(/\/repositorio$/);
+    await expect(acoes(page).getByRole('button', { name: 'Seções' })).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    );
+    await acoes(page).getByRole('button', { name: 'Seções' }).click();
+    await expect(painel(page).getByRole('link', { name: 'Repositório' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+  });
+
+  test('a barra de ações continua com três botões: o Repositório fica só na gaveta', async ({
+    page,
+  }) => {
+    await abrirHidratada(page, '/skills');
+
+    await expect(acoes(page).locator('.acao')).toHaveCount(3);
+    await expect(acoes(page).getByRole('link', { name: 'Repositório' })).toHaveCount(0);
   });
 
   test('a branch some da barra superior, o painel não tem botão de recolher e Ctrl+B não faz nada', async ({
