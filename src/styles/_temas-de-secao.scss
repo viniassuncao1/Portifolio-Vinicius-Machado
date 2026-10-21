@@ -1,0 +1,137 @@
+// Temas de cor por seção da visão geral (ADR-0019). O `<html>` recebe `data-secao` conforme a seção
+// que passa da metade da janela e as variáveis `--s-*` transitam entre os temas. Sem `data-secao`,
+// vale o tema do hero. Todo par de texto e fundo é conferido por `src/app/core/temas-de-secao.spec.ts`
+// (4,5:1), nos temas escuro e claro; ao mudar um valor, o teste diz qual par reprovou.
+//
+// Papéis: fundo, texto, secundario (texto de apoio), linha (divisórias), acento (texto e controles),
+// acento-2 (destaque de uma palavra), sobre-acento (texto sobre o fundo do acento).
+
+@property --s-fundo {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #1c1c1c;
+}
+
+@property --s-texto {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #f0f0f0;
+}
+
+@property --s-secundario {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #aaaaaa;
+}
+
+@property --s-linha {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #3a3a3a;
+}
+
+@property --s-acento {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #de60d2;
+}
+
+@property --s-acento-2 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #ffb86b;
+}
+
+@property --s-sobre-acento {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #1c1c1c;
+}
+
+@mixin tema-de-secao($fundo, $texto, $secundario, $linha, $acento, $acento-2, $sobre-acento) {
+  --s-fundo: #{$fundo};
+  --s-texto: #{$texto};
+  --s-secundario: #{$secundario};
+  --s-linha: #{$linha};
+  --s-acento: #{$acento};
+  --s-acento-2: #{$acento-2};
+  --s-sobre-acento: #{$sobre-acento};
+}
+
+// Tema escuro (padrão do site)
+:root,
+:root[data-secao='hero'] {
+  @include tema-de-secao(#1c1c1c, #f0f0f0, #aaaaaa, #3a3a3a, #de60d2, #ffb86b, #1c1c1c);
+}
+
+:root[data-secao='sobre'] {
+  @include tema-de-secao(#2b2b2b, #eeeeee, #b4b4b4, #444444, #e58bdb, #7fd1ae, #2b2b2b);
+}
+
+:root[data-secao='stack'] {
+  @include tema-de-secao(#14211a, #eaf3e6, #9db5a6, #25382c, #c8f560, #7be0a8, #14211a);
+}
+
+:root[data-secao='formacao'] {
+  @include tema-de-secao(#251a22, #f6e9f2, #c4a8bd, #3c2a37, #ff8ac4, #ffc27a, #251a22);
+}
+
+:root[data-secao='projetos'] {
+  @include tema-de-secao(#111111, #f6f1e7, #a8a29a, #2c2926, #ffd23f, #ff8a5c, #1a1400);
+}
+
+:root[data-secao='contato'] {
+  @include tema-de-secao(#0e3a3a, #effff6, #a9d8cc, #1f6560, #ffdf6b, #9bf2d0, #0b2f2d);
+}
+
+// Tema claro: aplicado por `data-tema='claro'` e, sem JavaScript, pelo `prefers-color-scheme`.
+// O hero claro entra no bloco `tokens-claros` de `_tokens.scss` (primeiro quadro, sem `data-tema`).
+@mixin hero-claro {
+  @include tema-de-secao(#f6f3ee, #1c1c1c, #5c5c5c, #d8d2c8, #a0158f, #8a4a00, #ffffff);
+}
+
+@mixin secoes-claras {
+  @include hero-claro;
+
+  &[data-secao='hero'] {
+    @include hero-claro;
+  }
+
+  &[data-secao='sobre'] {
+    @include tema-de-secao(#efe8dc, #1a1512, #5e554b, #d5ccbd, #b3261e, #8a4a00, #ffffff);
+  }
+
+  &[data-secao='stack'] {
+    @include tema-de-secao(#eef5ea, #13241a, #4c6455, #cddcc6, #2f6b00, #0b6b4a, #ffffff);
+  }
+
+  &[data-secao='formacao'] {
+    @include tema-de-secao(#f6e6ee, #2a1219, #6e4a58, #e2c3cb, #b0124f, #8a3b00, #ffffff);
+  }
+
+  &[data-secao='projetos'] {
+    @include tema-de-secao(#f5f1e6, #17140e, #5b564c, #ddd5c0, #7a5a00, #a83a00, #ffffff);
+  }
+
+  &[data-secao='contato'] {
+    @include tema-de-secao(#e3f3ee, #0b2f2d, #3f6b63, #bcdcd3, #0a5c54, #6a4d00, #ffffff);
+  }
+}
+
+// Troca suave entre temas. Sem movimento reduzido: o estado final aparece direto.
+:root {
+  transition:
+    --s-fundo var(--duracao-tema, 900ms) var(--curva-suave),
+    --s-texto var(--duracao-tema, 900ms) var(--curva-suave),
+    --s-secundario var(--duracao-tema, 900ms) var(--curva-suave),
+    --s-linha var(--duracao-tema, 900ms) var(--curva-suave),
+    --s-acento var(--duracao-tema, 900ms) var(--curva-suave),
+    --s-acento-2 var(--duracao-tema, 900ms) var(--curva-suave),
+    --s-sobre-acento var(--duracao-tema, 900ms) var(--curva-suave);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duracao-tema: 0ms;
+  }
+}
