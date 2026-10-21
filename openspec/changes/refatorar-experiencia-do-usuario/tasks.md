@@ -56,14 +56,14 @@
 - [x] 7.1 Otimizar imagens e fotos (AVIF/WebP, `NgOptimizedImage`, dimensões, carga tardia) e impor o orçamento de 200 KB no CI; verificar que o teste falha com um arquivo acima do limite
 - [x] 7.2 Rodar Lighthouse mobile e AXE em `/`, na vitrine e em uma rota de seção e atingir as metas da spec `orientacao-do-visitante`; verificar com o relatório salvo em `docs/diario/`
 - [x] 7.3 Atualizar `README.md`, `docs/arquitetura.md`, `docs/componentes.md` e registrar a entrada do diário; verificar que as capturas e comandos citados existem
-- [ ] 7.4 Rodar `npm run lint && npm run test:ci && npm run build && npm run e2e` e verificar que tudo passa, com a cobertura ≥ 80% nos arquivos novos
+- [x] 7.4 Rodar `npm run lint && npm run test:ci && npm run build && npm run e2e` e verificar que tudo passa, com a cobertura ≥ 80% nos arquivos novos
 - [ ] 7.5 Revisão visual com o Vinicius (casca e vitrine) e correção do que ele apontar; verificar com a aprovação dele registrada no PR
 
 > Nota de execução (2026-10-21): os grupos 2b, 5, 6 e 7 foram entregues pela reformulação do
 > grupo 8. Ficam em aberto, de propósito: **5.5** (inclinação 3D dos cartões, parallax da foto e
 > cursor personalizado; só os botões magnéticos do hero foram feitos), **6.1** (a casca de IDE
 > ganhou indicador deslizante, barra de carregamento e relógio, mas não foi redesenhada), **7.4**
-> (o gate final roda no PR), **7.5** (revisão visual do Vinicius) e **8.12** (PR aberto).
+> (gate final verde: lint, 994 testes unitários, build e 946 E2E), **7.5** (revisão visual do Vinicius) e o merge do PR #41, que fica com o Vinicius.
 
 ## 8. Reformulação v2 e execução pelo Maestri
 
@@ -82,7 +82,7 @@ Aprovação antecipada pelo Vinicius: executar tudo de uma vez, sem pausar para 
 - [x] 8.9 Detalhes de projeto v2 (abas "Visão geral / Código / Stack" e bloco de build) e restyling da casca de IDE com os tokens v2; verificar com E2E e axe
 - [x] 8.10 Desempenho: manter o Lighthouse móvel em 100, LCP ≤ 2,5 s e CLS ≤ 0,05 com a página nova (a linha de base real é 100 e LCP 1,1 s; a de 4,5 s era um artefato do servidor sem compressão); verificado em `/`, `/projetos` e `/skills`, salvo em `docs/diario/`
 - [x] 8.11 Regressão visual (320, 768, 1024 e 1440, claro e escuro), axe em todas as rotas e orçamentos no CI (imagem ≤ 200 KB, JS inicial sem o `motion`); verificar com a suíte E2E verde
-- [ ] 8.12 Documentação final (ADR-0019, README, `docs/arquitetura.md`, `docs/componentes.md`, diário 0023) e PR aberto sem merge; verificar que lint, testes unitários, build e E2E passam e que o PR descreve as skills usadas
+- [x] 8.12 Documentação final (ADR-0019, README, `docs/arquitetura.md`, `docs/componentes.md`, diário 0023) e PR aberto sem merge; verificar que lint, testes unitários, build e E2E passam e que o PR descreve as skills usadas
 
 ## Workflow follow-up
 

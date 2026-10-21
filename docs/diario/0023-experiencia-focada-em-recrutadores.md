@@ -2,7 +2,7 @@
 
 - **Data:** 2026-10-20
 - **Change:** [refatorar-experiencia-do-usuario](../../openspec/changes/refatorar-experiencia-do-usuario/)
-- **PR:** a abrir
+- **PR:** [#41](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/41)
 - **ADRs:** [0019](../adr/0019-experiencia-focada-em-recrutadores.md)
 
 ## Problema
