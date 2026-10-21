@@ -1,0 +1,90 @@
+<dialog #dialogo class="detalhes" aria-labelledby="titulo-do-projeto" (cancel)="aoCancelar($event)">
+  @if (projeto(); as p) {
+    <div class="painel">
+      <header class="topo">
+        <span class="contador">{{ contador() }}</span>
+        <button type="button" class="fechar" autofocus (click)="fechado.emit()">
+          <span aria-hidden="true">✕</span>
+          <span class="rotulo">Fechar</span>
+        </button>
+      </header>
+
+      <div class="conteudo">
+        <div class="galeria">
+          <div class="principal">
+            @if (imagem(); as img) {
+              @for (atual of [img]; track atual.src) {
+                <img
+                  class="foto"
+                  [ngSrc]="atual.src"
+                  [width]="atual.largura"
+                  [height]="atual.altura"
+                  [alt]="atual.alt"
+                  priority
+                />
+              }
+            } @else {
+              <app-capa-em-codigo [capa]="p.capa" />
+            }
+          </div>
+          @if (p.imagens.length > 1) {
+            <ul class="miniaturas">
+              @for (miniatura of p.imagens; track miniatura.src; let i = $index) {
+                <li>
+                  <button
+                    type="button"
+                    [attr.aria-label]="'Imagem ' + (i + 1) + ' de ' + p.imagens.length"
+                    [attr.aria-pressed]="i === indiceDaImagem()"
+                    (click)="escolherImagem(i)"
+                  >
+                    <img [ngSrc]="miniatura.src" width="96" height="60" alt="" />
+                  </button>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+
+        <div class="info">
+          <ul class="etiquetas" aria-label="Tecnologias">
+            @for (etiqueta of p.etiquetas; track etiqueta) {
+              <li>{{ etiqueta }}</li>
+            }
+          </ul>
+          <h2 id="titulo-do-projeto">{{ p.titulo }}</h2>
+          <p class="descricao">{{ p.descricao }}</p>
+          <ul class="destaques">
+            @for (destaque of p.destaques; track destaque) {
+              <li>{{ destaque }}</li>
+            }
+          </ul>
+          <div class="acoes">
+            @if (p.link; as link) {
+              <a
+                class="botao principal-acao"
+                [href]="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ link.rotulo }} <span aria-hidden="true">↗</span>
+                <span class="rotulo"> (abre em nova aba)</span>
+              </a>
+            }
+            <a class="botao" [routerLink]="['/' + p.secao]">
+              Ver em código <span aria-hidden="true">{{ '{ }' }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <footer class="navegacao">
+        <button type="button" (click)="navegar.emit(-1)">
+          <span aria-hidden="true">←</span> Projeto anterior
+        </button>
+        <button type="button" (click)="navegar.emit(1)">
+          Próximo projeto <span aria-hidden="true">→</span>
+        </button>
+      </footer>
+    </div>
+  }
+</dialog>

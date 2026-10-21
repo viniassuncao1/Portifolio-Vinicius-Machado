@@ -1,0 +1,38 @@
+<a
+  class="cartao"
+  [routerLink]="['/projetos', projeto().slug]"
+  [attr.data-slug]="projeto().slug"
+  [attr.data-ativo]="ativo()"
+  draggable="false"
+  (click)="aoClicar($event)"
+>
+  <span class="capa">
+    @if (imagem(); as img) {
+      <img
+        [ngSrc]="img.src"
+        [width]="img.largura"
+        [height]="img.altura"
+        [alt]="img.alt"
+        [priority]="prioridade()"
+        draggable="false"
+      />
+    } @else {
+      <app-capa-em-codigo [capa]="projeto().capa" />
+    }
+    <span class="numero" aria-hidden="true">{{ contador() }}</span>
+  </span>
+  <span class="corpo">
+    <span class="etiquetas">
+      @for (etiqueta of projeto().etiquetas; track etiqueta) {
+        <span class="etiqueta">{{ etiqueta }}</span>
+      }
+    </span>
+    <span class="titulo">{{ projeto().titulo }}</span>
+    <span class="destaques">
+      @for (destaque of projeto().destaques; track destaque) {
+        <span class="destaque">{{ destaque }}</span>
+      }
+    </span>
+    <span class="mais">Ver detalhes <span aria-hidden="true">→</span></span>
+  </span>
+</a>

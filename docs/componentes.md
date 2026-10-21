@@ -717,3 +717,43 @@ um **único `ConteudoDoEditor`**, que se rola.
 
 Uma feature não importa de outra feature: o editor e as construtoras vêm de `shared/`, e a lista
 de seções vem de `core/`.
+
+## Movimento e temas de seção (ADR-0019)
+
+- **Temas de cor por seção.** `src/styles/_temas-de-secao.scss` define, para `hero`, `sobre`,
+  `stack`, `formacao`, `projetos` e `contato`, as variáveis `--s-fundo`, `--s-texto`,
+  `--s-secundario`, `--s-linha`, `--s-acento`, `--s-acento-2` e `--s-sobre-acento`, nas variantes
+  escura e clara. O `<html>` recebe `data-secao` e as variáveis transitam em 900 ms (sem movimento
+  reduzido, a troca é imediata). `src/app/core/temas-de-secao.spec.ts` compila o SCSS e falha se
+  qualquer par de texto e fundo ficar abaixo de 4,5:1.
+- **`MovimentoConfig`** (`core/movimento/movimento-config.ts`): `reduzido` (signal que acompanha o
+  sistema), `ponteiroFino`, `deveAnimar()` e `carregar()`, que baixa o `motion` por `import()` só
+  quando há movimento. Tokens de duração, curvas, distâncias e molas em `movimento.tokens.ts`.
+- **Diretivas** (`shared/movimento/`): `appRevelar` (entra uma vez ao chegar perto do fim da
+  janela), `appMagnetico` (segue de leve o ponteiro) e `[appContador]` (conta até o valor). O HTML
+  pré-renderizado já é o estado final: elas só animam elementos que ainda estão fora da janela,
+  depois da hidratação, e não fazem nada com movimento reduzido.
+
+## Vitrine de projetos (ADR-0019)
+
+Rota `/projetos` (e `/projetos/:slug`), na árvore como `Vitrine.java`. Dados em
+`src/app/core/projetos.ts` (os seis projetos: slug, número, etiquetas, até três destaques,
+imagens, capa em código e link com o rótulo "Ver site" ou "Ver repositório").
+
+- **`CartaoDeProjeto`:** um link real para `/projetos/<slug>`; o clique comum é interceptado para
+  abrir os detalhes, e com Ctrl ou Shift segue o link normal. Sem captura de tela mostra a
+  `CapaEmCodigoDoProjeto` (a classe e um trecho em Java), escondida de leitores de tela.
+- **`CarrosselDeProjetos`:** rolagem horizontal nativa com `scroll-snap`; o mouse arrasta
+  (limiar de 6 px, e um arrasto não abre o cartão), botões e pontos levam a um cartão, as setas do
+  teclado andam de cartão em cartão e nas pontas o primeiro e o último valem como ativos. Não anda
+  sozinho e não clona cartões. A grade (`modo = 'grade'`) mostra todos de uma vez; no celular a
+  vitrine já abre em grade. `data-pronto` marca a hidratação (os testes esperam por ele).
+- **`DetalhesDoProjeto`:** `<dialog>` modal nativo (foco inicial em Fechar, Tab preso, Esc pede o
+  fechamento à vitrine) com contador, galeria, link, "Ver em código" e anterior/próximo.
+- **Expansão do cartão:** `TransicaoDoProjeto` (`core/transicao-de-projeto.ts`) combina com o
+  handler de View Transition do roteador (`core/transicao-de-rota.ts`): na ida o cartão carrega o
+  `view-transition-name: projeto` e o painel dos detalhes o recebe por CSS; na volta, o contrário.
+  Voltar do navegador e anterior/próximo não animam. Com movimento reduzido nada anima.
+- **Endereço:** `/projetos/:slug` é uma rota filha sem componente (a vitrine segue montada e o
+  carrossel não perde a posição); abre direto pelo endereço e o Voltar fecha os detalhes.
+- **Capas:** `node scripts/gerar-capas-dos-projetos.mjs` gera os WebP (960x600, até 200 KB).

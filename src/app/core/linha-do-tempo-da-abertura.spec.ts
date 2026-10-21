@@ -22,6 +22,7 @@ describe('linha do tempo da abertura', () => {
       'sobre/ComoUsoIA',
       'skills/Skills',
       'experiencias/Experiencias',
+      'projetos/Vitrine',
       'projetos/Projeto1',
       'projetos/Projeto2',
       'projetos/Projeto3',

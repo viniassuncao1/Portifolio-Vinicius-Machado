@@ -1,0 +1,24 @@
+<section class="vitrine" aria-labelledby="titulo-da-vitrine">
+  <header class="cabecalho">
+    <div>
+      <h2 id="titulo-da-vitrine">Projetos</h2>
+      <p class="dica">
+        Seis projetos, do back-end em Java às landing pages. Escolha um para ver os detalhes.
+      </p>
+    </div>
+    <button
+      type="button"
+      class="modo"
+      [attr.aria-pressed]="modo() === 'grade'"
+      (click)="alternarModo()"
+    >
+      {{ modo() === 'grade' ? 'Ver em carrossel' : 'Ver em grade' }}
+    </button>
+  </header>
+
+  <app-carrossel-de-projetos [projetos]="projetos" [modo]="modo()" (abrir)="abrir($event)" />
+
+  <app-proximo-arquivo />
+
+  <app-detalhes-do-projeto [projeto]="aberto()" (fechado)="fechar()" (navegar)="navegar($event)" />
+</section>

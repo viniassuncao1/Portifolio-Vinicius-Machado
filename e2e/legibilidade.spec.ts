@@ -1,6 +1,6 @@
 import { expect, test } from './fixtures';
 
-import { SECOES } from '../src/app/core/secoes';
+import { SECOES, SLUG_DA_VITRINE } from '../src/app/core/secoes';
 import { codigoSemTextos, comentariosDoCodigo, listasDe, textoDoCodigo } from './apoio';
 
 const LIMITE_DA_LISTA_CURTA = 5;
@@ -13,7 +13,7 @@ const PORTUGUES =
 /** O Início e cada seção, que é um arquivo só: o visitante lê a seção como um todo. */
 const GRUPOS: readonly { nome: string; rotas: string[] }[] = [
   { nome: 'Início', rotas: ['/'] },
-  ...SECOES.map((secao) => ({
+  ...SECOES.filter((secao) => secao.slug !== SLUG_DA_VITRINE).map((secao) => ({
     nome: secao.titulo,
     rotas: [`/${secao.slug}`],
   })),

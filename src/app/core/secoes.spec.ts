@@ -2,13 +2,14 @@ import { NOMES_DE_ICONE } from '../shared/icone/icone';
 import { SECOES } from './secoes';
 
 describe('SECOES', () => {
-  it('lista as 17 seções na ordem do design', () => {
+  it('lista as 18 seções na ordem do design', () => {
     expect(SECOES.map((secao) => secao.titulo)).toEqual([
       'Sobre Mim',
       'Diferenciais',
       'Como uso a IA',
       'Skills / STACK',
       'Experiências',
+      'Vitrine de projetos',
       'Projeto 1',
       'Projeto 2',
       'Projeto 3',
@@ -33,6 +34,7 @@ describe('SECOES', () => {
       'como-uso-ia',
       'skills',
       'experiencias',
+      'projetos',
       'projeto-1',
       'projeto-2',
       'projeto-3',
@@ -78,6 +80,7 @@ describe('SECOES', () => {
       'como-uso-ia': 'sobre',
       skills: 'skills',
       experiencias: 'experiencias',
+      projetos: 'projetos',
       'projeto-1': 'projetos',
       'projeto-2': 'projetos',
       'projeto-3': 'projetos',

@@ -1,11 +1,14 @@
 import { expect, test } from './fixtures';
 import type { Page } from '@playwright/test';
 
-import { SECOES } from '../src/app/core/secoes';
+import { SECOES, SLUG_DA_VITRINE } from '../src/app/core/secoes';
 import { linhasDoCodigo } from './apoio';
 
 /** Início e cada seção (um arquivo só, sem páginas), geradas de SECOES. */
-const ROTAS = ['/', ...SECOES.map((secao) => `/${secao.slug}`)];
+const ROTAS = [
+  '/',
+  ...SECOES.filter((secao) => secao.slug !== SLUG_DA_VITRINE).map((secao) => `/${secao.slug}`),
+];
 
 const PARES: Record<string, string> = { ')': '(', '}': '{', ']': '[' };
 

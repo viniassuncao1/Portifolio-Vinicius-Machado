@@ -44,7 +44,7 @@ describe('ProximoArquivo', () => {
   it('em seções que já foram paginadas, aponta sempre para a seção seguinte', async () => {
     expect((await abrir('/skills')).querySelector('a')?.getAttribute('href')).toBe('/experiencias');
     expect((await abrir('/experiencias')).querySelector('a')?.getAttribute('href')).toBe(
-      '/projeto-1',
+      '/projetos',
     );
   });
 });

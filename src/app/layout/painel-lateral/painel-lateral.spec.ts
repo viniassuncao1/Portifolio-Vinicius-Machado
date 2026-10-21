@@ -12,7 +12,7 @@ describe('PainelLateral', () => {
     const elemento = fixture.nativeElement as HTMLElement;
 
     expect(elemento.querySelectorAll('nav [data-tipo=pasta]')).toHaveLength(7);
-    expect(elemento.querySelectorAll('nav a')).toHaveLength(17);
+    expect(elemento.querySelectorAll('nav a')).toHaveLength(18);
     expect(elemento.querySelectorAll('nav .grupo:not([hidden]) a')).toHaveLength(3);
   });
 

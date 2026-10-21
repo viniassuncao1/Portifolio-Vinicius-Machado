@@ -99,7 +99,7 @@ describe('ArvoreDeSecoes por teclado (tree view)', () => {
 
     await tecla(fixture, pasta('projetos'), 'ArrowRight');
     expect(document.activeElement).toBe(itens()[itens().indexOf(pasta('projetos')) + 1]);
-    expect(document.activeElement?.textContent).toContain('Projeto1.java');
+    expect(document.activeElement?.textContent).toContain('Vitrine.java');
     raiz.remove();
   });
 

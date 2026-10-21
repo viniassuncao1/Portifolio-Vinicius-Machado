@@ -16,6 +16,9 @@ export interface Secao {
   readonly descricao: string;
 }
 
+/** Seção da vitrine de projetos: a única que não é um arquivo de código (`/projetos`). */
+export const SLUG_DA_VITRINE = 'projetos';
+
 /** Fonte única das seções: dela saem os itens da árvore e as rotas, na ordem do design. */
 export const SECOES: readonly Secao[] = [
   {
@@ -62,6 +65,15 @@ export const SECOES: readonly Secao[] = [
     pacote: 'experiencias',
     descricao:
       'Experiências de Vinicius: dev Full Stack e líder de squad na Memora, estagiário na Memora e co-fundador da Watts Company, agência de IA.',
+  },
+  {
+    slug: 'projetos',
+    titulo: 'Vitrine de projetos',
+    icone: 'design-projeto',
+    arquivo: 'Vitrine.java',
+    pacote: 'projetos',
+    descricao:
+      'Vitrine dos seis projetos de Vinicius: cases da Memora, este portfólio, launcher de TV, o agente Ana e duas landing pages, com capturas e destaques.',
   },
   {
     slug: 'projeto-1',

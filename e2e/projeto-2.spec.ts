@@ -22,6 +22,7 @@ test.describe('Projeto 2: este portfólio como estudo com IA (/projeto-2)', () =
       .getByRole('navigation', { name: 'Seções do portfólio' })
       .locator('#grupo-projetos a');
     await expect(projetos).toHaveText([
+      'Vitrine.java',
       'Projeto1.java',
       'Projeto2.java',
       'Projeto3.java',

@@ -19,6 +19,9 @@ const TIPOS = {
   '.xml': 'application/xml; charset=utf-8',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.avif': 'image/avif',
+  '.pdf': 'application/pdf',
 };
 
 async function caminhoDoArquivo(url) {

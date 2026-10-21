@@ -1,0 +1,164 @@
+:host {
+  display: block;
+}
+
+.pista {
+  // A pista é o offsetParent dos cartões: os cálculos de centralização usam offsetLeft.
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 1.5rem 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1.5rem;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.arrastando {
+    scroll-snap-type: none;
+    cursor: grabbing;
+    user-select: none;
+  }
+}
+
+.carrossel[data-modo='carrossel'] .pista {
+  cursor: grab;
+}
+
+// Grade: os mesmos cartões, todos à vista, sem rolagem. No celular a vitrine abre assim.
+.carrossel[data-modo='grade'] .pista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+  overflow: visible;
+  scroll-snap-type: none;
+
+  app-cartao-de-projeto {
+    flex: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .carrossel .pista {
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow: visible;
+    scroll-snap-type: none;
+    cursor: auto;
+
+    app-cartao-de-projeto {
+      flex: none;
+    }
+  }
+}
+
+.controles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 1.5rem 1rem;
+}
+
+.seta {
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: var(--borda-painel);
+  border-radius: 50%;
+  background: var(--cor-painel);
+  color: var(--cor-texto-forte);
+  font-size: 1rem;
+  cursor: pointer;
+  transition:
+    border-color var(--duracao-media) var(--curva-padrao),
+    transform var(--duracao-rapida) var(--curva-padrao);
+
+  &:hover:not(:disabled) {
+    border-color: var(--cor-acento);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: 2px;
+  }
+}
+
+.pontos {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+// Área de toque de 24px; o ponto visível é menor e cresce no ativo.
+.ponto {
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--cor-texto-esmaecido);
+    transform: translate(-50%, -50%);
+    transition:
+      width var(--duracao-media) var(--curva-padrao),
+      background var(--duracao-media) var(--curva-padrao);
+  }
+
+  &[aria-current='true']::before {
+    width: 1.25rem;
+    background: var(--cor-acento);
+  }
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: 0;
+    border-radius: 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seta,
+  .ponto::before {
+    transition: none;
+  }
+}
+
+.somente-leitores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .controles {
+    display: none;
+  }
+}
