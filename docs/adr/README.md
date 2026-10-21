@@ -11,7 +11,7 @@ Um ADR aceito não é editado. Se a decisão mudar, um novo ADR o substitui e o 
 | [0001](0001-registrar-decisoes-com-adrs.md)               | Registrar decisões com ADRs                                  | Aceito                                         |
 | [0002](0002-angular-como-framework.md)                    | Angular como framework                                       | Aceito                                         |
 | [0003](0003-pre-renderizacao-estatica.md)                 | Pré-renderização estática (SSG)                              | Aceito                                         |
-| [0004](0004-vercel-com-deploy-pelo-github-actions.md)     | Vercel com deploy pelo GitHub Actions                        | Aceito                                         |
+| [0004](0004-vercel-com-deploy-pelo-github-actions.md)     | Vercel com deploy pelo GitHub Actions                        | Aceito, substituído em parte pelo 0020         |
 | [0005](0005-desenvolvimento-orientado-a-specs.md)         | Desenvolvimento orientado a specs com OpenSpec               | Aceito                                         |
 | [0006](0006-regras-de-codigo-com-ecc.md)                  | Regras de código para a IA com o ECC                         | Aceito                                         |
 | [0007](0007-equipe-de-agentes-no-maestri.md)              | Equipe de agentes de IA no Maestri                           | Aceito                                         |
@@ -27,6 +27,7 @@ Um ADR aceito não é editado. Se a decisão mudar, um novo ADR o substitui e o 
 | [0017](0017-abertura-com-run.md)                          | Abertura com Run                                             | Aceito, substituído em parte pelo 0019         |
 | [0018](0018-secoes-num-arquivo-so.md)                     | Seções num arquivo só, sem paginação                         | Aceito                                         |
 | [0019](0019-experiencia-focada-em-recrutadores.md)        | Experiência focada em recrutadores                           | Aceito                                         |
+| [0020](0020-deploy-de-producao-manual.md)                 | Deploy de produção manual                                    | Aceito                                         |
 
 ## Modelo
 
