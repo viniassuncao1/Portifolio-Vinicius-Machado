@@ -7,6 +7,8 @@
   --duracao-lenta: 200ms;
   // Ciclo do cursor do editor (aceso e apagado).
   --duracao-cursor: 1060ms;
+  // Respiração do ponto "Disponível" na barra de status.
+  --duracao-pulso: 2400ms;
 
   // Desaceleração firme: o elemento chega rápido e assenta.
   --curva-saida: cubic-bezier(0.2, 0, 0, 1);
@@ -159,5 +161,81 @@ html.transicao-de-tema {
     to {
       color: var(--s-texto);
     }
+  }
+}
+
+// ---------- Casca: painel do projeto, toque e barra de status viva ----------
+// Os seletores atingem os elementos da casca de fora (estilos globais), então a casca não
+// carrega `transition` de `transform`/`opacity` nem `:active` nos botões: o movimento mora aqui.
+
+// Painel do projeto: a coluna do grid troca sem transição (o editor não "estica"); o painel só
+// entra com um deslize curto e opacidade. A transição fica no estado-base, então só roda quando o
+// estado muda (o HTML pré-renderizado já nasce no estado final, sem animação na carga).
+// No celular o painel é a gaveta, que a casca anima por `data-aberta`.
+@media (min-width: 768px) {
+  app-painel-lateral {
+    transition:
+      opacity var(--duracao-media) var(--curva-saida),
+      transform var(--duracao-media) var(--curva-saida);
+  }
+
+  .area[data-painel='false'] app-painel-lateral {
+    opacity: 0;
+    transform: translateX(-0.5rem);
+  }
+}
+
+// Toque: o controle afunda um pouco ao ser pressionado e volta ao soltar.
+:is(
+  app-barra-de-ferramentas button,
+  app-faixa-de-ferramentas button.botao,
+  app-faixa-de-abas button.arquivo,
+  app-barra-de-status button.ramo,
+  nav.acoes-celular .acao
+) {
+  transition: transform var(--duracao-rapida) var(--curva-saida);
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+app-barra-de-status :is(a.commit, a.item):active {
+  opacity: 0.7;
+}
+
+// Barra de status viva: o ponto de "Disponível" respira (só opacidade).
+app-barra-de-status .disponivel .ponto {
+  animation: movimento-respirar var(--duracao-pulso) ease-in-out infinite;
+}
+
+@keyframes movimento-respirar {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    app-barra-de-ferramentas button.botao,
+    app-barra-de-ferramentas button.projeto,
+    app-faixa-de-ferramentas button.botao,
+    app-faixa-de-abas button.arquivo,
+    app-barra-de-status button.ramo,
+    nav.acoes-celular .acao
+  ) {
+    transition: none;
+
+    &:active {
+      transform: none;
+    }
+  }
+
+  app-painel-lateral {
+    transition: none;
+  }
+
+  app-barra-de-status .disponivel .ponto {
+    animation: none;
   }
 }
