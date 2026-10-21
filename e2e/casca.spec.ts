@@ -102,7 +102,7 @@ test.describe('Estrutura da IDE', () => {
         await expect(item).toHaveAttribute('aria-hidden', 'true');
       }
     }
-    await expect(page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Buscar seção (Ctrl+K)' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Projeto' })).toBeVisible();
   });
 });
@@ -178,12 +178,16 @@ test.describe('Teclado', () => {
     await abrirHidratada(page, '/');
     const eventos = arquivoDaArvore(page, 'Eventos');
 
-    // Antes da árvore ficam só os botões Executar, Buscar, tema, master, Projeto e Commit; a árvore tem um só item na ordem de Tab
+    // Antes da árvore ficam só os botões do início, Executar, Buscar, tema, master, Projeto e Commit; a árvore tem um só item na ordem de Tab
     // (roving tabindex) e as setas percorrem o resto.
+    await page.keyboard.press('Tab');
+    await expect(
+      page.getByRole('button', { name: 'Portfolio_Vinicius, ir para o início' }),
+    ).toBeFocused();
     await page.keyboard.press('Tab');
     await expect(page.getByRole('button', { name: 'Executar PortfolioApplication' })).toBeFocused();
     await page.keyboard.press('Tab');
-    await expect(page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' })).toBeFocused();
+    await expect(page.getByRole('button', { name: 'Buscar seção (Ctrl+K)' })).toBeFocused();
     await page.keyboard.press('Tab');
     await expect(page.getByRole('button', { name: /^Usar tema/ })).toBeFocused();
     await page.keyboard.press('Tab');

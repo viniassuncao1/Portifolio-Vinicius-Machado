@@ -164,7 +164,7 @@ test.describe('Busca de seções', () => {
   test('o botão da faixa de abas também abre a busca', async ({ page }) => {
     await abrirComFocoNaCasca(page, '/');
 
-    await page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' }).click();
+    await page.getByRole('button', { name: 'Buscar seção (Ctrl+K)' }).click();
 
     await expect(dialogo(page)).toBeVisible();
     await expect(campo(page)).toBeFocused();
@@ -189,7 +189,7 @@ test.describe('Busca no celular (390x844)', () => {
 
   test('o botão de busca está visível e abre a caixa', async ({ page }) => {
     await abrirHidratada(page, '/');
-    const botao = page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' });
+    const botao = page.getByRole('button', { name: 'Buscar seção (Ctrl+K)' });
 
     await expect(botao).toBeVisible();
     await botao.click();
@@ -200,7 +200,7 @@ test.describe('Busca no celular (390x844)', () => {
 
   test('abre uma seção pela busca e a página não rola na horizontal', async ({ page }) => {
     await abrirHidratada(page, '/');
-    await page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' }).click();
+    await page.getByRole('button', { name: 'Buscar seção (Ctrl+K)' }).click();
 
     await campo(page).fill('exp');
     await page.keyboard.press('Enter');
