@@ -331,21 +331,31 @@ test.describe('Ajustes nativos do navegador', () => {
     expect(await variante('app-barra-de-status footer .posicao')).toContain('tabular-nums');
   });
 
-  test('o bloco de código não é traduzido pelo tradutor do navegador', async ({ browser }) => {
-    const contexto = await browser.newContext();
-    const pagina = await contexto.newPage();
+  // Um teste por rota, em contexto próprio para começar na visão cartão (a fixture começa no
+  // código). Com movimento reduzido o botão não entra animado e o clique não espera ele assentar.
+  for (const rota of ['/diferenciais', '/como-uso-ia', '/depoimentos']) {
+    test(`o bloco de código de ${rota} não é traduzido pelo tradutor do navegador`, async ({
+      browser,
+    }) => {
+      const contexto = await browser.newContext({ reducedMotion: 'reduce' });
+      const pagina = await contexto.newPage();
 
-    for (const rota of ['/diferenciais', '/como-uso-ia', '/depoimentos']) {
       await pagina.goto(rota);
-      await pagina.getByRole('button', { name: 'Ver como código' }).click();
+      // Antes da hidratação o botão pré-renderizado pode ser trocado no meio do clique: repete o
+      // clique até a visão de código aparecer.
+      const verCodigo = pagina.getByRole('button', { name: 'Ver como código' });
+      await expect(async () => {
+        if (await verCodigo.isVisible()) await verCodigo.click({ timeout: 2000 });
+        await expect(pagina.locator('main pre')).toBeVisible({ timeout: 3000 });
+      }).toPass({ timeout: 20_000 });
 
-      await expect(pagina.locator('main pre'), rota).toHaveAttribute('translate', 'no');
+      await expect(pagina.locator('main pre')).toHaveAttribute('translate', 'no');
       expect(await pagina.locator('main pre').evaluate((el: HTMLElement) => el.translate)).toBe(
         false,
       );
-    }
-    await contexto.close();
-  });
+      await contexto.close();
+    });
+  }
 
   test('os números de linha continuam escondidos dos leitores de tela e passam em 4,5:1', async ({
     page,
