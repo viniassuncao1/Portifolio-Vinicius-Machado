@@ -72,22 +72,73 @@ button.botao {
   }
 }
 
-// O botão Projeto só existe no celular, onde a faixa de ferramentas some.
-.projeto-celular {
-  display: none;
-  gap: var(--espaco-1);
-  width: auto;
-  padding-inline: var(--espaco-2);
-  color: inherit;
+// Widget do projeto (IntelliJ New UI): selo com as iniciais, nome e seta. Leva ao Início.
+.projeto {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--espaco-2);
+  min-height: var(--tamanho-botao-barra);
+  margin-inline-end: var(--espaco-2);
+  padding: 0 var(--espaco-2) 0 var(--espaco-1);
+  border: 0;
+  border-radius: var(--raio-controle);
+  background: transparent;
+  color: var(--cor-texto-forte);
   font: inherit;
+  font-weight: var(--peso-medio);
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--cor-linha-selecionada);
+  }
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+
+  // O selo usa o mesmo desenho do ícone do site: quadrado arredondado no acento, iniciais brancas.
+  .selo {
+    display: grid;
+    place-items: center;
+    inline-size: var(--tamanho-selo-projeto);
+    block-size: var(--tamanho-selo-projeto);
+    border-radius: 0.3125rem;
+    background: var(--cor-selo-projeto);
+    color: #fff;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .seta {
+    inline-size: 0.875rem;
+    block-size: 0.875rem;
+    color: var(--cor-texto-esmaecido);
+  }
 }
 
-// Com texto, o Seções precisa do fundo escuro do hover (o texto no cinza do hover dos ícones daria
-// menos de 4,5:1), como o indicador de branch.
-button.projeto-celular {
-  &:hover,
-  &[aria-expanded='true'] {
+// Busca em forma de pílula, com o atalho à vista (Ctrl/Cmd+K).
+.botao-busca {
+  width: auto;
+  gap: var(--espaco-2);
+  padding-inline: var(--espaco-2) var(--espaco-2);
+  border: var(--borda-largura) solid var(--cor-separador);
+  color: var(--cor-texto-esmaecido);
+
+  .rotulo-busca {
+    padding-inline-end: var(--espaco-3);
+  }
+
+  .atalho-busca {
+    padding: 0 var(--espaco-1);
+    border-radius: 0.25rem;
     background: var(--cor-linha-selecionada);
+    font-family: inherit;
+    font-size: var(--texto-status);
+    line-height: 1.25rem;
   }
 }
 
@@ -108,16 +159,14 @@ button.projeto-celular {
   stroke-width: 1.2;
 }
 
-// Barra compacta: Projeto e Buscar, no mesmo degradê.
+// Barra compacta: o projeto, o Executar, a busca (só o ícone) e o tema; a navegação fica na barra
+// de ações de baixo.
 @media (max-width: 767.98px) {
-  .projeto-celular {
-    display: flex;
-    width: auto;
-    min-width: var(--tamanho-alvo-toque);
-    height: var(--tamanho-alvo-toque);
+  .projeto {
+    min-height: var(--tamanho-alvo-toque);
+    margin-inline-end: auto;
   }
 
-  // O Executar fica no celular: a janela de Run não abre mais sozinha.
   .executar,
   .botao-busca,
   .botao-tema {
@@ -126,9 +175,17 @@ button.projeto-celular {
   }
 
   .botao-busca {
-    margin-inline-start: auto;
+    padding: 0;
+    border: 0;
+
+    .rotulo-busca,
+    .atalho-busca {
+      display: none;
+    }
   }
 
+  // A branch e os ícones de cena não cabem em 390 px: o repositório fica no menu Seções.
+  .ramo,
   .decorativo,
   .controles-janela {
     display: none;

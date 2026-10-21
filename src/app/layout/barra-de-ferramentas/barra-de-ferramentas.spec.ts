@@ -7,15 +7,9 @@ import { BarraDeFerramentas } from './barra-de-ferramentas';
 
 @Component({
   imports: [BarraDeFerramentas],
-  template: `<app-barra-de-ferramentas
-    [gavetaAberta]="aberta"
-    (alternarGaveta)="gaveta = gaveta + 1"
-    (buscar)="busca = busca + 1"
-  />`,
+  template: `<app-barra-de-ferramentas (buscar)="busca = busca + 1" />`,
 })
 class Hospedeiro {
-  aberta = false;
-  gaveta = 0;
   busca = 0;
 }
 
@@ -119,16 +113,16 @@ describe('BarraDeFerramentas', () => {
     }
   });
 
-  it('só tem como botões o Projeto do celular, o Executar, o Buscar, o tema e a branch', async () => {
+  it('só tem como botões o projeto, o Executar, o Buscar, o tema e a branch', async () => {
     const { raiz } = await montar();
     const nomes = Array.from(raiz.querySelectorAll('button')).map((b) =>
       (b.getAttribute('aria-label') ?? b.textContent ?? '').trim(),
     );
 
     expect(nomes).toEqual([
-      'Seções',
+      'Portfolio_Vinicius, ir para o início',
       'Executar PortfolioApplication',
-      'Buscar seção (Ctrl+P)',
+      'Buscar seção (Ctrl+K)',
       'Usar tema claro',
       'Branch master, abrir o repositório',
     ]);
@@ -142,16 +136,26 @@ describe('BarraDeFerramentas', () => {
     expect(fixture.componentInstance.busca).toBe(1);
   });
 
-  it('pede a gaveta pelo botão Projeto e reflete o estado em aria-expanded', async () => {
-    const { fixture, raiz } = await montar();
-    const botao = raiz.querySelector<HTMLButtonElement>('.projeto-celular')!;
+  it('mostra a identidade do projeto: selo VM, o nome e o caminho para o Início', async () => {
+    const { raiz } = await montar();
+    const projeto = raiz.querySelector<HTMLButtonElement>('button.projeto')!;
 
-    botao.click();
-    fixture.componentInstance.aberta = true;
-    fixture.changeDetectorRef.markForCheck();
-    await fixture.whenStable();
+    expect(projeto.querySelector('.selo')?.textContent).toBe('VM');
+    expect(projeto.querySelector('.nome-do-projeto')?.textContent).toBe('Portfolio_Vinicius');
+    expect(projeto.getAttribute('aria-label')).toContain('Portfolio_Vinicius');
+    projeto.click();
+    await new Promise((r) => setTimeout(r));
 
-    expect(fixture.componentInstance.gaveta).toBe(1);
-    expect(botao.getAttribute('aria-expanded')).toBe('true');
+    expect(TestBed.inject(Router).url).toBe('/');
+  });
+
+  it('mostra o atalho da busca ao lado do rótulo, fora da leitura', async () => {
+    const { raiz } = await montar();
+    const busca = raiz.querySelector<HTMLButtonElement>('.botao-busca')!;
+
+    expect(busca.getAttribute('aria-keyshortcuts')).toBe('Control+K Meta+K');
+    expect(busca.querySelector('.rotulo-busca')?.textContent).toBe('Buscar');
+    expect(busca.querySelector('.atalho-busca')?.textContent).toMatch(/Ctrl K|⌘K/);
+    expect(busca.querySelector('.atalho-busca')?.getAttribute('aria-hidden')).toBe('true');
   });
 });
