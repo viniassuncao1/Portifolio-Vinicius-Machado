@@ -16,6 +16,7 @@ import { Revelar } from './revelar';
 class Hospedeiro {}
 
 function simularAmbiente({ reduzido, topo }: { reduzido: boolean; topo: number }) {
+  vi.stubGlobal('navigator', { hardwareConcurrency: 8 });
   vi.stubGlobal('matchMedia', (consulta: string) => ({
     matches: consulta.includes('reduced-motion') ? reduzido : true,
     addEventListener: () => undefined,

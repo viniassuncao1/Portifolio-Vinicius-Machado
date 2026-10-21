@@ -5,6 +5,7 @@ import { provideRouter } from '@angular/router';
 import { Hero } from './hero';
 
 function simularMovimento(reduzido: boolean) {
+  vi.stubGlobal('navigator', { hardwareConcurrency: 8 });
   vi.stubGlobal('matchMedia', (consulta: string) => ({
     matches: consulta.includes('reduced-motion') ? reduzido : true,
     addEventListener: () => undefined,

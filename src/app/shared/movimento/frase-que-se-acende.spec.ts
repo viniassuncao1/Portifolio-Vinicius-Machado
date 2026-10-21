@@ -10,6 +10,7 @@ import { FraseQueSeAcende } from './frase-que-se-acende';
 class Hospedeiro {}
 
 function simular({ css, reduzido }: { css: boolean; reduzido: boolean }) {
+  vi.stubGlobal('navigator', { hardwareConcurrency: 8 });
   vi.stubGlobal('matchMedia', (consulta: string) => ({
     matches: consulta.includes('reduced-motion') ? reduzido : true,
     addEventListener: () => undefined,

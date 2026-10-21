@@ -15,6 +15,9 @@ type VisaoDoTeste = 'cartao' | 'codigo';
 const semearSessao = (contexto: BrowserContext) =>
   contexto.addInitScript(
     ({ chave, escolha }) => {
+      // A CI tem poucos núcleos e o app trata isso como "aparelho fraco" (sem movimento decorativo):
+      // os testes de movimento não podem depender da máquina que os roda.
+      Object.defineProperty(navigator, 'hardwareConcurrency', { get: () => 8, configurable: true });
       try {
         if (sessionStorage.getItem(chave) === null) sessionStorage.setItem(chave, '1');
         // A suíte antiga cobre o Início em código; quem testa o cartão pede `visao: 'cartao'`.

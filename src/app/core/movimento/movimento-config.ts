@@ -3,8 +3,8 @@ import { isPlatformBrowser } from '@angular/common';
 
 const CONSULTA_MOVIMENTO_REDUZIDO = '(prefers-reduced-motion: reduce)';
 const CONSULTA_PONTEIRO_FINO = '(hover: hover) and (pointer: fine)';
-/** Abaixo disso o aparelho é tratado como fraco e só roda o movimento essencial. */
-const NUCLEOS_DE_APARELHO_FRACO = 4;
+/** Com tão poucos núcleos o aparelho é tratado como fraco e só roda o movimento essencial. */
+const NUCLEOS_DE_APARELHO_FRACO = 2;
 
 export type BibliotecaDeMovimento = typeof import('motion');
 

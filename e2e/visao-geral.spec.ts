@@ -86,7 +86,7 @@ test.describe('Início em cartão', () => {
 
     await expect(page.locator('.hero .nome')).toHaveText('Vinicius Machado');
     await expect(page.locator('section.faixa')).toHaveCount(FAIXAS.length);
-    await expect(page.locator('.commit')).toHaveCount(3);
+    await expect(page.locator('app-experiencia-em-grafo .commit')).toHaveCount(3);
     await expect(page.locator('app-projetos-em-destaque a.cartao')).toHaveCount(PROJETOS.length);
     await expect(page.locator('.cartao .status')).toContainText('Disponível');
     await contexto.close();

@@ -9,6 +9,8 @@ interface Consulta {
 }
 
 function simularMatchMedia(reduzido: boolean, ponteiroFino = true) {
+  // Os testes não dependem dos núcleos da máquina que os roda (a CI tem poucos).
+  vi.stubGlobal('navigator', { hardwareConcurrency: 8 });
   let aoMudar: ((e: MediaQueryListEvent) => void) | undefined;
   vi.stubGlobal('matchMedia', (consulta: string): Consulta => {
     const ehReduzido = consulta.includes('reduced-motion');
