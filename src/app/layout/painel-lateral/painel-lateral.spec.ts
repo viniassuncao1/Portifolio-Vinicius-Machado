@@ -16,6 +16,22 @@ describe('PainelLateral', () => {
     expect(elemento.querySelectorAll('nav .grupo:not([hidden]) a')).toHaveLength(3);
   });
 
+  it('tem o link Repositório depois da árvore, para a gaveta do celular', async () => {
+    const fixture = TestBed.createComponent(PainelLateral);
+    await fixture.whenStable();
+    const elemento = fixture.nativeElement as HTMLElement;
+    const link = elemento.querySelector<HTMLAnchorElement>('a.repositorio')!;
+    let escolhida = 0;
+    fixture.componentInstance.secaoEscolhida.subscribe(() => (escolhida += 1));
+
+    expect(link.getAttribute('href')).toBe('/repositorio');
+    expect(link.textContent?.trim()).toBe('Repositório');
+    expect(link.closest('nav')).toBeNull();
+    expect(elemento.querySelector('app-arvore-de-secoes')?.nextElementSibling).toBe(link);
+    link.click();
+    expect(escolhida).toBe(1);
+  });
+
   it('mantém o cabeçalho e a scrollbar decorativos fora da leitura', async () => {
     const fixture = TestBed.createComponent(PainelLateral);
     await fixture.whenStable();

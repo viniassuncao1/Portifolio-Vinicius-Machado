@@ -30,6 +30,18 @@ describe('Casca', () => {
     });
   });
 
+  it('tem um único landmark de banner: a barra superior', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/contato');
+    const elemento = harness.routeNativeElement as HTMLElement;
+    const banners = elemento.querySelectorAll(
+      '[role="banner"], header:not(:is(main, section, article, aside, nav) *)',
+    );
+
+    expect(banners).toHaveLength(1);
+    expect(banners[0].tagName.toLowerCase()).toBe('app-barra-de-ferramentas');
+  });
+
   it('monta a barra, o painel e a aba e exibe a rota filha no editor', async () => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/contato');

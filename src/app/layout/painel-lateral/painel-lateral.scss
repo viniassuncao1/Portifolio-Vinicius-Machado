@@ -84,6 +84,11 @@ app-arvore-de-secoes {
   background: var(--cor-scrollbar-polegar);
 }
 
+// Link do repositório: só existe na gaveta do celular, depois da árvore.
+.repositorio {
+  display: none;
+}
+
 // Barra de fechar da gaveta: só existe abaixo de 768px, no lugar do cabeçalho que imita a janela.
 .barra-fechar {
   display: none;
@@ -92,6 +97,33 @@ app-arvore-de-secoes {
 @media (max-width: 767.98px) {
   :host {
     border-radius: 0;
+  }
+
+  .repositorio {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--espaco-2);
+    min-height: var(--tamanho-alvo-toque);
+    padding-inline: var(--recuo-item-atual);
+    border-block-start: var(--borda-divisoria);
+    color: var(--cor-texto);
+    font-size: var(--texto-arvore);
+    text-decoration: none;
+
+    &.atual {
+      color: var(--cor-texto-forte);
+      box-shadow: inset 2px 0 0 var(--cor-acento);
+    }
+
+    &:hover {
+      background: var(--cor-linha-selecionada);
+    }
+
+    &:focus-visible {
+      outline: var(--largura-anel-foco) solid var(--cor-foco);
+      outline-offset: -2px;
+    }
   }
 
   .cabecalho {

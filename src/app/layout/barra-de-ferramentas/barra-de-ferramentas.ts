@@ -17,6 +17,7 @@ import { Icone } from '../../shared/icone/icone';
 @Component({
   selector: 'app-barra-de-ferramentas',
   imports: [Icone],
+  host: { role: 'banner' },
   templateUrl: './barra-de-ferramentas.html',
   styleUrl: './barra-de-ferramentas.scss',
 })
