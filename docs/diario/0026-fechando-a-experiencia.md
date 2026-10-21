@@ -4,7 +4,7 @@
 - **Change:** [refatorar-experiencia-do-usuario](../../openspec/changes/refatorar-experiencia-do-usuario/) (grupo 9, fechamento)
 - **PR:** a definir (sem publicar)
 - **Testes:** a definir
-- **ADRs:** [0019](../adr/0019-experiencia-focada-em-recrutadores.md) e o ADR-0020 (deploy de produção manual, na branch `ci/deploy-manual-de-producao`)
+- **ADRs:** [0019](../adr/0019-experiencia-focada-em-recrutadores.md) e [0020](../adr/0020-deploy-de-producao-manual.md)
 
 ![Casca nova no desktop, tema escuro](imagens/0026/casca-1440-escuro.png)
 

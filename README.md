@@ -111,7 +111,7 @@ A aplicação fica disponível em `http://localhost:4200`.
 ## Como revisar localmente
 
 A produção não muda enquanto a experiência nova é revisada: o deploy de produção só roda pelo botão
-"Run workflow" (ADR-0020). Para ver tudo no seu computador:
+"Run workflow" ([ADR-0020](docs/adr/0020-deploy-de-producao-manual.md)). Para ver tudo no seu computador:
 
 ```bash
 npm start   # http://localhost:4200
