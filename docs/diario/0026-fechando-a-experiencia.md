@@ -2,8 +2,8 @@
 
 - **Data:** 2026-10-21
 - **Change:** [refatorar-experiencia-do-usuario](../../openspec/changes/refatorar-experiencia-do-usuario/) (grupo 9, fechamento)
-- **PR:** a definir (sem publicar)
-- **Testes:** a definir
+- **PR:** [#44](https://github.com/viniassuncao1/Portifolio-Vinicius-Machado/pull/44) (sem publicar)
+- **Testes:** 1030 testes unitários (95,25% de cobertura de instruções) e 1142 testes E2E
 - **ADRs:** [0019](../adr/0019-experiencia-focada-em-recrutadores.md) e [0020](../adr/0020-deploy-de-producao-manual.md)
 
 ![Casca nova no desktop, tema escuro](imagens/0026/casca-1440-escuro.png)
