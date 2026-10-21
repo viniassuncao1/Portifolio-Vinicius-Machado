@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import type { Locator, Page } from '@playwright/test';
 
+import { SECOES } from '../src/app/core/secoes';
 import { abrirHidratada, abrirPastas, arquivoDaArvore, arvoreDeSecoes } from './apoio';
 import { expect, test } from './fixtures';
 
@@ -311,27 +312,35 @@ test.describe('Início: nome, cargo e atalhos', () => {
 test.describe('Próximo arquivo', () => {
   test.use({ viewport: DESKTOP });
 
-  test('cada seção termina com "// Próximo: <Arquivo>.java →" para a seguinte na ordem da árvore; a última não tem', async ({
-    page,
-  }) => {
+  // Um teste por seção: todas num teste só estouravam o tempo na CI.
+  test('a árvore lista as seções na mesma ordem do "Próximo arquivo"', async ({ page }) => {
     await abrirHidratada(page, '/sobre-mim');
     await abrirPastas(page);
     const ordem = await arvoreDeSecoes(page)
       .locator('a[href]')
       .evaluateAll((els) => els.map((el) => el.getAttribute('href') ?? ''));
-    expect(ordem.length).toBeGreaterThan(10);
 
-    for (const [i, rota] of ordem.entries()) {
-      await page.goto(rota);
-      const proximo = page.locator('app-proximo-arquivo a');
-      if (i === ordem.length - 1) {
-        await expect(proximo, `${rota} é a última`).toHaveCount(0);
-      } else {
-        await expect(proximo, rota).toHaveAttribute('href', ordem[i + 1]);
-        await expect(proximo, rota).toHaveText(/^\/\/ Próximo: \S+\.java →$/);
-      }
-    }
+    expect(ordem).toEqual(SECOES.map((secao) => `/${secao.slug}`));
   });
+
+  for (const [i, secao] of SECOES.entries()) {
+    const seguinte = SECOES[i + 1];
+    test(`/${secao.slug} termina com o próximo arquivo ${seguinte ? `/${seguinte.slug}` : '(nenhum: é a última)'}`, async ({
+      page,
+    }) => {
+      // A vitrine (/projetos) não tem editor: lá basta abrir e esperar o link.
+      if (secao.slug === 'projetos') await page.goto('/projetos');
+      else await abrirHidratada(page, `/${secao.slug}`);
+      const proximo = page.locator('app-proximo-arquivo a');
+
+      if (!seguinte) {
+        await expect(proximo).toHaveCount(0);
+        return;
+      }
+      await expect(proximo).toHaveAttribute('href', `/${seguinte.slug}`);
+      await expect(proximo).toHaveText(/^\/\/ Próximo: \S+\.java →$/);
+    });
+  }
 
   test('depois de Sobre Mim, ativar o próximo arquivo abre Diferenciais', async ({ page }) => {
     await abrirHidratada(page, '/sobre-mim');
