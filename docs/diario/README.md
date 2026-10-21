@@ -40,6 +40,7 @@ e eu quero mostrar o processo, não só o resultado.
 | [0020](0020-dominio-proprio.md)                     | 2026-10-16 | O portfólio passa a usar vinimachado.wattscompany.com.br no SEO, no sitemap e no cartão, e o .vercel.app redireciona. |
 | [0021](0021-icone-com-iniciais.md)                  | 2026-10-16 | O favicon do Angular vira um "VM" num quadrado arredondado, no estilo do ícone de projeto do IntelliJ.                |
 | [0022](0022-copy-para-vagas-java.md)                | 2026-10-19 | Os textos e a ordem dos projetos passam a falar com vagas Java, e entra o launcher de TV em Java.                     |
+| [0025](0025-deploy-de-producao-manual.md)           | 2026-10-21 | O deploy de produção vira manual para refatorar localmente sem mexer no site no ar (ADR-0020).                        |
 
 ## Modelo de entrada
 

@@ -158,8 +158,9 @@ Tudo roda no workflow [`ci.yml`](.github/workflows/ci.yml):
 
 - **CI:** em todo PR e push na `main`, roda lint, formatação, testes unitários com cobertura,
   build e E2E em jobs paralelos.
-- **CD:** com tudo verde, publica na Vercel. Cada PR ganha uma URL de preview, e cada push na
-  `main` atualiza a produção.
+- **CD:** com tudo verde, publica na Vercel. Cada PR ganha uma URL de preview. A produção só é
+  atualizada pelo botão **Run workflow** na `main` ([ADR-0020](docs/adr/0020-deploy-de-producao-manual.md)):
+  um merge na `main` testa, mas não publica.
 
 O build precisa do histórico completo do Git para gerar a página do repositório, então os jobs do CI usam
 `fetch-depth: 0`. Em clone raso ou sem `git`, o painel mostra uma mensagem e o build não falha.
