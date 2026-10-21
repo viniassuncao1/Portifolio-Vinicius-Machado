@@ -62,22 +62,20 @@ test.describe('Visão em cartão das seções', () => {
     });
   }
 
-  test('o HTML pré-renderizado de cada seção já traz o cartão, sem JavaScript', async ({
-    browser,
-  }) => {
-    const contexto = await browser.newContext({ javaScriptEnabled: false, viewport: DESKTOP });
-    const page = await contexto.newPage();
+  // Um teste por seção: o laço com todas elas estourava o tempo em máquina carregada.
+  for (const secao of COM_DUAS_VISOES) {
+    test(`o HTML pré-renderizado de ${secao.slug} já traz o cartão, sem JavaScript`, async ({
+      browser,
+    }) => {
+      const contexto = await browser.newContext({ javaScriptEnabled: false, viewport: DESKTOP });
+      const page = await contexto.newPage();
 
-    for (const secao of COM_DUAS_VISOES) {
       await page.goto(`/${secao.slug}`);
-      await expect(page.locator('main .cartao-da-secao'), secao.slug).toBeAttached();
-      await expect(
-        page.locator('main .titulo-de-secao, main .titulo').first(),
-        secao.slug,
-      ).toBeAttached();
-    }
-    await contexto.close();
-  });
+      await expect(page.locator('main .cartao-da-secao')).toBeAttached();
+      await expect(page.locator('main .titulo-de-secao, main .titulo').first()).toBeAttached();
+      await contexto.close();
+    });
+  }
 
   // Um teste por seção e esquema: as 17 seções num teste só estouravam o tempo no tema escuro.
   for (const esquema of ['dark', 'light'] as const) {

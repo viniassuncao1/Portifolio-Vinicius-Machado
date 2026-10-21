@@ -94,15 +94,17 @@ test.describe('Metadados no HTML pré-renderizado (sem JavaScript)', () => {
     expect(m.canonico).toBe(`${ORIGEM}/skills`);
   });
 
-  test('cada seção tem a sua descrição, diferente das outras', async ({ page }) => {
-    const descricoes = new Map<string, string>();
+  test('cada seção tem a sua descrição, diferente das outras', async ({ request }) => {
+    // Só o HTML pré-renderizado, em paralelo: abrir 18 páginas num teste só estourava o tempo.
+    const descricoes = await Promise.all(
+      SECOES.map(async (secao) => {
+        const html = await (await request.get(`/${secao.slug}`)).text();
+        return /<meta name="description" content="([^"]*)"/.exec(html)?.[1] ?? '';
+      }),
+    );
 
-    for (const secao of SECOES) {
-      await page.goto(`/${secao.slug}`);
-      descricoes.set(secao.slug, (await metadados(page)).descricao ?? '');
-    }
-
-    expect(new Set(descricoes.values()).size).toBe(SECOES.length);
+    expect(descricoes.every((descricao) => descricao.length > 0)).toBe(true);
+    expect(new Set(descricoes).size).toBe(SECOES.length);
   });
 
   test('o título e o canônico de uma seção não indicam página', async ({ page }) => {
@@ -144,13 +146,14 @@ test.describe('Metadados no HTML pré-renderizado (sem JavaScript)', () => {
     expect(dados.knowsAbout).toEqual(expect.arrayContaining(['Java', 'Spring Boot', 'Angular']));
   });
 
-  test('as outras páginas não trazem dados estruturados', async ({ page }) => {
-    for (const rota of ROTAS.filter((r) => r !== '/')) {
+  // Um teste por rota: o laço com todas elas estourava o tempo em máquina carregada.
+  for (const rota of ROTAS.filter((r) => r !== '/')) {
+    test(`${rota} não traz dados estruturados`, async ({ page }) => {
       await page.goto(rota);
 
-      await expect(page.locator('script[type="application/ld+json"]'), rota).toHaveCount(0);
-    }
-  });
+      await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);
+    });
+  }
 });
 
 test.describe('Arquivos de SEO servidos pelo site', () => {
