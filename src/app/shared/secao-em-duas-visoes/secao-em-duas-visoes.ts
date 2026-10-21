@@ -1,5 +1,13 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, TemplateRef, contentChild, inject, input } from '@angular/core';
+import {
+  Component,
+  TemplateRef,
+  afterNextRender,
+  contentChild,
+  inject,
+  input,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { VisaoDoConteudoEscolhida } from '../../core/visao-do-conteudo';
 import type { ConteudoDoEditor } from '../editor-de-codigo/conteudo';
@@ -36,8 +44,18 @@ import type { NomeDaSecaoTematica } from '../movimento/tema-de-secao';
 })
 export class SecaoEmDuasVisoes {
   protected readonly visao = inject(VisaoDoConteudoEscolhida);
+  private readonly rota = inject(ActivatedRoute, { optional: true });
   readonly conteudo = input.required<ConteudoDoEditor>();
   readonly tema = input.required<NomeDaSecaoTematica>();
+  constructor() {
+    // `?visao=codigo` (o "Ver em código" da vitrine) abre o arquivo sem mudar a preferência de sempre.
+    afterNextRender(() => {
+      if (this.rota?.snapshot.queryParamMap.get('visao') === 'codigo') {
+        this.visao.escolherSemLembrar('codigo');
+      }
+    });
+  }
+
   protected readonly cartao = contentChild.required<TemplateRef<unknown>>('cartao');
   /** Algo que só a visão em código mostra depois do editor (por exemplo, o botão de copiar). */
   protected readonly extraDoCodigo = contentChild<TemplateRef<unknown>>('extraDoCodigo');

@@ -50,4 +50,13 @@ describe('VisaoDoConteudoEscolhida', () => {
     expect(servico.visao()).toBe('codigo');
     vi.restoreAllMocks();
   });
+
+  it('escolherSemLembrar mostra a visão sem gravá-la', () => {
+    const servico = TestBed.inject(VisaoDoConteudoEscolhida);
+
+    servico.escolherSemLembrar('codigo');
+
+    expect(servico.visao()).toBe('codigo');
+    expect(localStorage.getItem(CHAVE_DA_VISAO)).toBeNull();
+  });
 });

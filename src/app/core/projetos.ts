@@ -195,3 +195,7 @@ export const projetoDoSlug = (slug: string | null | undefined): Projeto | undefi
 /** Posição no carrossel e nos detalhes: `NN / 06`. */
 export const contadorDoProjeto = (projeto: Projeto): string =>
   `${String(projeto.numero).padStart(2, '0')} / ${String(PROJETOS.length).padStart(2, '0')}`;
+
+/** O projeto de uma seção (`projeto-1` a `projeto-6`). */
+export const projetoDaSecao = (secao: string): Projeto | undefined =>
+  PROJETOS.find((projeto) => projeto.secao === secao);

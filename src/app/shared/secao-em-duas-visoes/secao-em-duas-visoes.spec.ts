@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 import { VisaoDoConteudoEscolhida } from '../../core/visao-do-conteudo';
 import { comum, linha, vazia } from '../editor-de-codigo/conteudo';
@@ -75,5 +76,21 @@ describe('SecaoEmDuasVisoes', () => {
 
     expect(raiz.querySelector('app-editor-de-codigo')).not.toBeNull();
     expect(raiz.querySelector('.meu-extra')).toBeNull();
+  });
+
+  it('?visao=codigo abre o código sem mudar a preferência guardada', async () => {
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { queryParamMap: convertToParamMap({ visao: 'codigo' }) } },
+        },
+      ],
+    });
+
+    const { raiz } = await montar(Hospedeiro);
+
+    expect(raiz.querySelector('app-editor-de-codigo')).not.toBeNull();
+    expect(localStorage.getItem('visao-do-conteudo')).toBeNull();
   });
 });

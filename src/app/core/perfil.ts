@@ -195,3 +195,125 @@ export const IDIOMAS = [
   { idioma: 'Inglês', nivel: 'Básico' },
   { idioma: 'Espanhol', nivel: 'Básico' },
 ] as const;
+
+/** Os dados pessoais de `Diferenciais.java` e o texto do Javadoc. */
+export const DIFERENCIAIS = {
+  texto:
+    'Moro em Brasília há 20 anos. Sou mineiro, extrovertido, curioso e gosto de uma boa discussão, principalmente com quem sabe mais do que eu sobre algum assunto. Estou disposto a experiências novas e não me prendo só a back-end ou front-end: gosto de testar, aprender e encarar o que aparecer pela frente.',
+  origem: 'Mineiro',
+  cidade: 'Brasília',
+  anosNaCidade: 20,
+  tracos: ['Extrovertido', 'Curioso', 'Gosta de aprender'],
+} as const;
+
+/** A seção "Como uso a IA": o texto, as ferramentas e o método. */
+export const COMO_USO_IA = {
+  texto:
+    'Não vejo IA como modismo, é parte de como eu trabalho hoje, dos dois lados. Na Watts Company, desenvolvo agentes de IA que resolvem problema real pra cliente: a Ana, por exemplo, atende pacientes de uma clínica pelo WhatsApp, e boa parte deles nem imagina que está falando com uma IA. No dia a dia como desenvolvedor, uso Claude Code e Codex com metodologia SDD (Spec-Driven Development): deixou de ser “ferramenta a mais” e virou parte de como eu planejo e entrego código.',
+  ferramentas: ['Claude Code', 'Codex'],
+  metodologia: 'SDD (Spec-Driven Development)',
+} as const;
+
+/** Um curso concluído, do mais recente para o mais antigo (a mesma lista de `Certificacoes.java`). */
+export interface CursoDoPerfil {
+  /** Nome da variável Java do curso. */
+  readonly variavel: string;
+  readonly nome: string;
+  readonly horas: number;
+  readonly concluidoEm: readonly [ano: number, mes: number, dia: number];
+}
+
+export const CURSOS: readonly CursoDoPerfil[] = [
+  {
+    variavel: 'springBoot',
+    nome: 'Spring Boot 3: desenvolva uma API Rest em Java',
+    horas: 10,
+    concluidoEm: [2025, 12, 19],
+  },
+  {
+    variavel: 'springDataJpa',
+    nome: 'Java: persistência de dados e consultas com Spring Data JPA',
+    horas: 16,
+    concluidoEm: [2025, 12, 9],
+  },
+  {
+    variavel: 'javaApiEArquivos',
+    nome: 'Java: consumindo API, gravando arquivos e lidando com erros',
+    horas: 10,
+    concluidoEm: [2025, 11, 5],
+  },
+  {
+    variavel: 'http',
+    nome: 'HTTP: entendendo a web por baixo dos panos',
+    horas: 10,
+    concluidoEm: [2025, 10, 14],
+  },
+  {
+    variavel: 'angular',
+    nome: 'Angular: construa uma aplicação web com componentes, template e CLI',
+    horas: 8,
+    concluidoEm: [2025, 9, 22],
+  },
+  {
+    variavel: 'typescript',
+    nome: 'TypeScript na prática: implemente um projeto completo',
+    horas: 12,
+    concluidoEm: [2025, 9, 11],
+  },
+  {
+    variavel: 'pythonParaDados',
+    nome: 'Python para Dados: primeiros passos',
+    horas: 10,
+    concluidoEm: [2025, 4, 8],
+  },
+  {
+    variavel: 'pythonOrientadoAObjetos',
+    nome: 'Python: avance na Orientação a Objetos e consuma API',
+    horas: 8,
+    concluidoEm: [2025, 3, 27],
+  },
+  {
+    variavel: 'gitEGithub',
+    nome: 'Git e GitHub: repositório, commit e versões',
+    horas: 8,
+    concluidoEm: [2025, 3, 25],
+  },
+];
+
+export interface EventoDoPerfil {
+  readonly nome: string;
+  readonly vezes: number;
+}
+
+export const EVENTOS: readonly EventoDoPerfil[] = [
+  { nome: 'Brasília IT', vezes: 1 },
+  { nome: 'Campus Party Brasília', vezes: 2 },
+  { nome: 'BB Digital Week', vezes: 1 },
+];
+
+export interface RecomendacaoDoPerfil {
+  readonly autora: string;
+  readonly cargo: string;
+  readonly relacao: string;
+  readonly data: readonly [ano: number, mes: number, dia: number];
+  /** O texto como foi escrito no LinkedIn, um item por parágrafo. */
+  readonly paragrafos: readonly string[];
+  readonly foto: { readonly src: string; readonly alt: string };
+  readonly linkedin: string;
+}
+
+export const RECOMENDACOES: readonly RecomendacaoDoPerfil[] = [
+  {
+    autora: 'Luana Porto',
+    cargo: 'Desenvolvedor Backend Java',
+    relacao: 'Trabalhou na mesma equipe',
+    data: [2026, 9, 22],
+    paragrafos: [
+      'Tive a oportunidade de trabalhar com o Vinícius e acompanhar de perto seu trabalho no dia a dia. É um profissional muito comprometido, responsável e colaborativo, sempre disposto a ajudar o time e contribuir para que as entregas aconteçam da melhor forma possível.',
+      'Além da parte técnica, se destaca pela facilidade de comunicação, organização e pela forma como lida com desafios e aprende novas tecnologias. É uma pessoa em quem o time pode confiar e que agrega muito ao ambiente de trabalho.',
+      'Recomendo o Vinícius com muita tranquilidade e tenho certeza de que será uma ótima adição a qualquer equipe.',
+    ],
+    foto: { src: 'fotos/luana-porto.webp', alt: 'Foto de Luana Porto' },
+    linkedin: 'https://www.linkedin.com/in/luana-porto-pereira-gomes/',
+  },
+];
