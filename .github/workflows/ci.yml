@@ -5,8 +5,7 @@ on:
     branches: [main]
   push:
     branches: [main]
-  # Permite rodar o pipeline (e publicar a main) pelo botão "Run workflow", caso o GitHub
-  # deixe de disparar o push de um merge.
+  # Publicar em produção é manual (ADR-0020): só pelo botão "Run workflow" na main.
   workflow_dispatch:
 
 # Um push novo cancela a execução anterior do mesmo PR.
@@ -124,7 +123,8 @@ jobs:
   deploy-producao:
     name: Deploy de produção
     needs: [qualidade, testes-unitarios, build-e2e]
-    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
+    # Só pelo botão "Run workflow" (ADR-0020): um merge na main testa, mas não publica.
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: production
