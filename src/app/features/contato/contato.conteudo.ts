@@ -10,8 +10,9 @@ import {
 } from '../../shared/editor-de-codigo/conteudo';
 import type { ConteudoDoEditor } from '../../shared/editor-de-codigo/conteudo';
 
-/** Endereço copiado pelo botão "Copiar e-mail". */
-export const EMAIL_DE_CONTATO = 'viniciusmassuncao@gmail.com';
+import { EMAIL_DE_CONTATO } from '../../core/perfil';
+
+export { EMAIL_DE_CONTATO };
 
 /** Conteúdo da tela 30 (design/telas/tela-30.png), no estilo de leitura (ADR-0011); os quatro contatos são links reais. */
 export const CONTEUDO_CONTATO: ConteudoDoEditor = [

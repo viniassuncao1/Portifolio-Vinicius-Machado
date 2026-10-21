@@ -84,12 +84,12 @@ test.describe('Busca de seções', () => {
     await expect(page.getByRole('option').first()).toContainText('Sobre Mim');
   });
 
-  test('sem filtro lista todos os arquivos (Início e 17 seções)', async ({ page }) => {
+  test('sem filtro lista todos os arquivos (Início e 18 seções)', async ({ page }) => {
     await abrirComFocoNaCasca(page, '/');
     await page.keyboard.press('Control+p');
 
-    await expect(page.getByRole('option')).toHaveCount(18);
-    await expect(dialogo(page).getByRole('status')).toHaveText('18 resultados');
+    await expect(page.getByRole('option')).toHaveCount(19);
+    await expect(dialogo(page).getByRole('status')).toHaveText('19 resultados');
   });
 
   test('usa o singular com um resultado e avisa quando nada casa', async ({ page }) => {
@@ -180,7 +180,7 @@ test.describe('Busca de seções', () => {
     await page.keyboard.press('Control+p');
 
     await expect(campo(page)).toHaveValue('');
-    await expect(page.getByRole('option')).toHaveCount(18);
+    await expect(page.getByRole('option')).toHaveCount(19);
   });
 });
 
@@ -209,5 +209,27 @@ test.describe('Busca no celular (390x844)', () => {
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
     ).toBe(true);
+  });
+});
+
+test.describe('Comandos na busca (desktop)', () => {
+  test.use({ viewport: { width: 1440, height: 900 } });
+
+  test('os comandos de quem recruta aparecem ao digitar e o currículo baixa o PDF', async ({
+    page,
+  }) => {
+    await abrirComFocoNaCasca(page, '/skills');
+    await page.keyboard.press('Control+p');
+    const campo = dialogo(page).getByRole('combobox');
+    await expect(page.getByRole('option').filter({ hasText: 'Baixar currículo' })).toHaveCount(0);
+
+    await campo.fill('currículo');
+    await expect(page.getByRole('option')).toHaveText([/Baixar currículo/]);
+
+    const download = page.waitForEvent('download');
+    await campo.press('Enter');
+    expect((await download).suggestedFilename()).toBe(
+      'CV_Vinicius_Machado_Desenvolvedor_FullStack_Java.pdf',
+    );
   });
 });

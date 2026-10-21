@@ -1,0 +1,42 @@
+:host {
+  display: inline-block;
+}
+
+.alternar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  border: 1px solid color-mix(in srgb, var(--s-texto) 22%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--s-fundo) 80%, transparent);
+  color: var(--s-texto);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition:
+    transform var(--duracao-rapida) var(--curva-padrao),
+    border-color var(--duracao-media) var(--curva-padrao);
+
+  &:hover {
+    border-color: var(--s-acento);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--s-texto);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alternar {
+    transition: none;
+  }
+}

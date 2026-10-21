@@ -120,3 +120,44 @@ html.transicao-de-tema {
     animation: none;
   }
 }
+
+// Expansão do cartão de projeto até a tela cheia (e a volta): o cartão e o painel dos detalhes têm o
+// mesmo `view-transition-name` (`projeto`). A imagem de antes e a de depois ocupam o mesmo grupo.
+::view-transition-group(projeto) {
+  animation-duration: 600ms;
+  animation-timing-function: var(--curva-suave);
+}
+
+::view-transition-old(projeto),
+::view-transition-new(projeto) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(projeto),
+  ::view-transition-old(projeto),
+  ::view-transition-new(projeto) {
+    animation: none;
+  }
+}
+
+// Frase que se acende (`appFraseQueSeAcende`): cada palavra passa de `--s-secundario` a `--s-texto`
+// conforme a frase atravessa a janela. Só existe quando o navegador tem a rolagem animada em CSS.
+@supports (animation-timeline: view()) {
+  .frase-acesa .w {
+    color: var(--s-secundario);
+    animation: acender linear both;
+    animation-timeline: view();
+    // Cada palavra tem a sua janela, uma depois da outra, na metade de baixo da tela até a do meio.
+    animation-range: entry calc(100% * var(--i) / var(--n) * 0.6) entry
+      calc(40% + 100% * var(--i) / var(--n) * 0.6);
+  }
+
+  @keyframes acender {
+    to {
+      color: var(--s-texto);
+    }
+  }
+}

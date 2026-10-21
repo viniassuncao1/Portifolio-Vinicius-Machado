@@ -348,8 +348,8 @@ test.describe('Próximo arquivo', () => {
     const contexto = await browser.newContext({ javaScriptEnabled: false });
     const pagina = await contexto.newPage();
 
-    await pagina.goto('/sobre-mim');
-    await expect(pagina.locator('app-proximo-arquivo a')).toHaveAttribute('href', '/diferenciais');
+    await pagina.goto('/diferenciais');
+    await expect(pagina.locator('app-proximo-arquivo a')).toHaveAttribute('href', '/como-uso-ia');
     await pagina.goto('/');
     await expect(pagina.locator('app-proximo-arquivo a')).toHaveCount(0);
     await contexto.close();
@@ -576,6 +576,7 @@ test.describe('Limite de 5 abas', () => {
     await abrirPastas(page);
     for (const secao of ['Sobre Mim', 'Diferenciais', 'Skills / STACK', 'Experiências']) {
       await arquivoDaArvore(page, secao).click();
+      await expect(arquivoDaArvore(page, secao)).toHaveAttribute('aria-current', 'page');
     }
     await expect(abas(page)).toHaveCount(5);
     // Reusa a primeira (Início): a mais antiga passa a ser Sobre Mim.

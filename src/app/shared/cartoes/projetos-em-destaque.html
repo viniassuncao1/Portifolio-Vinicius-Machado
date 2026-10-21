@@ -1,0 +1,35 @@
+<div class="cabecalho">
+  <p class="eyebrow">Projetos</p>
+  <h3 class="titulo" appFraseQueSeAcende>Do back-end em Java às landing pages que convertem.</h3>
+</div>
+<ul class="bento">
+  @for (projeto of projetos; track projeto.slug; let i = $index) {
+    <li [attr.data-posicao]="i">
+      <a class="cartao casca-dupla" [routerLink]="['/projetos', projeto.slug]">
+        <span class="miolo">
+          <span class="capa">
+            @if (projeto.imagens[0]; as imagem) {
+              <img
+                [ngSrc]="imagem.src"
+                [width]="imagem.largura"
+                [height]="imagem.altura"
+                [alt]="imagem.alt"
+              />
+            } @else {
+              <app-capa-em-codigo [capa]="projeto.capa" />
+            }
+          </span>
+          <span class="texto">
+            <span class="numero">0{{ projeto.numero }}</span>
+            <span class="titulo-do-cartao">{{ projeto.titulo }}</span>
+            <span class="etiquetas">{{ projeto.etiquetas.join(' · ') }}</span>
+          </span>
+        </span>
+      </a>
+    </li>
+  }
+</ul>
+<a class="pilula" routerLink="/projetos">
+  Abrir a vitrine
+  <span class="seta-aninhada" aria-hidden="true">↗</span>
+</a>

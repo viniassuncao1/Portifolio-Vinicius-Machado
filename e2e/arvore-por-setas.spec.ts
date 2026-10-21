@@ -40,7 +40,7 @@ test.describe('Árvore em pastas navegável por teclado', () => {
     const grupo = arvoreDeSecoes(page).locator('#grupo-projetos');
     await expect(grupo).toBeVisible();
     await expect(grupo).toHaveCSS('opacity', '1');
-    await expect(grupo.locator('a')).toHaveCount(6);
+    await expect(grupo.locator('a')).toHaveCount(7);
     for (const arquivo of await grupo.locator('a').all()) {
       await expect(arquivo).toBeVisible();
       await expect(arquivo).toHaveCSS('opacity', '1');
@@ -70,6 +70,7 @@ test.describe('Árvore em pastas navegável por teclado', () => {
 
     await expect(pasta(page, 'projetos')).toHaveAttribute('aria-expanded', 'true');
     await expect(arvoreDeSecoes(page).locator('#grupo-projetos a')).toHaveText([
+      'Vitrine.java',
       'Projeto1.java',
       'Projeto2.java',
       'Projeto3.java',
@@ -109,7 +110,7 @@ test.describe('Árvore em pastas navegável por teclado', () => {
     await expect(pasta(page, 'projetos')).toHaveAttribute('aria-expanded', 'true');
 
     await page.keyboard.press('ArrowRight');
-    await expect(arquivoDaArvore(page, 'Projeto 1')).toBeFocused();
+    await expect(arquivoDaArvore(page, 'Vitrine de projetos')).toBeFocused();
 
     await page.keyboard.press('ArrowLeft');
     await expect(pasta(page, 'projetos')).toBeFocused();

@@ -11,12 +11,18 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { CopiarEmail } from '../../core/copiar-email';
+import { ENDERECO_DO_CURRICULO, ENDERECO_DO_GITHUB, ENDERECO_DO_LINKEDIN } from '../../core/perfil';
 import { ARQUIVO_INICIO, SECOES } from '../../core/secoes';
+
+type Comando = 'curriculo' | 'linkedin' | 'github' | 'email';
 
 interface Resultado {
   readonly arquivo: string;
   readonly titulo: string;
-  readonly rota: string;
+  /** Rota de uma seção; um comando não tem. */
+  readonly rota?: string;
+  readonly comando?: Comando;
 }
 
 const ARQUIVOS: readonly Resultado[] = [
@@ -26,6 +32,14 @@ const ARQUIVOS: readonly Resultado[] = [
     titulo: secao.titulo,
     rota: `/${secao.slug}`,
   })),
+];
+
+/** As ações de quem recruta, como comandos: só aparecem quando há texto na busca. */
+const COMANDOS: readonly Resultado[] = [
+  { arquivo: '▶ comando', titulo: 'Baixar currículo', comando: 'curriculo' },
+  { arquivo: '▶ comando', titulo: 'Abrir o LinkedIn', comando: 'linkedin' },
+  { arquivo: '▶ comando', titulo: 'Abrir o GitHub', comando: 'github' },
+  { arquivo: '▶ comando', titulo: 'Copiar e-mail', comando: 'email' },
 ];
 
 /** Minúsculas e sem acentos: "Experiências" casa com "exp". */
@@ -45,6 +59,7 @@ export class BuscaDeSecoes {
   private readonly router = inject(Router);
   private readonly documento = inject(DOCUMENT);
   private readonly injector = inject(Injector);
+  private readonly email = inject(CopiarEmail);
   private readonly dialogo = viewChild.required<ElementRef<HTMLDialogElement>>('dialogo');
   private readonly campo = viewChild.required<ElementRef<HTMLInputElement>>('campo');
   private focoAnterior: HTMLElement | null = null;
@@ -53,7 +68,8 @@ export class BuscaDeSecoes {
   protected readonly indiceAtivo = signal(0);
   protected readonly resultados = computed(() => {
     const termo = normalizar(this.consulta().trim());
-    return ARQUIVOS.filter((r) => normalizar(`${r.arquivo} ${r.titulo}`).includes(termo));
+    const base = termo ? [...ARQUIVOS, ...COMANDOS] : ARQUIVOS;
+    return base.filter((r) => normalizar(`${r.arquivo} ${r.titulo}`).includes(termo));
   });
   protected readonly resumo = computed(() => {
     const total = this.resultados().length;
@@ -100,7 +116,29 @@ export class BuscaDeSecoes {
   protected escolher(resultado: Resultado | undefined): void {
     if (!resultado) return;
     this.dialogo().nativeElement.close();
-    void this.router.navigateByUrl(resultado.rota);
+    if (resultado.rota !== undefined) void this.router.navigateByUrl(resultado.rota);
+    else if (resultado.comando) this.executar(resultado.comando);
+  }
+
+  private executar(comando: Comando): void {
+    switch (comando) {
+      case 'curriculo': {
+        const link = this.documento.createElement('a');
+        link.href = ENDERECO_DO_CURRICULO;
+        link.download = '';
+        link.click();
+        break;
+      }
+      case 'linkedin':
+        this.documento.defaultView?.open(ENDERECO_DO_LINKEDIN, '_blank', 'noopener,noreferrer');
+        break;
+      case 'github':
+        this.documento.defaultView?.open(ENDERECO_DO_GITHUB, '_blank', 'noopener,noreferrer');
+        break;
+      case 'email':
+        void this.email.copiar();
+        break;
+    }
   }
 
   /** Devolve o foco para onde estava (Escape, escolha ou clique fora). */

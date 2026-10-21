@@ -72,7 +72,7 @@ describe('AberturaComponente', () => {
     expect(main.hasAttribute('inert')).toBe(false);
   });
 
-  it('leva o foco ao ▶ quando fica pronto, sem pular nem Esc', async () => {
+  it('leva o foco ao ▶ quando fica pronto', async () => {
     const { fixture, el, abertura } = await montar();
 
     await avancar(fixture, LINHA_DO_TEMPO.splash);
@@ -83,9 +83,29 @@ describe('AberturaComponente', () => {
     expect(el.querySelector('.botao-run')?.getAttribute('aria-keyshortcuts')).toBe(
       abertura.teclasDoAtalho,
     );
+  });
+
+  it('o botão Pular e o Esc encerram a abertura na hora', async () => {
+    const { fixture, el, abertura } = await montar();
+    await avancar(fixture, LINHA_DO_TEMPO.splash);
+    expect(el.querySelector('.pular')?.textContent).toMatch(/Pular/);
+
+    el.querySelector<HTMLButtonElement>('.pular')!.click();
+    await avancar(fixture, 0);
+
+    expect(abertura.fase()).toBe('revelando');
+    await avancar(fixture, LINHA_DO_TEMPO.reduzido.fade);
+    expect(abertura.fase()).toBe('encerrada');
+  });
+
+  it('Esc pula a abertura', async () => {
+    const { fixture, abertura } = await montar();
+    await avancar(fixture, LINHA_DO_TEMPO.splash);
+
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-    expect(abertura.fase()).toBe('pronto');
-    expect(el.textContent).not.toMatch(/pular/i);
+    await avancar(fixture, 0);
+
+    expect(abertura.fase()).toBe('revelando');
   });
 
   it('o atalho da plataforma e o clique no ▶ executam', async () => {

@@ -1,0 +1,51 @@
+<div class="carrossel" [attr.data-modo]="modo()" [attr.data-pronto]="pronto()">
+  <div
+    #pista
+    class="pista"
+    role="group"
+    aria-roledescription="carrossel"
+    aria-label="Projetos"
+    (scroll)="aoRolar()"
+    (wheel)="soltarAlvo()"
+    (touchstart)="soltarAlvo()"
+    (keydown)="aoTeclar($event)"
+    (pointerdown)="aoApertar($event)"
+    (pointermove)="aoMover($event)"
+    (pointerup)="aoSoltar()"
+    (pointercancel)="aoSoltar()"
+    (click)="aoClicarNaPista($event)"
+  >
+    @for (projeto of projetos(); track projeto.slug; let i = $index) {
+      <app-cartao-de-projeto
+        [projeto]="projeto"
+        [ativo]="modo() === 'grade' || i === ativo()"
+        [prioridade]="i < 2"
+        (abrir)="abrir.emit($event)"
+      />
+    }
+  </div>
+
+  @if (modo() === 'carrossel') {
+    <div class="controles">
+      <button type="button" class="seta" [disabled]="primeiro()" (click)="andar(-1)">
+        <span aria-hidden="true">←</span>
+        <span class="somente-leitores">Projeto anterior</span>
+      </button>
+      <div class="pontos" role="group" aria-label="Escolher projeto">
+        @for (projeto of projetos(); track projeto.slug; let i = $index) {
+          <button
+            type="button"
+            class="ponto"
+            [attr.aria-label]="projeto.titulo"
+            [attr.aria-current]="i === ativo() ? 'true' : null"
+            (click)="irPara(i)"
+          ></button>
+        }
+      </div>
+      <button type="button" class="seta" [disabled]="ultimo()" (click)="andar(1)">
+        <span aria-hidden="true">→</span>
+        <span class="somente-leitores">Próximo projeto</span>
+      </button>
+    </div>
+  }
+</div>

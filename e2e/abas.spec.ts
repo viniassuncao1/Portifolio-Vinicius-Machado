@@ -9,7 +9,10 @@ const fechar = (page: Page, arquivo: string) =>
   page.getByRole('button', { name: `Fechar ${arquivo}` });
 const abrirPelaArvore = async (page: Page, secao: string) => {
   await abrirPastas(page);
-  await arquivoDaArvore(page, secao).click();
+  const item = arquivoDaArvore(page, secao);
+  await item.click();
+  // Espera a navegação terminar: cliques seguidos, sem isto, cancelam um ao outro numa máquina lenta.
+  await expect(item).toHaveAttribute('aria-current', 'page');
 };
 
 // Movimento reduzido: o código aparece pronto, sem a digitação interferir.

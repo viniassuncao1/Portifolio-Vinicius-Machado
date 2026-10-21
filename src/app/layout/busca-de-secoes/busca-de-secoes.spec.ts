@@ -51,12 +51,12 @@ describe('BuscaDeSecoes', () => {
     return { fixture, raiz, campo, digitar, tecla, opcoes };
   }
 
-  it('abre com o foco no campo e lista as 18 opções (Início e 17 seções)', async () => {
+  it('abre com o foco no campo e lista as 19 opções (Início e 18 seções)', async () => {
     const { raiz, campo, opcoes } = await montar();
 
     expect(raiz.querySelector('dialog')?.hasAttribute('open')).toBe(true);
     expect(document.activeElement).toBe(campo);
-    expect(opcoes()).toHaveLength(18);
+    expect(opcoes()).toHaveLength(19);
     raiz.remove();
   });
 
@@ -119,7 +119,7 @@ describe('BuscaDeSecoes', () => {
     const { raiz, campo, tecla } = await montar();
 
     tecla('ArrowUp');
-    expect(campo.getAttribute('aria-activedescendant')).toBe('opcao-busca-17');
+    expect(campo.getAttribute('aria-activedescendant')).toBe('opcao-busca-18');
     tecla('ArrowDown');
     expect(campo.getAttribute('aria-activedescendant')).toBe('opcao-busca-0');
     raiz.remove();
@@ -143,9 +143,9 @@ describe('BuscaDeSecoes', () => {
     const { raiz, digitar } = await montar();
     const contagem = () => raiz.querySelector('.contagem')?.textContent?.trim();
 
-    expect(contagem()).toBe('18 resultados');
+    expect(contagem()).toBe('19 resultados');
     await digitar('projeto');
-    expect(contagem()).toBe('6 resultados');
+    expect(contagem()).toBe('7 resultados');
     await digitar('formacao');
     expect(contagem()).toBe('1 resultado');
     await digitar('zzzz');
@@ -185,5 +185,68 @@ describe('BuscaDeSecoes', () => {
 
     expect(campo.getAttribute('aria-activedescendant')).toBe('opcao-busca-0');
     raiz.remove();
+  });
+
+  describe('comandos de quem recruta', () => {
+    afterEach(() => vi.restoreAllMocks());
+
+    it('não aparecem na lista inicial, só quando há texto na busca', async () => {
+      const { raiz, opcoes, digitar } = await montar();
+      expect(opcoes().some((o) => o.textContent?.includes('Baixar currículo'))).toBe(false);
+
+      await digitar('curr');
+
+      expect(opcoes().map((o) => o.textContent?.replace(/\s+/g, ' ').trim())).toEqual([
+        '▶ comandoBaixar currículo',
+      ]);
+      raiz.remove();
+    });
+
+    it('"currículo" baixa o PDF por um link de download', async () => {
+      const { raiz, digitar, tecla } = await montar();
+      const cliques: HTMLAnchorElement[] = [];
+      vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (
+        this: HTMLAnchorElement,
+      ) {
+        cliques.push(this);
+      });
+      await digitar('currículo');
+
+      tecla('Enter');
+
+      expect(cliques).toHaveLength(1);
+      expect(cliques[0].getAttribute('href')).toBe(
+        'CV_Vinicius_Machado_Desenvolvedor_FullStack_Java.pdf',
+      );
+      expect(cliques[0].hasAttribute('download')).toBe(true);
+      raiz.remove();
+    });
+
+    it('os comandos de LinkedIn e GitHub abrem em nova aba sem opener', async () => {
+      const { raiz, digitar, tecla } = await montar();
+      const abrir = vi.spyOn(window, 'open').mockReturnValue(null);
+
+      await digitar('linkedin');
+      tecla('Enter');
+      expect(abrir).toHaveBeenCalledWith(
+        'https://linkedin.com/in/viniassuncao',
+        '_blank',
+        'noopener,noreferrer',
+      );
+      raiz.remove();
+    });
+
+    it('"copiar e-mail" copia o endereço', async () => {
+      const escrever = vi.fn().mockResolvedValue(undefined);
+      vi.stubGlobal('navigator', { clipboard: { writeText: escrever } });
+      const { raiz, digitar, tecla } = await montar();
+
+      await digitar('copiar');
+      tecla('Enter');
+
+      expect(escrever).toHaveBeenCalledWith('viniciusmassuncao@gmail.com');
+      vi.unstubAllGlobals();
+      raiz.remove();
+    });
   });
 });

@@ -18,6 +18,13 @@
         </button>
       }
     </div>
+    <!-- Indicador deslizante: um fio de acento sob a aba ativa (decorativo; fora do tablist). -->
+    <span
+      class="indicador"
+      aria-hidden="true"
+      [class.medido]="indicador().largura > 0"
+      [style.transform]="'translateX(' + indicador().x + 'px) scaleX(' + indicador().largura + ')'"
+    ></span>
     <!-- Fora do tablist, que só pode ter abas; cada botão fica sobre a ponta da sua aba. -->
     <div class="fechamentos">
       @for (aba of abas(); track aba.slug) {

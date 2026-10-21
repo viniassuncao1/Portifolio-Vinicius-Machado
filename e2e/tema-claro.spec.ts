@@ -2,13 +2,16 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from './fixtures';
 import type { Page, Route } from '@playwright/test';
 
-import { SECOES } from '../src/app/core/secoes';
+import { SECOES, SLUG_DA_VITRINE } from '../src/app/core/secoes';
 import { abrirHidratada, abrirPastas, arquivoDaArvore, contraste, esperarLogDoRun } from './apoio';
 
 const DESKTOP = { width: 1920, height: 1080 };
 const CELULAR = { width: 390, height: 844 };
 const TAGS = ['wcag2a', 'wcag2aa'];
-const ROTAS = ['/', ...SECOES.map((secao) => `/${secao.slug}`)];
+const ROTAS = [
+  '/',
+  ...SECOES.filter((secao) => secao.slug !== SLUG_DA_VITRINE).map((secao) => `/${secao.slug}`),
+];
 
 const FUNDO_DA_PAGINA = { escuro: 'rgb(28, 28, 28)', claro: 'rgb(217, 217, 217)' };
 const FUNDO_DO_EDITOR = { escuro: 'rgb(43, 43, 43)', claro: 'rgb(247, 247, 247)' };
@@ -142,7 +145,7 @@ test.describe('Tema inicial: sistema no claro', () => {
     });
     const pagina = await contexto.newPage();
 
-    await pagina.goto('/skills');
+    await pagina.goto('/diferenciais');
 
     expect(await dataTema(pagina)).toBeNull();
     expect(await fundo(pagina, 'body')).toBe(FUNDO_DA_PAGINA.claro);
@@ -154,7 +157,7 @@ test.describe('Tema inicial: sistema no claro', () => {
     const contexto = await browser.newContext({ javaScriptEnabled: false, colorScheme: 'dark' });
     const pagina = await contexto.newPage();
 
-    await pagina.goto('/skills');
+    await pagina.goto('/diferenciais');
 
     expect(await fundo(pagina, 'body')).toBe(FUNDO_DA_PAGINA.escuro);
     expect(await fundo(pagina, 'app-editor-de-codigo')).toBe(FUNDO_DO_EDITOR.escuro);
@@ -373,7 +376,8 @@ test.describe('localStorage bloqueado', () => {
   test('a página abre, sem erro, e o botão ainda troca o tema nesta visita', async ({ page }) => {
     const erros: string[] = [];
     page.on('pageerror', (e) => erros.push(e.message));
-    await abrirHidratada(page, '/');
+    // Sem localStorage a visão do Início é o cartão: a seção Skills é um arquivo e tem o editor.
+    await abrirHidratada(page, '/diferenciais');
 
     expect(await dataTema(page)).toBe('escuro');
     await alternarTema(page);
@@ -390,7 +394,7 @@ test.describe('localStorage bloqueado', () => {
       const erros: string[] = [];
       page.on('pageerror', (e) => erros.push(e.message));
 
-      await abrirHidratada(page, '/skills');
+      await abrirHidratada(page, '/diferenciais');
 
       expect(await dataTema(page)).toBe('claro');
       expect(erros).toEqual([]);

@@ -8,12 +8,16 @@ import { SECOES as SECOES_DO_SITE } from '../src/app/core/secoes';
 /** A árvore de seções (a seção com várias páginas tem outra `nav`, com `aria-current` próprio). */
 const arvore = (page: Page) => page.getByRole('navigation', { name: 'Seções do portfólio' });
 
+/** Seções com as duas visões: sem JavaScript o HTML traz o cartão. */
+const SECOES_COM_CARTAO = new Set(['sobre-mim', 'skills', 'experiencias', 'formacao', 'contato']);
+
 const SECOES = [
   { slug: 'sobre-mim', titulo: 'Sobre Mim' },
   { slug: 'diferenciais', titulo: 'Diferenciais' },
   { slug: 'como-uso-ia', titulo: 'Como uso a IA' },
   { slug: 'skills', titulo: 'Skills / STACK' },
   { slug: 'experiencias', titulo: 'Experiências' },
+  { slug: 'projetos', titulo: 'Vitrine de projetos' },
   { slug: 'projeto-1', titulo: 'Projeto 1' },
   { slug: 'projeto-2', titulo: 'Projeto 2' },
   { slug: 'projeto-3', titulo: 'Projeto 3' },
@@ -29,7 +33,7 @@ const SECOES = [
 ];
 
 test.describe('Estrutura da IDE', () => {
-  test('lista as 17 seções na árvore, na ordem do design', async ({ page }) => {
+  test('lista as 18 seções na árvore, na ordem do design', async ({ page }) => {
     await page.goto('/');
 
     await abrirPastas(page);
@@ -218,7 +222,7 @@ test.describe('Seção de projeto', () => {
   });
 });
 
-test.describe('Pré-renderização das 17 rotas', () => {
+test.describe('Pré-renderização das 18 rotas', () => {
   test.use({ javaScriptEnabled: false });
 
   for (const { slug, titulo } of SECOES) {
@@ -230,7 +234,15 @@ test.describe('Pré-renderização das 17 rotas', () => {
       await expect(arvore(page).locator('[data-tipo=pasta]')).toHaveCount(7);
       await expect(arvore(page).locator('a[href]')).toHaveCount(SECOES.length);
       await expect(arquivoDaArvore(page, titulo)).toHaveAttribute('aria-current', 'page');
-      await expect(page.getByRole('main').locator('code')).toBeAttached();
+      // A vitrine e as seções com visão em cartão (a visão padrão) trazem o cartão no HTML; as demais,
+      // o código.
+      if (slug === 'projetos') {
+        await expect(page.getByRole('main').locator('a.cartao')).toHaveCount(6);
+      } else if (SECOES_COM_CARTAO.has(slug)) {
+        await expect(page.getByRole('main').locator('.cartao-da-secao')).toBeAttached();
+      } else {
+        await expect(page.getByRole('main').locator('code')).toBeAttached();
+      }
     });
   }
 });

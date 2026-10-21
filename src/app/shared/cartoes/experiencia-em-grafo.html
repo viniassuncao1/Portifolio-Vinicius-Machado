@@ -1,0 +1,30 @@
+<div class="cabecalho">
+  <p class="eyebrow">Experiência</p>
+  <h3 class="titulo" appFraseQueSeAcende>
+    Do estágio à liderança de squad, e uma agência co-fundada.
+  </h3>
+</div>
+<ol class="grafo">
+  @for (experiencia of experiencias(); track experiencia.cargo + experiencia.periodo) {
+    <li class="commit">
+      <span class="ponto" aria-hidden="true"></span>
+      <div class="corpo casca-dupla">
+        <div class="miolo">
+          <p class="periodo">{{ experiencia.periodo }}</p>
+          <h4>{{ experiencia.cargo }}</h4>
+          <p class="empresa">{{ experiencia.empresa }}</p>
+          <ul>
+            @for (destaque of experiencia.destaques; track destaque) {
+              <li>{{ destaque }}</li>
+            }
+          </ul>
+        </div>
+      </div>
+    </li>
+  }
+</ol>
+@if (!completo()) {
+  <a routerLink="/experiencias" class="mais"
+    >Ver as três experiências completas <span aria-hidden="true">→</span></a
+  >
+}

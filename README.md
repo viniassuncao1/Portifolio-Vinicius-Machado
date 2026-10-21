@@ -16,7 +16,7 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 - **Angular 22 moderno:** componentes standalone, signals, zoneless e o novo control flow.
 - **Pré-renderização (SSG):** cada rota é gerada como HTML estático no build, o que garante
   carregamento rápido e SEO.
-- **Casca de IDE como rota-pai:** a barra, o painel e a aba são montados uma vez; as 17 seções
+- **Casca de IDE como rota-pai:** a barra, o painel e a aba são montados uma vez; as 18 seções
   são rotas filhas pré-renderizadas, com o conteúdo definido como dados tipados.
 - **Abertura com Run:** o site abre como a IDE rodando o projeto: uma splash de 3 s, o ▶ do Run
   (que se aciona sozinho em 5 s), o build das classes do portfólio (uma por seção) e o log do Spring subindo, e então a IDE
@@ -30,6 +30,19 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
   requests. O histórico é gerado no build, sem token e sem e-mails
   ([ADR-0016](docs/adr/0016-repositorio-no-estilo-do-github.md),
   [ADR-0013](docs/adr/0013-historico-do-git-gerado-no-build.md)).
+- **Cartão ⇄ Código ([ADR-0019](docs/adr/0019-experiencia-focada-em-recrutadores.md)):** o Início
+  e as seções Sobre Mim, Skills, Experiências, Formação e Contato têm duas visões do mesmo
+  conteúdo. O **cartão** (padrão) se lê em segundos: um hero em que a classe `ViniciusMachado` é
+  digitada na janela da IDE e vira o cartão de apresentação, a barra de ações (currículo, LinkedIn,
+  GitHub, copiar e-mail), números que contam, a stack como `build.gradle`, a experiência como
+  `git log --graph` e o contato num terminal, com o tema de cor mudando a cada seção. O **código**
+  é o arquivo Java da IDE.
+- **Vitrine de projetos (`/projetos`):** os seis projetos num carrossel arrastável (ou grade), com
+  expansão do cartão até a tela cheia por View Transition, detalhes em `<dialog>` com abas
+  "Visão geral / Código / Stack" e endereço compartilhável por projeto.
+- **Movimento com cuidado:** CSS e View Transitions primeiro e a biblioteca `motion` carregada só
+  depois da hidratação e nunca com `prefers-reduced-motion`; a abertura pode ser pulada (Esc).
+  Lighthouse móvel 100 em tudo, LCP de 1,1 s e axe sem violações nos dois temas.
 - **UX pensada para quem recruta:** Javadoc em modo de leitura, "Próximo arquivo →", atalhos no
   Início, code vision para ver o site dos projetos e contatos fáceis de tocar.
 - **Fotos de perfil no Javadoc:** o Início, o Sobre Mim e a recomendação recebida mostram um

@@ -98,3 +98,29 @@
     display: none;
   }
 }
+
+// Estado vivo: "Disponível" com o ponto de Run piscando de leve e a hora de Brasília.
+.disponivel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.ponto {
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: var(--cor-run);
+}
+
+.relogio {
+  min-width: 2.5rem;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+@media (max-width: 767.98px) {
+  .disponivel {
+    display: none;
+  }
+}

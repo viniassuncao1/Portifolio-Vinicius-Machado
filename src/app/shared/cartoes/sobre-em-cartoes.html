@@ -1,0 +1,24 @@
+<div class="cabecalho">
+  <p class="eyebrow">Sobre</p>
+  <h3 class="titulo" appFraseQueSeAcende>
+    Java e Spring Boot no back, Angular no front, um squad para liderar.
+  </h3>
+</div>
+<div class="bento">
+  @for (item of itens; track item.titulo; let i = $index) {
+    <article class="casca-dupla" [attr.data-posicao]="i">
+      <div class="miolo">
+        <h4>{{ item.titulo }}</h4>
+        <p>{{ item.texto }}</p>
+      </div>
+    </article>
+  }
+</div>
+<p class="rodape">
+  <img class="foto" ngSrc="fotos/vinicius.webp" width="192" height="192" alt="" />
+  @if (!completo()) {
+    <a routerLink="/sobre-mim" class="mais"
+      >Ler o Sobre Mim completo <span aria-hidden="true">→</span></a
+    >
+  }
+</p>

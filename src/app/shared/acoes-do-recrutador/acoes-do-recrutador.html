@@ -1,0 +1,26 @@
+<nav class="acoes" aria-label="Ações rápidas">
+  <a class="acao principal" [href]="curriculo" download>
+    Currículo <span aria-hidden="true">↓</span>
+  </a>
+  <a class="acao" [href]="linkedin" target="_blank" rel="noopener noreferrer">
+    LinkedIn <span aria-hidden="true">↗</span>
+    <span class="somente-leitores">(abre em nova aba)</span>
+  </a>
+  <a class="acao" [href]="github" target="_blank" rel="noopener noreferrer">
+    GitHub <span aria-hidden="true">↗</span>
+    <span class="somente-leitores">(abre em nova aba)</span>
+  </a>
+  <!-- O botão ocupa o lugar desde o HTML pré-renderizado (e só aparece com a Clipboard API): assim
+       a barra não muda de linha quando a página hidrata. -->
+  <button
+    type="button"
+    class="acao"
+    [class.reservado]="!email.disponivel()"
+    [disabled]="!email.disponivel()"
+    [attr.aria-hidden]="email.disponivel() ? null : 'true'"
+    (click)="email.copiar()"
+  >
+    {{ copiado() ? 'E-mail copiado ✓' : 'Copiar e-mail' }}
+  </button>
+  <span class="aviso" role="status" aria-live="polite">{{ email.aviso() }}</span>
+</nav>

@@ -1,5 +1,6 @@
 import { Route, Routes } from '@angular/router';
 
+import { projetoDoSlug } from './core/projetos';
 import { DADO_ARVORE_NO_INICIO, SECOES } from './core/secoes';
 import type { Secao } from './core/secoes';
 import { TITULO_INICIO, TITULO_REPOSITORIO } from './core/titulos';
@@ -19,6 +20,7 @@ const FEATURES_DAS_SECOES: Readonly<Record<string, CarregadorDeSecao>> = {
   experiencias: () => import('./features/experiencias/experiencias').then((m) => m.Experiencias),
   certificacoes: () =>
     import('./features/certificacoes/certificacoes').then((m) => m.Certificacoes),
+  projetos: () => import('./features/projetos/vitrine').then((m) => m.Vitrine),
   'projeto-1': () => import('./features/projeto-1/projeto-1').then((m) => m.Projeto1),
   'projeto-2': () => import('./features/projeto-2/projeto-2').then((m) => m.Projeto2),
   'projeto-3': () => import('./features/projeto-3/projeto-3').then((m) => m.Projeto3),
@@ -47,12 +49,27 @@ export const SECOES_COM_ENDERECO_ANTIGO: readonly string[] = [
   'certificacoes',
 ];
 
+/**
+ * A vitrine continua montada quando o projeto aberto muda (`/projetos/<slug>`), para o carrossel
+ * não perder a posição: o slug é uma rota filha sem componente, e a vitrine lê o endereço.
+ */
+const ROTAS_FILHAS: Readonly<Record<string, Routes>> = {
+  projetos: [
+    {
+      path: ':slug',
+      title: (rota) => projetoDoSlug(rota.paramMap.get('slug'))?.titulo ?? 'Vitrine de projetos',
+      children: [],
+    },
+  ],
+};
+
 /** Rotas de uma seção: `<slug>`, com o arquivo inteiro. */
 function rotaDaSecao(secao: Secao): Route {
   return {
     path: secao.slug,
     title: secao.titulo,
     loadComponent: FEATURES_DAS_SECOES[secao.slug] ?? EM_CONSTRUCAO,
+    children: ROTAS_FILHAS[secao.slug],
   };
 }
 

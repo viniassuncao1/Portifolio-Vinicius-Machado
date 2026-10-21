@@ -8,7 +8,7 @@ const ORIGEM = 'https://vinimachado.wattscompany.com.br';
 const SITE = 'Vinicius Machado';
 const IMAGEM = `${ORIGEM}/compartilhamento/portfolio-v2.png`;
 const LIMITE_DA_DESCRICAO = 160;
-const TOTAL_DE_PAGINAS = 19;
+const TOTAL_DE_PAGINAS = 20;
 
 /**
  * O Início, cada seção (um arquivo só: `/`, `/skills`) e a página do repositório, que
@@ -47,7 +47,7 @@ async function metadados(page: Page) {
   };
 }
 
-test('a lista de rotas tem as 19 páginas, sem repetir nenhuma', () => {
+test('a lista de rotas tem as 20 páginas, sem repetir nenhuma', () => {
   expect(ROTAS).toHaveLength(TOTAL_DE_PAGINAS);
   expect(new Set(ROTAS).size).toBe(ROTAS.length);
 });
@@ -166,7 +166,7 @@ test.describe('Arquivos de SEO servidos pelo site', () => {
     expect(texto).toMatch(new RegExp(`^Sitemap: ${ORIGEM}/sitemap\\.xml$`, 'm'));
   });
 
-  test('/sitemap.xml é XML e lista as 19 páginas em endereços absolutos', async ({ request }) => {
+  test('/sitemap.xml é XML e lista as 20 páginas em endereços absolutos', async ({ request }) => {
     const resposta = await request.get('/sitemap.xml');
     const xml = await resposta.text();
     const enderecos = Array.from(xml.matchAll(/<loc>([^<]+)<\/loc>/g), (m) => m[1]);

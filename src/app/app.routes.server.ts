@@ -9,6 +9,8 @@ export const serverRoutes: ServerRoute[] = [
     path: `${slug}/:pagina`,
     renderMode: RenderMode.Client,
   })),
+  // Detalhes de um projeto (`/projetos/ana`): abrem no navegador; a página que vai ao ar é a vitrine.
+  { path: 'projetos/:slug', renderMode: RenderMode.Client },
   {
     path: '**',
     renderMode: RenderMode.Prerender,

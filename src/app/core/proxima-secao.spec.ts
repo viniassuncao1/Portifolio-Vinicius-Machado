@@ -18,7 +18,7 @@ describe('proximaSecao', () => {
 
   it('aparece em toda seção que tem outra depois, inclusive nas que eram paginadas', () => {
     expect(proximaSecao('/skills')?.arquivo).toBe('Experiencias.java');
-    expect(proximaSecao('/experiencias')?.slug).toBe('projeto-1');
+    expect(proximaSecao('/experiencias')?.slug).toBe('projetos');
   });
 
   it('um endereço antigo de página leva à mesma seguinte da seção', () => {

@@ -71,6 +71,7 @@ test.describe('Retrato no Javadoc: Início', () => {
     const pagina = await contexto.newPage();
     await pagina.goto('/');
 
+    // Sem JavaScript vale o cartão (a visão padrão): a foto está no cartão da apresentação.
     await expect(pagina.getByRole('img', { name: 'Foto de Vinicius Machado' })).toHaveCount(1);
     await contexto.close();
   });

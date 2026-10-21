@@ -6,6 +6,11 @@
   [attr.data-fase]="fase()"
 >
   <div class="fundo"></div>
+  @if (fase() !== 'revelando') {
+    <button type="button" class="pular" (click)="pular()">
+      Pular <kbd aria-hidden="true">Esc</kbd>
+    </button>
+  }
   <div class="palco">
     <section class="cartao">
       <img

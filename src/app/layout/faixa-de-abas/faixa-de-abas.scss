@@ -23,6 +23,26 @@
   overflow-x: auto;
   overflow-y: hidden;
   scrollbar-width: none;
+  // O indicador deslizante se posiciona em relação à lista.
+  position: relative;
+}
+
+.indicador {
+  position: absolute;
+  inset: auto auto 0 0;
+  z-index: 1;
+  width: 1px;
+  height: 2px;
+  background: var(--cor-acento);
+  opacity: 0;
+  transform-origin: left;
+  pointer-events: none;
+
+  // Só aparece depois de medido, e só então desliza (a primeira posição não anima).
+  &.medido {
+    opacity: 1;
+    transition: transform var(--duracao-lenta) var(--curva-suave);
+  }
 }
 
 .abas,
@@ -94,5 +114,11 @@ button {
 
   &:hover {
     color: var(--cor-texto);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicador.medido {
+    transition: none;
   }
 }

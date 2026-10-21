@@ -1,0 +1,75 @@
+:host {
+  display: block;
+  min-height: 100%;
+  background: var(--cor-editor);
+  color: var(--cor-texto);
+}
+
+.vitrine {
+  padding: 1.5rem 0;
+}
+
+.cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1.5rem 1rem;
+
+  h2 {
+    margin: 0 0 0.25rem;
+    color: var(--cor-texto-forte);
+    font-size: 1.75rem;
+    text-wrap: balance;
+  }
+}
+
+.dica {
+  margin: 0;
+  color: var(--cor-texto-esmaecido);
+  text-wrap: pretty;
+}
+
+.modo {
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  border: var(--borda-painel);
+  border-radius: 999px;
+  background: var(--cor-painel);
+  color: var(--cor-texto-forte);
+  font: inherit;
+  cursor: pointer;
+  transition: transform var(--duracao-rapida) var(--curva-padrao);
+
+  &:hover {
+    border-color: var(--cor-acento);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: 2px;
+  }
+}
+
+// No celular a vitrine já abre em grade: o botão não faz diferença.
+@media (max-width: 767px) {
+  .modo {
+    display: none;
+  }
+
+  .cabecalho,
+  .vitrine {
+    padding-inline: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modo {
+    transition: none;
+  }
+}

@@ -226,11 +226,12 @@ test.describe('Diferenciais (/diferenciais)', () => {
 test.describe('Seções sem JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
-  test('/sobre-mim entrega o código, o Javadoc e o item atual no HTML', async ({ page }) => {
+  test('/sobre-mim entrega o cartão e o item atual no HTML', async ({ page }) => {
     await page.goto('/sobre-mim');
 
-    await expect(page.locator('main code')).toContainText('interface Desenvolvedor');
-    await expect(page.locator('main .javadoc')).toContainText('Sou desenvolvedor Full Stack');
+    // Sem JavaScript o HTML traz o cartão (a visão padrão): as quatro afirmações do Sobre Mim.
+    await expect(page.locator('main .cartao-da-secao')).toContainText('Java 21 e Spring Boot');
+    await expect(page.locator('main .bento article')).toHaveCount(4);
     await expect(arquivoDaArvore(page, 'Sobre Mim')).toHaveAttribute('aria-current', 'page');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Sobre Mim');
   });

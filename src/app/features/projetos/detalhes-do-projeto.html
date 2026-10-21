@@ -1,0 +1,158 @@
+<dialog #dialogo class="detalhes" aria-labelledby="titulo-do-projeto" (cancel)="aoCancelar($event)">
+  @if (projeto(); as p) {
+    <div class="painel">
+      <header class="topo">
+        <span class="contador">{{ contador() }}</span>
+        <button type="button" class="fechar" autofocus (click)="fechado.emit()">
+          <span aria-hidden="true">✕</span>
+          <span class="rotulo">Fechar</span>
+        </button>
+      </header>
+
+      <div class="conteudo">
+        <div class="galeria">
+          <div class="principal">
+            @if (imagem(); as img) {
+              @for (atual of [img]; track atual.src) {
+                <img
+                  class="foto"
+                  [ngSrc]="atual.src"
+                  [width]="atual.largura"
+                  [height]="atual.altura"
+                  [alt]="atual.alt"
+                  priority
+                />
+              }
+            } @else {
+              <app-capa-em-codigo [capa]="p.capa" />
+            }
+          </div>
+          @if (p.imagens.length > 1) {
+            <ul class="miniaturas">
+              @for (miniatura of p.imagens; track miniatura.src; let i = $index) {
+                <li>
+                  <button
+                    type="button"
+                    [attr.aria-label]="'Imagem ' + (i + 1) + ' de ' + p.imagens.length"
+                    [attr.aria-pressed]="i === indiceDaImagem()"
+                    (click)="escolherImagem(i)"
+                  >
+                    <img [ngSrc]="miniatura.src" width="96" height="60" alt="" />
+                  </button>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+
+        <div class="info">
+          <ul class="etiquetas" aria-label="Tecnologias">
+            @for (etiqueta of p.etiquetas; track etiqueta) {
+              <li>{{ etiqueta }}</li>
+            }
+          </ul>
+          <h2 id="titulo-do-projeto">{{ p.titulo }}</h2>
+
+          <div class="abas" role="tablist" aria-label="Seções dos detalhes">
+            @for (a of abas; track a.id; let i = $index) {
+              <button
+                type="button"
+                role="tab"
+                class="aba"
+                [id]="'aba-' + a.id"
+                [attr.aria-selected]="aba() === a.id"
+                [attr.aria-controls]="'painel-' + a.id"
+                [attr.tabindex]="aba() === a.id ? 0 : -1"
+                (click)="escolherAba(a.id)"
+                (keydown)="aoTeclarNaAba($event, i)"
+              >
+                {{ a.rotulo }}
+              </button>
+            }
+          </div>
+
+          <div
+            class="painel-da-aba"
+            role="tabpanel"
+            [id]="'painel-' + aba()"
+            [attr.aria-labelledby]="'aba-' + aba()"
+          >
+            @switch (aba()) {
+              @case ('visao') {
+                <p class="descricao">{{ p.descricao }}</p>
+                <ul class="destaques">
+                  @for (destaque of p.destaques; track destaque) {
+                    <li>{{ destaque }}</li>
+                  }
+                </ul>
+              }
+              @case ('codigo') {
+                <div class="trecho" aria-label="Trecho em Java do projeto" role="group">
+                  <p class="linha">
+                    <span class="palavra">public class</span> {{ p.capa.classe }} {{ '{' }}
+                  </p>
+                  @for (linha of p.capa.linhas; track $index) {
+                    <p class="linha recuo">{{ linha }}</p>
+                  }
+                  <p class="linha">{{ '}' }}</p>
+                </div>
+                <p class="descricao">
+                  Este é o trecho de abertura do projeto. O arquivo completo, com o Javadoc e os
+                  detalhes, está em <a [routerLink]="['/' + p.secao]">{{ p.secao }}</a
+                  >.
+                </p>
+              }
+              @case ('stack') {
+                <div class="build" role="group" aria-label="Tecnologias do projeto">
+                  <p class="linha tarefa">&gt; Task :papel</p>
+                  <p class="linha saida">{{ p.papel }}</p>
+                  <p class="linha tarefa">&gt; Task :compileStack</p>
+                  @for (etiqueta of p.etiquetas; track etiqueta) {
+                    <p class="linha saida">
+                      <span class="ok" aria-hidden="true">✓</span> {{ etiqueta }}
+                    </p>
+                  }
+                  <p class="linha tarefa">&gt; Task :destaques</p>
+                  @for (destaque of p.destaques; track destaque) {
+                    <p class="linha saida">
+                      <span class="ok" aria-hidden="true">✓</span> {{ destaque }}
+                    </p>
+                  }
+                  <p class="linha final">
+                    <span class="ok" aria-hidden="true">●</span> BUILD SUCCESSFUL
+                  </p>
+                </div>
+              }
+            }
+          </div>
+
+          <div class="acoes">
+            @if (p.link; as link) {
+              <a
+                class="botao principal-acao"
+                [href]="link.url"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {{ link.rotulo }} <span aria-hidden="true">↗</span>
+                <span class="rotulo"> (abre em nova aba)</span>
+              </a>
+            }
+            <a class="botao" [routerLink]="['/' + p.secao]">
+              Ver em código <span aria-hidden="true">{{ '{ }' }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <footer class="navegacao">
+        <button type="button" (click)="navegar.emit(-1)">
+          <span aria-hidden="true">←</span> Projeto anterior
+        </button>
+        <button type="button" (click)="navegar.emit(1)">
+          Próximo projeto <span aria-hidden="true">→</span>
+        </button>
+      </footer>
+    </div>
+  }
+</dialog>

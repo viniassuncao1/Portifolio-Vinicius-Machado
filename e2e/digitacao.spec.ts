@@ -251,13 +251,13 @@ test.describe('Sem JavaScript', () => {
   test('o HTML pré-renderizado traz o código completo e nunca o estado de digitação', async ({
     page,
   }) => {
-    const resposta = await page.request.get('/sobre-mim');
+    const resposta = await page.request.get('/diferenciais');
     const html = await resposta.text();
 
     expect(html).toContain('app-editor-de-codigo');
     expect(html).not.toMatch(/class="[^"]*digitando/);
-    await page.goto('/sobre-mim');
-    await expect(page.locator(`${EDITOR} code`)).toContainText('sobreMim');
+    await page.goto('/diferenciais');
+    await expect(page.locator(`${EDITOR} code`)).toContainText('DadosPessoais');
     await expect(page.locator(EDITOR)).not.toHaveClass(/digitando/);
   });
 });
