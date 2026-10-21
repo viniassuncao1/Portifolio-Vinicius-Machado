@@ -15,7 +15,7 @@ const DECORATIVOS = [
   'app-faixa-de-ferramentas span.botao',
 ];
 
-const buscar = (page: Page) => page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' });
+const buscar = (page: Page) => page.getByRole('button', { name: 'Buscar seção (Ctrl+K)' });
 const status = (page: Page) => page.getByRole('contentinfo');
 
 async function violacoes(page: Page): Promise<string[]> {
@@ -113,7 +113,7 @@ test.describe('Barra superior (desktop)', () => {
     }
   });
 
-  test('o leitor de tela só encontra como botões Executar, Buscar, o tema, a branch, Projeto e Commit', async ({
+  test('o leitor de tela só encontra como botões o início, Executar, Buscar, o tema, a branch, Projeto e Commit', async ({
     page,
   }) => {
     await page.goto('/skills');
@@ -125,8 +125,9 @@ test.describe('Barra superior (desktop)', () => {
     const texto = (await page.locator('app-barra-de-ferramentas').ariaSnapshot()) ?? '';
 
     expect(botoes).toEqual([
+      'Portfolio_Vinicius, ir para o início',
       'Executar PortfolioApplication',
-      'Buscar seção (Ctrl+P)',
+      'Buscar seção (Ctrl+K)',
       'Usar tema claro',
       'Branch master, abrir o repositório',
       'Projeto',
@@ -322,7 +323,7 @@ test.describe('Barra de status: commit do deploy', () => {
 test.describe('Celular (390x844)', () => {
   test.use({ viewport: CELULAR });
 
-  test('esconde a faixa de ferramentas e recolhe o painel, com Seções e Buscar na barra', async ({
+  test('esconde a faixa de ferramentas e recolhe o painel, com a busca no topo e Seções, Projetos e Contato na barra de ações', async ({
     page,
   }) => {
     await page.goto('/');
@@ -331,10 +332,17 @@ test.describe('Celular (390x844)', () => {
     await expect(
       page.locator('app-painel-lateral').getByRole('link', { name: 'Sobre Mim' }),
     ).toBeHidden();
-    await expect(page.getByRole('button', { name: 'Seções' })).toBeVisible();
+    // As ações do celular ficam numa barra inferior (Seções, Projetos e Contato).
+    const acoes = page.getByRole('navigation', { name: 'Ações' });
+    await expect(acoes.getByRole('button', { name: 'Seções' })).toBeVisible();
+    await expect(acoes.getByRole('link', { name: 'Projetos' })).toHaveAttribute(
+      'href',
+      '/projetos',
+    );
+    await expect(acoes.getByRole('link', { name: 'Contato' })).toHaveAttribute('href', '/contato');
     await expect(buscar(page)).toBeVisible();
-    // A branch fica na barra compacta: é por ela que o painel do Git abre no celular.
-    await expect(page.locator('app-barra-de-ferramentas .ramo')).toBeVisible();
+    // A branch sai da barra superior no celular.
+    await expect(page.locator('app-barra-de-ferramentas .ramo')).toBeHidden();
     await expect(page.locator('app-barra-de-ferramentas .decorativo').first()).toBeHidden();
   });
 

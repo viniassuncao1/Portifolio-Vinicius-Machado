@@ -90,6 +90,8 @@ button {
   &.ativa {
     background: var(--cor-aba-ativa);
     color: var(--cor-texto);
+    // Fio de luz no topo da aba aberta: ela se destaca como uma superfície, não só pela cor.
+    box-shadow: inset 0 1px 0 var(--cor-bisel-claro);
   }
 
   &:not(.ativa):hover {

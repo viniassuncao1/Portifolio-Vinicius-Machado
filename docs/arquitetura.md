@@ -67,7 +67,7 @@ Além da estrutura do design, a casca tem comportamento de IDE ([ADR-0010](adr/0
   a aba da rota atual, para o HTML pré-renderizado e a hidratação coincidirem.
 - **Barra de status** (`BarraDeStatus`): arquivo aberto, `linha:coluna` (serviço `EstadoDoEditor`),
   codificação, versão do Java e ramo.
-- **Busca de seções** (`BuscaDeSecoes`): Ctrl/Cmd+P abre um `<dialog>` com combobox; o filtro
+- **Busca de seções** (`BuscaDeSecoes`): Ctrl/Cmd+K (ou Ctrl/Cmd+P) abre um `<dialog>` com combobox; o filtro
   ignora acentos e maiúsculas. A árvore de seções também se navega por setas (roving tabindex).
 - **Digitação, cursor e linha atual** (`EditorDeCodigo`): o código aparece digitado na primeira
   abertura de cada página, em até 1,5 s. É só visual, uma máscara de CSS: o texto completo fica
@@ -199,6 +199,23 @@ Abaixo de 768px o painel do projeto vira uma **gaveta**. O botão **Seções** d
 (ícone com rótulo visível, `aria-expanded` e `aria-controls`) a abre, com as pastas já abertas, e leva o foco ao primeiro item; Escape, o botão "Fechar
 seções" ou a escolha de uma seção a fecham e devolvem o foco ao botão. O design só tem telas de
 desktop, então esse comportamento é decisão nossa.
+
+### Casca reimaginada (fechamento da experiência)
+
+A casca mantém o que a IDE tem de reconhecível (pacotes, abas, Git, ▶ Executar) e ganha uma
+camada nova, desenhada pelos tokens v2 e não copiada das telas do design:
+
+- **Superfícies double-bezel:** o editor fica numa bandeja com raios concêntricos, fio de luz no
+  topo e sombra em duas camadas (`--cor-bandeja`, `--raio-bandeja`, `--espaco-bandeja`,
+  `--sombra-bandeja`), nos dois temas.
+- **Barra superior:** widget do projeto com o selo VM, Executar, busca em pílula com atalho
+  (Ctrl/Cmd+K) e branch.
+- **Painel do projeto recolhível:** botão ou Ctrl/Cmd+B, estado lembrado na sessão e lido só
+  depois da hidratação, para o HTML pré-renderizado não divergir.
+- **Celular:** barra de ações inferior (Seções, Projetos, Contato) e a gaveta do painel aberta por
+  ela.
+
+Detalhes por componente em [componentes.md](componentes.md#casca).
 
 ## Design tokens e estilos
 

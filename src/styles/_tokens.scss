@@ -35,6 +35,14 @@
   --cor-acento: #de60d2;
   --largura-anel-foco: 2px;
   --cor-fundo-modal: rgb(0 0 0 / 55%);
+  // Superfícies v2 (double-bezel): uma bandeja em volta da superfície interna, que tem um fio de luz
+  // no topo. O raio externo é o interno somado à espessura da bandeja (raios concêntricos).
+  // Selo do projeto na barra superior: o rosa do site com letras brancas (5,2:1; é o do favicon)
+  --cor-selo-projeto: #9a2a8c;
+  --cor-bandeja: #232323;
+  --cor-bisel-claro: rgb(255 255 255 / 7%);
+  --cor-bisel-borda: rgb(255 255 255 / 6%);
+  --sombra-bandeja: 0 1px 2px rgb(0 0 0 / 35%), 0 0.5rem 1.5rem rgb(0 0 0 / 22%);
   // Abertura: o verde do Run segue o ícone da IntelliJ Platform (5,75:1 sobre o painel), o stop é o
   // vermelho dela (3,84:1, só ícone); o fundo cobre a casca sem esconder que ela está por baixo.
   --cor-run: #5fb865;
@@ -139,6 +147,10 @@
   --lado-retrato-grande: 6rem;
   --lado-retrato-pequeno: 4rem;
   --largura-calha: 1.5rem;
+  --espaco-bandeja: 0.375rem;
+  --raio-bandeja: calc(var(--raio-editor) + var(--espaco-bandeja));
+  --altura-acoes-celular: 3.5rem;
+  --tamanho-selo-projeto: 1.375rem;
   --tamanho-botao-barra: 1.75rem;
 
   // Editor de código
@@ -194,6 +206,10 @@
   --cor-javadoc-renderizado: #ececec;
   --cor-acento: #9a2a8c;
   --cor-fundo-modal: rgb(0 0 0 / 35%);
+  --cor-bandeja: #e2e2e2;
+  --cor-bisel-claro: rgb(255 255 255 / 70%);
+  --cor-bisel-borda: rgb(0 0 0 / 8%);
+  --sombra-bandeja: 0 1px 2px rgb(0 0 0 / 8%), 0 0.5rem 1.5rem rgb(0 0 0 / 10%);
   --cor-run: #1f7a36;
   --cor-stop: #c23b3b;
   --cor-fundo-abertura: rgb(217 217 217 / 92%);

@@ -1,10 +1,6 @@
 <app-barra-de-carregamento />
 <app-cursor-do-site />
-<app-barra-de-ferramentas
-  [gavetaAberta]="gavetaAberta()"
-  (alternarGaveta)="alternarGaveta()"
-  (buscar)="abrirBusca()"
-/>
+<app-barra-de-ferramentas (buscar)="abrirBusca()" />
 <div class="area" [attr.data-painel]="painelVisivel()">
   <app-faixa-de-ferramentas [painelVisivel]="painelVisivel()" (alternarPainel)="alternarPainel()" />
   <app-painel-lateral
@@ -32,6 +28,7 @@
   </div>
 </div>
 <app-barra-de-status />
+<app-acoes-do-celular [gavetaAberta]="gavetaAberta()" (alternarGaveta)="alternarGaveta()" />
 <app-busca-de-secoes />
 <app-janela-de-preview />
 <app-abertura />

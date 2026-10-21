@@ -167,28 +167,31 @@ test.describe('Início em cartão', () => {
     expect(fundoDoContato).not.toBe(fundoDoHero);
   });
 
-  test('as faixas passam no axe, cada uma com o seu tema, nos temas escuro e claro', async ({
-    page,
-  }) => {
-    for (const esquema of ['dark', 'light'] as const) {
-      await page.emulateMedia({ colorScheme: esquema });
-      await abrirInicio(page);
-      await page.getByRole('button', { name: 'Copiar e-mail' }).first().waitFor();
-      for (const { rotulo, tema } of FAIXAS) {
+  // Um teste por faixa e esquema: o laço com todas as faixas estourava o tempo.
+  for (const esquema of ['dark', 'light'] as const) {
+    for (const { rotulo, tema } of FAIXAS) {
+      test(`a faixa "${rotulo}" passa no axe, com o seu tema, no tema ${esquema}`, async ({
+        page,
+      }) => {
+        await page.emulateMedia({ colorScheme: esquema });
+        await abrirInicio(page);
+        await page.getByRole('button', { name: 'Copiar e-mail' }).first().waitFor();
         await irParaAFaixa(page, rotulo, tema);
+
         const { violations } = await new AxeBuilder({ page })
           .include(`section.faixa[aria-label="${rotulo}"]`)
           .withTags(TAGS)
           .analyze();
+
         expect(
           violations.map(
             (v) =>
               `${esquema}/${rotulo}: ${v.id} ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`,
           ),
         ).toEqual([]);
-      }
+      });
     }
-  });
+  }
 
   test('o foco no teclado mostra um anel de 2px na cor do texto do tema, em cada faixa', async ({
     page,

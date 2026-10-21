@@ -59,6 +59,12 @@ async function alternarTema(page: Page): Promise<void> {
   await expect(page.locator('html.transicao-de-tema')).toHaveCount(0);
 }
 
+/** No desktop pela branch da barra superior; no celular ela some, então pelo endereço. */
+async function abrirORepositorio(page: Page): Promise<void> {
+  if (page.viewportSize()!.width < 768) await page.goto('/repositorio');
+  else await page.getByRole('button', { name: 'Branch master, abrir o repositório' }).click();
+}
+
 async function abrirNoClaro(page: Page, rota: string): Promise<void> {
   await abrirHidratada(page, rota);
   expect(await dataTema(page)).toBe('claro');
@@ -285,7 +291,7 @@ test.describe('Botão de tema', () => {
 
     const tema = (await botaoDeTema(page).boundingBox())!;
     const busca = (await page
-      .getByRole('button', { name: 'Buscar seção (Ctrl+P)' })
+      .getByRole('button', { name: 'Buscar seção (Ctrl+K)' })
       .boundingBox())!;
 
     expect(Math.abs(tema.y - busca.y)).toBeLessThan(8);
@@ -646,7 +652,7 @@ for (const [nome, viewport] of [
 
     test('a busca aberta é clara e não tem violações', async ({ page }) => {
       await abrirNoClaro(page, '/skills');
-      await page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' }).click();
+      await page.getByRole('button', { name: 'Buscar seção (Ctrl+K)' }).click();
       const dialogo = page.getByRole('dialog', { name: 'Buscar seção' });
       await expect(dialogo).toBeVisible();
       await expect(page.getByRole('combobox', { name: 'Buscar arquivo ou seção' })).toBeFocused();
@@ -661,7 +667,7 @@ for (const [nome, viewport] of [
     }) => {
       await page.route('**/git/historico.json', responder(HISTORICO));
       await abrirNoClaro(page, '/sobre-mim');
-      await page.getByRole('button', { name: 'Branch master, abrir o repositório' }).click();
+      await abrirORepositorio(page);
       await expect(page).toHaveURL(/\/repositorio$/);
       await expect(page.locator('main dl.numeros')).toBeVisible();
 
@@ -675,7 +681,7 @@ for (const [nome, viewport] of [
     test('a página do repositório com erro também passa no claro', async ({ page }) => {
       await page.route('**/git/historico.json', (rota) => rota.fulfill({ status: 500, body: '' }));
       await abrirNoClaro(page, '/sobre-mim');
-      await page.getByRole('button', { name: 'Branch master, abrir o repositório' }).click();
+      await abrirORepositorio(page);
       await expect(page.getByRole('alert')).toBeVisible();
 
       expect(await violacoes(page)).toEqual([]);

@@ -546,30 +546,31 @@ test.describe('Celular sem corte horizontal (390x844)', () => {
     expect(estilo.recuo, 'recuo pendurado: texto-indent negativo').toMatch(/^-/);
   });
 
-  test('nenhuma página rola na horizontal no celular', async ({ page }) => {
-    for (const rota of [
-      '/',
-      '/sobre-mim',
-      '/skills',
-      '/skills/3',
-      '/experiencias',
-      '/certificacoes',
-      '/projeto-4',
-      '/projeto-5',
-      '/projeto-6',
-      '/projeto-1',
-      '/depoimentos',
-      '/contato',
-      '/repositorio',
-    ]) {
+  // Um teste por rota: um laço só com todas as rotas estoura o tempo na CI.
+  for (const rota of [
+    '/',
+    '/sobre-mim',
+    '/skills',
+    '/experiencias',
+    '/certificacoes',
+    '/projetos',
+    '/projeto-4',
+    '/projeto-5',
+    '/projeto-6',
+    '/projeto-1',
+    '/depoimentos',
+    '/contato',
+    '/repositorio',
+  ]) {
+    test(`${rota} não rola na horizontal no celular`, async ({ page }) => {
       await page.goto(rota);
       await expect(page.getByRole('heading', { level: 1 })).toBeAttached();
+
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
-        rota,
       ).toBe(true);
-    }
-  });
+    });
+  }
 });
 
 test.describe('Limite de 5 abas', () => {
@@ -628,7 +629,7 @@ test.describe('Ícones decorativos discretos', () => {
   test('são mais apagados que os botões reais e não mudam ao passar o mouse', async ({ page }) => {
     await abrirHidratada(page, '/skills');
     const decorativo = page.locator('app-barra-de-ferramentas .decorativo').first();
-    const real = page.getByRole('button', { name: 'Buscar seção (Ctrl+P)' });
+    const real = page.getByRole('button', { name: 'Buscar seção (Ctrl+K)' });
     const medir = (alvo: Locator) =>
       alvo.evaluate((el) => {
         const cs = getComputedStyle(el);

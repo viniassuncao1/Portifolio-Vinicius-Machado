@@ -4,7 +4,10 @@ import { provideRouter } from '@angular/router';
 import { PainelLateral } from './painel-lateral';
 
 describe('PainelLateral', () => {
-  beforeEach(() => TestBed.configureTestingModule({ providers: [provideRouter([])] }));
+  // Rota coringa: o clique no link Repositório navega, e a navegação precisa terminar dentro do teste.
+  beforeEach(() =>
+    TestBed.configureTestingModule({ providers: [provideRouter([{ path: '**', children: [] }])] }),
+  );
 
   it('mostra a árvore em 7 pastas, com a primeira expandida', async () => {
     const fixture = TestBed.createComponent(PainelLateral);
@@ -14,6 +17,23 @@ describe('PainelLateral', () => {
     expect(elemento.querySelectorAll('nav [data-tipo=pasta]')).toHaveLength(7);
     expect(elemento.querySelectorAll('nav a')).toHaveLength(18);
     expect(elemento.querySelectorAll('nav .grupo:not([hidden]) a')).toHaveLength(3);
+  });
+
+  it('tem o link Repositório depois da árvore, para a gaveta do celular', async () => {
+    const fixture = TestBed.createComponent(PainelLateral);
+    await fixture.whenStable();
+    const elemento = fixture.nativeElement as HTMLElement;
+    const link = elemento.querySelector<HTMLAnchorElement>('a.repositorio')!;
+    let escolhida = 0;
+    fixture.componentInstance.secaoEscolhida.subscribe(() => (escolhida += 1));
+
+    expect(link.getAttribute('href')).toBe('/repositorio');
+    expect(link.textContent?.trim()).toBe('Repositório');
+    expect(link.closest('nav')).toBeNull();
+    expect(elemento.querySelector('app-arvore-de-secoes')?.nextElementSibling).toBe(link);
+    link.click();
+    await fixture.whenStable();
+    expect(escolhida).toBe(1);
   });
 
   it('mantém o cabeçalho e a scrollbar decorativos fora da leitura', async () => {

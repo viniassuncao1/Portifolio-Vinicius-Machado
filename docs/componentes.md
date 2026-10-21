@@ -57,18 +57,28 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 ### `Casca`
 
 - **Onde:** `layout/casca/casca.ts`, seletor `app-casca`.
-- **O que faz:** é a rota-pai de todas as páginas. Monta a barra superior, a faixa de ferramentas, o painel do projeto,
-  a `FaixaDeAbas` com o botão de busca, o `<router-outlet>` dentro do `<main>`, a `BarraDeStatus`
-  e a `BuscaDeSecoes`. A casca **ocupa a janela inteira** (`100dvh`, sem rolagem da página): só a
-  área do editor rola, e cada navegação volta ao topo. O atalho Ctrl/Cmd+P (`keydown.control.p` e
-  `keydown.meta.p` no `host`) abre a busca com `preventDefault`. Contém o `h1` visualmente oculto, com o título
-  da rota (vem da `EstrategiaDeTitulo`). No desktop, o botão Projeto da faixa de ferramentas
-  mostra e esconde o painel do projeto. Abaixo de 768px controla a gaveta: abre pelo botão
-  Projeto da barra superior (`aria-expanded`, `aria-controls`), move o foco para o primeiro item e,
-  com Escape ou ao escolher uma seção, fecha e devolve o foco ao botão.
+- **O que faz:** é a rota-pai de todas as páginas. Monta a barra superior, a faixa de ferramentas, o
+  painel do projeto, a `FaixaDeAbas`, o `<router-outlet>` dentro do `<main>`, a `BarraDeStatus`, a
+  `BuscaDeSecoes`, o `AcoesDoCelular` e o cursor do site. A casca **ocupa a janela inteira** (`100dvh`,
+  sem rolagem da página): só a área do editor rola, e cada navegação volta ao topo. Contém o `h1`
+  visualmente oculto, com o título da rota (vem da `EstrategiaDeTitulo`).
+- **Atalhos** (no `host`, com `preventDefault`): Ctrl/Cmd+K e Ctrl/Cmd+P abrem a busca; Ctrl/Cmd+B
+  recolhe e mostra o painel do projeto, como nas IDEs (só no desktop, a partir de 768px).
+- **Painel recolhível:** no desktop o botão Projeto da faixa de ferramentas (ou Ctrl/Cmd+B) mostra e
+  esconde o painel. A escolha fica na **sessão** (`sessionStorage`, chave `painel-do-projeto`): recarregar ou navegar
+  mantém o painel como o visitante deixou. O valor só é lido depois da hidratação
+  (`afterNextRender`), então o HTML pré-renderizado sai sempre com o painel aberto. Sem
+  armazenamento, o estado vale até recarregar.
+- **Gaveta no celular:** abaixo de 768px o painel vira uma gaveta aberta pelo botão **Seções** da
+  barra de ações de baixo (`aria-expanded`, `aria-controls`). Abrir move o foco para o primeiro
+  item; Escape ou escolher uma seção fecha e devolve o foco ao botão.
 - **Entradas e saídas:** nenhuma. Quem a usa é o roteador (`app.routes.ts`).
 - **Estado:** `gavetaAberta` (celular) e `painelVisivel` (desktop), ambos signals. O painel recebe
   `data-aberta`, que o CSS usa para animar, e a área do editor recebe `data-painel`.
+- **Superfícies double-bezel:** o editor fica numa **bandeja** (`--cor-bandeja`) com raio externo
+  igual ao interno mais a espessura da bandeja (`--raio-bandeja`, raios concêntricos), um fio de luz
+  no topo (`--cor-bisel-claro`) e uma sombra em duas camadas. Tudo vem dos tokens v2 de
+  `src/styles/_tokens.scss`, nos dois temas.
 
 ### `PainelLateral`
 
@@ -107,26 +117,43 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 
 - **Onde:** `layout/barra-de-ferramentas/barra-de-ferramentas.ts`, seletor
   `app-barra-de-ferramentas`.
-- **O que faz:** a barra de ferramentas do design, mas **sem o degradê**: usa a cor do painel,
-  escura no tema escuro e clara no tema claro. Foi um desvio pedido pelo Vinicius: a faixa clara destoava do resto da interface
-  ([ADR-0012](adr/0012-design-original-com-elementos-do-intellij.md)). Usa os **ícones do design**
-  (`public/icones/*.svg`) e os controles de janela do design. Dos ícones da IntelliJ Platform ficam
-  só a **busca** e a **branch** `master`. Quase tudo só imita a IDE e fica fora da leitura e do
-  foco. É botão de verdade o **Buscar** (emite `buscar`, que abre a busca de seções) e, no celular,
-  o **Projeto**, que abre e fecha a gaveta. O **Executar** (play) sempre tem função: nas rotas com preview
-  (`JanelaDePreview.previewDaRota()`) abre o site do projeto ("Executar o projeto"); nas demais
-  abre a janela de Run e reinicia o log ("Executar PortfolioApplication"). O foco é um anel rosa.
+- **O que faz:** a barra superior da casca, **sem degradê**: usa a cor do painel, escura no tema
+  escuro e clara no claro (desvio pedido pelo Vinicius,
+  [ADR-0012](adr/0012-design-original-com-elementos-do-intellij.md)). Da esquerda para a direita:
+  o **widget do projeto**, os ícones decorativos, o **Executar**, a **busca**, o botão de tema, a
+  **branch** e os controles de janela do design.
+- **Widget do projeto:** um botão com o selo **VM** (`--cor-selo-projeto`, o rosa do favicon, com
+  letras brancas a 5,2:1 de contraste), o nome `Portfolio_Vinicius` e uma seta, como o widget do
+  projeto do IntelliJ New UI. Leva ao Início (`aria-label` "Portfolio_Vinicius, ir para o início").
+- **Executar:** sempre tem função. Nas rotas com preview (`JanelaDePreview.previewDaRota()`) abre o
+  site do projeto ("Executar o projeto"); nas demais abre a janela de Run e reinicia o log
+  ("Executar PortfolioApplication").
+- **Busca em pílula:** botão com a lupa, o rótulo "Buscar" e o atalho (`Ctrl K`, ou `⌘K` em
+  Mac, escolhido no navegador por `atalhoDaBusca`). Tem `aria-haspopup="dialog"` e
+  `aria-keyshortcuts="Control+K Meta+K"`; emite `buscar`, que abre a `BuscaDeSecoes`.
+- **Tema:** à direita da busca, troca entre claro e escuro (sol no escuro, lua no claro), com
+  `aria-label` "Usar tema claro" ou "Usar tema escuro" e `aria-pressed` no claro; chama
+  `Tema.alternar()`, que faz um crossfade curto (View Transition) quando o navegador e o movimento
+  reduzido permitem. Não existe no design nem no IntelliJ ([ADR-0014](adr/0014-tema-claro.md)).
+- **Branch `master`:** botão de verdade que abre a aba da página do repositório (`/repositorio`,
+  [ADR-0016](adr/0016-repositorio-no-estilo-do-github.md)).
+- **Ícones decorativos** (os que só imitam a IDE) ficam apagados (opacidade 0,55), sem hover e fora
+  da leitura e do foco.
 - **Entrada e saídas:** `gavetaAberta = input(false)`; `alternarGaveta` e `buscar`. Método
-  público: `focarProjeto()`, usado para devolver o foco quando a gaveta fecha.
-- **Botão de tema:** à direita do Buscar, troca entre o tema claro e o escuro (ícone de sol no
-  escuro e de lua no claro, desenhados no padrão dos ícones do design). Tem `aria-label` "Usar tema
-  claro" ou "Usar tema escuro" e `aria-pressed` no claro; chama `Tema.alternar()`, que troca com um crossfade curto (View Transition) quando o navegador e o movimento reduzido permitem. Não existe no
-  design nem no IntelliJ (desvio do [ADR-0014](adr/0014-tema-claro.md)).
-- **Branch `master`:** é um botão de verdade que abre a aba da página do repositório
-  (`/repositorio`, [ADR-0016](adr/0016-repositorio-no-estilo-do-github.md)).
-- **Ícones decorativos** (os que só imitam a IDE) ficam mais apagados (opacidade 0,55) e sem efeito
-  de hover, para não parecerem clicáveis.
-- **Celular:** a barra fica compacta e escura, com Projeto (ícone) e Buscar.
+  público: `focarProjeto()`.
+- **Celular:** a barra fica compacta; Seções, Projetos e Contato passam para o `AcoesDoCelular`.
+
+### `AcoesDoCelular`
+
+- **Onde:** `layout/acoes-do-celular/acoes-do-celular.ts`, seletor `app-acoes-do-celular`.
+- **O que faz:** a barra de ações fixa **embaixo** da tela no celular (altura
+  `--altura-acoes-celular`, 3,5rem), um `<nav aria-label="Ações">` com três destinos: **Seções**
+  (botão que abre e fecha a gaveta do painel, com `aria-controls` e `aria-expanded`), **Projetos**
+  (`/projetos`) e **Contato** (`/contato`). Os links usam `routerLinkActive` e
+  `aria-current="page"`. Faz parte da casca nova para o recrutador chegar ao que importa sem
+  entender a árvore.
+- **Saídas:** `alternarGaveta`. Método público: `focarSecoes()`, usado para devolver o foco quando
+  a gaveta fecha.
 
 ### `FaixaDeFerramentas`
 
@@ -218,7 +245,7 @@ busca, a digitação do código, o botão "Seções" e a gaveta do celular. As l
 - **Onde:** `layout/busca-de-secoes/busca-de-secoes.ts`, seletor `app-busca-de-secoes`.
 - **O que faz:** busca no estilo "Go to File". Um `<dialog>` modal com um **combobox** WAI-ARIA
   (`role="combobox"`, `aria-activedescendant`, lista `role="listbox"` e contagem em `role="status"`).
-  Ctrl/Cmd+P ou o botão da faixa de abas chamam `abrir()`. O filtro é **sem acento e sem
+  Ctrl/Cmd+K, Ctrl/Cmd+P ou o botão Buscar da barra superior chamam `abrir()`. O filtro é **sem acento e sem
   diferença de maiúsculas** (`normalize('NFD')`): "exp" encontra `Experiencias.java`. Setas movem
   a opção ativa, Enter abre a seção, Escape ou o clique fora fecham, e o foco volta para onde
   estava.
@@ -733,6 +760,22 @@ de seções vem de `core/`.
   janela), `appMagnetico` (segue de leve o ponteiro) e `[appContador]` (conta até o valor). O HTML
   pré-renderizado já é o estado final: elas só animam elementos que ainda estão fora da janela,
   depois da hidratação, e não fazem nada com movimento reduzido.
+
+### Movimento da casca (`src/styles/_movimento.scss`)
+
+Só `transform` e `opacity`, com os tokens de duração, e nada com movimento reduzido:
+
+- **Painel do projeto:** no desktop a coluna do grid troca **sem transição** (o editor não
+  "estica"); só o painel entra com `opacity` e `translateX(-0.5rem)` em `--duracao-media`. No
+  celular o painel é a gaveta, animada pela casca por `data-aberta`.
+- **Pressionado:** `:active` com `scale(0.96)` na barra superior, na faixa de ferramentas, nas abas,
+  na branch e na barra de ações do celular. Os links do rodapé ficam com `opacity: 0.7`.
+- **Barra de status viva:** o ponto "Disponível" respira só em `opacity`, num ciclo de
+  `--duracao-pulso` (2400 ms, token novo).
+- **Foco sem animação, de propósito:** o anel de foco aparece na hora, para quem navega pelo teclado
+  nunca esperar para ver onde está.
+- **Movimento reduzido:** o bloco `prefers-reduced-motion: reduce` remove `transition` e `animation`
+  de tudo isso.
 
 ## Vitrine de projetos (ADR-0019)
 

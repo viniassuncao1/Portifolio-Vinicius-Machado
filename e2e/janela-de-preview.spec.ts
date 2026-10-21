@@ -105,9 +105,9 @@ test.describe('Janela de preview', () => {
         const imagem = janela(page).getByRole('img', { name: projeto.textoAlternativo });
 
         await expect(imagem).toBeVisible();
-        expect(await imagem.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(
-          0,
-        );
+        await expect
+          .poll(() => imagem.evaluate((img: HTMLImageElement) => img.naturalWidth))
+          .toBeGreaterThan(0);
         const area = janela(page).getByRole('region', { name: `Captura do site ${projeto.nome}` });
         const rolavel = await area.evaluate((el) => el.scrollHeight > el.clientHeight);
 

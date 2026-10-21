@@ -1,3 +1,8 @@
+## Purpose
+
+Mostrar os seis projetos numa vitrine de cartões com captura, etiquetas e destaques, com detalhes
+em diálogo acessível e endereço próprio, sem perder o arquivo em código de cada projeto.
+
 ## ADDED Requirements
 
 ### Requirement: Cartões de projeto

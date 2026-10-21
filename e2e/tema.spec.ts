@@ -184,7 +184,7 @@ test.describe('Anel de foco rosa de 2px', () => {
     await abrirHidratada(page, '/projeto-5');
     const esperado = [
       { nome: 'Executar o projeto', naBarra: true },
-      { nome: 'Buscar seção (Ctrl+P)', naBarra: true },
+      { nome: 'Buscar seção (Ctrl+K)', naBarra: true },
       { nome: 'Executar Projeto 5', naBarra: false },
       { nome: 'Projeto', naBarra: false },
     ];

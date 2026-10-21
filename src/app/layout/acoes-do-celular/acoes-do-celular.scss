@@ -1,0 +1,66 @@
+// Só existe no celular. Cada ação tem a altura toda da barra como área de toque (≥ 44 px).
+:host {
+  display: none;
+}
+
+@media (max-width: 767.98px) {
+  :host {
+    display: block;
+    flex: none;
+  }
+}
+
+.acoes-celular {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  box-sizing: border-box;
+  height: var(--altura-acoes-celular);
+  border-block-start: var(--borda-painel);
+  background: var(--cor-painel);
+  // Fio de luz no topo, como as demais superfícies; o recuo seguro cobre a barra do iPhone.
+  box-shadow: inset 0 1px 0 var(--cor-bisel-claro);
+  padding-block-end: env(safe-area-inset-bottom, 0);
+}
+
+.acao {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cor-texto-esmaecido);
+  font: inherit;
+  font-size: var(--texto-status);
+  text-decoration: none;
+  cursor: pointer;
+
+  // O item da seção aberta ganha o fio de acento no topo (como o indicador das abas).
+  &.atual,
+  &[aria-expanded='true'] {
+    color: var(--cor-texto-forte);
+  }
+
+  &.atual::before,
+  &[aria-expanded='true']::before {
+    content: '';
+    position: absolute;
+    inset: 0 25% auto;
+    height: 2px;
+    border-radius: 0 0 2px 2px;
+    background: var(--cor-acento);
+  }
+
+  &:hover {
+    background: var(--cor-linha-selecionada);
+  }
+
+  &:focus-visible {
+    outline: var(--largura-anel-foco) solid var(--cor-foco);
+    outline-offset: -2px;
+  }
+}

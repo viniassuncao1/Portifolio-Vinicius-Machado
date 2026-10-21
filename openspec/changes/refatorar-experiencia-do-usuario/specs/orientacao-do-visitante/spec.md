@@ -1,3 +1,8 @@
+## Purpose
+
+Fazer quem recruta entender em segundos quem é o Vinicius, o que ele faz e onde ver os projetos,
+o currículo e o contato, a partir da primeira dobra e de caminhos curtos em qualquer página.
+
 ## ADDED Requirements
 
 ### Requirement: Primeira dobra que responde em segundos

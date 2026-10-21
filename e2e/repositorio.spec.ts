@@ -422,11 +422,11 @@ test.describe('Estados de erro e de histórico vazio', () => {
 test.describe('Repositório no celular (390x844)', () => {
   test.use({ viewport: CELULAR });
 
-  test('abre pelo master, fica em uma coluna e não rola na horizontal', async ({ page }) => {
+  test('abre pelo endereço, fica em uma coluna e não rola na horizontal', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.route(ENDERECO, responder(HISTORICO));
-    await abrirHidratada(page, '/sobre-mim');
-    await ramo(page).click();
+    // No celular a branch some da barra superior: o repositório abre pelo endereço.
+    await page.goto('/repositorio');
     await expect(numeros(page)).toBeVisible();
 
     const blocos = await page

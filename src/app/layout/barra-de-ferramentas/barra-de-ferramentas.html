@@ -1,13 +1,14 @@
 <button
-  #botaoProjeto
   type="button"
-  class="botao projeto-celular"
-  aria-controls="painel-lateral"
-  [attr.aria-expanded]="gavetaAberta()"
-  (click)="alternarGaveta.emit()"
+  class="projeto"
+  aria-label="Portfolio_Vinicius, ir para o início"
+  (click)="irParaOInicio()"
 >
-  <app-icone nome="design-projeto" />
-  <span class="rotulo-celular">Seções</span>
+  <span class="selo" aria-hidden="true">VM</span>
+  <span class="nome-do-projeto">Portfolio_Vinicius</span>
+  <svg class="seta" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+    <path fill="none" stroke="currentColor" stroke-width="1.4" d="m4.5 6.5 3.5 3.5 3.5-3.5" />
+  </svg>
 </button>
 <span class="botao decorativo" aria-hidden="true"><app-icone nome="design-arquivo" /></span>
 <span class="botao decorativo" aria-hidden="true"><app-icone nome="design-pasta" /></span>
@@ -39,10 +40,13 @@
   type="button"
   class="botao botao-busca"
   aria-haspopup="dialog"
-  aria-label="Buscar seção (Ctrl+P)"
+  aria-label="Buscar seção (Ctrl+K)"
+  aria-keyshortcuts="Control+K Meta+K"
   (click)="buscar.emit()"
 >
   <app-icone nome="buscar" />
+  <span class="rotulo-busca" aria-hidden="true">Buscar</span>
+  <kbd class="atalho-busca" aria-hidden="true">{{ atalhoDaBusca() }}</kbd>
 </button>
 <button
   type="button"

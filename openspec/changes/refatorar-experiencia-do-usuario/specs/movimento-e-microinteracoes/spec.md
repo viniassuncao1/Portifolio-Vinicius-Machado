@@ -1,3 +1,9 @@
+## Purpose
+
+Dar ao portfólio movimento que orienta, responde e mostra hierarquia, sempre com um estado final
+legível sem ele: o site funciona inteiro sem JavaScript e sem animações, e respeita o movimento
+reduzido sem custo extra.
+
 ## ADDED Requirements
 
 ### Requirement: Movimento com propósito e reversível

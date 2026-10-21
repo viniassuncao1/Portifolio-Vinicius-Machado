@@ -17,7 +17,9 @@ desenvolvo em Angular com auxílio de IA, de forma planejada e verificável.
 - **Pré-renderização (SSG):** cada rota é gerada como HTML estático no build, o que garante
   carregamento rápido e SEO.
 - **Casca de IDE como rota-pai:** a barra, o painel e a aba são montados uma vez; as 18 seções
-  são rotas filhas pré-renderizadas, com o conteúdo definido como dados tipados.
+  são rotas filhas pré-renderizadas, com o conteúdo definido como dados tipados. A casca tem
+  superfícies double-bezel, painel do projeto recolhível (Ctrl/Cmd+B), busca em pílula (Ctrl/Cmd+K)
+  e, no celular, uma barra de ações embaixo.
 - **Abertura com Run:** o site abre como a IDE rodando o projeto: uma splash de 3 s, o ▶ do Run
   (que se aciona sozinho em 5 s), o build das classes do portfólio (uma por seção) e o log do Spring subindo, e então a IDE
   aparece. Só na página inicial e uma vez por sessão, com o conteúdo sempre no HTML
@@ -105,6 +107,22 @@ A aplicação fica disponível em `http://localhost:4200`.
 | `npm run lint`         | ESLint em TypeScript e templates                          |
 | `npm run format`       | Formata o projeto com Prettier                            |
 | `npm run format:check` | Verifica a formatação sem alterar arquivos                |
+
+## Como revisar localmente
+
+A produção não muda enquanto a experiência nova é revisada: o deploy de produção só roda pelo botão
+"Run workflow" ([ADR-0020](docs/adr/0020-deploy-de-producao-manual.md)). Para ver tudo no seu computador:
+
+```bash
+npm start   # http://localhost:4200
+```
+
+Para revisar todas as rotas de uma vez, gere a galeria de revisão (capturas em 320, 768, 1024 e
+1440 px, nos temas claro e escuro) e abra o `index.html`:
+
+```bash
+node scripts/capturar-revisao.mjs   # escreve .maestri/capturas/revisao/index.html
+```
 
 ## Compartilhamento no LinkedIn
 
